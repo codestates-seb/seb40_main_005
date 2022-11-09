@@ -51,14 +51,6 @@
 
 </br>
 
-## 🪄 Front-end 실행방법
-
-
-## 🪄 Back-end 실행방법
-
-
-</br>
-
 ## 🖌️Code Convention
 ### 🪄Frontend
 
@@ -68,9 +60,10 @@
 
 ## 🖌️Commit / PR Convention
 
+</br>
 
 
-## 🖌️branch Convention
+## 🖌️git flow
 
 
 
