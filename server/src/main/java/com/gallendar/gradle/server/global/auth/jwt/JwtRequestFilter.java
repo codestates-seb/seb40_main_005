@@ -1,5 +1,7 @@
 package com.gallendar.gradle.server.global.auth.jwt;
 
+import com.gallendar.gradle.server.members.domain.Members;
+import com.gallendar.gradle.server.members.domain.MembersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +19,8 @@ import java.io.IOException;
 public class JwtRequestFilter extends OncePerRequestFilter {
     public static final String HEADER_KEY = "Authorization";
     @Autowired
+    private MembersRepository membersRepository;
+    @Autowired
     private JwtUtils jwtUtils;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -32,13 +36,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         // 토큰을 가져오면 검증을 한다.
         if (memberId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            User user = this.userRepository.findByUserId(userid).orElseThrow(() -> new IllegalArgumentException("올바르지 않은 사용자입니다."));
+            Members members = this.membersRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("올바르지 않은 사용자입니다."));
 
             // 토큰이 유효한 경우 수동으로 인증을 설정하도록 스프링 시큐리티를 구성한다.
             if (jwtUtils.validateToken(jwtToken)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                         new UsernamePasswordAuthenticationToken(
-                                user,
+                                members,
                                 null,
                                 null
                         );
