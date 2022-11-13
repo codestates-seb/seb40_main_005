@@ -32,12 +32,4 @@ public class BoardPostDto {
         this.music = music;
     }
 
-    public Board toBoard(){
-        return Board.builder()
-                .title(title)
-                .content(content)
-                .photo(photo)
-                .music(music)
-                .build();
-    }
 }
