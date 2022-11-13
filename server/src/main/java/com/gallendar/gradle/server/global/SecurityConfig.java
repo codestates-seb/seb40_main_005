@@ -5,9 +5,11 @@ import com.gallendar.gradle.server.global.auth.jwt.JwtAuthenticationEntryPoint;
 import com.gallendar.gradle.server.global.auth.jwt.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,7 +21,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
-
+@Configuration
+@EnableWebSecurity
 public class SecurityConfig {
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -55,7 +58,7 @@ public class SecurityConfig {
                 // 이 요청은 인증을 하지 않는다.
                 .authorizeRequests()
                 .antMatchers(
-                        "")
+                        "/authentication")
 
                 .permitAll()
                 // 다른 모든 요청은 인증을 한다.
