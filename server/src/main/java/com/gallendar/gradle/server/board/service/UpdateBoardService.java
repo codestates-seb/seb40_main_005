@@ -1,9 +1,9 @@
-package com.gallendar.gradle.server.domain.board.service;
+package com.gallendar.gradle.server.board.service;
 
-import com.gallendar.gradle.server.domain.board.dto.BoardResponseDto;
-import com.gallendar.gradle.server.domain.board.dto.BoardUpdateRequestDto;
-import com.gallendar.gradle.server.domain.board.entity.Board;
-import com.gallendar.gradle.server.domain.board.repository.BoardRepository;
+import com.gallendar.gradle.server.board.dto.BoardResponseDto;
+import com.gallendar.gradle.server.board.dto.BoardUpdateRequestDto;
+import com.gallendar.gradle.server.board.entity.Board;
+import com.gallendar.gradle.server.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UpdateBoardService {
 
     private BoardRepository boardRepository;
+
     @Transactional
     public Long update(Long boardId, BoardUpdateRequestDto requestDto){
         Board board = boardRepository.findById(boardId)

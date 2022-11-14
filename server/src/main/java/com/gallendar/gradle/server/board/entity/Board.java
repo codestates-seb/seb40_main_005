@@ -1,4 +1,4 @@
-package com.gallendar.gradle.server.domain.board.entity;
+package com.gallendar.gradle.server.board.entity;
 
 import com.gallendar.gradle.server.global.auditing.BaseTimeEntity;
 import lombok.Builder;

@@ -1,6 +1,6 @@
-package com.gallendar.gradle.server.domain.board.dto;
+package com.gallendar.gradle.server.board.dto;
 
-import com.gallendar.gradle.server.domain.board.entity.Board;
+import com.gallendar.gradle.server.board.entity.Board;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

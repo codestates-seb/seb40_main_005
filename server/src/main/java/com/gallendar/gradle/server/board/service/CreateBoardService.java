@@ -1,7 +1,7 @@
-package com.gallendar.gradle.server.domain.board.service;
+package com.gallendar.gradle.server.board.service;
 
-import com.gallendar.gradle.server.domain.board.dto.BoardCreateRequestDto;
-import com.gallendar.gradle.server.domain.board.repository.BoardRepository;
+import com.gallendar.gradle.server.board.dto.BoardCreateRequestDto;
+import com.gallendar.gradle.server.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

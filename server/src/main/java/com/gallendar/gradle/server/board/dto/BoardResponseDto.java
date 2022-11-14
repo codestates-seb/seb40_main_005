@@ -1,12 +1,7 @@
-package com.gallendar.gradle.server.domain.board.dto;
+package com.gallendar.gradle.server.board.dto;
 
-import com.gallendar.gradle.server.domain.board.entity.Board;
+import com.gallendar.gradle.server.board.entity.Board;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.time.LocalDateTime;
 
 @Getter
 public class BoardResponseDto {

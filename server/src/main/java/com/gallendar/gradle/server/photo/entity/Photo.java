@@ -1,4 +1,4 @@
-package com.gallendar.gradle.server.domain.photo.entity;
+package com.gallendar.gradle.server.photo.entity;
 
 import lombok.Builder;
 import org.springframework.data.annotation.Id;
