@@ -19,7 +19,6 @@ public class MembersController {
     private final JwtUtils jwtUtils;
     @PostMapping("/authentication")
     public LoginResponse membersLogin(@RequestBody LoginRequest loginRequest){
-        System.out.println(loginRequest.getId());
         return loginService.LoginMembers(loginRequest);
     }
 }
