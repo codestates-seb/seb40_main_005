@@ -14,7 +14,6 @@ public class BoardResponseDto {
     private long boardId;
     private String title;
     private String content;
-    private MultipartFile photo;
     private String music;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
