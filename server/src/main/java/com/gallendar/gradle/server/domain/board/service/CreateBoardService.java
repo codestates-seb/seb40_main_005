@@ -1,6 +1,6 @@
 package com.gallendar.gradle.server.domain.board.service;
 
-import com.gallendar.gradle.server.domain.board.dto.BoardRequestDto;
+import com.gallendar.gradle.server.domain.board.dto.BoardCreateRequestDto;
 import com.gallendar.gradle.server.domain.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ public class CreateBoardService {
 
     private final BoardRepository boardRepository;
     @Transactional
-    public Long save(BoardRequestDto requestDto){
+    public Long save(BoardCreateRequestDto requestDto){
         return boardRepository.save(requestDto.toEntity()).getBoardId();
     }
 

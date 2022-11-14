@@ -1,6 +1,6 @@
 package com.gallendar.gradle.server.domain.board.controller;
 
-import com.gallendar.gradle.server.domain.board.dto.BoardRequestDto;
+import com.gallendar.gradle.server.domain.board.dto.BoardCreateRequestDto;
 import com.gallendar.gradle.server.domain.board.entity.Board;
 import com.gallendar.gradle.server.domain.board.repository.BoardRepository;
 import org.junit.After;
@@ -42,7 +42,7 @@ public class BoardControllerTest {
         String title = "title";
         String content = "content";
         String music = "music";
-        BoardRequestDto requestDto = BoardRequestDto.builder()
+        BoardCreateRequestDto requestDto = BoardCreateRequestDto.builder()
                 .title(title)
                 .content(content)
                 .music(music)
