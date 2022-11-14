@@ -1,33 +1,24 @@
 package com.gallendar.gradle.server.domain.board.controller;
 
-import com.gallendar.gradle.server.domain.board.dto.BoardPostDto;
-import com.gallendar.gradle.server.domain.board.dto.SingleResponseDto;
-import com.gallendar.gradle.server.domain.board.entity.Board;
-import com.gallendar.gradle.server.domain.board.mapper.BoardMapper;
-import com.gallendar.gradle.server.domain.board.service.BoardService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import com.gallendar.gradle.server.domain.board.dto.BoardRequestDto;
+import com.gallendar.gradle.server.domain.board.service.CreateBoardService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-
-@Controller
+@RequiredArgsConstructor
+@RestController
 @RequestMapping("/boards")
 public class BoardController {
 
-    private BoardService boardService;
-    private BoardMapper mapper;
+    private final CreateBoardService createBoardService;
 
     @PostMapping
-    public ResponseEntity postBoard(@RequestBody BoardPostDto boardDto){
+    public Long save(@RequestBody BoardRequestDto requestDto){
+        return createBoardService.save(requestDto);
 
-        Board board = mapper.boardPostDtoToBoard(boardDto);
 
-        Board savedBoard = boardService.createBoard(board);
-
-        return new ResponseEntity<>(
-                new SingleResponseDto<>(mapper.boardToBoardResponseDto(savedBoard)), HttpStatus.CREATED);
     }
 }
