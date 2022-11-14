@@ -11,7 +11,3 @@ spring:
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-
-mail:
-  address:
-    admin: admin@gmail.com

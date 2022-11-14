@@ -10,6 +10,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class BoardRepositoryTest {
@@ -40,8 +43,9 @@ public class BoardRepositoryTest {
 
         //then
         Board board = boardList.get(0);
-        assert(board.getTitle()).equals(title);
-        assert(board.getContent()).equals(content);
+        assertThat(board.getTitle()).isEqualTo(title);
+        assertThat(board.getContent()).isEqualTo(content);
+
 
 
     }
