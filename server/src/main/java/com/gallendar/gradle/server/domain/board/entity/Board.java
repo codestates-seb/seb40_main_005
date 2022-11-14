@@ -5,13 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
@@ -27,18 +23,14 @@ public class Board extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
 
-    @Column(length = 100, nullable = false)
-    private MultipartFile photo;
-
     @Column(nullable = true)
     private String music;
 
     @Builder
-    public Board(Long boardId, String title, String content, MultipartFile photo, String music){
+    public Board(Long boardId, String title, String content, String music){
         this.boardId = boardId;
         this.title = title;
         this.content = content;
-        this.photo = photo;
         this.music = music;
     }
 
