@@ -1,16 +1,28 @@
-server:
-  #  port: 8080
-  servlet:
-    encoding:
-      charset: UTF-8
-      enabled: true
-      force: true
-
 spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/gallendar?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username:
+    password:
   jpa:
+    open-in-view: false
+    generate-ddl: true
+    show-sql: true
     hibernate:
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-  h2:
-    console:
-      enabled: true
+      ddl-auto: update
+  main:
+    allow-circular-references: true
+  jwt:
+    secret:
+    jwtExpirationMs:
+    jwtRefreshExpirationMs:
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher
+
+logging:
+  level:
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG

@@ -1,4 +1,4 @@
-package com.gallendar.gradle.server.global;
+package com.gallendar.gradle.server.global.config;
 
 
 import com.gallendar.gradle.server.global.auth.jwt.JwtAuthenticationEntryPoint;
@@ -21,6 +21,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -32,7 +33,6 @@ public class SecurityConfig {
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
-
 
 
     @Autowired
@@ -58,7 +58,8 @@ public class SecurityConfig {
                 // 이 요청은 인증을 하지 않는다.
                 .authorizeRequests()
                 .antMatchers(
-                        "/authentication")
+                        "/authentication"
+                        , "/members/**")
 
                 .permitAll()
                 // 다른 모든 요청은 인증을 한다.
