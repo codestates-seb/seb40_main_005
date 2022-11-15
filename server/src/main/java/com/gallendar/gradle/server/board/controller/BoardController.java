@@ -1,12 +1,11 @@
 package com.gallendar.gradle.server.board.controller;
 
-import com.gallendar.gradle.server.board.dto.BoardListResponseDto;
-import com.gallendar.gradle.server.board.dto.BoardResponseDto;
-import com.gallendar.gradle.server.board.dto.BoardUpdateRequestDto;
-import com.gallendar.gradle.server.board.dto.BoardCreateRequestDto;
+import com.gallendar.gradle.server.board.dto.*;
+import com.gallendar.gradle.server.board.mapper.BoardMapper;
 import com.gallendar.gradle.server.board.service.BoardServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,6 +20,7 @@ public class BoardController {
 
     @Autowired
     private final BoardServiceImpl boardService;
+    private final BoardMapper mapper;
 
 
     @PostMapping
@@ -41,9 +41,15 @@ public class BoardController {
         return boardService.findById(boardId);
     }
 
+//    @GetMapping
+//    public List<BoardListResponseDto> findAll(int page, int size){
+//        return boardService.findAllDesc();
+//    }
+
     @GetMapping
-    public List<BoardListResponseDto> findAll(){
-        return boardService.findAllDesc();
+    public MultiResponseDto<BoardResponseDto> findByAll(@Positive @RequestParam(required = false,defaultValue = "1") int page,
+                                                        @Positive @RequestParam(required = false, defaultValue = "10") int size){
+        return new MultiResponseDto<>(mapper.boardsToBoardResponseDto(boardService.findAllDesc(page, size)), boardService.findAllBoard(page, size));
     }
 
 }

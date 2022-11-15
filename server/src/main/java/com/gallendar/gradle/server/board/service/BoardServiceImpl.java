@@ -7,6 +7,9 @@ import com.gallendar.gradle.server.board.dto.BoardUpdateRequestDto;
 import com.gallendar.gradle.server.board.entity.Board;
 import com.gallendar.gradle.server.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,9 +46,18 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Transactional(readOnly = true)
-    public List<BoardListResponseDto> findAllDesc(){
-        return boardRepository.findAllDesc().stream()
-                .map(BoardListResponseDto::new)
-                .collect(Collectors.toList());
+    public List<Board> findAllDesc(int page, int size){
+
+        Page<Board> findAllBoard = findAllBoard(page, size);
+
+        List<Board> boards = findAllBoard.getContent();
+
+        return boards;
+
     }
+
+    public Page<Board> findAllBoard(int page, int size){
+        return boardRepository.findAllDescBy(PageRequest.of(page-1, size, Sort.by("boardId").descending()));
+    }
+
 }
