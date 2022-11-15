@@ -60,6 +60,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
 	implementation 'org.mariadb.jdbc:mariadb-java-client'
+
+	implementation 'org.apache.httpcomponents:httpclient'
+	runtimeOnly 'com.h2database:h2'
+
 }
 
 tasks.named('test') {
