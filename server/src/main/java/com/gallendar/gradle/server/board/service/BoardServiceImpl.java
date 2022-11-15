@@ -30,6 +30,7 @@ public class BoardServiceImpl implements BoardService{
         return boardId;
     }
 
+    @Transactional
     public BoardResponseDto findById (Long boardId){
         Board entity = boardRepository.findById(boardId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardId =" + boardId));

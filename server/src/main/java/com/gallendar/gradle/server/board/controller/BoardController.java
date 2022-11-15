@@ -1,5 +1,6 @@
 package com.gallendar.gradle.server.board.controller;
 
+import com.gallendar.gradle.server.board.dto.BoardResponseDto;
 import com.gallendar.gradle.server.board.dto.BoardUpdateRequestDto;
 import com.gallendar.gradle.server.board.dto.BoardCreateRequestDto;
 import com.gallendar.gradle.server.board.service.BoardServiceImpl;
@@ -29,5 +30,11 @@ public class BoardController {
     public Long update(@PathVariable("board-id") @Positive long boardId,
                        @Valid @RequestBody BoardUpdateRequestDto requestDto){
         return boardService.update(boardId, requestDto);
+    }
+
+    @GetMapping("/{board-id}")
+    public BoardResponseDto findById(@PathVariable("board-id") Long boardId){
+
+        return boardService.findById(boardId);
     }
 }
