@@ -1,6 +1,6 @@
-package com.gallendar.gradle.server.domain.board.dto;
+package com.gallendar.gradle.server.board.dto;
 
-import com.gallendar.gradle.server.domain.board.entity.Board;
+import com.gallendar.gradle.server.board.entity.Board;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 
 @Getter
 @NoArgsConstructor
-public class BoardRequestDto {
+public class BoardCreateRequestDto {
 
     @NotBlank(message = "제목을 입력하세요.")
     private String title;
@@ -19,7 +19,7 @@ public class BoardRequestDto {
     private String music;
 
     @Builder
-    public BoardRequestDto(String title, String content, String music){
+    public BoardCreateRequestDto(String title, String content, String music){
         this.title = title;
         this.content = content;
         this.music = music;

@@ -1,4 +1,4 @@
-package com.gallendar.gradle.server.domain.board.entity;
+package com.gallendar.gradle.server.board.entity;
 
 import com.gallendar.gradle.server.global.auditing.BaseTimeEntity;
 import lombok.Builder;
@@ -34,6 +34,11 @@ public class Board extends BaseTimeEntity {
         this.music = music;
     }
 
+    public void update(String title, String content, String music){
+        this.title = title;
+        this.content = content;
+        this.music = music;
+    }
 
 
 

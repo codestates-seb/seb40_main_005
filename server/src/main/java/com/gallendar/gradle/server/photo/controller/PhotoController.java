@@ -1,4 +1,4 @@
-package com.gallendar.gradle.server.domain.photo.controller;
+package com.gallendar.gradle.server.photo.controller;
 
 import org.springframework.stereotype.Controller;
 

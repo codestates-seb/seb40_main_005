@@ -1,4 +1,4 @@
-package com.gallendar.gradle.server.domain.photo.service;
+package com.gallendar.gradle.server.photo.service;
 
 import org.springframework.stereotype.Service;
 

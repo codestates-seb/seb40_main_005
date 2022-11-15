@@ -1,6 +1,7 @@
 package com.gallendar.gradle.server.domain.board.repository;
 
-import com.gallendar.gradle.server.domain.board.entity.Board;
+import com.gallendar.gradle.server.board.entity.Board;
+import com.gallendar.gradle.server.board.repository.BoardRepository;
 import org.junit.After;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
