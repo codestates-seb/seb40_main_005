@@ -1,13 +1,13 @@
 package com.gallendar.gradle.server.board.entity;
 
 import com.gallendar.gradle.server.global.auditing.BaseTimeEntity;
+import com.gallendar.gradle.server.tags.domain.BoardTags;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -15,6 +15,7 @@ import javax.persistence.*;
 public class Board extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "board_id")
     private Long boardId;
 
     @Column(length = 100, nullable = false)
@@ -25,21 +26,20 @@ public class Board extends BaseTimeEntity {
 
     @Column(nullable = true)
     private String music;
+    @OneToMany(mappedBy = "board")
+    private List<BoardTags> boardTags;
 
     @Builder
-    public Board(Long boardId, String title, String content, String music){
+    public Board(Long boardId, String title, String content, String music) {
         this.boardId = boardId;
         this.title = title;
         this.content = content;
         this.music = music;
     }
 
-    public void update(String title, String content, String music){
+    public void update(String title, String content, String music) {
         this.title = title;
         this.content = content;
         this.music = music;
     }
-
-
-
 }
