@@ -16,6 +16,7 @@ public class CreateMemberService {
     private final MembersRepository membersRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
+
     public CreateMemberService(MembersRepository membersRepository,
                               BCryptPasswordEncoder passwordEncoder){
         this.membersRepository = membersRepository;
@@ -37,7 +38,7 @@ public class CreateMemberService {
     /* member 저장 */
     public Members createMember (SignupRequestDto signupRequestDto){
 
-        signupRequestDto.setPassword(passwordEncoder.encode(signupRequestDto.getPassword())); // 암호화
+       signupRequestDto.setPassword(passwordEncoder.encode(signupRequestDto.getPassword())); // 암호화
 
         return membersRepository.save(signupRequestDto.toEntity());
     }

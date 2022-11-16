@@ -28,7 +28,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -38,79 +40,67 @@ import javax.validation.Valid;
 @ExtendWith(MockitoExtension.class)
 public class MembersControllerTest {
 
-        @InjectMocks
-        private MembersController membersController;
+    @InjectMocks
+    private MembersController membersController;
 
-        @Mock
-        private CreateMemberService createMemberService;
-        private MockMvc mockMvc;
+    @Mock
+    private CreateMemberService createMemberService;
+    private MockMvc mockMvc;
 
-        @BeforeEach
-        public void init() {
-            mockMvc = MockMvcBuilders.standaloneSetup(membersController).build();
-        }
+    @BeforeEach
+    public void init() {
+        mockMvc = MockMvcBuilders.standaloneSetup(membersController).build();
+    }
 
-        @Test
-        @DisplayName("회원가입 테스트")
-        void postMemberTest() throws Exception {
+    @Test
+    @DisplayName("회원가입 테스트")
+    void postMemberTest() throws Exception {
 
-         Members member = new Members(1L,"test1","test1@gmail.com","Testtest1234!",MemberRole.USER);
+        Members member = new Members(1L, "test1", "test1@gmail.com", "Testtest1234!", MemberRole.USER);
+        SignupRequestDto signupDto = new SignupRequestDto("test1", "test1@gmail.com", "Testtest1234!");
+        given(createMemberService.createMember(any(SignupRequestDto.class))).willReturn(member);
 
-         given(createMemberService.createMember(any(SignupRequestDto.class))).willReturn(member);
+        Gson gson = new Gson();
+        String content = gson.toJson(signupDto);
 
-            SignupRequestDto signupDto = SignupRequestDto.builder()
-                    .id("test1")
-                    .email("test1@gmail.com")
-                    .password("Testtest1234!")
-                    .build();
+        mockMvc.perform(MockMvcRequestBuilders.post("/members")
+                                .content(content)
+                                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
 
-          Gson gson = new Gson();
-          String content = gson.toJson(signupDto);
 
-          mockMvc.perform(
-                          MockMvcRequestBuilders.post("/members")
-                                 .content(content)
-                                 .contentType(MediaType.APPLICATION_JSON))
-                   .andExpect(status().isOk())
-                   .andExpect(jsonPath("id",member.getId()).exists())
-                   .andExpect(jsonPath("email",member.getEmail()).exists())
-                   .andExpect(jsonPath("role",member.getRole()).exists());
-
-        }
+    }
 
     /* 이메일 중복검사 */
 //        @GetMapping("/{email}")
-        @Test
-        @DisplayName("이메일 중복확인 테스트")
-        void getDuplicatedEmailTest() throws Exception {
+    @Test
+    @DisplayName("이메일 중복확인 테스트")
+    void getDuplicatedEmailTest() throws Exception {
 
 
-            String email = "test1@gmail.com";
-            given(createMemberService.checkMemberEmailDuplication(email)).willReturn(true);
+        String email = "test1@gmail.com";
+        given(createMemberService.checkMemberEmailDuplication(email)).willReturn(false);
 
 
+        mockMvc.perform(
+                        get("/members/checkEmail/" + email))
+                .andExpect(status().isOk())
+                .andReturn();
 
-            mockMvc.perform(
-                             post("/members/" + email))
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.email").exists())
-                    .andReturn();
+    }
 
-        }
-
-        /* ID 중복검사 */
+    /* ID 중복검사 */
 //        @GetMapping("/{id}")
-        @DisplayName("ID 중복확인 테스트")
-        @Test
-        void signUpFailByDuplicatedId() throws Exception {
+    @DisplayName("ID 중복확인 테스트")
+    @Test
+    void getDuplicatedIdTest() throws Exception {
 
-            String id = "test1";
-            given(createMemberService.checkMemberIdDuplication(id)).willReturn(true);
+        String id = "test1";
+        given(createMemberService.checkMemberIdDuplication(id)).willReturn(false);
 
-            mockMvc.perform(
-                            post("/members/" + id))
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.id").exists())
-                    .andReturn();
-        }
+        mockMvc.perform(
+                        get("/members/checkId/" + id))
+                .andExpect(status().isOk())
+                .andReturn();
+    }
 }

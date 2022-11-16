@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 
 @NoArgsConstructor
 @Getter
@@ -19,7 +16,7 @@ import javax.validation.constraints.Pattern;
 public class SignupRequestDto {
 
     @NotBlank(message = "아이디를 입력해주세요.")
-    @Min(5)
+    @Size(min=5)
     private String id;
 
     @NotBlank(message = "이메일을 입력해주세요.")

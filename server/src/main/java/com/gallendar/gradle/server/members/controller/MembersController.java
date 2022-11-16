@@ -31,36 +31,44 @@ public class MembersController {
     private final CreateMemberService createMemberService;
     private final SignupRequestDto signupRequestDto;
 
+//    public MembersController(CreateMemberService createMemberService){
+//        this.createMemberService = createMemberService;
+//    }
+
     @PostMapping("/authentication")
     public LoginResponse membersLogin(@RequestBody LoginRequest loginRequest) {
         return loginService.LoginMembers(loginRequest);
     }
 
-    @GetMapping("/members/search/{id}")
+    @GetMapping("/search/{id}")
     public List<MemberSearchResponse> searchMemberById(@PathVariable(value = "id") String id) {
         return memberSearchService.MemberSearchById(id);
     }
 
     /* ID 중복검사 */
-    @GetMapping("/{id}")
-    public ResponseEntity<Boolean> checkMemberId( @PathVariable String id) {
-
-        return ResponseEntity.ok(createMemberService.checkMemberIdDuplication(id)); // 고려해 봐야 할 부분
+    @GetMapping("checkId/{id}")
+    public ResponseEntity<String> checkMemberId( @PathVariable String id) {
+        if(createMemberService.checkMemberIdDuplication(id)){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("해당 ID 는 이미 사용중입니다.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("사용 가능한 ID 입니다."); // 고려해 봐야 할 부분
     }
 
     /* 이메일 중복검사 */
-    @GetMapping("/{email}")
-    public ResponseEntity<Boolean> checkMemberEmail(@PathVariable String email) {
-
-        return ResponseEntity.ok(createMemberService.checkMemberEmailDuplication(email));  // 고려해 봐야 할 부분
+    @GetMapping("checkEmail/{email}")
+    public ResponseEntity<String> checkMemberEmail(@PathVariable String email) {
+        if(createMemberService.checkMemberEmailDuplication(email)){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("해당 Email 은 이미 사용중입니다.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("사용 가능한 email 입니다.");
     }
     /* 회원가입 'submit' */
     @PostMapping
-    public ResponseEntity postMember(@Valid @RequestBody SignupRequestDto signupRequestDto) {
+    public ResponseEntity<String> postMember(@Valid @RequestBody SignupRequestDto signupRequestDto) {
 
         createMemberService.createMember(signupRequestDto);
 
-        return new ResponseEntity(HttpStatus.CREATED);  // 이메일 인증 추가시 수정 필요
+        return ResponseEntity.status(HttpStatus.CREATED).body("회원가입 성공");  // 이메일 인증 추가시 수정 필요
     }
 
 }
