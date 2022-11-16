@@ -50,10 +50,19 @@ dependencies {
 	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
 	implementation 'org.mariadb.jdbc:mariadb-java-client'
 
-	//gson
-	implementation 'com.google.code.gson:gson:2.8.7'
 	implementation 'org.apache.httpcomponents:httpclient'
 	runtimeOnly 'com.h2database:h2'
+
+	// gson
+	implementation group: 'com.google.code.gson', name: 'gson'
+
+	// test 및 REST DOCS 관련
+	testImplementation 'com.h2database:h2:1.4.199'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+	//querydsl
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 
 }
 
