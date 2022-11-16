@@ -42,8 +42,16 @@ dependencies {
 	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 
-	//JWT 기능을 위한 jjwt 라이브러리
+	//jwt
 	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
+
+	//connector
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
+	implementation 'org.mariadb.jdbc:mariadb-java-client'
+
+	implementation 'org.apache.httpcomponents:httpclient'
+	runtimeOnly 'com.h2database:h2'
 
 	// gson
 	implementation group: 'com.google.code.gson', name: 'gson'
@@ -56,14 +64,6 @@ dependencies {
 	//querydsl
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
-
-	//connector
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
-	implementation 'org.mariadb.jdbc:mariadb-java-client'
-
-	implementation 'org.apache.httpcomponents:httpclient'
-	runtimeOnly 'com.h2database:h2'
 
 }
 
