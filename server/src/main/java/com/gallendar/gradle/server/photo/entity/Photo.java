@@ -21,8 +21,7 @@ public class Photo {
     private String path;
 
     @Builder
-    public Photo(Long photoId, String fileName, String path){
-        this.photoId = photoId;
+    public Photo(String fileName, String path){
         this.fileName = fileName;
         this.path = path;
     }

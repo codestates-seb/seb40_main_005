@@ -1,5 +1,8 @@
 spring:
-  profiles: local
+  profiles:
+    include:
+      - aws
+      - credentials
   autoconfigure:
     exclude: org.springframework.cloud.aws.autoconfigure.context.ContextStackAutoConfiguration
   datasource:
@@ -23,13 +26,21 @@ spring:
   mvc:
     path match:
       matching-strategy: ant_path_matcher
+server:
+  port: 9000
+
 cloud:
   aws:
+    credentials:
+      accessKey:       # AWS IAM AccessKey 적기
+      secretKey:    # AWS IAM SecretKey 적기
     s3:
-      bucket: gallendar
+      bucket:
+      dir: /test
     region:
       static: ap-northeast-2
-
+    stack:
+      auto: false
 logging:
   level:
     org:
