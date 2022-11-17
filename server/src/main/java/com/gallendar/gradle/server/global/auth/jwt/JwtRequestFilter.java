@@ -18,10 +18,11 @@ import java.io.IOException;
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
     public static final String HEADER_KEY = "Authorization";
-    @Autowired
+
     private MembersRepository membersRepository;
     @Autowired
     private JwtUtils jwtUtils;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         final String requestTokenHeader = request.getHeader(HEADER_KEY);
