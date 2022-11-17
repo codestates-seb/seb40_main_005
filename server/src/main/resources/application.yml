@@ -1,24 +1,34 @@
 spring:
+  profiles: local
+  autoconfigure:
+    exclude: org.springframework.cloud.aws.autoconfigure.context.ContextStackAutoConfiguration
   datasource:
-    url: jdbc:mysql://localhost:3306/gallendar?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/gallendar?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username:
-    password:
+    username: root
+    password: tkatka55**
   jpa:
     open-in-view: false
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
+    database: mysql
   main:
     allow-circular-references: true
   jwt:
-    secret:
-    jwtExpirationMs:
-    jwtRefreshExpirationMs:
+    secret: 1
+    jwtExpirationMs: 1000
+    jwtRefreshExpirationMs: 10000
   mvc:
     path match:
       matching-strategy: ant_path_matcher
+cloud:
+  aws:
+    s3:
+      bucket: gallendar
+    region:
+      static: ap-northeast-2
 
 logging:
   level:
@@ -26,3 +36,7 @@ logging:
       springframework:
         orm:
           jpa: DEBUG
+    com:
+      amazonaws:
+        util:
+          EC2MetaDataUtils: error

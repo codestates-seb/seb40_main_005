@@ -1,6 +1,7 @@
 package com.gallendar.gradle.server.board.entity;
 
 import com.gallendar.gradle.server.global.auditing.BaseTimeEntity;
+import com.gallendar.gradle.server.members.domain.Members;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,6 +40,12 @@ public class Board extends BaseTimeEntity {
         this.content = content;
         this.music = music;
     }
+
+
+//    @ManyToOne
+//    @JoinColumn(name = "members_id")
+//    private Members members;
+
 
 
 

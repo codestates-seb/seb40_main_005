@@ -1,16 +1,16 @@
 // 1. queryDsl version 정보 추가
 buildscript {
-	ext {
-		queryDslVersion = "5.0.0"
-	}
+    ext {
+        queryDslVersion = "5.0.0"
+    }
 }
 
 plugins {
-	id 'org.springframework.boot' version '2.7.5'
-	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-	// 2. querydsl plugins 추가
-	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
-	id 'java'
+    id 'org.springframework.boot' version '2.7.5'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    // 2. querydsl plugins 추가
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+    id 'java'
 }
 
 group = 'com.gallendar.gradle'
@@ -18,56 +18,63 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'junit:junit:4.13.1'
     compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
 
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 
-	//JWT 기능을 위한 jjwt 라이브러리
-	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
+    //JWT 기능을 위한 jjwt 라이브러리
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
 
-	// gson
-	implementation group: 'com.google.code.gson', name: 'gson'
+    // gson
+    implementation group: 'com.google.code.gson', name: 'gson'
 
-	// test 및 REST DOCS 관련
-	testImplementation 'com.h2database:h2:1.4.199'
-	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    // test 및 REST DOCS 관련
+    testImplementation 'com.h2database:h2:1.4.199'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 
-	//querydsl
-	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
-	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+    //querydsl
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 
-	//connector
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
-	implementation 'org.mariadb.jdbc:mariadb-java-client'
+    //connector
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
+    implementation 'org.mariadb.jdbc:mariadb-java-client'
 
-	implementation 'org.apache.httpcomponents:httpclient'
-	runtimeOnly 'com.h2database:h2'
+    implementation 'org.apache.httpcomponents:httpclient'
+    runtimeOnly 'com.h2database:h2'
+
+
+    //s3 starter aws
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+    //s3 mockup test
+    implementation 'io.findify:s3mock_2.13:0.2.6'
+    testImplementation 'io.findify:s3mock_2.12:0.2.6'
 
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
 
 /*
@@ -77,21 +84,21 @@ tasks.named('test') {
 def querydslDir = "$buildDir/generated/querydsl"
 // JPA 사용 여부와 사용할 경로를 설정
 querydsl {
-	jpa = true
-	querydslSourcesDir = querydslDir
+    jpa = true
+    querydslSourcesDir = querydslDir
 }
 // build 시 사용할 sourceSet 추가
 sourceSets {
-	main.java.srcDir querydslDir
+    main.java.srcDir querydslDir
 }
 // querydsl 컴파일시 사용할 옵션 설정
-compileQuerydsl{
-	options.annotationProcessorPath = configurations.querydsl
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
 }
 // querydsl 이 compileClassPath 를 상속하도록 설정
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-	querydsl.extendsFrom compileClasspath
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    querydsl.extendsFrom compileClasspath
 }
