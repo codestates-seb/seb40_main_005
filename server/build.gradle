@@ -29,40 +29,45 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'junit:junit:4.13.1'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'org.springframework.security:spring-security-test'
 
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     implementation 'org.mapstruct:mapstruct:1.5.3.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 
-    //JWT 기능을 위한 jjwt 라이브러리
-//    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
 
-    // gson
-    implementation group: 'com.google.code.gson', name: 'gson'
 
-    // test 및 REST DOCS 관련
-    testImplementation 'com.h2database:h2:1.4.199'
-    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	//jwt
+	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
+
+	//connector
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
+	implementation 'org.mariadb.jdbc:mariadb-java-client'
+
+	implementation 'org.apache.httpcomponents:httpclient'
+	runtimeOnly 'com.h2database:h2'
+
+	// gson
+	implementation group: 'com.google.code.gson', name: 'gson'
+
+	// test 및 REST DOCS 관련
+	testImplementation 'com.h2database:h2:1.4.199'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	testImplementation group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+
 
     //querydsl
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 
-    //connector
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
-    implementation 'org.mariadb.jdbc:mariadb-java-client'
-
-    implementation 'org.apache.httpcomponents:httpclient'
-    runtimeOnly 'com.h2database:h2'
 
 
     //s3 starter aws
