@@ -1,4 +1,4 @@
-package com.gallendar.gradle.server.domain.board.controller;
+package com.gallendar.gradle.server.board.controller;
 
 import com.gallendar.gradle.server.board.dto.BoardCreateRequestDto;
 import com.gallendar.gradle.server.board.dto.BoardUpdateRequestDto;
@@ -22,7 +22,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.InstanceOfAssertFactories.map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

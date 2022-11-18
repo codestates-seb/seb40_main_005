@@ -1,4 +1,4 @@
-package com.gallendar.gradle.server.membersControllerTest;
+package com.gallendar.gradle.server.member.membersControllerTest;
 
 
 import com.google.gson.Gson;
@@ -56,7 +56,7 @@ public class MembersControllerTest {
     @DisplayName("회원가입 테스트")
     void postMemberTest() throws Exception {
 
-        Members member = new Members(1L, "test1", "test1@gmail.com", "Testtest1234!", MemberRole.USER);
+        Members member = new Members("test1", "test1@gmail.com", "Testtest1234!", MemberRole.USER);
         SignupRequestDto signupDto = new SignupRequestDto("test1", "test1@gmail.com", "Testtest1234!");
         given(createMemberService.createMember(any(SignupRequestDto.class))).willReturn(member);
 
