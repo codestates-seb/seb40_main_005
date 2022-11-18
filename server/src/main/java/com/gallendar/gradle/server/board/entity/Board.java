@@ -55,6 +55,7 @@ public class Board extends BaseTimeEntity {
         this.music = music;
     }
 
+
     public void setMembers(Members members) {
         this.members = members;
     }
