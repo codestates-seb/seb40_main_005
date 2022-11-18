@@ -52,4 +52,9 @@ public class BoardController {
         return new MultiResponseDto<>(mapper.boardsToBoardResponseDto(boardService.findAllDesc(page, size)), boardService.findAllBoard(page, size));
     }
 
+    @DeleteMapping("/{board-id}")
+    public Long delete(@PathVariable("board-id") Long boardId){
+        boardService.delete(boardId);
+        return boardId;
+    }
 }
