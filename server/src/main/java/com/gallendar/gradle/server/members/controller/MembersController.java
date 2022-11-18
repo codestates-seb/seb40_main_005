@@ -7,12 +7,10 @@ import com.gallendar.gradle.server.members.service.CreateMemberService;
 import com.gallendar.gradle.server.members.service.MemberSearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+
 
 import javax.validation.Valid;
 
@@ -88,10 +86,4 @@ public class MembersController {
         String response = "회원정보 조회";
         return response;
     }
-
-
-
-
-
-
 }
