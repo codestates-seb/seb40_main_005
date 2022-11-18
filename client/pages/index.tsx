@@ -1,7 +1,5 @@
 import Image from "next/image";
 import TopBtn from "../components/topBtn";
-import Link from "next/link";
-import { useEffect, useState } from "react";
 
 
 function Home() {
@@ -59,10 +57,11 @@ function Home() {
               </div>
             </div>
           </div>
-          
+
+
         </div>
-        
-        <div id="1-section" className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/lending_두번째이미지.png')]">
+
+        <div className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/lending_두번째이미지.png')]">
           <div className="flex flex-col items-start justify-center pl-32 pr-28 w-full h-1/2 z-10 ">
             <div className="font-SCDream3 sm:text-3xl md:text-2xl lg:text-4xl text-gray-700">
               오늘 나에게
@@ -81,7 +80,8 @@ function Home() {
           </div>
         </div>
 
-        <div id="2-section" className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/lending_세번째이미지.png')]">
+
+        <div className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/lending_세번째이미지.png')]">
           <div className="flex flex-col items-start justify-center pl-32 pr-28 w-full h-1/2 z-10 ">
             <div className="font-SCDream3 sm:text-3xl md:text-2xl lg:text-4xl text-gray-200">
               오늘 나의
@@ -100,7 +100,7 @@ function Home() {
           </div>
         </div>
 
-        <div id="3-section" className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/lending_네번째이미지.png')]">
+        <div className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/lending_네번째이미지.png')]">
           <div className="flex flex-col items-start justify-center pl-32 pr-28 w-full h-1/2 z-10 ">
             <div className="font-SCDream3 sm:text-3xl md:text-2xl lg:text-4xl text-gray-700">
               오늘 나를
@@ -119,7 +119,7 @@ function Home() {
           </div>
         </div>
 
-        <div id="4-section" className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/lending_다섯번째이미지.png')]">
+        <div className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/lending_다섯번째이미지.png')]">
           <div className="flex flex-col items-start justify-center pl-32 pr-28 w-full h-1/2 z-10 ">
             <div className="font-SCDream3 sm:text-3xl md:text-2xl lg:text-4xl text-gray-700">
               인상깊은 나의
@@ -138,7 +138,8 @@ function Home() {
           </div>
         </div>
 
-        <div id="5-section" className="flex flex-col items-center justify-center w-full h-screen bg-cover bg-[url('/images/solid_background.png')]">
+
+        <div className="flex flex-col items-center justify-center w-full h-screen bg-cover bg-[url('/images/solid_background.png')]">
           <div className="flex md:flex-col lg:flex-row items-center justify-center pl-28 md:pl-20 pr-28 md:pr-20 w-full h-fit z-10 ">
             <div className="font-SCDream3 sm:text-2xl md:text-xl lg:text-3xl text-gray-200 mt-3">
               당신의 모든 순간들을
