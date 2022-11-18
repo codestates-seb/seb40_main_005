@@ -3,27 +3,9 @@ import TopBtn from "../components/topBtn";
 
 
 function Home() {
-  // const [section, setSection] = useState(0);
-
-  // useEffect(()=> {
-  //   function watchScroll() {
-  //     window.addEventListener("scroll", ()=> {
-  //       setSection(section+1);
-  //       window.scrollTo({
-  //         top : document.getElementById(`1-section`)?.offsetTop,
-  //         left : 0,
-  //         behavior: "smooth"
-  //       });
-  //     })
-  //   }
-  //   watchScroll();
-  // },[])
-
-
- 
   return (
     <>
-    <TopBtn/>
+      <TopBtn />
       <div className="flex-col items-center justify-center bg-slate-400">
         <div className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/첫화면이미지.png')]">
           <div className="absolute top-0 left-0 right-0 bottom-0 bg-white/60"></div>
@@ -57,8 +39,6 @@ function Home() {
               </div>
             </div>
           </div>
-
-
         </div>
 
         <div className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/lending_두번째이미지.png')]">
@@ -79,7 +59,6 @@ function Home() {
             </div>
           </div>
         </div>
-
 
         <div className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/lending_세번째이미지.png')]">
           <div className="flex flex-col items-start justify-center pl-32 pr-28 w-full h-1/2 z-10 ">
@@ -137,7 +116,6 @@ function Home() {
             </div>
           </div>
         </div>
-
 
         <div className="flex flex-col items-center justify-center w-full h-screen bg-cover bg-[url('/images/solid_background.png')]">
           <div className="flex md:flex-col lg:flex-row items-center justify-center pl-28 md:pl-20 pr-28 md:pr-20 w-full h-fit z-10 ">
