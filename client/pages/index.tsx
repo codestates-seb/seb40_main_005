@@ -1,6 +1,7 @@
 import Image from "next/image";
 import TopBtn from "../components/topBtn";
 
+
 function Home() {
   return (
     <>
