@@ -29,11 +29,7 @@ public class MembersController {
     private final MemberSearchService memberSearchService;
 
     private final CreateMemberService createMemberService;
-    private final SignupRequestDto signupRequestDto;
 
-//    public MembersController(CreateMemberService createMemberService){
-//        this.createMemberService = createMemberService;
-//    }
 
     @PostMapping("/authentication")
     public LoginResponse membersLogin(@RequestBody LoginRequest loginRequest) {
