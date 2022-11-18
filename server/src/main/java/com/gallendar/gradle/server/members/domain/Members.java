@@ -1,15 +1,14 @@
 package com.gallendar.gradle.server.members.domain;
 
 import com.gallendar.gradle.server.global.auditing.BaseTimeEntity;
-import com.gallendar.gradle.server.members.dto.SignupRequestDto;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
 @Getter
-@NoArgsConstructor
+
 public class Members extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
