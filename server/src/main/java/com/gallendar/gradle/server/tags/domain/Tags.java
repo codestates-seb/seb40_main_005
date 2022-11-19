@@ -1,5 +1,6 @@
 package com.gallendar.gradle.server.tags.domain;
 
+import com.gallendar.gradle.server.tags.type.TagStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,16 +21,13 @@ public class Tags {
     private String tagsMember;
 
     @Column
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private TagStatus status;
 
     @OneToMany(mappedBy = "tags", cascade = CascadeType.REMOVE)
     private List<BoardTags> boardTags;
-
-    @Transient
-    private String tagStatus = "공유 신청이 되었습니다.";
-
     @Builder
-    public Tags(String tagsMember) {
+    public Tags(String tagsMember,TagStatus tagStatus) {
         this.tagsMember = tagsMember;
         this.status = tagStatus;
     }

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/notification")
@@ -15,13 +17,13 @@ public class TagsController {
     private final NotificationService notificationService;
 
     /**
-     * 현재 내가 태그 되었는지 확인
+     * 태그 알림 요청
      * @param id
      * @return
      */
     @GetMapping
-    public NotificationResponse findTagsById(@RequestParam(value = "id") String id){
-        return null;
+    public List<List<NotificationResponse>> findTagsById(@RequestParam(value = "id") String id){
+        return notificationService.tagsFindById(id);
     }
 
     @GetMapping("/accept")

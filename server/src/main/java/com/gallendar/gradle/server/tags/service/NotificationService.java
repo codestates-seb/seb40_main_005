@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -15,7 +16,10 @@ public class NotificationService {
     private final TagsRepository tagsRepository;
     private final TagsRepositoryCustomImpl tagsRepositoryCustom;
 
-    public NotificationResponse tagsFindById(String id){
-        return null;
+    public List<List<NotificationResponse>> tagsFindById(String id) {
+        List<Tags> tags = tagsRepositoryCustom.findByTagsMember(id);
+        return tags.stream()
+                .map(tags1 -> tags1.getBoardTags().stream()
+                        .map(NotificationResponse::from).collect(Collectors.toList())).collect(Collectors.toList());
     }
 }
