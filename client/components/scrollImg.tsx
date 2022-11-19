@@ -3,7 +3,7 @@ const ScrollImg = () => {
     return (
         <>
  
-            <div className="w-full z-50 text-base flex items-center justify-center bottom-5 fixed">
+            <div className="w-full z-25 text-base flex items-center justify-center bottom-5 fixed">
                 <span className="absolute animate-ping flex h-10 w-10 rounded-full bg-orange-500 opacity-75"></span>
                 <svg className="h-5 md:h-6 lg:h-7 fill-none text-gray-400	stroke-gray-400" viewBox="0 0 18 35" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10.7799 28.0179H7.06376C3.72819 28.0179 1 25.7215 1 22.9143V12.1314C1 9.32429 3.72886 7.02783 7.06376 7.02783H10.7792C14.1148 7.02783 16.843 9.32429 16.843 12.1314V22.9143C16.843 25.7215 14.1141 28.0179 10.7792 28.0179H10.7799Z"  stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
