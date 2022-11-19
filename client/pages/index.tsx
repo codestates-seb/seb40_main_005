@@ -1,9 +1,11 @@
 import Image from "next/image";
 import TopBtn from "../components/topBtn";
 
+
 function Home() {
   return (
     <>
+      <TopBtn />
       <div className="flex-col items-center justify-center bg-slate-400">
         <div className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/첫화면이미지.png')]">
           <div className="absolute top-0 left-0 right-0 bottom-0 bg-white/60"></div>
@@ -149,7 +151,6 @@ function Home() {
           </div>
         </div>
       </div>
-      <TopBtn/>
     </>
   );
 }
