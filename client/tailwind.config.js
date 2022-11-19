@@ -1,3 +1,5 @@
+const { RecoilBridge } = require('recoil');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -19,6 +21,12 @@ module.exports = {
         SCDream8 : ["SCDream8"],
         SCDream9 : ["SCDream9"]
       },
+      colors:{
+        "topbtn": "rgb(5,5,5, 0.37)",
+      },
+      screens: {
+        'md': '376px'
+      }
     },
   },
   plugins: [],

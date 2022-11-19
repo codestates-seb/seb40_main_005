@@ -1,4 +1,4 @@
-package com.gallendar.gradle.server.createMemberServiceTest;
+package com.gallendar.gradle.server.member.createMemberServiceTest;
 
 
 import com.gallendar.gradle.server.members.domain.MemberRole;
