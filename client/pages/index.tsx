@@ -141,7 +141,7 @@ function Home() {
               </div>
               <div className="flex flex-row font-SCDream3 text-2xl md:text-3xl lg:text-4xl text-gray-700 mt-2 sm:mt-1">
                 이 뭘까?
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>
@@ -161,7 +161,7 @@ function Home() {
               </div>
               <div className="font-SCDream3 text-2xl md:text-3xl lg:text-4xl text-gray-200 mt-2 sm:mt-1">
                 이 뭘까?
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>
@@ -181,7 +181,7 @@ function Home() {
               </div>
               <div className="font-SCDream3 text-2xl md:text-3xl lg:text-4xl text-gray-700 mt-2 sm:mt-1">
                 는 뭘까?
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>
@@ -201,7 +201,7 @@ function Home() {
               </div>
               <div className="font-SCDream3 text-2xl md:text-3xl lg:text-4xl text-gray-700 mt-2 sm:mt-1">
                 할 수는 없을까?
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>
@@ -222,7 +222,7 @@ function Home() {
               </div>
               <div className="font-SCDream3 text-base md:text-xl lg:text-3xl text-gray-100">
                 와 함께 하세요!
-              </motion.div>
+              </div>
             </div>
           </div>
           <div className="flex flex-row items-center justify-left w-fit mt-10">
