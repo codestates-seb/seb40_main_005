@@ -62,87 +62,89 @@ function Home() {
   };
 
   // 은비 작업부분
-  //참고 레퍼런스: https://codingbroker.tistory.com/128
-  const outerDivRef = useRef<any>(null);
-  const [scrollIdx, setScrollIndex] = useState<number>(1);
-  const DIVIDER_HEIGHT = 5;
-  useEffect(() => {
-    const wheelHandler = (e: { preventDefault: any; deltaY: number }) => {
-      // e.preventDefault();
-      const { deltaY } = e;
-      const { scrollTop } = outerDivRef.current; // 스크롤 위쪽 끝부분 위치
-      const pageHeight = window.innerHeight; // 화면 세로길이, 100vh와 같습니다.
+  // const outerDivRef = useRef<any>(null);
+  // const [scrollIdx, setScrollIndex] = useState<number>(1);
+  // const DIVIDER_HEIGHT = 5;
+  // useEffect(() => {
+  //   const wheelHandler = (e: { preventDefault: any; deltaY: number }) => {
+  //     // e.preventDefault();
+  //     const { deltaY } = e;
+  //     const { scrollTop } = outerDivRef.current; // 스크롤 위쪽 끝부분 위치
+  //     const pageHeight = window.innerHeight; // 화면 세로길이, 100vh와 같습니다.
+  //     const totalHeight = document.body.scrollHeight;
+  //     console.log(window.pageYOffset, pageHeight, totalHeight);
 
-      if (deltaY > 0) {
-        // 스크롤 내릴 때
-        if (scrollTop >= 0 && scrollTop < pageHeight) {
-          //현재 1페이지
-          console.log("현재 1페이지, down");
-          outerDivRef.current.scrollTo({
-            top: pageHeight + DIVIDER_HEIGHT,
-            left: 0,
-            behavior: "smooth",
-          });
-          setScrollIndex(2);
-        } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-          //현재 2페이지
-          console.log("현재 2페이지, down");
-          console.log(scrollTop);
+  //     if (deltaY > 0) {
+  //       // 스크롤 내릴 때
+  //       if (scrollTop >= 0 && scrollTop < pageHeight) {
+  //         //현재 1페이지
+  //         console.log("현재 1페이지, down");
+  //         outerDivRef.current.scrollTo({
+  //           top: pageHeight + DIVIDER_HEIGHT,
+  //           left: 0,
+  //           behavior: "smooth",
+  //         });
+  //         setScrollIndex(2);
+  //         console.log(outerDivRef.current);
+  //       } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
+  //         //현재 2페이지
+  //         console.log("현재 2페이지, down");
+  //         console.log(scrollTop);
 
-          outerDivRef.current.scrollTo({
-            top: pageHeight * 2 + DIVIDER_HEIGHT * 2,
-            left: 0,
-            behavior: "smooth",
-          });
-          setScrollIndex(3);
-        } else {
-          // 현재 3페이지
-          console.log("현재 3페이지, down");
-          outerDivRef.current.scrollTo({
-            top: pageHeight * 2 + DIVIDER_HEIGHT * 2,
-            left: 0,
-            behavior: "smooth",
-          });
-          setScrollIndex(3);
-        }
-      } else {
-        // 스크롤 올릴 때
-        if (scrollTop >= 0 && scrollTop < pageHeight) {
-          //현재 1페이지
-          console.log("현재 1페이지, up");
-          outerDivRef.current.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: "smooth",
-          });
-          setScrollIndex(1);
-        } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-          //현재 2페이지
-          console.log("현재 2페이지, up");
-          outerDivRef.current.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: "smooth",
-          });
-          // setScrollIndex(1);
-        } else {
-          // 현재 3페이지
-          console.log("현재 3페이지, up");
-          outerDivRef.current.scrollTo({
-            top: pageHeight + DIVIDER_HEIGHT,
-            left: 0,
-            behavior: "smooth",
-          });
-          // setScrollIndex(3);
-        }
-      }
-    };
-    const outerDivRefCurrent = outerDivRef.current;
-    outerDivRefCurrent?.addEventListener("wheel", wheelHandler);
-    return () => {
-      outerDivRefCurrent?.removeEventListener("wheel", wheelHandler);
-    };
-  }, []);
+  //         outerDivRef.current.scrollTo({
+  //           top: pageHeight * 2 + DIVIDER_HEIGHT * 2,
+  //           left: 0,
+  //           behavior: "smooth",
+  //         });
+  //         setScrollIndex(3);
+  //       } else {
+  //         // 현재 3페이지
+  //         console.log("현재 3페이지, down");
+  //         outerDivRef.current.scrollTo({
+  //           top: pageHeight * 2 + DIVIDER_HEIGHT * 2,
+  //           left: 0,
+  //           behavior: "smooth",
+  //         });
+  //         setScrollIndex(3);
+  //       }
+  //     } else {
+  //       // 스크롤 올릴 때
+  //       if (scrollTop >= 0 && scrollTop < pageHeight) {
+  //         //현재 1페이지
+  //         console.log("현재 1페이지, up");
+  //         outerDivRef.current.scrollTo({
+  //           top: 0,
+  //           left: 0,
+  //           behavior: "smooth",
+  //         });
+  //         setScrollIndex(1);
+  //       } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
+  //         //현재 2페이지
+  //         console.log("현재 2페이지, up");
+  //         outerDivRef.current.scrollTo({
+  //           top: 0,
+  //           left: 0,
+  //           behavior: "smooth",
+  //         });
+  //         // setScrollIndex(1);
+  //       } else {
+  //         // 현재 3페이지
+  //         console.log("현재 3페이지, up");
+  //         outerDivRef.current.scrollTo({
+  //           top: pageHeight + DIVIDER_HEIGHT,
+  //           left: 0,
+  //           behavior: "smooth",
+  //         });
+  //         // setScrollIndex(3);
+  //       }
+  //     }
+  //   };
+  //   const outerDivRefCurrent = outerDivRef.current;
+  //   outerDivRefCurrent?.addEventListener("wheel", wheelHandler);
+  //   return () => {
+  //     outerDivRefCurrent?.removeEventListener("wheel", wheelHandler);
+  //   };
+  // }, []);
   // 여기까지 은비 작업부분 ^__^
 
   return (
