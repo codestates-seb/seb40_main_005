@@ -18,20 +18,22 @@ public class TagsController {
 
     /**
      * 태그 알림 요청
+     *
      * @param id
      * @return
      */
     @GetMapping
-    public List<List<NotificationResponse>> findTagsById(@RequestParam(value = "id") String id){
+    public List<NotificationResponse> findTagsById(@RequestParam(value = "id") String id) {
         return notificationService.tagsFindById(id);
     }
 
     @GetMapping("/accept")
-    public String acceptByTagBoard(){
-        return "수락 합니다.";
+    public String acceptByTagBoard(@RequestParam(value = "id") String id) {
+        return null;
     }
+
     @GetMapping("/pass")
-    public String passByTagBoard(){
+    public String passByTagBoard() {
         return "거절 합니다.";
     }
 }

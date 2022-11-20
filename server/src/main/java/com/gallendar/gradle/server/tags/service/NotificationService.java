@@ -7,6 +7,7 @@ import com.gallendar.gradle.server.tags.dto.NotificationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,10 +17,14 @@ public class NotificationService {
     private final TagsRepository tagsRepository;
     private final TagsRepositoryCustomImpl tagsRepositoryCustom;
 
-    public List<List<NotificationResponse>> tagsFindById(String id) {
+    public List<NotificationResponse> tagsFindById(String id) {
+        List<NotificationResponse> list=new ArrayList<>();
         List<Tags> tags = tagsRepositoryCustom.findByTagsMember(id);
-        return tags.stream()
-                .map(tags1 -> tags1.getBoardTags().stream()
-                        .map(NotificationResponse::from).collect(Collectors.toList())).collect(Collectors.toList());
+        tags.forEach(tags1 -> {
+            tags1.getBoardTags().forEach(boardTags -> {
+                list.add(NotificationResponse.from(boardTags));
+            });
+        });
+        return list;
     }
 }
