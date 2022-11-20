@@ -5,6 +5,7 @@ import com.gallendar.gradle.server.members.dto.MemberSearchResponse;
 import com.gallendar.gradle.server.members.dto.SignupRequestDto;
 import com.gallendar.gradle.server.members.service.CreateMemberService;
 import com.gallendar.gradle.server.members.service.MemberSearchService;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -25,10 +26,15 @@ public class MembersController {
     private final CreateMemberService createMemberService;
 
 
-
-    @GetMapping("/members/{email}")
-    public List<MemberSearchResponse> searchMemberById(@PathVariable(value = "email") String email) {
-        return memberSearchService.MemberSearchById(email);
+    /**
+     * 유저 찾기(태그 추가할 때 사용)
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "유저 찾기",notes = "유저의 id 값으로 요청이 들어오면 해당 요청이 포함된 모든 결과를 리스트로 반환한다.")
+    @GetMapping("/members/search")
+    public List<MemberSearchResponse> searchMemberById(@RequestParam(value = "id") String id) {
+        return memberSearchService.MemberSearchById(id);
     }
 
 
