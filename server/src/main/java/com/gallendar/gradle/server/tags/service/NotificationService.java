@@ -31,9 +31,9 @@ public class NotificationService {
     private final BoardRepository boardRepository;
     private final MembersRepository membersRepository;
 
-    public List<NotificationResponse> tagsFindById(String id) {
+    public List<NotificationResponse> tagsFindById(String userId) {
         List<NotificationResponse> list = new ArrayList<>();
-        List<Tags> tags = tagsRepositoryCustom.findByTagsMember(id);
+        List<Tags> tags = tagsRepositoryCustom.findByTagsMember(userId);
         tags.forEach(tags1 -> {
             tags1.getBoardTags().forEach(boardTags -> {
                 list.add(NotificationResponse.from(boardTags));
