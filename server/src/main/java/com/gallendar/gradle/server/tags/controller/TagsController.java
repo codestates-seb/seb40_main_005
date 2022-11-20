@@ -25,7 +25,7 @@ public class TagsController {
     /**
      * 태그 알림 요청
      *
-     * @param id
+     * @param userId
      * @return
      */
     @ApiOperation(value = "태그 알림", notes = "현재 로그인 한 유저의 태그된 게시글에 대한 정보를 간단히 응답한다.")
