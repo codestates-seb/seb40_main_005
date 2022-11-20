@@ -59,7 +59,12 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers(
                         "/authentication"
-                        , "/members/**")
+                        , "/members/**"
+                        // -- Swagger UI v2
+                        , "/v2/api-docs", "/swagger-resources/**"
+                        , "/swagger-ui.html", "/webjars/**", "/swagger/**"
+                        // -- Swagger UI v3 (Open API)
+                        , "/v3/api-docs/**", "/swagger-ui/**")
 
                 .permitAll()
                 // 다른 모든 요청은 인증을 한다.
