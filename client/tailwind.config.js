@@ -23,6 +23,8 @@ module.exports = {
       },
       colors:{
         "topbtn": "rgb(5,5,5, 0.37)",
+        "lightOrange" : "rgb(235 ,130 ,83 ,0.3)",
+        "orange" : "#EB8253",
       },
       screens: {
         'md': '376px'
