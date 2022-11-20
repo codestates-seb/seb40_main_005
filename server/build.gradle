@@ -76,6 +76,9 @@ dependencies {
     implementation 'io.findify:s3mock_2.13:0.2.6'
     testImplementation 'io.findify:s3mock_2.12:0.2.6'
 
+    //swagger
+    implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
+
 }
 
 tasks.named('test') {
