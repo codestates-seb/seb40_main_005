@@ -48,4 +48,15 @@ public class NotificationTest {
             System.out.println("boardTags = " + boardTags.getTags().getStatus());
         });
     }
+
+    @Test
+    @Transactional
+    public void denyByTabBoard(){
+        Board board = boardRepositoryCustom.findById(1L, "user2");
+        board.getBoardTags().forEach(boardTags -> {
+            System.out.println("boardTags = " + boardTags.getTags().getStatus());
+            boardTags.getTags().changeStatus(TagStatus.deny);
+            System.out.println("boardTags = " + boardTags.getTags().getStatus());
+        });
+    }
 }

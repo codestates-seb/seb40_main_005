@@ -58,4 +58,16 @@ public class NotificationService {
         });
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+
+    @Transactional
+    public ResponseEntity<Message> denyTagBoard(String userId, Long boardId) {
+        Message message = new Message();
+        message.setMessage("공유가 거절되었습니다.");
+        message.setStatus(Status.OK);
+        Board board = boardRepositoryCustom.findById(boardId, userId);
+        board.getBoardTags().forEach(boardTags -> {
+            boardTags.getTags().changeStatus(TagStatus.deny);
+        });
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
 }

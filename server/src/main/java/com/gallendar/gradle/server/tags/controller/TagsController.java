@@ -42,8 +42,16 @@ public class TagsController {
         return notificationService.acceptTagBoard(userId, boardId);
     }
 
-    @GetMapping("/pass")
-    public String passByTagBoard() {
-        return "거절 합니다.";
+    /**
+     * 태그된 게시글 거절
+     *
+     * @param userId
+     * @param boardId
+     * @return
+     */
+
+    @GetMapping("/deny")
+    public ResponseEntity<Message> passByTagBoard(@RequestParam(value = "userId") String userId, @RequestParam(value = "boardId") Long boardId) {
+        return notificationService.denyTagBoard(userId, boardId);
     }
 }
