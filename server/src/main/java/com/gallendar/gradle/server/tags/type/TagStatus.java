@@ -5,6 +5,6 @@ public enum TagStatus {
      * 태그 상태 관리
      */
 
-    alert,agree,deny;
+    alert,accept,deny;
 
 }
