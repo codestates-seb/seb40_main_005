@@ -35,14 +35,6 @@ public class Board extends BaseTimeEntity {
     private Members members;
 
     @Builder
-    public Board(Long boardId, String title, String content, String music) {
-        this.boardId = boardId;
-        this.title = title;
-        this.content = content;
-        this.music = music;
-    }
-
-    @Builder
     public Board(String title, String content, String music) {
         this.title = title;
         this.content = content;
@@ -54,7 +46,6 @@ public class Board extends BaseTimeEntity {
         this.content = content;
         this.music = music;
     }
-
 
     public void setMembers(Members members) {
         this.members = members;

@@ -5,6 +5,7 @@ import com.gallendar.gradle.server.board.repository.BoardRepository;
 import com.gallendar.gradle.server.members.domain.Members;
 import com.gallendar.gradle.server.members.domain.MembersRepository;
 import com.gallendar.gradle.server.tags.domain.*;
+import com.gallendar.gradle.server.tags.type.TagStatus;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +82,7 @@ public class RelationMappingTest {
             board.setMembers(members);
             boardRepository.save(board);
 
-            Tags tags=Tags.builder().tagsMember("user2222").build();
+            Tags tags=Tags.builder().tagsMember("user2222").tagStatus(TagStatus.alert).build();
             tagsRepository.save(tags);
 
             BoardTags boardTags=new BoardTags();
@@ -93,6 +94,6 @@ public class RelationMappingTest {
         board.setMembers(members);
         boardRepository.save(board);
         List<Tags> list=tagsRepositoryCustom.findByTagsMember("user2222");
-        list.stream().map(t->t.getBoardTags().stream().map(b->b.getBoard().getMembers()).collect(Collectors.toList())).collect(Collectors.toList()).forEach(System.out::println);
+        list.stream().map(t->t.getBoardTags().stream().map(b->b.getBoard().getMembers().getId()).collect(Collectors.toList())).collect(Collectors.toList()).forEach(System.out::println);
     }
 }
