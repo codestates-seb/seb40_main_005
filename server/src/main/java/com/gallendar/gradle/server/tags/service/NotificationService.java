@@ -31,6 +31,7 @@ public class NotificationService {
     private final BoardRepository boardRepository;
     private final MembersRepository membersRepository;
 
+    @Transactional
     public List<NotificationResponse> tagsFindById(String userId) {
         List<NotificationResponse> list = new ArrayList<>();
         List<Tags> tags = tagsRepositoryCustom.findByTagsMember(userId);
