@@ -1,5 +1,6 @@
 package com.gallendar.gradle.server.board.entity;
 
+import com.gallendar.gradle.server.category.domain.Category;
 import com.gallendar.gradle.server.global.auditing.BaseTimeEntity;
 import com.gallendar.gradle.server.members.domain.Members;
 import com.gallendar.gradle.server.tags.domain.BoardTags;
@@ -30,17 +31,13 @@ public class Board extends BaseTimeEntity {
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
     private List<BoardTags> boardTags;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "members_id")
     private Members members;
 
-    @Builder
-    public Board(Long boardId, String title, String content, String music) {
-        this.boardId = boardId;
-        this.title = title;
-        this.content = content;
-        this.music = music;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="category_id")
+    private Category category;
 
     @Builder
     public Board(String title, String content, String music) {
@@ -54,7 +51,6 @@ public class Board extends BaseTimeEntity {
         this.content = content;
         this.music = music;
     }
-
 
     public void setMembers(Members members) {
         this.members = members;

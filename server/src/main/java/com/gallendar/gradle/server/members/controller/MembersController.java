@@ -1,10 +1,14 @@
 package com.gallendar.gradle.server.members.controller;
 
+import com.gallendar.gradle.server.exception.Message;
 import com.gallendar.gradle.server.global.auth.jwt.JwtUtils;
 import com.gallendar.gradle.server.members.dto.MemberSearchResponse;
 import com.gallendar.gradle.server.members.dto.SignupRequestDto;
 import com.gallendar.gradle.server.members.service.CreateMemberService;
 import com.gallendar.gradle.server.members.service.MemberSearchService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -25,10 +29,15 @@ public class MembersController {
     private final CreateMemberService createMemberService;
 
 
-
-    @GetMapping("/members/{email}")
-    public List<MemberSearchResponse> searchMemberById(@PathVariable(value = "email") String email) {
-        return memberSearchService.MemberSearchById(email);
+    /**
+     * 유저 찾기(태그 추가할 때 사용)
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "유저 찾기",notes = "유저의 id 값으로 요청이 들어오면 해당 요청이 포함된 모든 결과를 리스트로 반환한다.")
+    @GetMapping("/members/search")
+    public List<MemberSearchResponse> searchMemberById(@RequestParam(value = "id") String id) {
+        return memberSearchService.MemberSearchById(id);
     }
 
 
@@ -56,6 +65,20 @@ public class MembersController {
         createMemberService.createMember(signupRequestDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("회원가입 성공");  // 이메일 인증 추가시 수정 필요
+    }
+
+    /**
+     * 아이디 찾기
+     * @param email
+     * @return
+     */
+    @ApiOperation(value = "아이디 찾기",notes = "가입한 이메일을 통해서 로그인 아이디를 찾을 수 있다.")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "아이디 찾기")
+    })
+    @GetMapping("/members/find-id")
+    public ResponseEntity<Message> findIdByEmail(@RequestParam("email") String email){
+        return memberSearchService.idFindByEmail(email);
     }
 
     //Todo: 회원 탈퇴
