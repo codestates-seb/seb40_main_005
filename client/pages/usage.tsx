@@ -45,14 +45,13 @@ const Usage = () => {
 
   useEffect(() => {
     window.addEventListener("wheel", e => {
-      // console.log(window.scrollY)
-      // console.log(window.innerHeight);
       const scrollPos: number = window.scrollY;
       const viewHeight: number = window.innerHeight;
-
+      console.log(scrollPos, viewHeight )
+      
       // console.log(e);
       const { deltaY } = e;
-      console.log(deltaY);
+      // console.log(deltaY);
 
       if (deltaY > 0) {
         if (scrollPos <= viewHeight / 2) {
@@ -319,7 +318,7 @@ const Usage = () => {
                 <div className="font-SCDream4 text-xl md:text-2xl lg:text-3xl text-gray-100">
                   소중한 순간
                 </div>
-                <div className="absolute top-6 left-0 right-0 bottom-0.5 bg-orange/40"></div>
+                <div className="absolute top-7 left-0 right-0 bottom-0.5 bg-orange/40"></div>
               </div>
               <div className="font-SCDream4 text-xl md:text-2xl lg:text-3xl text-gray-100">
                 들을 기록해볼까요?
@@ -331,7 +330,7 @@ const Usage = () => {
                   <div className="z-10 text-base md:text-xl lg:text-2xl text-gray-100 font-SCDream2">
                     시작하기
                   </div>
-                  <div className="absolute top-5 left-0 right-0 bottom-0.5 bg-orange/40"></div>
+                  <div className="absolute top-6 left-0 right-0 bottom-0.5 bg-orange/40"></div>
                 </div>
               </Link>
               <Link href="/">
@@ -339,7 +338,7 @@ const Usage = () => {
                   <div className="z-10 text-base md:text-xl lg:text-2xl text-gray-100 font-SCDream2">
                     초기화면으로 돌아가기
                   </div>
-                  <div className="absolute top-5 left-0 right-0 bottom-0.5 bg-orange/40"></div>
+                  <div className="absolute top-6 left-0 right-0 bottom-0.5 bg-orange/40"></div>
                 </div>
               </Link>
             </div>
