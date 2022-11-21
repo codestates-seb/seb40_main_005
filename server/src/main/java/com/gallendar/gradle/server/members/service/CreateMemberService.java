@@ -4,25 +4,21 @@ package com.gallendar.gradle.server.members.service;
 import com.gallendar.gradle.server.members.domain.Members;
 import com.gallendar.gradle.server.members.domain.MembersRepository;
 import com.gallendar.gradle.server.members.dto.SignupRequestDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
 
 @Service
+@RequiredArgsConstructor
 public class CreateMemberService {
 
     private final MembersRepository membersRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    PasswordEncoder passwordEncoder;
 
-
-    public CreateMemberService(MembersRepository membersRepository,
-                              BCryptPasswordEncoder passwordEncoder){
-        this.membersRepository = membersRepository;
-        this.passwordEncoder = passwordEncoder;
-
-    }
     /* ID 중복검사 */
     public boolean checkMemberIdDuplication(String id) {
         return membersRepository.existsById(id);
