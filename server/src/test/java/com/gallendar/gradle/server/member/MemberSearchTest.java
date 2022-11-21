@@ -60,4 +60,9 @@ public class MemberSearchTest {
         assertThat(memberId2.size()).isEqualTo(3);
         assertThat(memberId3.size()).isEqualTo(1);
     }
+    @Test
+    void findIdByEmail(){
+        Members members=membersRepository.findByEmail("123").orElseThrow(()->new IllegalArgumentException());
+        assertThat(members.getId()).isEqualTo("aaa");
+    }
 }
