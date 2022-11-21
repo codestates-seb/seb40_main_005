@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  awsapp:
+    image: amazon/aws-cli
+    container_name: awscli
+
+  database:
+    image: mysql
+    container_name: gallendar
+    environment:
+      - MYSQL_DATABASE=gallendar
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_PASSWORD=1234
+    command: ['--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
+    ports:
+      - 13306:3306
+    volumes:
+      - gallendar_volume:/var/lib/mysql
+    networks:
+      - gallendar-network
+
+  application:
+    build: .
+    restart: always
+    ports:
+      - 818:80
+    depends_on:
+      - database
+    container_name: server
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://database:33060/gallendar?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: gallendaruser
+      SPRING_DATASOURCE_PASSWORD: 1234
+    networks:
+      - gallendar-network
+networks:
+  gallendar-network:

@@ -6,10 +6,11 @@ spring:
   autoconfigure:
     exclude: org.springframework.cloud.aws.autoconfigure.context.ContextStackAutoConfiguration
   datasource:
-    url: jdbc:mysql://localhost:3306/gallendar?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+#    url: jdbc:mysql://database:13306/gallendar?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/gallendar?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: 
-    password: 
+    username: root
+    password: tkatka55**
   jpa:
     open-in-view: false
     generate-ddl: true
@@ -27,13 +28,13 @@ spring:
     path match:
       matching-strategy: ant_path_matcher
 server:
-  port: 9000
+  port: 818
 
 cloud:
   aws:
     credentials:
-      accessKey:       # AWS IAM AccessKey 적기
-      secretKey:    # AWS IAM SecretKey 적기
+      accessKey: AKIA3EWIUSTJH6NLPMF3      # AWS IAM AccessKey 적기
+      secretKey: RWPtIEw50h33Z+E0ow41Jrsj4qBFGSUAvQ1Sl/tk    # AWS IAM SecretKey 적기
     s3:
       bucket:
       dir: /test
