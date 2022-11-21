@@ -6,8 +6,6 @@ import com.gallendar.gradle.server.members.domain.MembersRepository;
 import com.gallendar.gradle.server.members.dto.LoginRequest;
 import com.gallendar.gradle.server.members.dto.LoginResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class LoginService {
     private final JwtUtils jwtUtils;
     private final MembersRepository membersRepository;
-    private final PasswordEncoder passwordEncoder;
+    PasswordEncoder passwordEncoder;
 
     public LoginResponse LoginMembers(LoginRequest loginRequest){
         final String memberId = loginRequest.getId();
