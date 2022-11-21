@@ -1,5 +1,6 @@
 package com.gallendar.gradle.server.members.controller;
 
+import com.gallendar.gradle.server.exception.Message;
 import com.gallendar.gradle.server.global.auth.jwt.JwtUtils;
 import com.gallendar.gradle.server.members.dto.MemberSearchResponse;
 import com.gallendar.gradle.server.members.dto.SignupRequestDto;
@@ -62,6 +63,11 @@ public class MembersController {
         createMemberService.createMember(signupRequestDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("회원가입 성공");  // 이메일 인증 추가시 수정 필요
+    }
+
+    @GetMapping("/members/find-id")
+    public ResponseEntity<Message> findIdByEmail(@RequestParam("email") String email){
+        return memberSearchService.idFindByEmail(email);
     }
 
     //Todo: 회원 탈퇴
