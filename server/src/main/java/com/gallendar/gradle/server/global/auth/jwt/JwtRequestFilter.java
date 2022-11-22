@@ -18,7 +18,7 @@ import java.io.IOException;
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
     public static final String HEADER_KEY = "Authorization";
-
+    @Autowired
     private MembersRepository membersRepository;
     @Autowired
     private JwtUtils jwtUtils;
@@ -38,7 +38,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         // 토큰을 가져오면 검증을 한다.
         if (memberId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             Members members = this.membersRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("올바르지 않은 사용자입니다."));
-
             // 토큰이 유효한 경우 수동으로 인증을 설정하도록 스프링 시큐리티를 구성한다.
             if (jwtUtils.validateToken(jwtToken)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
