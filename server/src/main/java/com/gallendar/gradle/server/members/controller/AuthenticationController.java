@@ -5,9 +5,6 @@ import com.gallendar.gradle.server.members.dto.LoginResponse;
 import com.gallendar.gradle.server.members.service.LoginService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,7 +15,7 @@ import javax.validation.constraints.Email;
 @RequestMapping("/authentication")
 public class AuthenticationController {
 
-    private final LoginService loginService;
+    private LoginService loginService;
 
     /**
      * 로그인
@@ -29,19 +26,15 @@ public class AuthenticationController {
     @ApiOperation(value = "로그인", notes = "등록된 회원이 로그인을 시도하여 성공하면 토큰을 응답, 실패하면 예외발생")
     @PostMapping
     public LoginResponse membersLogin(@RequestBody LoginRequest loginRequest) {
-        return loginService.loginMembers(loginRequest);
+        return loginService.LoginMembers(loginRequest);
     }
 
 
-    /**
-     * 로그아웃
-     * @return
-     */
+    //Todo: 로그아웃
     @GetMapping
-    public ResponseEntity<?> membersLogout() {
-        HttpHeaders httpHeaders=new HttpHeaders();
-        httpHeaders.set(HttpHeaders.AUTHORIZATION,null);
-        return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+    public String membersLogout() {
+        String response = "로그아웃";
+        return response;
     }
 
 
