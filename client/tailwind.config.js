@@ -27,6 +27,7 @@ module.exports = {
         orange: "#EB8253",
         bgGray: "#F8F9FD",
         bgWhite: "#FEFEFE",
+
       },
       screens: {
         md: "376px",
