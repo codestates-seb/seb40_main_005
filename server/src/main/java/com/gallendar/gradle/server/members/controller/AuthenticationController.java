@@ -15,7 +15,7 @@ import javax.validation.constraints.Email;
 @RequestMapping("/authentication")
 public class AuthenticationController {
 
-    private LoginService loginService;
+    private final LoginService loginService;
 
     /**
      * 로그인
@@ -26,7 +26,7 @@ public class AuthenticationController {
     @ApiOperation(value = "로그인", notes = "등록된 회원이 로그인을 시도하여 성공하면 토큰을 응답, 실패하면 예외발생")
     @PostMapping
     public LoginResponse membersLogin(@RequestBody LoginRequest loginRequest) {
-        return loginService.LoginMembers(loginRequest);
+        return loginService.loginMembers(loginRequest);
     }
 
 
