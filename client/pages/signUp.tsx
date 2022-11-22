@@ -18,7 +18,6 @@ const SignUp = () => {
 
   //   const [authentication, setAuthentication] = useState<boolean>(false);
   const [idValue, setIdValue] = useState<string>("");
-<<<<<<< Updated upstream
   const [idAlert, setIdAlert] = useState<boolean>(false);
   const [checkId, setCheckId] = useState<boolean>(false);
 
@@ -35,22 +34,6 @@ const SignUp = () => {
     getAllPosts,
   );
 
-=======
-  const [checkId, setCheckId] = useState<boolean>(false);
-
-  const getAllPosts = async() => {
-    const { data } = await axios.get("http://3.39.195.113:8080/members/search?id=35");
-
-    return data;
-  }
-  const queryClient = useQueryClient();
-  const { data, status, isLoading, isSuccess } = useQuery(
-    ['questions'],
-    getAllPosts
-  );
-
-
->>>>>>> Stashed changes
   const onValid = () => {
     // const queryClient = useQueryClient();
     // const {data, status, isLoading, isSuccess} = useQuery(
@@ -66,26 +49,19 @@ const SignUp = () => {
     alert("detive!");
   };
 
-<<<<<<< Updated upstream
   const handleIdChange = (e: any) => {
     setIdValue(e.target.value);
-=======
-  const handleIdChange = (e: any) => {};
-
-  const handleIdEnter = (e: any) => {
-    // console.log(e);
->>>>>>> Stashed changes
   };
 
   return (
     <>
       <CertifyPageLayout>
-        <div className="flex flex-col justify-start items-start w-full h-full">
+        <div className="flex flex-col items-start justify-start w-full h-full">
           <div className="relative items-center justify-center w-fit h-7 ">
             <div className="z-10 text-base md:text-xl lg:text-2xl text-zinc-500 font-SCDream6">
               회원가입
             </div>
-            <div className="absolute top-5 md:top-6 lg:top-7 left-0 right-0 bottom-1 md:bottom-0 lg:-bottom-1 bg-mainOrange/40"></div>
+            <div className="absolute left-0 right-0 top-5 md:top-6 lg:top-7 bottom-1 md:bottom-0 lg:-bottom-1 bg-mainOrange/40"></div>
           </div>
 
           <form onSubmit={handleSubmit(onValid, onInValid)} className="w-full">
@@ -94,7 +70,7 @@ const SignUp = () => {
                 <div className="relative items-center justify-center w-fit h-7 mt-7">
                   <label
                     htmlFor="identity"
-                    className="font-SCDream5 text-gray-500 text-base"
+                    className="text-base text-gray-500 font-SCDream5"
                   >
                     ID
                   </label>
@@ -104,42 +80,27 @@ const SignUp = () => {
                   className="font-SCDream2 text-gray-500 w-full text-sm mt-2 border-b-[1px] border-mainOrange/40 outline-none"
                   id="identity"
                   type="text"
-<<<<<<< Updated upstream
                   value={idValue}
-=======
-                  onKeyUp={handleIdEnter}
->>>>>>> Stashed changes
                   placeholder="ID를 입력 후 Enter를 눌러주세요"
                   {...register("singleErrorInput", {
                     required: "ID는 필수 입력입니다.",
                     onChange: handleIdChange,
                   })}
-<<<<<<< Updated upstream
-                  
-=======
->>>>>>> Stashed changes
                 />
                 <ErrorMessage
                   errors={errors}
                   name="singleErrorInput"
                   render={({ message }) => (
-                    <div className="flex flex-row justify-end items-end w-full text-mainOrange h-fit font-SCDream2 text-xs mt-1">
+                    <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
                       {message}
                     </div>
                   )}
                 />
-<<<<<<< Updated upstream
                 {idValue.length < 5 ? (
-                  <div className="flex flex-row justify-end items-end w-full text-mainOrange h-fit font-SCDream2 text-xs mt-1">
+                  <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
                     5글자 이상으로 입력해주세요
                   </div>
                 ) : null}
-=======
-
-                <div className="flex flex-row justify-end items-end w-full text-mainOrange h-fit font-SCDream2 text-xs mt-1">
-                  5글자 이상으로 입력해주세요
-                </div>
->>>>>>> Stashed changes
               </div>
             </div>
           </form>
