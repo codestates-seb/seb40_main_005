@@ -238,13 +238,13 @@ function Home() {
                 <div className="z-10 ml-1 text-lg text-gray-700 font-SCDream3">
                   로그인
                 </div>
-                <div className="absolute top-5 left-0.5 right-0 bottom-0.5  bg-orange/40"></div>
+                <div className="absolute top-5 left-0.5 right-0 bottom-0.5  bg-mainOrange/40"></div>
               </div>
               <div className="relative items-center justify-center cursor-pointer w-fit h-7">
                 <div className="z-10 ml-1 text-lg text-gray-700 font-SCDream3">
                   회원가입
                 </div>
-                <div className="absolute top-5 left-1 right-0 bottom-0.5  bg-orange/40"></div>
+                <div className="absolute top-5 left-1 right-0 bottom-0.5  bg-mainOrange/40"></div>
               </div>
             </div>
           </div>
@@ -264,7 +264,7 @@ function Home() {
                 <div className="flex flex-row text-3xl text-gray-700 font-SCDream6 md:text-4xl lg:text-5xl">
                   가장 특별했던 사진
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 top-7 md:top-8 lg:top-10 bg-orange/40"></div>
+                <div className="absolute bottom-0 left-0 right-0 top-7 md:top-8 lg:top-10 bg-mainOrange/40"></div>
               </div>
               <div className="flex flex-row mt-2 text-2xl text-gray-700 font-SCDream3 md:text-3xl lg:text-4xl sm:mt-1">
                 이 뭘까?
@@ -287,7 +287,7 @@ function Home() {
                 <div className="z-10 text-3xl text-gray-200 font-SCDream6 md:text-4xl lg:text-5xl">
                   무드에 맞는 음악
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 top-7 md:top-8 lg:top-10 bg-orange/40"></div>
+                <div className="absolute bottom-0 left-0 right-0 top-7 md:top-8 lg:top-10 bg-mainOrange/40"></div>
               </div>
               <div className="mt-2 text-2xl text-gray-200 font-SCDream3 md:text-3xl lg:text-4xl sm:mt-1">
                 이 뭘까?
@@ -310,7 +310,7 @@ function Home() {
                 <div className="z-10 text-3xl text-gray-700 font-SCDream6 md:text-4xl lg:text-5xl">
                   설명해주는 문구
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 top-7 md:top-8 lg:top-10 bg-orange/40"></div>
+                <div className="absolute bottom-0 left-0 right-0 top-7 md:top-8 lg:top-10 bg-mainOrange/40"></div>
               </div>
               <div className="mt-2 text-2xl text-gray-700 font-SCDream3 md:text-3xl lg:text-4xl sm:mt-1">
                 는 뭘까?
@@ -333,7 +333,7 @@ function Home() {
                 <div className="z-10 text-3xl text-gray-700 font-SCDream6 md:text-4xl lg:text-5xl">
                   하루를 공유
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 top-7 md:top-8 lg:top-10 bg-orange/40"></div>
+                <div className="absolute bottom-0 left-0 right-0 top-7 md:top-8 lg:top-10 bg-mainOrange/40"></div>
               </div>
               <div className="mt-2 text-2xl text-gray-700 font-SCDream3 md:text-3xl lg:text-4xl sm:mt-1">
                 할 수는 없을까?
@@ -369,14 +369,14 @@ function Home() {
               <div className="z-10 text-lg text-gray-100 font-SCDream2">
                 시작하기
               </div>
-              <div className="absolute top-5 left-0 right-0 bottom-0.5 bg-orange/40"></div>
+              <div className="absolute top-5 left-0 right-0 bottom-0.5 bg-mainOrange/40"></div>
             </div>
             <Link href="/usage">
               <div className="relative items-center justify-center cursor-pointer w-fit h-7">
                 <div className="z-10 ml-1 text-lg text-gray-100 font-SCDream2">
                   사용설명 보러가기
                 </div>
-                <div className="absolute top-5 left-1 right-0 bottom-0.5  bg-orange/40"></div>
+                <div className="absolute top-5 left-1 right-0 bottom-0.5  bg-mainOrange/40"></div>
               </div>
             </Link>
           </div>
