@@ -330,9 +330,7 @@ const Usage = () => {
                   <div className="z-10 text-base md:text-xl lg:text-2xl text-gray-100 font-SCDream2">
                     시작하기
                   </div>
-
                   <div className="absolute top-4 md:top-5 lg:top-6 left-0 right-0 bottom-2 md:bottom-1 lg:bottom-0 bg-mainOrange/40"></div>
-
                 </div>
               </Link>
               <Link href="/">
@@ -340,9 +338,7 @@ const Usage = () => {
                   <div className="z-10 text-base md:text-xl lg:text-2xl text-gray-100 font-SCDream2">
                     초기화면으로 돌아가기
                   </div>
-
                   <div className="absolute top-4 md:top-5 lg:top-6 left-0 right-0 bottom-2 md:bottom-1 lg:bottom-0 bg-mainOrange/40"></div>
-
                 </div>
               </Link>
             </div>
