@@ -5,6 +5,7 @@ import com.gallendar.gradle.server.exception.Status;
 import com.gallendar.gradle.server.members.domain.Members;
 import com.gallendar.gradle.server.members.domain.MembersRepository;
 import com.gallendar.gradle.server.members.domain.MembersRepositoryCustomImpl;
+import com.gallendar.gradle.server.members.dto.FindIdByEmailResponse;
 import com.gallendar.gradle.server.members.dto.MemberSearchResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,12 +26,8 @@ public class MemberSearchService {
         return members.stream().map(MemberSearchResponse::from).collect(Collectors.toList());
     }
 
-    public ResponseEntity<Message> idFindByEmail(String email) {
-        Message message = new Message();
+    public FindIdByEmailResponse idFindByEmail(String email) {
         Members members = membersRepository.findByEmail(email).orElseThrow(() -> new IllegalArgumentException());
-        message.setStatus(Status.OK);
-        message.setMessage("아이디 찾기");
-        message.setData(members.getId());
-        return new ResponseEntity<>(message, HttpStatus.OK);
+        return new FindIdByEmailResponse(members.getId());
     }
 }
