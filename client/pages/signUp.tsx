@@ -86,6 +86,7 @@ const SignUp = () => {
                     required: "ID는 필수 입력입니다.",
                     onChange: handleIdChange,
                   })}
+                  
                 />
                 <ErrorMessage
                   errors={errors}
