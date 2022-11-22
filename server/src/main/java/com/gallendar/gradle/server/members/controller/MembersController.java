@@ -2,6 +2,7 @@ package com.gallendar.gradle.server.members.controller;
 
 import com.gallendar.gradle.server.exception.Message;
 import com.gallendar.gradle.server.global.auth.jwt.JwtUtils;
+import com.gallendar.gradle.server.members.dto.FindIdByEmailResponse;
 import com.gallendar.gradle.server.members.dto.MemberSearchResponse;
 import com.gallendar.gradle.server.members.dto.SignupRequestDto;
 import com.gallendar.gradle.server.members.service.CreateMemberService;
@@ -23,6 +24,7 @@ import javax.validation.Valid;
 public class MembersController {
 
 
+    private final JwtUtils jwtUtils;
     private final MemberSearchService memberSearchService;
 
     private final CreateMemberService createMemberService;
@@ -73,10 +75,10 @@ public class MembersController {
      */
     @ApiOperation(value = "아이디 찾기",notes = "가입한 이메일을 통해서 로그인 아이디를 찾을 수 있다.")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "아이디 찾기")
+            @ApiResponse(code = 200, message = "id")
     })
     @GetMapping("/members/find-id")
-    public ResponseEntity<Message> findIdByEmail(@RequestParam("email") String email){
+    public FindIdByEmailResponse findIdByEmail(@RequestParam("email") String email){
         return memberSearchService.idFindByEmail(email);
     }
 
