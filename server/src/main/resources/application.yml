@@ -6,9 +6,10 @@ spring:
   autoconfigure:
     exclude: org.springframework.cloud.aws.autoconfigure.context.ContextStackAutoConfiguration
   datasource:
-#    url: jdbc:mysql://database:13306/gallendar?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&useSSL=false
     url: jdbc:mysql://localhost:3306/gallendar?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: root
+#    password: Tkatka55**
     username: root
     password: tkatka55**
   jpa:
@@ -16,27 +17,24 @@ spring:
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     database: mysql
   main:
     allow-circular-references: true
   jwt:
-    secret: 1
-    jwtExpirationMs: 1000
-    jwtRefreshExpirationMs: 10000
+    secret: 1234asd
+    jwtExpirationMs: 3600000
   mvc:
     path match:
       matching-strategy: ant_path_matcher
-server:
-  port: 818
 
 cloud:
   aws:
     credentials:
-      accessKey: AKIA3EWIUSTJH6NLPMF3      # AWS IAM AccessKey 적기
-      secretKey: RWPtIEw50h33Z+E0ow41Jrsj4qBFGSUAvQ1Sl/tk    # AWS IAM SecretKey 적기
+      accessKey: AKIA3EWIUSTJMY6KYUW2      # AWS IAM AccessKey 적기
+      secretKey: eETjkVO7A6j1N19OABOI2IGP9W3N6Q04NrmWW2cv    # AWS IAM SecretKey 적기
     s3:
-      bucket:
+      bucket: gallendar
       dir: /test
     region:
       static: ap-northeast-2

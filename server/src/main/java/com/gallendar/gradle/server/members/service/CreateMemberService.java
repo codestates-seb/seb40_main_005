@@ -18,7 +18,6 @@ import javax.transaction.Transactional;
 public class CreateMemberService {
 
     private final MembersRepository membersRepository;
-    @Autowired
     private final PasswordEncoder passwordEncoder;
 
     /* ID 중복검사 */

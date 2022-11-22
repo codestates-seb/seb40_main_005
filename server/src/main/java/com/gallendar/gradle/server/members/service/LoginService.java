@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 public class LoginService {
     private final JwtUtils jwtUtils;
     private final MembersRepository membersRepository;
-    @Autowired
     private final PasswordEncoder passwordEncoder;
 
     public LoginResponse loginMembers(LoginRequest loginRequest){
