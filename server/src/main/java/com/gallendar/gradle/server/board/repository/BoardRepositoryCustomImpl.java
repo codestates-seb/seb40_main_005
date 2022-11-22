@@ -8,6 +8,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @RequiredArgsConstructor
 @Repository
@@ -26,5 +28,10 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
                 .where(qBoardTags.tags.status.eq(TagStatus.alert),qBoardTags.tags.tagsMember.eq(userId))
                 .fetchOne();
         return board;
+    }
+
+    @Override
+    public List<Board> findByBoard(int year, int month, int day, String category) {
+        return null;
     }
 }

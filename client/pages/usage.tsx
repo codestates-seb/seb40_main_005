@@ -47,8 +47,8 @@ const Usage = () => {
     window.addEventListener("wheel", e => {
       const scrollPos: number = window.scrollY;
       const viewHeight: number = window.innerHeight;
-      console.log(scrollPos, viewHeight )
-      
+      console.log(scrollPos, viewHeight);
+
       // console.log(e);
       const { deltaY } = e;
       // console.log(deltaY);
@@ -69,39 +69,45 @@ const Usage = () => {
             top: document.getElementById("4page")?.offsetTop,
             behavior: "smooth",
           });
-        } else if (scrollPos <= viewHeight + viewHeight + viewHeight + viewHeight / 2) {
+        } else if (
+          scrollPos <=
+          viewHeight + viewHeight + viewHeight + viewHeight / 2
+        ) {
           window.scrollTo({
             top: document.getElementById("5page")?.offsetTop,
             behavior: "smooth",
           });
-        } else if (scrollPos <= viewHeight + viewHeight + viewHeight + viewHeight + viewHeight / 2) {
+        } else if (
+          scrollPos <=
+          viewHeight + viewHeight + viewHeight + viewHeight + viewHeight / 2
+        ) {
           window.scrollTo({
             top: document.getElementById("6page")?.offsetTop,
             behavior: "smooth",
           });
         }
-      }else {
-        if (scrollPos <= viewHeight){
+      } else {
+        if (scrollPos <= viewHeight) {
           window.scrollTo({
             top: document.getElementById("1page")?.offsetTop,
             behavior: "smooth",
           });
-        }else if (scrollPos <= viewHeight * 2){
+        } else if (scrollPos <= viewHeight * 2) {
           window.scrollTo({
             top: document.getElementById("2page")?.offsetTop,
             behavior: "smooth",
           });
-        } else if (scrollPos <= viewHeight * 3){
+        } else if (scrollPos <= viewHeight * 3) {
           window.scrollTo({
             top: document.getElementById("3page")?.offsetTop,
             behavior: "smooth",
           });
-        }else if (scrollPos <= viewHeight * 4){
+        } else if (scrollPos <= viewHeight * 4) {
           window.scrollTo({
             top: document.getElementById("4page")?.offsetTop,
             behavior: "smooth",
           });
-        }else if (scrollPos <= viewHeight * 5){
+        } else if (scrollPos <= viewHeight * 5) {
           window.scrollTo({
             top: document.getElementById("5page")?.offsetTop,
             behavior: "smooth",
@@ -116,7 +122,10 @@ const Usage = () => {
       <ScrollImg />
       <TopBtn />
       <div className="flex-col items-center justify-center">
-        <div id="1page" className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/solid_background.png')]">
+        <div
+          id="1page"
+          className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/solid_background.png')]"
+        >
           <div className="flex flex-col sm:flex-row items-center sm:items-center justify-center h-fit z-10 w-full pl-5 pr-3 sm:pl-3 sm:pr-5">
             <motion.div
               className="flex items-center justify-left w-fit ml-3 mr-3 mb-2"
@@ -318,7 +327,7 @@ const Usage = () => {
                 <div className="font-SCDream4 text-xl md:text-2xl lg:text-3xl text-gray-100">
                   소중한 순간
                 </div>
-                <div className="absolute top-7 left-0 right-0 bottom-0.5 bg-orange/40"></div>
+                <div className="absolute top-7 left-0 right-0 bottom-0.5 bg-mainOrange/40"></div>
               </div>
               <div className="font-SCDream4 text-xl md:text-2xl lg:text-3xl text-gray-100">
                 들을 기록해볼까요?
@@ -330,7 +339,7 @@ const Usage = () => {
                   <div className="z-10 text-base md:text-xl lg:text-2xl text-gray-100 font-SCDream2">
                     시작하기
                   </div>
-                  <div className="absolute top-6 left-0 right-0 bottom-0.5 bg-orange/40"></div>
+                  <div className="absolute top-4 md:top-5 lg:top-6 left-0 right-0 bottom-2 md:bottom-1 lg:bottom-0 bg-mainOrange/40"></div>
                 </div>
               </Link>
               <Link href="/">
@@ -338,7 +347,7 @@ const Usage = () => {
                   <div className="z-10 text-base md:text-xl lg:text-2xl text-gray-100 font-SCDream2">
                     초기화면으로 돌아가기
                   </div>
-                  <div className="absolute top-6 left-0 right-0 bottom-0.5 bg-orange/40"></div>
+                  <div className="absolute top-4 md:top-5 lg:top-6 left-0 right-0 bottom-2 md:bottom-1 lg:bottom-0 bg-mainOrange/40"></div>
                 </div>
               </Link>
             </div>
