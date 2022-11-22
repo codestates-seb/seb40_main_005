@@ -5,6 +5,7 @@ import com.gallendar.gradle.server.members.domain.Members;
 import com.gallendar.gradle.server.members.domain.MembersRepository;
 import com.gallendar.gradle.server.members.dto.SignupRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,8 @@ import javax.transaction.Transactional;
 public class CreateMemberService {
 
     private final MembersRepository membersRepository;
-    PasswordEncoder passwordEncoder;
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
 
     /* ID 중복검사 */
     public boolean checkMemberIdDuplication(String id) {
@@ -33,9 +35,7 @@ public class CreateMemberService {
      @Transactional
     /* member 저장 */
     public Members createMember (SignupRequestDto signupRequestDto){
-
-       signupRequestDto.setPassword(passwordEncoder.encode(signupRequestDto.getPassword())); // 암호화
-
+        signupRequestDto.setPassword(passwordEncoder.encode(signupRequestDto.getPassword())); // 암호화
         return membersRepository.save(signupRequestDto.toEntity());
     }
 
