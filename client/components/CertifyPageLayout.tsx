@@ -1,5 +1,9 @@
 import Image from "next/image";
 
+/**
+ * @description 사용 예시 : CertifyPageLayout태그 안에서 코드 작성
+**/
+
 const CertifyPageLayout = (props : {
     children : React.ReactNode
 }) => {
