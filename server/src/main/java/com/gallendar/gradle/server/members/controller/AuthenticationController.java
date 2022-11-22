@@ -5,6 +5,9 @@ import com.gallendar.gradle.server.members.dto.LoginResponse;
 import com.gallendar.gradle.server.members.service.LoginService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,11 +33,15 @@ public class AuthenticationController {
     }
 
 
-    //Todo: 로그아웃
+    /**
+     * 로그아웃
+     * @return
+     */
     @GetMapping
-    public String membersLogout() {
-        String response = "로그아웃";
-        return response;
+    public ResponseEntity<?> membersLogout() {
+        HttpHeaders httpHeaders=new HttpHeaders();
+        httpHeaders.set(HttpHeaders.AUTHORIZATION,null);
+        return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
     }
 
 
