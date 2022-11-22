@@ -30,6 +30,8 @@ module.exports = {
         'underbar': "rgb(255, 174, 140)",
         "bgGray": "#F8F9FD",
         "bgWhite": "#FEFEFE",
+        "socialBgGray": "rgba(220,220,220,0.43)",
+        "socialBgOrg": "rgba(250, 139, 92,0.72)"
 
       },
 
