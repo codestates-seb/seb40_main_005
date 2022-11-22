@@ -26,6 +26,8 @@ module.exports = {
         lightOrange: "rgb(235 ,130 ,83 ,0.3)",
         orange: "#EB8253",
         bgGray: "#F8F9FD",
+        bgWhite: "#FEFEFE",
+
       },
       screens: {
         md: "376px",
