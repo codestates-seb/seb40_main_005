@@ -23,7 +23,6 @@ import javax.validation.Valid;
 public class MembersController {
 
 
-    private final JwtUtils jwtUtils;
     private final MemberSearchService memberSearchService;
 
     private final CreateMemberService createMemberService;
