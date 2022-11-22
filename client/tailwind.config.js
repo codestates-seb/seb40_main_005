@@ -34,7 +34,6 @@ module.exports = {
         "socialBgOrg": "rgba(250, 139, 92,0.72)"
 
       },
-
       screens: {
         md: "376px",
       },

@@ -43,80 +43,89 @@ const Usage = () => {
     },
   };
 
-  // useEffect(() => {
-  //   window.addEventListener("wheel", e => {
-  //     const scrollPos: number = window.scrollY;
-  //     const viewHeight: number = window.innerHeight;
-  //     console.log(scrollPos, viewHeight )
-      
-  //     // console.log(e);
-  //     const { deltaY } = e;
-  //     // console.log(deltaY);
+  useEffect(() => {
+    window.addEventListener("wheel", e => {
+      const scrollPos: number = window.scrollY;
+      const viewHeight: number = window.innerHeight;
+      console.log(scrollPos, viewHeight);
 
-  //     if (deltaY > 0) {
-  //       if (scrollPos <= viewHeight / 2) {
-  //         window.scrollTo({
-  //           top: document.getElementById("2page")?.offsetTop,
-  //           behavior: "smooth",
-  //         });
-  //       } else if (scrollPos <= viewHeight + viewHeight / 2) {
-  //         window.scrollTo({
-  //           top: document.getElementById("3page")?.offsetTop,
-  //           behavior: "smooth",
-  //         });
-  //       } else if (scrollPos <= viewHeight + viewHeight + viewHeight / 2) {
-  //         window.scrollTo({
-  //           top: document.getElementById("4page")?.offsetTop,
-  //           behavior: "smooth",
-  //         });
-  //       } else if (scrollPos <= viewHeight + viewHeight + viewHeight + viewHeight / 2) {
-  //         window.scrollTo({
-  //           top: document.getElementById("5page")?.offsetTop,
-  //           behavior: "smooth",
-  //         });
-  //       } else if (scrollPos <= viewHeight + viewHeight + viewHeight + viewHeight + viewHeight / 2) {
-  //         window.scrollTo({
-  //           top: document.getElementById("6page")?.offsetTop,
-  //           behavior: "smooth",
-  //         });
-  //       }
-  //     }else {
-  //       if (scrollPos <= viewHeight){
-  //         window.scrollTo({
-  //           top: document.getElementById("1page")?.offsetTop,
-  //           behavior: "smooth",
-  //         });
-  //       }else if (scrollPos <= viewHeight * 2){
-  //         window.scrollTo({
-  //           top: document.getElementById("2page")?.offsetTop,
-  //           behavior: "smooth",
-  //         });
-  //       } else if (scrollPos <= viewHeight * 3){
-  //         window.scrollTo({
-  //           top: document.getElementById("3page")?.offsetTop,
-  //           behavior: "smooth",
-  //         });
-  //       }else if (scrollPos <= viewHeight * 4){
-  //         window.scrollTo({
-  //           top: document.getElementById("4page")?.offsetTop,
-  //           behavior: "smooth",
-  //         });
-  //       }else if (scrollPos <= viewHeight * 5){
-  //         window.scrollTo({
-  //           top: document.getElementById("5page")?.offsetTop,
-  //           behavior: "smooth",
-  //         });
-  //       }
-  //     }
-  //   });
-  // }, []);
+      // console.log(e);
+      const { deltaY } = e;
+      // console.log(deltaY);
+
+      if (deltaY > 0) {
+        if (scrollPos <= viewHeight / 2) {
+          window.scrollTo({
+            top: document.getElementById("2page")?.offsetTop,
+            behavior: "smooth",
+          });
+        } else if (scrollPos <= viewHeight + viewHeight / 2) {
+          window.scrollTo({
+            top: document.getElementById("3page")?.offsetTop,
+            behavior: "smooth",
+          });
+        } else if (scrollPos <= viewHeight + viewHeight + viewHeight / 2) {
+          window.scrollTo({
+            top: document.getElementById("4page")?.offsetTop,
+            behavior: "smooth",
+          });
+        } else if (
+          scrollPos <=
+          viewHeight + viewHeight + viewHeight + viewHeight / 2
+        ) {
+          window.scrollTo({
+            top: document.getElementById("5page")?.offsetTop,
+            behavior: "smooth",
+          });
+        } else if (
+          scrollPos <=
+          viewHeight + viewHeight + viewHeight + viewHeight + viewHeight / 2
+        ) {
+          window.scrollTo({
+            top: document.getElementById("6page")?.offsetTop,
+            behavior: "smooth",
+          });
+        }
+      } else {
+        if (scrollPos <= viewHeight) {
+          window.scrollTo({
+            top: document.getElementById("1page")?.offsetTop,
+            behavior: "smooth",
+          });
+        } else if (scrollPos <= viewHeight * 2) {
+          window.scrollTo({
+            top: document.getElementById("2page")?.offsetTop,
+            behavior: "smooth",
+          });
+        } else if (scrollPos <= viewHeight * 3) {
+          window.scrollTo({
+            top: document.getElementById("3page")?.offsetTop,
+            behavior: "smooth",
+          });
+        } else if (scrollPos <= viewHeight * 4) {
+          window.scrollTo({
+            top: document.getElementById("4page")?.offsetTop,
+            behavior: "smooth",
+          });
+        } else if (scrollPos <= viewHeight * 5) {
+          window.scrollTo({
+            top: document.getElementById("5page")?.offsetTop,
+            behavior: "smooth",
+          });
+        }
+      }
+    });
+  }, []);
 
   return (
     <>
       <ScrollImg />
       <TopBtn />
       <div className="flex-col items-center justify-center">
-        <div id="1page" className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/solid_background.png')]">
+        <div
+          id="1page"
+          className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/solid_background.png')]"
+        >
           <div className="flex flex-col sm:flex-row items-center sm:items-center justify-center h-fit z-10 w-full pl-5 pr-3 sm:pl-3 sm:pr-5">
             <motion.div
               className="flex items-center justify-left w-fit ml-3 mr-3 mb-2"
@@ -178,10 +187,10 @@ const Usage = () => {
               viewport={{ once: true, amount: 0.5 }}
               transition={{ staggerChildren: 0.5 }}
             >
-              <div className="font-SCDream2 text-xs md:text-xs lg:text-base pr-0 md:pr-1.5 text-gray-100 mt-5">
+              <div className="font-SCDream1 text-xs md:text-xs lg:text-base pr-0 md:pr-1.5 text-gray-100 mt-5">
                 여러분의 하루를 카테고리로 분류할 수 있고,
               </div>
-              <div className="font-SCDream2 text-xs md:text-xs lg:text-base text-gray-100 mt-1 md:mt-5">
+              <div className="font-SCDream1 text-xs md:text-xs lg:text-base text-gray-100 mt-1 md:mt-5">
                 그날 들은 음악을 기록할 수 있어요!
               </div>
             </motion.div>
@@ -218,10 +227,10 @@ const Usage = () => {
               viewport={{ once: true, amount: 0.5 }}
               transition={{ staggerChildren: 0.5 }}
             >
-              <div className="font-SCDream2 text-xs md:text-xs lg:text-base pr-0 md:pr-1.5 text-gray-100 mt-5">
+              <div className="font-SCDream1 text-xs md:text-xs lg:text-base pr-0 md:pr-1.5 text-gray-100 mt-5">
                 지인들을 태그하여 여러분의 인상깊은 하루를
               </div>
-              <div className="font-SCDream2 text-xs md:text-xs lg:text-base text-gray-100 mt-1 md:mt-5">
+              <div className="font-SCDream1 text-xs md:text-xs lg:text-base text-gray-100 mt-1 md:mt-5">
                 공유할 수 있습니다!
               </div>
             </motion.div>
@@ -258,10 +267,10 @@ const Usage = () => {
               viewport={{ once: true, amount: 0.5 }}
               transition={{ staggerChildren: 0.5 }}
             >
-              <div className="font-SCDream2 text-xs md:text-xs lg:text-base pr-0 md:pr-1.5 text-gray-100 mt-5">
+              <div className="font-SCDream1 text-xs md:text-xs lg:text-base pr-0 md:pr-1.5 text-gray-100 mt-5">
                 게시글 작성 시 설정한 카테고리별로
               </div>
-              <div className="font-SCDream2 text-xs md:text-xs lg:text-base text-gray-100 mt-1 md:mt-5">
+              <div className="font-SCDream1 text-xs md:text-xs lg:text-base text-gray-100 mt-1 md:mt-5">
                 좌측메뉴를 이용하여 확인할 수 있습니다!
               </div>
             </motion.div>
@@ -327,7 +336,7 @@ const Usage = () => {
             <div className="flex flex-row items-center mt-8 justify-left w-fit">
               <Link href="/login">
                 <div className="relative items-center justify-center cursor-pointer w-fit h-7 mr-5">
-                  <div className="z-10 text-sm md:text-base lg:text-xl text-gray-100 font-SCDream2">
+                  <div className="z-10 text-base md:text-xl lg:text-2xl text-gray-100 font-SCDream2">
                     시작하기
                   </div>
                   <div className="absolute top-4 md:top-5 lg:top-6 left-0 right-0 bottom-2 md:bottom-1 lg:bottom-0 bg-mainOrange/40"></div>
@@ -335,7 +344,7 @@ const Usage = () => {
               </Link>
               <Link href="/">
                 <div className="relative items-center justify-center cursor-pointer w-fit h-7">
-                  <div className="z-10 text-sm md:text-base lg:text-xl text-gray-100 font-SCDream2">
+                  <div className="z-10 text-base md:text-xl lg:text-2xl text-gray-100 font-SCDream2">
                     초기화면으로 돌아가기
                   </div>
                   <div className="absolute top-4 md:top-5 lg:top-6 left-0 right-0 bottom-2 md:bottom-1 lg:bottom-0 bg-mainOrange/40"></div>
