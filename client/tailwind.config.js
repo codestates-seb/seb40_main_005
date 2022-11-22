@@ -22,11 +22,17 @@ module.exports = {
         SCDream9: ["SCDream9"],
       },
       colors: {
-        topbtn: "rgb(5,5,5, 0.37)",
-        lightOrange: "rgb(235 ,130 ,83 ,0.3)",
-        orange: "#EB8253",
-        bgGray: "#F8F9FD",
+        "topbtn": "rgb(5,5,5, 0.37)",
+        "lightOrange": "rgb(235 ,130 ,83 ,0.3)",
+        "orange": "#EB8253",
+        "btnOrange": "#FF9264",
+        "textBlack" : "rgb(0,0,0, 0.5)",
+        'underbar': "rgb(255, 174, 140)",
+        "bgGray": "#F8F9FD",
+        bgWhite: "#FEFEFE",
+
       },
+
       screens: {
         md: "376px",
       },

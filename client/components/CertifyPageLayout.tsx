@@ -1,5 +1,10 @@
 import Image from "next/image";
 
+
+/**
+ * @description 사용 예시 : CertifyPageLayout태그 안에서 코드 작성
+**/
+
 const CertifyPageLayout = (props : {
     children : React.ReactNode
 }) => {
@@ -11,7 +16,7 @@ const CertifyPageLayout = (props : {
                 <Image
                 className=""
                     src="/images/logo export(orange).svg"
-                    width={200}
+                    width={150}
                     height={50}
                 />
                 <div className="flex h-4/5 w-80 lg:mt-11 lg:mb-10 lg:h-[32rem] md:w-4/6 lg:w-3/5 drop-shadow-2xl">
