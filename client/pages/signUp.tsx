@@ -56,12 +56,12 @@ const SignUp = () => {
   return (
     <>
       <CertifyPageLayout>
-        <div className="flex flex-col items-start justify-start w-full h-full">
+        <div className="flex flex-col justify-start items-start w-full h-full">
           <div className="relative items-center justify-center w-fit h-7 ">
             <div className="z-10 text-base md:text-xl lg:text-2xl text-zinc-500 font-SCDream6">
               회원가입
             </div>
-            <div className="absolute left-0 right-0 top-5 md:top-6 lg:top-7 bottom-1 md:bottom-0 lg:-bottom-1 bg-mainOrange/40"></div>
+            <div className="absolute top-5 md:top-6 lg:top-7 left-0 right-0 bottom-1 md:bottom-0 lg:-bottom-1 bg-mainOrange/40"></div>
           </div>
 
           <form onSubmit={handleSubmit(onValid, onInValid)} className="w-full">
@@ -70,7 +70,7 @@ const SignUp = () => {
                 <div className="relative items-center justify-center w-fit h-7 mt-7">
                   <label
                     htmlFor="identity"
-                    className="text-base text-gray-500 font-SCDream5"
+                    className="font-SCDream5 text-gray-500 text-base"
                   >
                     ID
                   </label>
@@ -86,19 +86,18 @@ const SignUp = () => {
                     required: "ID는 필수 입력입니다.",
                     onChange: handleIdChange,
                   })}
-                  
                 />
                 <ErrorMessage
                   errors={errors}
                   name="singleErrorInput"
                   render={({ message }) => (
-                    <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
+                    <div className="flex flex-row justify-end items-end w-full text-mainOrange h-fit font-SCDream2 text-xs mt-1">
                       {message}
                     </div>
                   )}
                 />
                 {idValue.length < 5 ? (
-                  <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
+                  <div className="flex flex-row justify-end items-end w-full text-mainOrange h-fit font-SCDream2 text-xs mt-1">
                     5글자 이상으로 입력해주세요
                   </div>
                 ) : null}
