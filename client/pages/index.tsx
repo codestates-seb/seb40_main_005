@@ -73,7 +73,7 @@ function Home() {
       const totalHeight = document.body.scrollHeight; // 전체 화면크기
       const currY = pageHeight;
 
-      console.log(scrollTop, totalHeight - pageHeight);
+      // console.log(scrollTop, totalHeight - pageHeight);
 
       if (scrollTop < pageHeight) {
         setScrollIndex(1);
@@ -87,7 +87,7 @@ function Home() {
         setScrollIndex(2);
 
         if (scrollTop >= Math.floor(currY / 2)) {
-          console.log("here!");
+          // console.log("here!");
         }
       } else if (scrollTop >= totalHeight - pageHeight) {
         setScrollIndex(6);
@@ -190,7 +190,7 @@ function Home() {
       <Dots scrollIdx={scrollIdx} />
       <div className="flex-col items-center justify-center h-screen">
         <div
-          id="page1"
+          id="1"
           className=" flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/첫화면이미지.png')]"
         >
           <div className="absolute top-0 bottom-0 left-0 right-0 w-full h-screen bg-white/60"></div>
@@ -240,18 +240,20 @@ function Home() {
                 </div>
                 <div className="absolute top-5 left-0.5 right-0 bottom-0.5  bg-orange/40"></div>
               </div>
+              <Link href="/signUp">
               <div className="relative items-center justify-center cursor-pointer w-fit h-7">
                 <div className="z-10 ml-1 text-lg text-gray-700 font-SCDream3">
                   회원가입
                 </div>
                 <div className="absolute top-5 left-1 right-0 bottom-0.5  bg-orange/40"></div>
               </div>
+              </Link>
             </div>
           </div>
         </div>
 
         <div
-          id="page2"
+          id="2"
           className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/lending_두번째이미지.png')]"
         >
           {/* 반응형 이슈 */}
@@ -274,7 +276,7 @@ function Home() {
         </div>
 
         <div
-          id="page3"
+          id="3"
           className=" flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/lending_세번째이미지.png')]"
         >
           {/* 반응형 이슈 */}
@@ -297,7 +299,7 @@ function Home() {
         </div>
 
         <div
-          id="page4"
+          id="4"
           className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/lending_네번째이미지.png')]"
         >
           {/* 반응형 이슈 */}
@@ -320,7 +322,7 @@ function Home() {
         </div>
 
         <div
-          id="page5"
+          id="5"
           className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/lending_다섯번째이미지.png')]"
         >
           {/* 반응형 이슈 */}
@@ -343,7 +345,7 @@ function Home() {
         </div>
 
         <div
-          id="page6"
+          id="6"
           className=" flex flex-col items-center justify-center w-full h-screen bg-cover bg-[url('/images/solid_background.png')]"
         >
           {/* 반응형 이슈 */}
@@ -372,12 +374,12 @@ function Home() {
               <div className="absolute top-5 left-0 right-0 bottom-0.5 bg-orange/40"></div>
             </div>
             <Link href="/usage">
-            <div className="relative items-center justify-center cursor-pointer w-fit h-7">
-              <div className="z-10 ml-1 text-lg text-gray-100 font-SCDream2">
-                사용설명 보러가기
+              <div className="relative items-center justify-center cursor-pointer w-fit h-7">
+                <div className="z-10 ml-1 text-lg text-gray-100 font-SCDream2">
+                  사용설명 보러가기
+                </div>
+                <div className="absolute top-5 left-1 right-0 bottom-0.5  bg-orange/40"></div>
               </div>
-              <div className="absolute top-5 left-1 right-0 bottom-0.5  bg-orange/40"></div>
-            </div>
             </Link>
           </div>
         </div>
