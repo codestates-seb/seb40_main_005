@@ -8,8 +8,8 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/gallendar?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: 
-    password: 
+    username: root
+    password: tkatka55**
   jpa:
     open-in-view: false
     generate-ddl: true
@@ -29,11 +29,14 @@ spring:
 cloud:
   aws:
     credentials:
-      accessKey:       # AWS IAM AccessKey 적기
-      secretKey:     # AWS IAM SecretKey 적기
+      accessKey: AKIA3EWIUSTJMY6KYUW2       # AWS IAM AccessKey 적기
+      secretKey: eETjkVO7A6j1N19OABOI2IGP9W3N6Q04NrmWW2cv    # AWS IAM SecretKey 적기
     s3:
       bucket: gallendar
+#      bucket: test
       dir: /test
+      mock:
+        port: 3306
     region:
       static: ap-northeast-2
     stack:
