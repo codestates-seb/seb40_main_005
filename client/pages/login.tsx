@@ -5,6 +5,7 @@ import KakaoBtn from "../components/KakaoBtn";
 import SubmitBtn from "../components/SubmitBtn";
 
 const Login = () => {
+<<<<<<< Updated upstream
   return (
     <>
       <CertifyPageLayout>
@@ -21,6 +22,9 @@ const Login = () => {
       </CertifyPageLayout>
     </>
   );
+=======
+  return <></>;
+>>>>>>> Stashed changes
 };
 
 export default Login;
