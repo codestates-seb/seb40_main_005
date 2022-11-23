@@ -21,28 +21,26 @@ const SignUp = () => {
   const [idAlert, setIdAlert] = useState<boolean>(false);
   const [checkId, setCheckId] = useState<boolean>(false);
 
-  const getAllPosts = async () => {
-    const { data } = await axios.get(
-      "http://3.39.195.113:8080/members/search?id=35",
-    );
+  // const getAllPosts = async () => {
+  //   const { data } = await axios.get(
+  //     "http://13.209.7.184:8080/members/search?id=kimcoding",
+  //   );
 
-    return data;
-  };
-  const queryClient = useQueryClient();
-  const { data, status, isLoading, isSuccess } = useQuery(
-    ["questions"],
-    getAllPosts,
-  );
+  //   return data;
+  // };
+
+  // const { data, status, isLoading, isSuccess } = useQuery(
+  //   ["questions"],
+  //   getAllPosts,
+  // );
+
+  
+  // if(idAlert){
+    
+  // }
 
   const onValid = () => {
-    // const queryClient = useQueryClient();
-    // const {data, status, isLoading, isSuccess} = useQuery(
-    //   ['question'],
-    //   ()=> {
-    //     return axios.get("http://3.39.195.113:8080/members/search?id=35");
-    //   }
-    // )
-    console.log(data);
+    setIdAlert(true);
   };
 
   const onInValid = () => {
@@ -77,8 +75,9 @@ const SignUp = () => {
                   <div className="absolute top-4 md:top-4.5 lg:top-4 left-0 right-0 bottom-2 md:bottom-1.5 lg:bottom-1.5 bg-mainOrange/40"></div>
                 </div>
                 <input
-                  className="font-SCDream2 text-gray-500 w-full text-sm mt-2 border-b-[1px] border-mainOrange/40 outline-none"
+                  className="font-SCDream3 text-gray-500 w-full text-sm mt-2 border-b-[1px] border-mainOrange/40 outline-none"
                   id="identity"
+                  autoComplete="off"
                   type="text"
                   value={idValue}
                   placeholder="ID를 입력 후 Enter를 눌러주세요"
@@ -97,7 +96,7 @@ const SignUp = () => {
                     </div>
                   )}
                 />
-                {idValue.length < 5 ? (
+                {idValue.length !== 0 && idValue.length < 5 ? (
                   <div className="flex flex-row justify-end items-end w-full text-mainOrange h-fit font-SCDream2 text-xs mt-1">
                     5글자 이상으로 입력해주세요
                   </div>
