@@ -28,21 +28,21 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+//    @Autowired
+//    private UserDetailsService userDetailsService;
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
 
-    @Autowired
-    public void configGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        // 일치하는 자격증명을 위해 사용자를 로드할 위치를 알수 있도록
-        // AuthenticationManager를 구성한다.
-        // BCryptPasswordEncoder를 이용
-        auth.userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
-    }
+//    @Autowired
+//    public void configGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        // 일치하는 자격증명을 위해 사용자를 로드할 위치를 알수 있도록
+//        // AuthenticationManager를 구성한다.
+//        // BCryptPasswordEncoder를 이용
+//        auth.userDetailsService(userDetailsService)
+//                .passwordEncoder(passwordEncoder());
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
