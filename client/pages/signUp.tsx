@@ -64,10 +64,10 @@ const SignUp = () => {
   };
 
   const handlePressEnter = (e: any) => {
-    if (e.keyCode === 13) {
-      e.preventDefault();
-      idRefetch();
-      console.log(data);
+      if (e.keyCode === 13) {
+        e.preventDefault();
+        idRefetch();
+        console.log(data);
     }
   };
 
@@ -134,24 +134,24 @@ const SignUp = () => {
                 errors={errors}
                 name="idErrorInput"
                 render={({ message }) => (
-                  <div className="flex flex-row justify-end items-end w-full text-nagativeMessage h-fit font-SCDream2 text-xs mt-1">
+                  <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
                     {message}
                   </div>
                 )}
               />
               {idValue.length !== 0 && idValue.length < 5 ? (
-                <div className="flex flex-row justify-end items-end w-full text-nagativeMessage h-fit font-SCDream2 text-xs mt-1">
+                <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
                   5글자 이상으로 입력해주세요
                 </div>
               ) : null}
 
               {/* API 구현 뒤 수정 필요 */}
               {data && data.data.length > 0 ? (
-                <div className="flex flex-row justify-end items-end w-full text-mainOrange h-fit font-SCDream2 text-xs mt-1">
+                <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
                   사용가능한 ID입니다
                 </div>
               ) : data && data.data.length === 0 ? (
-                <div className="flex flex-row justify-end items-end w-full text-nagativeMessage h-fit font-SCDream2 text-xs mt-1">
+                <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
                   이미 사용중인 ID입니다
                 </div>
               ) : null}
@@ -169,7 +169,7 @@ const SignUp = () => {
                 </label>
                 <div className="absolute top-4 md:top-4.5 lg:top-4 left-0 right-0 bottom-2 md:bottom-1.5 lg:bottom-1.5 bg-mainOrange/40"></div>
               </div>
-              <div className="flex flex-row w-full h-fit  justify-center items-end">
+              <div className="flex flex-row items-end justify-center w-full h-fit">
                 <input
                   className="font-SCDream3 text-gray-500 w-full text-xs md:text-sm mt-2 border-b-[1px] border-mainOrange/40 outline-none"
                   id="email"
@@ -191,17 +191,17 @@ const SignUp = () => {
                 errors={errors}
                 name="emailErrorInput"
                 render={({ message }) => (
-                  <div className="flex flex-row justify-end items-end w-full text-nagativeMessage h-fit font-SCDream2 text-xs mt-1">
+                  <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
                     {message}
                   </div>
                 )}
               />
               {emailValue.length !== 0 && checkEmail ? (
-                <div className="flex flex-row justify-end items-end w-full text-mainOrange h-fit font-SCDream2 text-xs mt-1">
+                <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
                   올바른 이메일 형식입니다
                 </div>
               ) : emailValue.length !== 0 && !checkEmail ? (
-                <div className="flex flex-row justify-end items-end w-full text-nagativeMessage h-fit font-SCDream2 text-xs mt-1">
+                <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
                   올바르지않은 이메일 형식입니다
                 </div>
               ) : null}
@@ -214,17 +214,17 @@ const SignUp = () => {
                 <div className="flex flex-row justify-end items-end w-full text-mainOrange h-fit font-SCDream2 text-xs mt-1">
                   사용가능한 Email입니다! 인증요청 버튼을 클릭해주세요
                 </div>
-              ): null}
+              ) : null}
             </div>
           </form>
 
           {/* <form className="w-full">
             <div className="flex flex-col w-full h-fit">
-              <div className="flex flex-col md:flex-row w-full h-fit">
+              <div className="flex flex-col w-full md:flex-row h-fit">
                 <div className="relative items-center justify-center w-fit h-7 mt-7">
                   <label
                     htmlFor="password"
-                    className="font-SCDream5 text-gray-500 text-base"
+                    className="text-base text-gray-500 font-SCDream5"
                   >
                     비밀번호
                   </label>
@@ -251,17 +251,17 @@ const SignUp = () => {
                 errors={errors}
                 name="passwordErrorInput"
                 render={({ message }) => (
-                  <div className="flex flex-row justify-end items-end w-full text-nagativeMessage h-fit font-SCDream2 text-xs mt-1">
+                  <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
                     {message}
                   </div>
                 )}
               />
               {pwValue.length !== 0 && checkPw ? (
-                <div className="flex flex-row justify-end items-end w-full text-mainOrange h-fit font-SCDream2 text-xs mt-1">
+                <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
                   올바른 비밀번호 형식입니다
                 </div>
               ) : pwValue.length !== 0 && !checkPw ? (
-                <div className="flex flex-row justify-end items-end w-full text-nagativeMessage h-fit font-SCDream2 text-xs mt-1">
+                <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
                   비밀번호 형식이 올바르지 않습니다
                 </div>
               ) : null}
@@ -271,7 +271,7 @@ const SignUp = () => {
                 <div className="relative items-center justify-center w-fit h-7 mt-7">
                   <label
                     htmlFor="checkpassword"
-                    className="font-SCDream5 text-gray-500 text-base"
+                    className="text-base text-gray-500 font-SCDream5"
                   >
                     비밀번호 확인
                   </label>
@@ -294,37 +294,37 @@ const SignUp = () => {
                 errors={errors}
                 name="repasswordErrorInput"
                 render={({ message }) => (
-                  <div className="flex flex-row justify-end items-end w-full text-nagativeMessage h-fit font-SCDream2 text-xs mt-1">
+                  <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
                     {message}
                   </div>
                 )}
               />
               {rePwValue.length !== 0 && checkRePw ? (
-                <div className="flex flex-row justify-end items-end w-full text-mainOrange h-fit font-SCDream2 text-xs mt-1">
+                <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
                   비밀번호가 일치합니다
                 </div>
               ) : rePwValue.length !== 0 && !checkRePw ? (
-                <div className="flex flex-row justify-end items-end w-full text-nagativeMessage h-fit font-SCDream2 text-xs mt-1">
+                <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
                   비밀번호가 일치하지 않습니다
                 </div>
               ) : null}
             </div>
-            <div className="flex flex-row justify-end items-center w-full h-fit">
+            <div className="flex flex-row items-center justify-end w-full h-fit">
               <SubmitBtn/>
             </div>
           </form> */}
 
           <EmailCheckNumberLayout>
-            <div className="flex flex-row w-full h-fit justify-center items-center font-SCDream5 text-sm md:text-lg text-mainOrange">
+            <div className="flex flex-row items-center justify-center w-full text-sm h-fit font-SCDream5 md:text-lg text-mainOrange">
               Gallendar에 오신 걸 환영합니다!
             </div>
-            <div className="flex flex-row w-full h-fit justify-center items-center font-SCDream5 text-xs md:text-sm text-socialBgOrg">
+            <div className="flex flex-row items-center justify-center w-full text-xs h-fit font-SCDream5 md:text-sm text-socialBgOrg">
               Welcome to Galledar!
             </div>
           </EmailCheckNumberLayout>
 
           {/* <EmailCheckNumberLayout>
-            <div className="text-mainOrange font-SCDream4 text-xs md:text-sm">
+            <div className="text-xs text-mainOrange font-SCDream4 md:text-sm">
               입력하신 Email로 인증번호가 발송되었습니다
             </div>
             <div className=" text-nagativeMessage font-SCDream3 text-[11px] md:text-[12px] mt-2">
@@ -336,7 +336,7 @@ const SignUp = () => {
             />
             <AuthBtn>인증</AuthBtn>
           </EmailCheckNumberLayout> */}
-          <div className="flex flex-col justify-center items-center w-full h-fit mt-3">
+          <div className="flex flex-col items-center justify-center w-full mt-3 h-fit">
             <GoogleBtn />
             <KakaoBtn />
           </div>
