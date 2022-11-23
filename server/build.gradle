@@ -64,6 +64,12 @@ dependencies {
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
 
+	//email
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	//Redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
 }
 
 tasks.named('test') {
@@ -74,7 +80,7 @@ tasks.named('test') {
  * queryDSL 설정 추가
  */
 // querydsl에서 사용할 경로 설정
-def querydslDir = "$buildDir/generated/querydsl"
+def querydslDir = '$buildDir/generated/querydsl'
 // JPA 사용 여부와 사용할 경로를 설정
 querydsl {
 	jpa = true

@@ -9,17 +9,27 @@ spring:
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
   main:
     allow-circular-references: true
   jwt:
-    secret:
-    jwtExpirationMs:
-    jwtRefreshExpirationMs:
+    secret: 1234asdf
+    jwtExpirationMs: 10
+    jwtRefreshExpirationMs: 1000
   mvc:
     path match:
       matching-strategy: ant_path_matcher
-
+  mail:
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+    host: smtp.gmail.com
+    username:
+    password:
+    port: 587
 logging:
   level:
     org:
