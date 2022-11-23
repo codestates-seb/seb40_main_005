@@ -28,6 +28,7 @@ const SignUp = () => {
   const [emailValue, setEmailValue] = useState<string>("");
   const [checkEmail, setCheckEmail] = useState<boolean>(false);
   const [isSameEmail, setIsSameEmail] = useState<boolean>(false);
+  const [isCheckEmail, setIsCheckEmail] = useState<boolean>(false);
   const [pwValue, setPwValue] = useState<string>("");
   const [checkPw, setCheckPw] = useState<boolean>(false);
   const [rePwValue, setRePwValue] = useState<string>("");
@@ -73,6 +74,7 @@ const SignUp = () => {
   const handleEmailEnter = (e: any) => {
     if (e.keyCode === 13) {
       e.preventDefault();
+      setIsCheckEmail(true);
     }
   };
 
@@ -97,19 +99,19 @@ const SignUp = () => {
   return (
     <>
       <CertifyPageLayout>
-        <div className="flex flex-col justify-start items-start w-full h-full">
+        <div className="flex flex-col items-start justify-start w-full h-full">
           <div className="relative items-center justify-center w-fit h-7 ">
             <div className="z-10 text-base md:text-xl lg:text-2xl text-zinc-500 font-SCDream6">
               회원가입
             </div>
-            <div className="absolute top-5 md:top-6 lg:top-7 left-0 right-0 bottom-1 md:bottom-0 lg:-bottom-1 bg-mainOrange/40"></div>
+            <div className="absolute left-0 right-0 top-5 md:top-6 lg:top-7 bottom-1 md:bottom-0 lg:-bottom-1 bg-mainOrange/40"></div>
           </div>
           <form className="w-full">
             <div className="flex flex-col w-full h-fit">
               <div className="relative items-center justify-center w-fit h-7 mt-7">
                 <label
                   htmlFor="identity"
-                  className="font-SCDream5 text-gray-500 text-base"
+                  className="text-base text-gray-500 font-SCDream5"
                 >
                   ID
                 </label>
@@ -161,7 +163,7 @@ const SignUp = () => {
               <div className="relative items-center justify-center w-fit h-7 mt-7">
                 <label
                   htmlFor="email"
-                  className="font-SCDream5 text-gray-500 text-base"
+                  className="text-base text-gray-500 font-SCDream5"
                 >
                   E-mail
                 </label>
@@ -181,8 +183,7 @@ const SignUp = () => {
                     onChange: handleEmailChange,
                   })}
                 />
-                {}
-                <AuthBtn>인증요청</AuthBtn>
+                {isCheckEmail ? <AuthBtn>인증요청</AuthBtn> : null}
                 {/* <AuthBtn>인증완료</AuthBtn> */}
               </div>
 
@@ -204,11 +205,12 @@ const SignUp = () => {
                   올바르지않은 이메일 형식입니다
                 </div>
               ) : null}
-              {emailValue.length !== 0 && isSameEmail ? (
+
+              {emailValue.length !== 0 && isSameEmail && isCheckEmail ? (
                 <div className="flex flex-row justify-end items-end w-full text-nagativeMessage h-fit font-SCDream2 text-xs mt-1">
                   이미 존재하는 Email입니다
                 </div>
-              ) : emailValue.length !== 0 && !isSameEmail ? (
+              ) : emailValue.length !== 0 && !isSameEmail && isCheckEmail ? (
                 <div className="flex flex-row justify-end items-end w-full text-mainOrange h-fit font-SCDream2 text-xs mt-1">
                   사용가능한 Email입니다! 인증요청 버튼을 클릭해주세요
                 </div>
