@@ -38,4 +38,4 @@ out/
 
 ### Custom ###
 
-src/main/resources/application.yml
+*.yml
