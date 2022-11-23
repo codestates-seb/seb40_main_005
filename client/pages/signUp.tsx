@@ -64,10 +64,10 @@ const SignUp = () => {
   };
 
   const handlePressEnter = (e: any) => {
-      if (e.keyCode === 13) {
-        e.preventDefault();
-        idRefetch();
-        console.log(data);
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      idRefetch();
+      console.log(data);
     }
   };
 
@@ -205,15 +205,11 @@ const SignUp = () => {
                   올바르지않은 이메일 형식입니다
                 </div>
               ) : null}
-              {emailValue.length !== 0 && isSameEmail ? (
-                <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
 
               {emailValue.length !== 0 && isSameEmail && isCheckEmail ? (
                 <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
                   이미 존재하는 Email입니다
                 </div>
-              ) : emailValue.length !== 0 && !isSameEmail ? (
-                <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
               ) : emailValue.length !== 0 && !isSameEmail && isCheckEmail ? (
                 <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
                   사용가능한 Email입니다! 인증요청 버튼을 클릭해주세요
