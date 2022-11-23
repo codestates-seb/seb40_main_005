@@ -64,10 +64,10 @@ const SignUp = () => {
   };
 
   const handlePressEnter = (e: any) => {
-    if (e.keyCode === 13) {
-      e.preventDefault();
-      idRefetch();
-      console.log(data);
+      if (e.keyCode === 13) {
+        e.preventDefault();
+        idRefetch();
+        console.log(data);
     }
   };
 
