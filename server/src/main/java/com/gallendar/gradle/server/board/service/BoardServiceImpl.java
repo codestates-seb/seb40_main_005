@@ -60,4 +60,11 @@ public class BoardServiceImpl implements BoardService{
         return boardRepository.findAllDescBy(PageRequest.of(page-1, size, Sort.by("boardId").descending()));
     }
 
+    @Transactional
+    public void delete (Long boardId){
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardId="+boardId));
+
+        boardRepository.delete(board);
+    }
+
 }

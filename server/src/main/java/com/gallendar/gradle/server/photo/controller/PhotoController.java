@@ -1,8 +1,24 @@
 package com.gallendar.gradle.server.photo.controller;
 
-import org.springframework.stereotype.Controller;
+import com.gallendar.gradle.server.photo.service.S3UploadService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-@Controller
+import java.io.IOException;
+
+/**
+ * ImageFile을 S3 클라우드로 업로드
+ */
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/photo")
 public class PhotoController {
 
+    private final S3UploadService s3UploadService;
+
+    @PostMapping("/upload")
+    public String uploadPhoto(@RequestPart("images") MultipartFile multipartFile) throws IOException{
+        return s3UploadService.upload(multipartFile);
+    }
 }

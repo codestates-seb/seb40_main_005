@@ -27,21 +27,21 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+//    @Autowired
+//    private UserDetailsService userDetailsService;
 
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
 
-    @Autowired
-    public void configGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        // 일치하는 자격증명을 위해 사용자를 로드할 위치를 알수 있도록
-        // AuthenticationManager를 구성한다.
-        // BCryptPasswordEncoder를 이용
-        auth.userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
-    }
+//    @Autowired
+//    public void configGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        // 일치하는 자격증명을 위해 사용자를 로드할 위치를 알수 있도록
+//        // AuthenticationManager를 구성한다.
+//        // BCryptPasswordEncoder를 이용
+//        auth.userDetailsService(userDetailsService)
+//                .passwordEncoder(passwordEncoder());
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -57,8 +57,16 @@ public class SecurityConfig {
                 // 이 요청은 인증을 하지 않는다.
                 .authorizeRequests()
                 .antMatchers(
-                        "/authentication/**"
-                        , "/members/**")
+
+
+                        "/authentication"
+                        , "/members/**"
+                        // -- Swagger UI v2
+                        , "/v2/api-docs", "/swagger-resources/**"
+                        , "/swagger-ui.html", "/webjars/**", "/swagger/**"
+                        // -- Swagger UI v3 (Open API)
+                        , "/v3/api-docs/**", "/swagger-ui/**")
+
 
                 .permitAll()
                 // 다른 모든 요청은 인증을 한다.

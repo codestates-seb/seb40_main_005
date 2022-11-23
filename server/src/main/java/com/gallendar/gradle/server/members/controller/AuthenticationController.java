@@ -15,17 +15,29 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+import io.swagger.annotations.ApiOperation;
+
+
+
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/authentication")
 public class AuthenticationController {
 
-    @Autowired
-    private final LoginService loginService;
-    @Autowired
+
+   
     private final MailService mailService;
 
+    private LoginService loginService;
+
+    /**
+     * 로그인
+     *
+     * @param loginRequest
+     * @return
+     */
+    @ApiOperation(value = "로그인", notes = "등록된 회원이 로그인을 시도하여 성공하면 토큰을 응답, 실패하면 예외발생")
 
     @PostMapping
     public LoginResponse membersLogin(@RequestBody LoginRequest loginRequest) {
@@ -48,6 +60,7 @@ public class AuthenticationController {
         String response = "비밀번호 변경전 이루어지는 유저확인";
         return response;
     }
+
 
 
     @PostMapping("/email")
