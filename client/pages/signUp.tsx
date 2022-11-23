@@ -28,6 +28,7 @@ const SignUp = () => {
   const [emailValue, setEmailValue] = useState<string>("");
   const [checkEmail, setCheckEmail] = useState<boolean>(false);
   const [isSameEmail, setIsSameEmail] = useState<boolean>(false);
+  const [isCheckEmail, setIsCheckEmail] = useState<boolean>(false);
   const [pwValue, setPwValue] = useState<string>("");
   const [checkPw, setCheckPw] = useState<boolean>(false);
   const [rePwValue, setRePwValue] = useState<string>("");
@@ -63,18 +64,17 @@ const SignUp = () => {
   };
 
   const handlePressEnter = (e: any) => {
-    if (e.keyCode === 13) {
       if (e.keyCode === 13) {
         e.preventDefault();
         idRefetch();
         console.log(data);
-      }
     }
   };
 
   const handleEmailEnter = (e: any) => {
     if (e.keyCode === 13) {
       e.preventDefault();
+      setIsCheckEmail(true);
     }
   };
 
@@ -183,8 +183,7 @@ const SignUp = () => {
                     onChange: handleEmailChange,
                   })}
                 />
-                {}
-                <AuthBtn>인증요청</AuthBtn>
+                {isCheckEmail ? <AuthBtn>인증요청</AuthBtn> : null}
                 {/* <AuthBtn>인증완료</AuthBtn> */}
               </div>
 
@@ -208,9 +207,14 @@ const SignUp = () => {
               ) : null}
               {emailValue.length !== 0 && isSameEmail ? (
                 <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
+
+              {emailValue.length !== 0 && isSameEmail && isCheckEmail ? (
+                <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
                   이미 존재하는 Email입니다
                 </div>
               ) : emailValue.length !== 0 && !isSameEmail ? (
+                <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
+              ) : emailValue.length !== 0 && !isSameEmail && isCheckEmail ? (
                 <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
                   사용가능한 Email입니다! 인증요청 버튼을 클릭해주세요
                 </div>
