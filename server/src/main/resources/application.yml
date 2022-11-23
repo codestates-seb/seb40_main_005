@@ -15,8 +15,20 @@ spring:
     generate-ddl: true
     show-sql: true
     hibernate:
-      ddl-auto: update
+       ddl-auto: update
     database: mysql
+  mail:
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+    host: smtp.gmail.com
+    username:
+    password:
+    port: 587
+      
   main:
     allow-circular-references: true
   jwt:
