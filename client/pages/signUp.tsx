@@ -219,43 +219,43 @@ const SignUp = () => {
           </form>
 
           {/* <form className="w-full">
-            <div className="flex flex-col w-full h-fit">
+              <div className="flex flex-col w-full h-fit">
               <div className="flex flex-col w-full md:flex-row h-fit">
-                <div className="relative items-center justify-center w-fit h-7 mt-7">
-                  <label
+                  <div className="relative items-center justify-center w-fit h-7 mt-7">
+                    <label
                     htmlFor="password"
                     className="text-base text-gray-500 font-SCDream5"
-                  >
+                    >
                     비밀번호
-                  </label>
-                  <div className="absolute top-4 md:top-4.5 lg:top-4 left-0 right-0 bottom-2 md:bottom-1.5 lg:bottom-1.5 bg-mainOrange/40"></div>
-                </div>
+                    </label>
+                    <div className="absolute top-4 md:top-4.5 lg:top-4 left-0 right-0 bottom-2 md:bottom-1.5 lg:bottom-1.5 bg-mainOrange/40"></div>
+                  </div>
                 <div className="font-SCDream3 text-gray-400 w-fit h-fit text-[10px] mt-0 md:mt-9 ml-0 md:ml-2">
                   특수문자, 영문자, 숫자 포함 8글자 이상으로 입력해주세요
                 </div>
               </div>
-              <input
+                  <input
                 className="font-SCDream3 text-gray-500 w-full text-xs md:text-sm mt-2 border-b-[1px] border-mainOrange/40 outline-none"
-                id="email"
-                autoComplete="off"
+                    id="email"
+                    autoComplete="off"
                 type="password"
                 value={pwValue}
                 placeholder="비밀번호를 입력하세요"
                 {...register("passwordErrorInput", {
                   required: "비밀번호는 필수 입력입니다.",
                   onChange: handlePwChange,
-                })}
-              />
+                    })}
+                  />
 
-              <ErrorMessage
-                errors={errors}
+                  <ErrorMessage
+                    errors={errors}
                 name="passwordErrorInput"
-                render={({ message }) => (
+                    render={({ message }) => (
                   <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
-                    {message}
-                  </div>
-                )}
-              />
+                        {message}
+                      </div>
+                    )}
+                  />
               {pwValue.length !== 0 && checkPw ? (
                 <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
                   올바른 비밀번호 형식입니다
@@ -263,9 +263,9 @@ const SignUp = () => {
               ) : pwValue.length !== 0 && !checkPw ? (
                 <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
                   비밀번호 형식이 올바르지 않습니다
+                    </div>
+                  ) : null}
                 </div>
-              ) : null}
-            </div>
 
             <div className="flex flex-col w-full h-fit">
                 <div className="relative items-center justify-center w-fit h-7 mt-7">
@@ -276,7 +276,7 @@ const SignUp = () => {
                     비밀번호 확인
                   </label>
                   <div className="absolute top-4 md:top-4.5 lg:top-4 left-0 right-0 bottom-2 md:bottom-1.5 lg:bottom-1.5 bg-mainOrange/40"></div>
-                </div>
+              </div>
               <input
                 className="font-SCDream3 text-gray-500 w-full text-xs md:text-sm mt-2 mb-5 border-b-[1px] border-mainOrange/40 outline-none"
                 id="checkpassword"
