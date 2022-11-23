@@ -1,7 +1,7 @@
 import axios from "axios"
 
-const checkUserId = (userid : string) => { // 요청메소드 + 요청정보
+const fetchIdCheck = (userid : string) => { // 요청메소드 + 요청정보
     return axios.get(`http://13.209.7.184:8080/members/search?id=${userid}`);
 }
 
-export default checkUserId;
+export default fetchIdCheck;
