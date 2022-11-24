@@ -1,8 +1,8 @@
 import axios from "axios";
 
 interface LoginValue {
-  id: number;
-  todo: string;
+  id: string;
+  password: string;
 }
 
 const postLogin = async (payload: LoginValue) => {
