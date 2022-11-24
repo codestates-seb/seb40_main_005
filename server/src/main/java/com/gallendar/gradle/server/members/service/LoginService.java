@@ -24,6 +24,6 @@ public class LoginService {
             throw new IllegalArgumentException("아이디 또는 비밀번호를 확인해주세요.");
         }
         String token=jwtUtils.generateToken(memberId);
-        return new LoginResponse(token);
+        return new LoginResponse(token,members.getMembersId(),members.getId());
     }
 }
