@@ -1,14 +1,12 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useSetRecoilState } from "recoil";
+import { isLoginState } from "../recoil/authAtom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import Link from "next/link";
-import SubmitBtn from "./SubmitBtn";
-import useLogin from "../hooks/auth/useLogin";
-import { useSetRecoilState } from "recoil";
-import { isLoginState } from "../recoil/authAtom";
-import { useMutation } from "react-query";
+import { Dispatch, SetStateAction, useState } from "react";
 import postLogin from "../apis/auth/postLogin";
-
+import { useMutation } from "react-query";
+import { useRouter } from "next/router";
 // import { client } from "../client/client";
 
 interface FormValues {
@@ -17,17 +15,34 @@ interface FormValues {
   setFailedMsg: Dispatch<SetStateAction<string>>;
 }
 
-export default () => {
+const LoginForm = () => {
   const [idValue, setIdValue] = useState<string>("");
   const [failedMsg, setFailedMsg] = useState<string>("");
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>();
 
-  const onValid = ({ id, password, setFailedMsg }: FormValues) => {
-    useLogin({ id, password, setFailedMsg });
+  const router = useRouter();
+  const loginMutation = useMutation(postLogin);
+  const setIsLogin = useSetRecoilState(isLoginState);
+
+  const useLogin = ({ id, password }: FormValues) => {
+    return loginMutation
+      .mutateAsync({ id, password })
+      .then(res => {
+        if (res.token) {
+          localStorage.setItem("token", res.token);
+          setIsLogin(true);
+          setFailedMsg("");
+          router.push("/main");
+        }
+      })
+      .catch(() => {
+        setFailedMsg("ID 혹은 비밀번호가 일치하지 않습니다.");
+      });
   };
 
   const handleIdChange = (e: any) => {
@@ -46,7 +61,7 @@ export default () => {
 
         <form
           className="relative flex flex-col mt-5 text-base text-gray-500 font-SCDream5"
-          onSubmit={handleSubmit(onValid)}
+          onSubmit={handleSubmit(useLogin)}
         >
           {/* 아이디 입력 */}
           <label htmlFor="id">ID</label>
@@ -72,7 +87,7 @@ export default () => {
             errors={errors}
             name="id"
             render={({ message }) => (
-              <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
+              <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
                 {message}
               </div>
             )}
@@ -111,11 +126,12 @@ export default () => {
             errors={errors}
             name="password"
             render={({ message }) => (
-              <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
+              <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
                 {message}
               </div>
             )}
           />
+
           <div className="mt-2 text-gray-500 flex justify-between text-[6px] font-SCDream2">
             <Link href={"/signup"}>아직 회원이 아니신가요?</Link>
 
@@ -135,7 +151,14 @@ export default () => {
         </form>
 
         {/* 로그인 실패 메세지 */}
+        {failedMsg.length !== 0 ? (
+          <div className="self-center my-8 text-xs md:text-sm lg:my-5 font-SCDream4 md:mt-12 text-nagativeMessage">
+            {failedMsg}
+          </div>
+        ) : null}
       </div>
     </>
   );
 };
+
+export default LoginForm;
