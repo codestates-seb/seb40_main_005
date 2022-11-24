@@ -4,8 +4,9 @@ import lombok.Getter;
 
 public enum ExceptionCode {
 
-    MEMBER_EXISTS(404, "Member exists");
-
+    MEMBER_EXISTS(404, "Member exists"),
+    AUTH_NUMBER_MISS_MATCH(404,"This authentication number is incorrect");
+   
     @Getter
     private int status;
     @Getter
