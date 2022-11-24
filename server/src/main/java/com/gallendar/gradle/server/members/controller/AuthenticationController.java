@@ -18,18 +18,15 @@ import javax.validation.Valid;
 import io.swagger.annotations.ApiOperation;
 
 
-
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/authentication")
 public class AuthenticationController {
 
 
-   
     private final MailService mailService;
 
-    private LoginService loginService;
+    private final LoginService loginService;
 
     /**
      * 로그인
@@ -38,7 +35,6 @@ public class AuthenticationController {
      * @return
      */
     @ApiOperation(value = "로그인", notes = "등록된 회원이 로그인을 시도하여 성공하면 토큰을 응답, 실패하면 예외발생")
-
     @PostMapping
     public LoginResponse membersLogin(@RequestBody LoginRequest loginRequest) {
         return loginService.LoginMembers(loginRequest);
@@ -60,7 +56,6 @@ public class AuthenticationController {
         String response = "비밀번호 변경전 이루어지는 유저확인";
         return response;
     }
-
 
 
     @PostMapping("/email")
