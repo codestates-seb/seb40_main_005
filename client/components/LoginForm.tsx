@@ -4,22 +4,25 @@ import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { useCallback, useState } from "react";
 import Link from "next/link";
-import { useMutation } from "react-query";
 import postLogin from "../apis/auth/postLogin";
+import { useSetRecoilState } from "recoil";
+import { isLoginState } from "../recoil/authAtom";
+import { useMutation } from "react-query";
+import { useRouter } from "next/router";
+import EmailCheckNumberLayout from "./EmailCheckNumberLayout";
 // import { client } from "../client/client";
 
 interface FormInputs {
   singleErrorInput: string;
   id: string;
   password: string;
+  setFailedMsg: Dispatch<SetStateAction<string>>;
+  // setFailedMsg: string;
 }
 
-export const LoginForm = () => {
+const LoginForm = () => {
   const [idValue, setIdValue] = useState<string>("");
-  const [errorMsg, setErrorMsg] = useState("");
-  const [failedMsg, setFailedMsg] = useState("");
-
-  const setIsLogin = useSetRecoilState(isLoginState);
+  const [failedMsg, setFailedMsg] = useState<string>("");
 
   const {
     register,
@@ -28,15 +31,24 @@ export const LoginForm = () => {
   } = useForm<FormInputs>();
 
   const loginMutation = useMutation(postLogin);
+  const router = useRouter();
+  const loginMutation = useMutation(postLogin);
+  const setIsLogin = useSetRecoilState(isLoginState);
 
-  const onValid = () => {
-    loginMutation.mutateAsync().then(res => {
-      if (res.data.success) {
-        localStorage.setItem("token", res.token);
-        // localStorage.setItem("username", result.username);
-        setIsLogin(true);
-      }
-    });
+  const useLogin = ({ id, password }: FormValues) => {
+    return loginMutation
+      .mutateAsync({ id, password })
+      .then(res => {
+        if (res.token) {
+          localStorage.setItem("token", res.token);
+          setIsLogin(true);
+          setFailedMsg("");
+          router.push("/signup");
+        }
+      })
+      .catch(() => {
+        setFailedMsg("ID 혹은 비밀번호가 일치하지 않습니다.");
+      });
   };
 
   const handleIdChange = (e: any) => {
@@ -55,8 +67,8 @@ export const LoginForm = () => {
 
         <form
           className="relative flex flex-col mt-5 text-base text-gray-500 font-SCDream5"
-          onSubmit={onValid}
-        >
+          onSubmit={handleSubmit(useLogin)}
+
           {/* 아이디 입력 */}
           <label htmlFor="id">ID</label>
           {/* 언더바 */}
@@ -77,7 +89,7 @@ export const LoginForm = () => {
             errors={errors}
             name="singleErrorInput"
             render={({ message }) => (
-              <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
+              <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
                 {message}
               </div>
             )}
@@ -100,14 +112,25 @@ export const LoginForm = () => {
           <input
             className="mt-4 text-sm outline-none font-SCDream3 border-b-[1px] border-mainOrange/40"
             id="password"
+            placeholder="비밀번호를 입력하세요"
             type="password"
             {...register("password", {
               required: "비밀번호를 입력해주세요!",
               pattern:
                 /^(?=.[A-Za-z])(?=.\d)(?=.[$@$!%#?&])[A-Za-z\d$@$!%*#?&]{8,25}$/,
             })}
-            placeholder="비밀번호를 입력하세요"
-          ></input>
+          />
+
+          <ErrorMessage
+            errors={errors}
+            name="password"
+            render={({ message }) => (
+              <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
+                {message}
+              </div>
+            )}
+          />
+
           <div className="mt-2 text-gray-500 flex justify-between text-[6px] font-SCDream2">
             <Link href={"/signup"}>아직 회원이 아니신가요?</Link>
 
@@ -121,51 +144,16 @@ export const LoginForm = () => {
             </div>
           </div>
         </form>
+
+        {/* 로그인 실패 메세지 */}
+        {failedMsg.length !== 0 ? (
+          <div className="self-center my-8 text-xs md:text-sm lg:my-5 font-SCDream4 md:mt-12 text-nagativeMessage">
+            {failedMsg}
+          </div>
+        ) : null}
       </div>
     </>
   );
 };
 
-// client
-//       .post("/api/login", JSON.stringify(payload))
-//       .then((res) => {
-//         if (res.headers.get("Authorization")) {
-//           localStorage.setItem("accessToken", res.headers.get("Authorization"));
-//           localStorage.setItem("userName", res.data.displayName);
-//         }
-//         setIsLogin(true);
-//         naviagte("/");
-//         setFailedMsg("");
-//       })
-//       .catch((err) => {
-//         setFailedMsg(err.response.data.message);
-//         setErrorMsg("");
-//       });
-//   };
-
-//   return (
-//         <form
-//           className="flex flex-col space-y-5"
-//           onSubmit={handleSubmit(onValid, onInValid)}
-//         >
-//           <Input
-//             label={"Email"}
-//             register={register("email", {
-//               required: "이메일을 입력해주세요!",
-//             })}
-//             errorMsg={errorMsg}
-//             failedMsg={failedMsg}
-//           />
-
-//           <Input
-//             label={"Password"}
-//             register={register("password", {
-//               required: "비밀번호를 입력해주세요!",
-//               minLength: {
-//                 value: 8,
-//                 message: "비밀번호는 8글자 이상입니다.",
-//               },
-//             })}
-//             errorMsg={errorMsg}
-//             failedMsg={failedMsg}
-//           />
+export default LoginForm;
