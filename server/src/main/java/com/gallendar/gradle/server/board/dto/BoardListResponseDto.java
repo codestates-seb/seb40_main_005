@@ -11,6 +11,7 @@ public class BoardListResponseDto {
     private String title;
     private String content;
     private String music;
+    private Long photoId;
     private LocalDateTime modefiedDate;
 
     public BoardListResponseDto(Board entity){
@@ -18,6 +19,7 @@ public class BoardListResponseDto {
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.music = entity.getMusic();
+        this.photoId = entity.getPhotoId();
         this.modefiedDate = entity.getUpdatedAt();
     }
 }

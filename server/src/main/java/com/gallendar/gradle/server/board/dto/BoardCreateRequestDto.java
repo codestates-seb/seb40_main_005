@@ -17,12 +17,14 @@ public class BoardCreateRequestDto {
     @NotBlank(message = "내용을 입력하세요.")
     private String content;
     private String music;
+    private Long boardId;
 
     @Builder
-    public BoardCreateRequestDto(String title, String content, String music){
+    public BoardCreateRequestDto(String title, String content, String music, Long boardId){
         this.title = title;
         this.content = content;
         this.music = music;
+        this.boardId = boardId;
     }
 
     public Board toEntity(){
@@ -30,6 +32,7 @@ public class BoardCreateRequestDto {
                 .title(title)
                 .content(content)
                 .music(music)
+                .photoId(boardId)
                 .build();
     }
 }

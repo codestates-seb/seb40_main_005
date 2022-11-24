@@ -16,6 +16,7 @@ public class BoardResponseDto {
     private String title;
     private String content;
     private String music;
+    private Long photoId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -24,6 +25,7 @@ public class BoardResponseDto {
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.music = entity.getMusic();
+        this.photoId = entity.getPhotoId();
         this.createdAt = entity.getCreatedAt();
         this.updatedAt = entity.getUpdatedAt();
     }
