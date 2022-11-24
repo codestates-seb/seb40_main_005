@@ -42,14 +42,14 @@ public class Board extends BaseTimeEntity {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "photo_id")
-    private Long photoId;
+    private Photo photo;
 
     @Builder
     public Board(String title, String content, String music, Long photoId) {
         this.title = title;
         this.content = content;
         this.music = music;
-        this.photoId = photoId;
+        this.photo = photo;
     }
 
     public void update(String title, String content, String music) {

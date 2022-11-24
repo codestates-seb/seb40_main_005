@@ -6,7 +6,6 @@ import com.gallendar.gradle.server.board.dto.BoardResponseDto;
 import com.gallendar.gradle.server.board.dto.BoardUpdateRequestDto;
 import com.gallendar.gradle.server.board.entity.Board;
 import com.gallendar.gradle.server.board.repository.BoardRepository;
-import com.gallendar.gradle.server.members.domain.Members;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,12 +23,11 @@ public class BoardServiceImpl implements BoardService{
 
     private final BoardRepository boardRepository;
 
-    /* 게시글 저장 */
     @Transactional
     public Long save(BoardCreateRequestDto requestDto){
         return boardRepository.save(requestDto.toEntity()).getBoardId();
     }
-    /* 게시글 수정 */
+
     @Transactional
     public Long update(Long boardId, BoardUpdateRequestDto requestDto){
         Board board = boardRepository.findById(boardId)
@@ -43,7 +41,7 @@ public class BoardServiceImpl implements BoardService{
                 .ifPresent(music->requestDto.setMusic(music));
         board.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getMusic());
 
-        board.update(requestDto.getTitle(),requestDto.getContent(),requestDto.getMusic());
+        board.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getMusic());
 
         return boardId;
     }
@@ -61,7 +59,7 @@ public class BoardServiceImpl implements BoardService{
     @Transactional(readOnly = true)
     public List<Board> findAllDesc(int page, int size){
 
-        Page<Board> fiqndAllBoard = findAllBoard(page, size);
+        Page<Board> findAllBoard = findAllBoard(page, size);
 
         List<Board> boards = findAllBoard.getContent();
 
@@ -79,16 +77,6 @@ public class BoardServiceImpl implements BoardService{
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardId="+boardId));
 
         boardRepository.delete(board);
-    }
-
-    /**
-     * Todo:
-     * ExceptionCode 작성후 error response 수정
-     */
-    private void isAutoorized(Board board, Members members){
-        if(!board.getMembers().equals(members)) {
-            throw new IllegalArgumentException("사용자가 일치하지 않습니다.");
-        }
     }
 
 }
