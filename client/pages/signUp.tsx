@@ -9,6 +9,7 @@ import GoogleBtn from "../components/GoogleBtn";
 import KakaoBtn from "../components/KakaoBtn";
 import SubmitBtn from "../components/SubmitBtn";
 import useCheckEmail from "../hooks/user/useCheckEmail";
+import useCheckAuthNum from "../hooks/user/useCheckAuthNum";
 
 const SignUp = () => {
   const {
@@ -24,6 +25,12 @@ const SignUp = () => {
     repasswordErrorInput: string;
   }
 
+  interface SignUpData {
+    id : string,
+    email : string,
+    password : string
+  }
+
   const [idValue, setIdValue] = useState<string>("");
   const [checkId, setCheckId] = useState<boolean>(false);
   const [emailValue, setEmailValue] = useState<string>("");
@@ -37,7 +44,7 @@ const SignUp = () => {
   const [authInputView, setAuthInputView] = useState<boolean>(false);
   const [authNumValue, setAuthNumValue] = useState<string>("");
   const [checkAuthNum, setCheckAuthNum] = useState<boolean>(false);
-
+  const [pwInputView, setPwInputView] = useState<boolean>(false);
   const {
     data: idData,
     refetch: idRefetch,
@@ -47,9 +54,15 @@ const SignUp = () => {
 
   const { data: emailData, refetch: emailRefetch } = useCheckEmail(emailValue);
 
+  const { data: authNumData, refetch: authNumRefetch } = useCheckAuthNum(
+    authNumValue,
+    emailValue,
+  );
+
   const emailRex = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi;
   const pwRex =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,23}$/;
+  const idRex = /^[a-zA-Z0-9]{5,20}$/;
 
   const handleAuthClick = () => {
     setAuthInputView(true);
@@ -57,6 +70,7 @@ const SignUp = () => {
 
   const handleIdChange = (e: any) => {
     setIdValue(e.target.value);
+
   };
 
   const handleEmailChange = (e: any) => {
@@ -69,9 +83,12 @@ const SignUp = () => {
   };
 
   const handlePressEnter = (e: any) => {
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13){
       e.preventDefault();
-      idRefetch();
+      if(idValue.length >= 5 ){
+        idRefetch();
+        console.log(idData);
+      }
     }
   };
 
@@ -108,8 +125,15 @@ const SignUp = () => {
 
   const handleClickAuthNumBtn = () => {
     // 조건문 추가
-    setCheckAuthNum(true);
+    authNumRefetch();
+    // setCheckAuthNum(false);
+    setAuthInputView(false);
+    setPwInputView(true);
   };
+
+  const handleClickSubmit = () => {
+
+  }
 
   return (
     <>
@@ -143,6 +167,11 @@ const SignUp = () => {
                 {...register("idErrorInput", {
                   required: "ID는 필수 입력입니다.",
                   onChange: handleIdChange,
+                  minLength: 5,
+                  pattern: {
+                    value: /^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{5,}$/,
+                    message: "ID는 영문,숫자 5자 이상 입력되어야합니다.",
+                  },
                 })}
               />
               <ErrorMessage
@@ -154,9 +183,9 @@ const SignUp = () => {
                   </div>
                 )}
               />
-              {idValue.length !== 0 && idValue.length < 5 ? (
+              {idValue.length !== 0 && idValue.length < 5 && !idRex.test(idValue) ? (
                 <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
-                  5글자 이상으로 입력해주세요
+                  ID는 영문,숫자포함 5자 이상 입력되어야합니다.
                 </div>
               ) : null}
 
@@ -238,10 +267,10 @@ const SignUp = () => {
               <div className="text-xs text-mainOrange font-SCDream4 md:text-sm">
                 입력하신 Email로 인증번호가 발송되었습니다
               </div>
-              {!checkAuthNum ? (
+              {authNumValue.length !== 0 && !checkAuthNum ? (
                 <div className=" text-nagativeMessage font-SCDream3 text-[11px] md:text-[12px] mt-2">
-                인증번호가 올바르지 않습니다
-              </div>
+                  인증번호가 올바르지 않습니다
+                </div>
               ) : (
                 <div className=" text-nagativeMessage font-SCDream3 text-[11px] md:text-[12px] mt-2">
                   5분이내에 입력해주세요
@@ -256,7 +285,7 @@ const SignUp = () => {
               />
               <AuthBtn onClick={handleClickAuthNumBtn}>인증</AuthBtn>
             </EmailCheckNumberLayout>
-          ) : isCheckEmail && authInputView ? (
+          ) : isCheckEmail && !authInputView && pwInputView ? (
             <form className="w-full">
               <div className="flex flex-col w-full h-fit">
                 <div className="flex flex-col w-full md:flex-row h-fit">
@@ -317,7 +346,7 @@ const SignUp = () => {
                   <div className="absolute top-4 md:top-4.5 lg:top-4 left-0 right-0 bottom-2 md:bottom-1.5 lg:bottom-1.5 bg-mainOrange/40"></div>
                 </div>
                 <input
-                  className="font-SCDream3 text-gray-500 w-full text-xs md:text-sm mt-2 mb-5 border-b-[1px] border-mainOrange/40 outline-none"
+                  className="font-SCDream3 text-gray-500 w-full text-xs md:text-sm mt-2 mb-0 border-b-[1px] border-mainOrange/40 outline-none"
                   id="checkpassword"
                   autoComplete="off"
                   type="password"
@@ -343,13 +372,13 @@ const SignUp = () => {
                     비밀번호가 일치합니다
                   </div>
                 ) : rePwValue.length !== 0 && !checkRePw ? (
-                  <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
+                  <div className="flex flex-row items-end justify-end w-full mt-1 text-xs  text-nagativeMessage h-fit font-SCDream2">
                     비밀번호가 일치하지 않습니다
                   </div>
                 ) : null}
               </div>
-              <div className="flex flex-row items-center justify-end w-full h-fit">
-                <SubmitBtn onClick={()=>console.log('active')}/>
+              <div className="flex flex-row items-center justify-end w-full h-fit mt-4">
+                <SubmitBtn onClick={handleClickSubmit} />
               </div>
             </form>
           ) : (
@@ -362,7 +391,7 @@ const SignUp = () => {
               </div>
             </EmailCheckNumberLayout>
           )}
-          {!authInputView ? (
+          {!authInputView && !pwInputView ? (
             <div className="flex flex-col items-center justify-center w-full mt-3 h-fit">
               <GoogleBtn />
               <KakaoBtn />
