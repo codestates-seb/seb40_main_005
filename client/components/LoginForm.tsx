@@ -2,22 +2,17 @@ import { useSetRecoilState } from "recoil";
 import { isLoginState } from "../recoil/authAtom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-import { useCallback, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import Link from "next/link";
 import postLogin from "../apis/auth/postLogin";
-import { useSetRecoilState } from "recoil";
-import { isLoginState } from "../recoil/authAtom";
 import { useMutation } from "react-query";
 import { useRouter } from "next/router";
-import EmailCheckNumberLayout from "./EmailCheckNumberLayout";
 // import { client } from "../client/client";
 
-interface FormInputs {
-  singleErrorInput: string;
+interface FormValues {
   id: string;
   password: string;
   setFailedMsg: Dispatch<SetStateAction<string>>;
-  // setFailedMsg: string;
 }
 
 const LoginForm = () => {
@@ -28,9 +23,8 @@ const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormInputs>();
+  } = useForm<FormValues>();
 
-  const loginMutation = useMutation(postLogin);
   const router = useRouter();
   const loginMutation = useMutation(postLogin);
   const setIsLogin = useSetRecoilState(isLoginState);
@@ -68,7 +62,7 @@ const LoginForm = () => {
         <form
           className="relative flex flex-col mt-5 text-base text-gray-500 font-SCDream5"
           onSubmit={handleSubmit(useLogin)}
-
+        >
           {/* 아이디 입력 */}
           <label htmlFor="id">ID</label>
           {/* 언더바 */}
