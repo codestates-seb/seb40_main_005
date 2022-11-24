@@ -14,7 +14,9 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -41,6 +43,7 @@ public class MembersController {
 
     /**
      * 유저 찾기(태그 추가할 때 사용)
+     *
      * @param id
      * @return
      */
@@ -48,11 +51,12 @@ public class MembersController {
     @GetMapping("/members/search")
     public List<MemberSearchResponse> searchMemberById(@RequestParam(value = "id") String id) {
         return memberSearchService.MemberSearchById(id);
-        }
-        
-     
+    }
+
+
     /**
      * 아이디 찾기
+     *
      * @param email
      * @return
      */

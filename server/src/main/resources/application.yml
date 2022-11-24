@@ -8,8 +8,8 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/gallendar?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: 
-    password: 
+    username:
+    password:
   jpa:
     open-in-view: false
     generate-ddl: true
@@ -28,6 +28,9 @@ spring:
     username:
     password:
     port: 587
+  redis:
+    host: 127.0.0.1
+    port: 6379
       
   main:
     allow-circular-references: true
