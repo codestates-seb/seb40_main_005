@@ -1,19 +1,33 @@
 package com.gallendar.gradle.server.members.controller;
 
+import com.gallendar.gradle.server.exception.BusinessLogicException;
+import com.gallendar.gradle.server.members.dto.AuthNumDto;
+import com.gallendar.gradle.server.members.dto.EmailRequestDto;
 import com.gallendar.gradle.server.members.dto.LoginRequest;
 import com.gallendar.gradle.server.members.dto.LoginResponse;
 import com.gallendar.gradle.server.members.service.LoginService;
-import io.swagger.annotations.ApiOperation;
+import com.gallendar.gradle.server.members.service.MailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Email;
+
+import io.swagger.annotations.ApiOperation;
+
+
+
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/authentication")
 public class AuthenticationController {
+
+
+   
+    private final MailService mailService;
 
     private LoginService loginService;
 
@@ -24,6 +38,7 @@ public class AuthenticationController {
      * @return
      */
     @ApiOperation(value = "로그인", notes = "등록된 회원이 로그인을 시도하여 성공하면 토큰을 응답, 실패하면 예외발생")
+
     @PostMapping
     public LoginResponse membersLogin(@RequestBody LoginRequest loginRequest) {
         return loginService.LoginMembers(loginRequest);
@@ -47,18 +62,20 @@ public class AuthenticationController {
     }
 
 
-    //Todo: 이메일 인증번호 발송
-    @GetMapping("/{email}")
-    public String getEmailAuthentication(@PathVariable Email email) {
-        String response = "이메일 인증 테스트";
-        return response;
+
+    @PostMapping("/email")
+    public void sendAuthEmail(@Valid @RequestBody EmailRequestDto emailRequestDto) throws Exception {
+        mailService.sendAuthEmail(emailRequestDto.getEmail());
     }
 
-    //Todo: 이메일 인증번호 검증
-    @PostMapping("/email")
-    public String getEmailAuthenticationNumber(@Valid @RequestBody String authenticationNumber) {
-        String response = "이메일 인증번호 검증";
-        return response;
+    @PostMapping("/email/verify")
+    public ResponseEntity getEmailAuthenticationNumber(@Valid @RequestBody AuthNumDto authNumDto) throws BusinessLogicException {
+        try {
+            mailService.checkAuthNum(authNumDto.getAuthNum(), authNumDto.getEmail());
+        } catch (BusinessLogicException businessLogicException) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This authentication number is incorrect");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("successful!");
 
     }
 
