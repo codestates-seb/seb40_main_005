@@ -1,7 +1,5 @@
 package com.gallendar.gradle.server.members.controller;
 
-import com.gallendar.gradle.server.exception.BusinessLogicException;
-import com.gallendar.gradle.server.exception.ExceptionCode;
 import com.gallendar.gradle.server.exception.Message;
 import com.gallendar.gradle.server.global.auth.jwt.JwtUtils;
 import com.gallendar.gradle.server.members.dto.FindIdByEmailResponse;
@@ -43,7 +41,6 @@ public class MembersController {
 
     /**
      * 유저 찾기(태그 추가할 때 사용)
-     *
      * @param id
      * @return
      */
@@ -56,7 +53,6 @@ public class MembersController {
 
     /**
      * 아이디 찾기
-     *
      * @param email
      * @return
      */
@@ -67,6 +63,12 @@ public class MembersController {
     @GetMapping("/members/find-id")
     public FindIdByEmailResponse findIdByEmail(@RequestParam("email") String email) {
         return memberSearchService.idFindByEmail(email);
+    }
+
+
+    @GetMapping("/{email}")
+    public List<MemberSearchResponse> searchMemberByEmail(@PathVariable(value = "email") String email) {
+        return memberSearchService.MemberSearchById(email);
     }
 
 
@@ -87,13 +89,9 @@ public class MembersController {
 
 
     @PostMapping
-    public ResponseEntity postMember(@Valid @RequestBody SignupRequestDto signupRequestDto) {
+    public ResponseEntity<String> postMember(@Valid @RequestBody SignupRequestDto signupRequestDto) {
 
-        try {
             createMemberService.createMember(signupRequestDto);
-        } catch (BusinessLogicException businessLogicException) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This email or Id is already in use");
-        }
 
         return ResponseEntity.status(HttpStatus.CREATED).body("successful");
     }

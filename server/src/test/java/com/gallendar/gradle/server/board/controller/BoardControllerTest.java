@@ -1,5 +1,6 @@
 package com.gallendar.gradle.server.board.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gallendar.gradle.server.board.dto.BoardCreateRequestDto;
 import com.gallendar.gradle.server.board.dto.BoardUpdateRequestDto;
 import com.gallendar.gradle.server.board.entity.Board;
@@ -12,20 +13,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.*;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class BoardControllerTest {
+
+    @Autowired
+    private WebApplicationContext context;
+
+    private MockMvc mvc;
+
+    @Before
+    public void setupMvc(){
+        mvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .apply(springSecurity())
+                .build();
+    }
 
     @LocalServerPort
     private int port;
@@ -36,17 +54,18 @@ public class BoardControllerTest {
     @Autowired
     private BoardRepository boardRepository;
 
-    @Before
-    public void setup(){
-        restTemplate.getRestTemplate().setRequestFactory(new HttpComponentsClientHttpRequestFactory());
-    }
 
     @After
     public void tearDown() throws Exception {
         boardRepository.deleteAll();
     }
 
+    /**
+     * Board Post Test
+     * @throws Exception
+     */
     @Test
+    @WithMockUser
     public void Board_등록() throws Exception{
         // given
         String title = "title";
@@ -61,20 +80,26 @@ public class BoardControllerTest {
         String url = "http://localhost:" + port + "/boards";
 
         // when
-        ResponseEntity<Long> responseEntity = restTemplate.
-                postForEntity(url, requestDto, Long.class);
+        mvc.perform(post(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(requestDto)))
+                .andExpect(status().isOk());
+
 
         // then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK); //spring security 설정
-        assertThat(responseEntity.getBody()).isGreaterThan(0L);
-
         List<Board> all = boardRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(title);
         assertThat(all.get(0).getContent()).isEqualTo(content);
 
+
     }
 
+    /**
+     * Board Patch Test
+     * @throws Exception
+     */
     @Test
+    @WithMockUser
     public void Board_수정() throws Exception {
         // given
         Board savedBoard = boardRepository.save(Board.builder()
@@ -97,16 +122,13 @@ public class BoardControllerTest {
 
         String url = "http://localhost:" + port + "/boards/" + updateBoardId;
 
-        HttpEntity<BoardUpdateRequestDto> requestEntity = new HttpEntity<>(requestDto);
-
         // when
-        ResponseEntity<Long> responseEntity = restTemplate.
-                exchange(url, HttpMethod.PATCH,
-                        requestEntity, Long.class);
+        mvc.perform(patch(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(requestDto)))
+                .andExpect(status().isOk());
 
         // then
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-
         List<Board> all = boardRepository.findAll();
         assertThat(all.get(0).getTitle()).isEqualTo(expectedTitle);
         assertThat(all.get(0).getContent()).isEqualTo(expectedContent);
