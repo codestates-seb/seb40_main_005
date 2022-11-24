@@ -42,8 +42,6 @@ dependencies {
     implementation 'org.mapstruct:mapstruct:1.5.3.Final'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
 
-
-
 	//jwt
 	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
 
@@ -64,6 +62,12 @@ dependencies {
 	testImplementation group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
 
 
+	//email
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	//Redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
     //querydsl
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
@@ -79,6 +83,7 @@ dependencies {
     //swagger
     implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
 
+
 }
 
 tasks.named('test') {
@@ -89,7 +94,7 @@ tasks.named('test') {
  * queryDSL 설정 추가
  */
 // querydsl에서 사용할 경로 설정
-def querydslDir = "$buildDir/generated/querydsl"
+def querydslDir = '$buildDir/generated/querydsl'
 // JPA 사용 여부와 사용할 경로를 설정
 querydsl {
     jpa = true
