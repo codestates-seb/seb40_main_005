@@ -31,8 +31,8 @@ module.exports = {
         "bgGray": "#F8F9FD",
         "bgWhite": "#FEFEFE",
         "socialBgGray": "rgba(220,220,220,0.43)",
-        "socialBgOrg": "rgba(250, 139, 92,0.72)"
-
+        "socialBgOrg": "rgba(250, 139, 92,0.72)",
+        "nagativeMessage": "#ff0000",
       },
       screens: {
         md: "376px",
