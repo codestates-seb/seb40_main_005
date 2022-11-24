@@ -61,7 +61,7 @@ public class BoardServiceImpl implements BoardService{
     @Transactional(readOnly = true)
     public List<Board> findAllDesc(int page, int size){
 
-        Page<Board> findAllBoard = findAllBoard(page, size);
+        Page<Board> fiqndAllBoard = findAllBoard(page, size);
 
         List<Board> boards = findAllBoard.getContent();
 
