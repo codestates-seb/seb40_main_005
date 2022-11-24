@@ -40,6 +40,7 @@ public class MembersController {
 
     /**
      * 유저 찾기(태그 추가할 때 사용)
+     *
      * @param id
      * @return
      */
@@ -52,6 +53,7 @@ public class MembersController {
 
     /**
      * 아이디 찾기
+     *
      * @param email
      * @return
      */
@@ -66,12 +68,13 @@ public class MembersController {
 
     /**
      * 비밀번호 변경
+     *
      * @param changePasswordRequest
      * @return
      */
     @ApiOperation(value = "비밀번호 변경", notes = "가입된 회원의 패스워드를 변경한다, 기존 설정된 비밀번호 패턴을 맞추지 않는다면 예외처리")
     @PatchMapping("/password")
-    public ChangePasswordResponse changePasswordById(@Valid @RequestBody ChangePasswordRequest changePasswordRequest){
+    public ChangePasswordResponse changePasswordById(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
         return changePasswordService.passwordChangeById(changePasswordRequest);
     }
 
@@ -79,7 +82,6 @@ public class MembersController {
     public List<MemberSearchResponse> searchMemberByEmail(@PathVariable(value = "email") String email) {
         return memberSearchService.MemberSearchById(email);
     }
-
 
     @GetMapping("/checkId/{id}")
     public ResponseEntity<String> checkMemberId(@PathVariable String id) {
@@ -100,7 +102,7 @@ public class MembersController {
     @PostMapping
     public ResponseEntity<String> postMember(@Valid @RequestBody SignupRequestDto signupRequestDto) {
 
-            createMemberService.createMember(signupRequestDto);
+        createMemberService.createMember(signupRequestDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("successful");
     }
