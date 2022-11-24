@@ -1,16 +1,20 @@
 import { atom } from "recoil";
 
-export const isLoginState = atom({
+const localStorage = typeof window !== "undefined" ? window.localStorage : null;
+
+const isLoginState = atom({
   key: "isLogin",
-  default: localStorage.getItem("token") ? true : false,
+  default: localStorage?.getItem("token") ? true : false,
 });
 
-export const accessTokenState = atom({
+const accessTokenState = atom({
   key: "token",
-  default: localStorage.getItem("token") || "",
+  default: localStorage?.getItem("token") || "",
 });
 
-export const userNameState = atom({
+const userNameState = atom({
   key: "userName",
-  default: localStorage.getItem("userName") || "",
+  default: localStorage?.getItem("userName") || "",
 });
+
+export { isLoginState, accessTokenState, userNameState };
