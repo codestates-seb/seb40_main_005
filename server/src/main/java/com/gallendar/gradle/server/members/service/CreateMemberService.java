@@ -31,7 +31,7 @@ public class CreateMemberService {
     /* Email 중복검사 */
     public boolean checkMemberEmailDuplication(String email) {
 
-        return membersRepository.existsByEmail(email);   
+        return membersRepository.existsByEmail(email);
     }
 
     @Transactional
