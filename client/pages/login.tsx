@@ -1,4 +1,4 @@
-import LoginForm from "../components/LoginForm";
+import { LoginForm } from "../components/LoginForm";
 import CertifyPageLayout from "../components/CertifyPageLayout";
 import GoogleBtn from "../components/GoogleBtn";
 import KakaoBtn from "../components/KakaoBtn";
