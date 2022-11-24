@@ -240,8 +240,8 @@ const SignUp = () => {
               </div>
               {!checkAuthNum ? (
                 <div className=" text-nagativeMessage font-SCDream3 text-[11px] md:text-[12px] mt-2">
-                인증번호가 올바르지 않습니다
-              </div>
+                  인증번호가 올바르지 않습니다
+                </div>
               ) : (
                 <div className=" text-nagativeMessage font-SCDream3 text-[11px] md:text-[12px] mt-2">
                   5분이내에 입력해주세요
@@ -349,7 +349,7 @@ const SignUp = () => {
                 ) : null}
               </div>
               <div className="flex flex-row items-center justify-end w-full h-fit">
-                <SubmitBtn onClick={()=>console.log('active')}/>
+                <SubmitBtn onClick={() => console.log("active")} />
               </div>
             </form>
           ) : (
