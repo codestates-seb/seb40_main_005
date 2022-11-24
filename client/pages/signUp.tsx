@@ -245,9 +245,9 @@ const SignUp = () => {
                     onChange: handleEmailChange,
                   })}
                 />
-                {emailValue.length !== 0 && isCheckEmail ? (
+                {emailValue.length !== 0 && isCheckEmail && checkAuthNum ? (
                   <AuthBtn onClick={handleAuthClick}>인증요청</AuthBtn>
-                ) : checkAuthNum ? <AuthBtn onClick={()=>{return 0}}>인증완료</AuthBtn> : null}
+                ) : emailValue.length !== 0 && isCheckEmail && !checkAuthNum ? <AuthBtn onClick={()=>{return 0}}>인증완료</AuthBtn> : null}
                 {/* <AuthBtn>인증완료</AuthBtn> */}
               </div>
 
