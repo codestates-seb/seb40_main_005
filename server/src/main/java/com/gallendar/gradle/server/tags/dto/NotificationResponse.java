@@ -15,7 +15,6 @@ public class NotificationResponse {
     private String shareId;
     private String title;
     private LocalDateTime shareDateTime;
-
     public static NotificationResponse from(BoardTags boardTags){
         String shareId=boardTags.getBoard().getMembers().getId();
         String title=boardTags.getBoard().getTitle();

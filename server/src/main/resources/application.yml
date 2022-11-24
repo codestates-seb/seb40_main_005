@@ -1,0 +1,66 @@
+spring:
+  profiles:
+    include:
+      - aws
+      - credentials
+  autoconfigure:
+    exclude: org.springframework.cloud.aws.autoconfigure.context.ContextStackAutoConfiguration
+  datasource:
+    url: jdbc:mysql://localhost:3306/gallendar?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: 
+    password: 
+  jpa:
+    open-in-view: false
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database: mysql
+  mail:
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+    host: smtp.gmail.com
+    username:
+    password:
+    port: 587
+
+  main:
+    allow-circular-references: true
+  jwt:
+    secret: 1234asd
+    jwtExpirationMs: 3600000
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher
+
+cloud:
+  aws:
+    credentials:
+      accessKey:        # AWS IAM AccessKey 적기
+      secretKey:    # AWS IAM SecretKey 적기
+    s3:
+      bucket: gallendar
+      #      bucket: test
+      dir: /test
+      mock:
+        port: 3306
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+logging:
+  level:
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG
+    com:
+      amazonaws:
+        util:
+          EC2MetaDataUtils: error
+
