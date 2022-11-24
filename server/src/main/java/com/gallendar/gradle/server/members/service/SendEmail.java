@@ -20,7 +20,7 @@ public class SendEmail {
     public static final String authNum = CreateAuthNum.createNum();
 
     public MimeMessage createEmailForm(String email) throws MessagingException {
-        String setFrom = "5kamjas.gallendar@gmail.com";
+        String setFrom = "5kamjas.gallender@gmail.com";
         String title = "Gallendar 회원가입 인증 번호";
 
         MimeMessage message = emailSender.createMimeMessage();
