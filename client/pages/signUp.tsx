@@ -10,6 +10,8 @@ import KakaoBtn from "../components/KakaoBtn";
 import SubmitBtn from "../components/SubmitBtn";
 import useCheckEmail from "../hooks/user/useCheckEmail";
 import useCheckAuthNum from "../hooks/user/useCheckAuthNum";
+import usePostSignUpData from "../hooks/user/usePostSignUpData";
+
 
 const SignUp = () => {
   const {
@@ -26,9 +28,9 @@ const SignUp = () => {
   }
 
   interface SignUpData {
-    id : string,
-    email : string,
-    password : string
+    id: string;
+    email: string;
+    password: string;
   }
 
   const [idValue, setIdValue] = useState<string>("");
@@ -43,13 +45,13 @@ const SignUp = () => {
   const [checkRePw, setCheckRePw] = useState<boolean>(false);
   const [authInputView, setAuthInputView] = useState<boolean>(false);
   const [authNumValue, setAuthNumValue] = useState<string>("");
-  const [checkAuthNum, setCheckAuthNum] = useState<boolean>(false);
+  const [checkAuthNum, setCheckAuthNum] = useState<boolean>(true);
   const [pwInputView, setPwInputView] = useState<boolean>(false);
+  const [signUpData, setSignUpData] = useState<SignUpData>({id: idValue, email:emailValue, password:pwValue});
+
   const {
     data: idData,
     refetch: idRefetch,
-    isLoading,
-    isFetching,
   } = useCheckUserId(idValue);
 
   const { data: emailData, refetch: emailRefetch } = useCheckEmail(emailValue);
@@ -58,6 +60,10 @@ const SignUp = () => {
     authNumValue,
     emailValue,
   );
+
+
+  const { data:signupData, mutate:singUpMute } = usePostSignUpData(signUpData);
+
 
   const emailRex = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi;
   const pwRex =
@@ -70,7 +76,6 @@ const SignUp = () => {
 
   const handleIdChange = (e: any) => {
     setIdValue(e.target.value);
-
   };
 
   const handleEmailChange = (e: any) => {
@@ -83,9 +88,9 @@ const SignUp = () => {
   };
 
   const handlePressEnter = (e: any) => {
-    if (e.keyCode === 13){
+    if (e.keyCode === 13) {
       e.preventDefault();
-      if(idValue.length >= 5 ){
+      if (idValue.length >= 5) {
         idRefetch();
         console.log(idData);
       }
@@ -113,6 +118,11 @@ const SignUp = () => {
   const handleRePwChange = (e: any) => {
     if (e.target.value === pwValue) {
       setCheckRePw(true);
+      setSignUpData({
+        id : idValue,
+        email : emailValue,
+        password : e.target.value
+      })
     } else {
       setCheckRePw(false);
     }
@@ -126,14 +136,20 @@ const SignUp = () => {
   const handleClickAuthNumBtn = () => {
     // 조건문 추가
     authNumRefetch();
-    // setCheckAuthNum(false);
+    setCheckAuthNum(true);
     setAuthInputView(false);
     setPwInputView(true);
   };
 
-  const handleClickSubmit = () => {
 
-  }
+  const handleClickSubmit = (e:any) => {
+    e.preventDefault();
+    
+    // console.log(idValue, emailValue, pwValue);
+    singUpMute(signUpData);
+    console.log(signUpData);
+    console.log(signupData);
+  };
 
   return (
     <>
@@ -183,7 +199,9 @@ const SignUp = () => {
                   </div>
                 )}
               />
-              {idValue.length !== 0 && idValue.length < 5 && !idRex.test(idValue) ? (
+              {idValue.length !== 0 &&
+              (idValue.length < 5 ||
+              !idRex.test(idValue)) ? (
                 <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
                   ID는 영문,숫자포함 5자 이상 입력되어야합니다.
                 </div>
@@ -229,7 +247,7 @@ const SignUp = () => {
                 />
                 {emailValue.length !== 0 && isCheckEmail ? (
                   <AuthBtn onClick={handleAuthClick}>인증요청</AuthBtn>
-                ) : null}
+                ) : checkAuthNum ? <AuthBtn onClick={()=>{return 0}}>인증완료</AuthBtn> : null}
                 {/* <AuthBtn>인증완료</AuthBtn> */}
               </div>
 
@@ -286,10 +304,10 @@ const SignUp = () => {
               <AuthBtn onClick={handleClickAuthNumBtn}>인증</AuthBtn>
             </EmailCheckNumberLayout>
           ) : isCheckEmail && !authInputView && pwInputView ? (
-            <form className="w-full">
+            <form className="w-full" onSubmit={handleClickSubmit}>
               <div className="flex flex-col w-full h-fit">
                 <div className="flex flex-col w-full md:flex-row h-fit">
-                  <div className="relative items-center justify-center w-fit h-7 mt-7">
+                  <div className="relative items-center justify-center w-fit h-7 mt-3">
                     <label
                       htmlFor="password"
                       className="text-base text-gray-500 font-SCDream5"
@@ -298,7 +316,7 @@ const SignUp = () => {
                     </label>
                     <div className="absolute top-4 md:top-4.5 lg:top-4 left-0 right-0 bottom-2 md:bottom-1.5 lg:bottom-1.5 bg-mainOrange/40"></div>
                   </div>
-                  <div className="font-SCDream3 text-gray-400 w-fit h-fit text-[10px] mt-0 md:mt-9 ml-0 md:ml-2">
+                  <div className="font-SCDream3 text-gray-400 w-fit h-fit text-[10px] mt-0 md:mt-5 ml-0 md:ml-2">
                     특수문자, 영문자, 숫자 포함 8글자 이상으로 입력해주세요
                   </div>
                 </div>
@@ -336,7 +354,7 @@ const SignUp = () => {
               </div>
 
               <div className="flex flex-col w-full h-fit">
-                <div className="relative items-center justify-center w-fit h-7 mt-7">
+                <div className="relative items-center justify-center w-fit h-7 mt-3">
                   <label
                     htmlFor="checkpassword"
                     className="text-base text-gray-500 font-SCDream5"
@@ -378,7 +396,7 @@ const SignUp = () => {
                 ) : null}
               </div>
               <div className="flex flex-row items-center justify-end w-full h-fit mt-4">
-                <SubmitBtn onClick={handleClickSubmit} />
+                <SubmitBtn onClick={()=> handleClickSubmit} />
               </div>
             </form>
           ) : (

@@ -12,7 +12,9 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -42,30 +44,30 @@ public class MembersController {
      * @param id
      * @return
      */
-    @ApiOperation(value = "유저 찾기",notes = "유저의 id 값으로 요청이 들어오면 해당 요청이 포함된 모든 결과를 리스트로 반환한다.")
+    @ApiOperation(value = "유저 찾기", notes = "유저의 id 값으로 요청이 들어오면 해당 요청이 포함된 모든 결과를 리스트로 반환한다.")
     @GetMapping("/members/search")
     public List<MemberSearchResponse> searchMemberById(@RequestParam(value = "id") String id) {
         return memberSearchService.MemberSearchById(id);
-        }
-        
-     
+    }
+
+
     /**
      * 아이디 찾기
      * @param email
      * @return
      */
-    @ApiOperation(value = "아이디 찾기",notes = "가입한 이메일을 통해서 로그인 아이디를 찾을 수 있다.")
+    @ApiOperation(value = "아이디 찾기", notes = "가입한 이메일을 통해서 로그인 아이디를 찾을 수 있다.")
     @ApiResponses({
             @ApiResponse(code = 200, message = "id")
     })
     @GetMapping("/members/find-id")
-    public FindIdByEmailResponse findIdByEmail(@RequestParam("email") String email){
+    public FindIdByEmailResponse findIdByEmail(@RequestParam("email") String email) {
         return memberSearchService.idFindByEmail(email);
     }
 
 
     @GetMapping("/{email}")
-    public List<MemberSearchResponse> searchMemberById(@PathVariable(value = "email") String email) {
+    public List<MemberSearchResponse> searchMemberByEmail(@PathVariable(value = "email") String email) {
         return memberSearchService.MemberSearchById(email);
     }
 
@@ -89,7 +91,7 @@ public class MembersController {
     @PostMapping
     public ResponseEntity<String> postMember(@Valid @RequestBody SignupRequestDto signupRequestDto) {
 
-        createMemberService.createMember(signupRequestDto);
+            createMemberService.createMember(signupRequestDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("successful");
     }
@@ -124,5 +126,4 @@ public class MembersController {
     }
 
 
- 
 }

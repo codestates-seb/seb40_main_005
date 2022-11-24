@@ -3,7 +3,6 @@ import {
     useQueryClient,
     useQueryErrorResetBoundary,
   } from "react-query";
-
 import checkAuthNum from "../../apis/user/checkAuthNum";
   
   const useCheckAuthNum = (authNum:string, email:string) => {

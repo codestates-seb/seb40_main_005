@@ -32,7 +32,7 @@ module.exports = {
         "bgWhite": "#FEFEFE",
         "socialBgGray": "rgba(220,220,220,0.43)",
         "socialBgOrg": "rgba(250, 139, 92,0.72)",
-        "nagativeMessage": "#ff0000",
+        "nagativeMessage" : "#ff0000"
       },
       screens: {
         md: "376px",

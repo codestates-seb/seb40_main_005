@@ -12,7 +12,7 @@ const postSignUp = async ( {id, email, password}:SignUpData )=> {
         "email" : email,
         "password" : password
     }
-    return await axios.post(`http://13.209.7.184:8080/mombers`, data)
+    return await axios.post(`http://13.209.7.184:8080/members`, data)
 }
 
 export default postSignUp;
