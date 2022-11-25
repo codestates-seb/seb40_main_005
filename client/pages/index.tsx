@@ -1,6 +1,6 @@
 import Image from "next/image";
-import TopBtn from "../components/topBtn";
-import ScrollImg from "../components/scrollImg";
+import TopBtn from "../components/TopBtn";
+import ScrollImg from "../components/ScrollImg";
 import Dots from "../components/Dots";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
