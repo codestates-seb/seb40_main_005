@@ -36,8 +36,6 @@ public class S3UploadService{
 
 
 
-
-
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
