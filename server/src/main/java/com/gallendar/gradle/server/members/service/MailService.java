@@ -19,5 +19,6 @@ public class MailService {
 
     public String checkAuthNum(String key, String email) throws BusinessLogicException {
         return sendEmail.verifyEmail(key, email);
+
     }
 }
