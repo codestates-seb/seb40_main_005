@@ -73,6 +73,7 @@ public class SendEmail {
         } else {
             redisUtil.deleteData(authNum);
             return "SUCCESSFUL!";
+
         }
     }
 }

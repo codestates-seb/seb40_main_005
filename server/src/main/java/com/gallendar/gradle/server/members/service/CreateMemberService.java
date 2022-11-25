@@ -52,6 +52,8 @@ public class CreateMemberService {
             signupRequestDto.setPassword(passwordEncoder.encode(password));
 
             membersRepository.save(signupRequestDto.toEntity());
+
+
         }
 
     }

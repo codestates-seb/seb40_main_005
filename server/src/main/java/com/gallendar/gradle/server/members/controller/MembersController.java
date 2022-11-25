@@ -67,6 +67,7 @@ public class MembersController {
     @GetMapping("/members/find-id")
     public FindIdByEmailResponse findIdByEmail(@RequestParam("email") String email) {
         return memberSearchService.idFindByEmail(email);
+
     }
 
 
