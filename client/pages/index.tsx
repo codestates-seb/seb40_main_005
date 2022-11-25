@@ -234,13 +234,15 @@ function Home() {
               여러분의 인상적인 순간들을 캘린더로 확인하세요!
             </motion.div>
             <div className="flex flex-row items-center justify-center w-full mt-20 sm:justify-start sm:mt-8">
-              <div className="relative items-center justify-center mr-8 cursor-pointer w-fit h-7">
-                <div className="z-10 ml-1 text-lg text-gray-700 font-SCDream3">
-                  로그인
+              <Link href="/login">
+                <div className="relative items-center justify-center mr-8 cursor-pointer w-fit h-7">
+                  <div className="z-10 ml-1 text-lg text-gray-700 font-SCDream3">
+                    로그인
+                  </div>
+                  <div className="absolute top-5 left-0.5 right-0 bottom-0.5  bg-mainOrange/40"></div>
                 </div>
-                <div className="absolute top-5 left-0.5 right-0 bottom-0.5  bg-mainOrange/40"></div>
-              </div>
-              <Link href="/signUp">
+              </Link>
+              <Link href="/signup">
                 <div className="relative items-center justify-center cursor-pointer w-fit h-7">
                   <div className="z-10 ml-1 text-lg text-gray-700 font-SCDream3">
                     회원가입
@@ -367,12 +369,14 @@ function Home() {
             </div>
           </div>
           <div className="flex flex-row items-center mt-10 justify-left w-fit">
-            <div className="relative items-center justify-center mr-8 cursor-pointer w-fit h-7">
-              <div className="z-10 text-lg text-gray-100 font-SCDream2">
-                시작하기
+            <Link href="/login">
+              <div className="relative items-center justify-center mr-8 cursor-pointer w-fit h-7">
+                <div className="z-10 text-lg text-gray-100 font-SCDream2">
+                  시작하기
+                </div>
+                <div className="absolute top-5 left-0 right-0 bottom-0.5 bg-mainOrange/40"></div>
               </div>
-              <div className="absolute top-5 left-0 right-0 bottom-0.5 bg-mainOrange/40"></div>
-            </div>
+            </Link>
             <Link href="/usage">
               <div className="relative items-center justify-center cursor-pointer w-fit h-7">
                 <div className="z-10 ml-1 text-lg text-gray-100 font-SCDream2">
