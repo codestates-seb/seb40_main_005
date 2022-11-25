@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 /**
  * @description 사용 예시 : CertifyPageLayout태그 안에서 코드 작성!
@@ -8,12 +9,14 @@ const CertifyPageLayout = (props: { children: React.ReactNode }) => {
   return (
     <>
       <div className="flex flex-col justify-center md:justify-evenly lg:justify-center bg-bgGray items-center  h-screen">
-        <Image
-          className=""
-          src="/images/logo export(orange).svg"
-          width={200}
-          height={50}
-        />
+        <Link href="/">
+          <Image
+            className="cursor-pointer"
+            src="/images/logo export(orange).svg"
+            width={200}
+            height={50}
+          />
+        </Link>
         <div className="flex h-4/5 w-80 lg:mt-11 lg:mb-10 lg:h-[32rem] md:w-4/6 lg:w-3/5 drop-shadow-2xl">
           <div className="lg:w-1/2 hidden md:hidden lg:block h-full bg-gradient-to-t from-[#FE4C00] to-[#FF9264]">
             <div className="flex justify-center	 items-center lg:h-full">
