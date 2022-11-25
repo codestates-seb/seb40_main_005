@@ -9,4 +9,6 @@ import lombok.Getter;
 public class LoginResponse {
     @ApiModelProperty(value="토큰",dataType = "String")
     private String token;
+    private Long id;
+    private String memberId;
 }

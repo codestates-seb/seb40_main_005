@@ -11,7 +11,7 @@ import SubmitBtn from "../components/SubmitBtn";
 import useCheckEmail from "../hooks/user/useCheckEmail";
 import useCheckAuthNum from "../hooks/user/useCheckAuthNum";
 import usePostSignUpData from "../hooks/user/usePostSignUpData";
-
+import WelcomeModal from "../components/WelcomeModal";
 
 const SignUp = () => {
   const {
@@ -34,7 +34,9 @@ const SignUp = () => {
   }
 
   const [idValue, setIdValue] = useState<string>("");
-  const [checkId, setCheckId] = useState<boolean>(false);
+  const [checkId, setCheckId] = useState<boolean>(true);
+  const [isCheckId, setIsCheckId] = useState<boolean>(false);
+  const [isSameId, setIsSameId] = useState<boolean>(false);
   const [emailValue, setEmailValue] = useState<string>("");
   const [checkEmail, setCheckEmail] = useState<boolean>(false);
   const [isSameEmail, setIsSameEmail] = useState<boolean>(false);
@@ -45,9 +47,10 @@ const SignUp = () => {
   const [checkRePw, setCheckRePw] = useState<boolean>(false);
   const [authInputView, setAuthInputView] = useState<boolean>(false);
   const [authNumValue, setAuthNumValue] = useState<string>("");
-  const [checkAuthNum, setCheckAuthNum] = useState<boolean>(true);
+  const [checkAuthNum, setCheckAuthNum] = useState<boolean>(false);
   const [pwInputView, setPwInputView] = useState<boolean>(false);
   const [signUpData, setSignUpData] = useState<SignUpData>({id: idValue, email:emailValue, password:pwValue});
+  const [modalView, setModalView] = useState<boolean>(false);
 
   const {
     data: idData,
@@ -76,9 +79,20 @@ const SignUp = () => {
 
   const handleIdChange = (e: any) => {
     setIdValue(e.target.value);
+    setIsCheckId(false);
+    if(e.target.value.length !== 0 
+      && (e.target.value.length < 5 || !idRex.test(e.target.value))){
+        setCheckId(false);
+      }else{
+        setCheckId(true);
+      }
   };
 
   const handleEmailChange = (e: any) => {
+    if (isCheckEmail){
+      setAuthInputView(false)
+      setIsCheckEmail(false)
+    }
     if (emailRex.test(e.target.value)) {
       setCheckEmail(true);
     } else {
@@ -90,9 +104,12 @@ const SignUp = () => {
   const handlePressEnter = (e: any) => {
     if (e.keyCode === 13) {
       e.preventDefault();
-      if (idValue.length >= 5) {
+      if (idValue.length !== 0 && checkId) {
         idRefetch();
-        console.log(idData);
+        setIsCheckId(true);
+        setIsSameId(true);
+      }else {
+        setIsSameId(false)
       }
     }
   };
@@ -147,12 +164,16 @@ const SignUp = () => {
     
     // console.log(idValue, emailValue, pwValue);
     singUpMute(signUpData);
+    setModalView(true);
+
     console.log(signUpData);
     console.log(signupData);
   };
 
   return (
     <>
+      {modalView? <WelcomeModal name={"박성훈"}/> : null}
+      
       <CertifyPageLayout>
         <div className="flex flex-col items-start justify-start w-full h-full">
           <div className="relative items-center justify-center w-fit h-7 ">
@@ -199,21 +220,19 @@ const SignUp = () => {
                   </div>
                 )}
               />
-              {idValue.length !== 0 &&
-              (idValue.length < 5 ||
-              !idRex.test(idValue)) ? (
-                <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
+              {!checkId ? (
+                <div className="flex flex-row items-end justify-end w-full mt-1 text-[10px] md:text-[11px] text-nagativeMessage h-fit font-SCDream2">
                   ID는 영문,숫자포함 5자 이상 입력되어야합니다.
                 </div>
               ) : null}
 
               {/* API 구현 뒤 수정 필요 */}
-              {idData && idData.data.length > 0 ? (
-                <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
+              {checkId && isCheckId && isSameId && idValue.length !== 0 ? (
+                <div className="flex flex-row items-end justify-end w-full mt-1 text-[10px] md:text-[11px] text-mainOrange h-fit font-SCDream2">
                   사용가능한 ID입니다
                 </div>
-              ) : idData && idData.data.length === 0 ? (
-                <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
+              ) : checkId && isCheckId && !isSameId && idValue.length !== 0 ? (
+                <div className="flex flex-row items-end justify-end w-full mt-1 text-[10px] md:text-[11px] text-nagativeMessage h-fit font-SCDream2">
                   이미 사용중인 ID입니다
                 </div>
               ) : null}
@@ -222,7 +241,7 @@ const SignUp = () => {
 
           <form className="w-full" onSubmit={handleEmailEnter}>
             <div className="flex flex-col w-full h-fit">
-              <div className="relative items-center justify-center w-fit h-7 mt-7">
+              <div className="relative items-center justify-center w-fit h-7 mt-5">
                 <label
                   htmlFor="email"
                   className="text-base text-gray-500 font-SCDream5"
@@ -245,9 +264,9 @@ const SignUp = () => {
                     onChange: handleEmailChange,
                   })}
                 />
-                {emailValue.length !== 0 && isCheckEmail && checkAuthNum ? (
+                {emailValue.length !== 0 && isCheckEmail && !checkAuthNum ? (
                   <AuthBtn onClick={handleAuthClick}>인증요청</AuthBtn>
-                ) : emailValue.length !== 0 && isCheckEmail && !checkAuthNum ? <AuthBtn onClick={()=>{return 0}}>인증완료</AuthBtn> : null}
+                ) : emailValue.length !== 0 && isCheckEmail && checkAuthNum ? <AuthBtn onClick={()=>{return 0}}>인증완료</AuthBtn> : null}
                 {/* <AuthBtn>인증완료</AuthBtn> */}
               </div>
 
@@ -261,19 +280,19 @@ const SignUp = () => {
                 )}
               />
               {emailValue.length !== 0 && !checkEmail ? (
-                <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
+                <div className="flex flex-row items-end justify-end w-full mt-1 text-[10px] md:text-[11px] text-nagativeMessage h-fit font-SCDream2">
                   올바르지않은 이메일 형식입니다
                 </div>
               ) : null}
 
               {/* isSameEmail 상태 활용 */}
               {/* api완성 시 수정필요 */}
-              {emailValue.length !== 0 && isSameEmail && isCheckEmail ? (
-                <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
+              {emailValue.length !== 0 && isSameEmail && isCheckEmail && emailRex.test(emailValue) ? (
+                <div className="flex flex-row items-end justify-end w-full mt-1 text-[10px] md:text-[11px] text-nagativeMessage h-fit font-SCDream2">
                   이미 존재하는 Email입니다
                 </div>
-              ) : emailValue.length !== 0 && !isSameEmail && isCheckEmail ? (
-                <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
+              ) : emailValue.length !== 0 && !isSameEmail && isCheckEmail && emailRex.test(emailValue) ? (
+                <div className="flex flex-row items-end justify-end w-full mt-1 text-[10px] md:text-[11px] text-mainOrange h-fit font-SCDream2">
                   사용가능한 Email입니다! 인증요청 버튼을 클릭해주세요
                 </div>
               ) : null}
@@ -285,7 +304,7 @@ const SignUp = () => {
               <div className="text-xs text-mainOrange font-SCDream4 md:text-sm">
                 입력하신 Email로 인증번호가 발송되었습니다
               </div>
-              {authNumValue.length !== 0 && !checkAuthNum ? (
+              {authNumValue.length !== 0 && !checkAuthNum ? ( //요청 응답에 따른 조건 부여
                 <div className=" text-nagativeMessage font-SCDream3 text-[11px] md:text-[12px] mt-2">
                   인증번호가 올바르지 않습니다
                 </div>
@@ -307,7 +326,7 @@ const SignUp = () => {
             <form className="w-full" onSubmit={handleClickSubmit}>
               <div className="flex flex-col w-full h-fit">
                 <div className="flex flex-col w-full md:flex-row h-fit">
-                  <div className="relative items-center justify-center w-fit h-7 mt-3">
+                  <div className="relative items-center justify-center w-fit h-7 mt-5">
                     <label
                       htmlFor="password"
                       className="text-base text-gray-500 font-SCDream5"
@@ -316,7 +335,7 @@ const SignUp = () => {
                     </label>
                     <div className="absolute top-4 md:top-4.5 lg:top-4 left-0 right-0 bottom-2 md:bottom-1.5 lg:bottom-1.5 bg-mainOrange/40"></div>
                   </div>
-                  <div className="font-SCDream3 text-gray-400 w-fit h-fit text-[10px] mt-0 md:mt-5 ml-0 md:ml-2">
+                  <div className="font-SCDream3 text-gray-400 w-fit h-fit text-[10px] mt-0 md:mt-7 ml-0 md:ml-2">
                     특수문자, 영문자, 숫자 포함 8글자 이상으로 입력해주세요
                   </div>
                 </div>
@@ -343,11 +362,11 @@ const SignUp = () => {
                   )}
                 />
                 {pwValue.length !== 0 && checkPw ? (
-                  <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
+                  <div className="flex flex-row items-end justify-end w-full mt-1 text-[10px] md:text-[11px] text-mainOrange h-fit font-SCDream2">
                     올바른 비밀번호 형식입니다
                   </div>
                 ) : pwValue.length !== 0 && !checkPw ? (
-                  <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-nagativeMessage h-fit font-SCDream2">
+                  <div className="flex flex-row items-end justify-end w-full mt-1 text-[10px] md:text-[11px] text-nagativeMessage h-fit font-SCDream2">
                     비밀번호 형식이 올바르지 않습니다
                   </div>
                 ) : null}
@@ -386,18 +405,19 @@ const SignUp = () => {
                   )}
                 />
                 {rePwValue.length !== 0 && checkRePw ? (
-                  <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
+                  <div className="flex flex-row items-end justify-end w-full mt-1 text-[10px] md:text-[11px] text-mainOrange h-fit font-SCDream2">
                     비밀번호가 일치합니다
                   </div>
                 ) : rePwValue.length !== 0 && !checkRePw ? (
-                  <div className="flex flex-row items-end justify-end w-full mt-1 text-xs  text-nagativeMessage h-fit font-SCDream2">
+                  <div className="flex flex-row items-end justify-end w-full mt-1 text-[10px] md:text-[11px]  text-nagativeMessage h-fit font-SCDream2">
                     비밀번호가 일치하지 않습니다
                   </div>
                 ) : null}
               </div>
-              <div className="flex flex-row items-center justify-end w-full h-fit mt-4">
+              {isCheckId && isCheckEmail && checkPw && checkRePw ? <div className="flex flex-row items-center justify-end w-full h-fit mt-4">
                 <SubmitBtn onClick={()=> handleClickSubmit} />
-              </div>
+              </div> : null}
+              
             </form>
           ) : (
             <EmailCheckNumberLayout>
