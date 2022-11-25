@@ -25,4 +25,8 @@ public class BoardUpdateRequestDto {
         this.content = content;
         this.music = music;
     }
+
 }
+
+
+

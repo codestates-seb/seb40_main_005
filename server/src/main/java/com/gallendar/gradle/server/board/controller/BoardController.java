@@ -60,16 +60,23 @@ public class BoardController {
         return boardService.findById(boardId);
     }
 
-//    @GetMapping
-//    public List<BoardListResponseDto> findAll(int page, int size){
-//        return boardService.findAllDesc();
-//    }
 
+
+
+
+    /**
+     * 게시글 삭제
+     * @param boardId
+     * @return
+     */
     @DeleteMapping("/{board-id}")
     public Long delete(@PathVariable("board-id") Long boardId) {
         boardService.delete(boardId);
         return boardId;
     }
+
+}
+
 
     /**
      * 캘린더 조건별로 조회

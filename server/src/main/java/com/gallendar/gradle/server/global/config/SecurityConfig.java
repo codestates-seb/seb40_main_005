@@ -6,11 +6,9 @@ import com.gallendar.gradle.server.global.auth.jwt.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -27,21 +25,9 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-//    @Autowired
-//    private UserDetailsService userDetailsService;
-
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
-
-//    @Autowired
-//    public void configGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        // 일치하는 자격증명을 위해 사용자를 로드할 위치를 알수 있도록
-//        // AuthenticationManager를 구성한다.
-//        // BCryptPasswordEncoder를 이용
-//        auth.userDetailsService(userDetailsService)
-//                .passwordEncoder(passwordEncoder());
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
