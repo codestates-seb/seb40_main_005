@@ -1,9 +1,6 @@
 package com.gallendar.gradle.server.members.controller;
 
 import com.gallendar.gradle.server.exception.BusinessLogicException;
-import com.gallendar.gradle.server.exception.ExceptionCode;
-import com.gallendar.gradle.server.exception.Message;
-import com.gallendar.gradle.server.global.auth.jwt.JwtUtils;
 import com.gallendar.gradle.server.members.dto.*;
 import com.gallendar.gradle.server.members.service.ChangePasswordService;
 import com.gallendar.gradle.server.members.service.CreateMemberService;
@@ -22,11 +19,6 @@ import org.springframework.http.ResponseEntity;
 
 import javax.validation.Valid;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-
-
-import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -66,7 +58,7 @@ public class MembersController {
     @GetMapping("/find-id")
     public FindIdByEmailResponse findIdByEmail(@RequestParam("email") String email) {
         return memberSearchService.idFindByEmail(email);
-
+    }
 
     /**
      * 비밀번호 변경
@@ -74,23 +66,18 @@ public class MembersController {
      * @param changePasswordRequest
      * @return
      */
-    @ApiOperation(value = "비밀번호 변경", notes = "가입된 회원의 패스워드를 변경한다, 기존 설정된 비밀번호 패턴을 맞추지 않는다면 예외처리")
     @PatchMapping("/password")
     public ChangePasswordResponse changePasswordById(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
         return changePasswordService.passwordChangeById(changePasswordRequest);
     }
 
-  
-    
      /**
      * 아이디 중복 확인
      * @param id
      * @return
      */
     @ApiOperation(value = "아이디 중복 확인", notes = "입력한 아이디가 이미 가입되어있는지 확인 할 수 있다.")
-    @GetMapping("/{id}")
     @GetMapping("/checkId/{id}")
-
     public ResponseEntity<String> checkMemberId(@PathVariable String id) {
         return (createMemberService.checkMemberIdDuplication(id) ?
                 ResponseEntity.status(HttpStatus.CONFLICT).body("This ID is already in use.")
@@ -103,7 +90,7 @@ public class MembersController {
      * @return
      */
     @ApiOperation(value = "이메일 중복 확인", notes = "입력한 이메일이 이미 가입되어있는지 확인 할 수 있다.")
-    @GetMapping("/{email}")
+    @GetMapping("/checkEmail/{email}")
     public ResponseEntity<String> checkMemberEmail(@PathVariable String email) {
         return (createMemberService.checkMemberEmailDuplication(email) ?
                 ResponseEntity.status(HttpStatus.CONFLICT).body("This Email is already in use.")
@@ -156,6 +143,4 @@ public class MembersController {
         String response = "회원정보 조회";
         return response;
     }
-
-
 }
