@@ -12,6 +12,7 @@ import useCheckEmail from "../hooks/user/useCheckEmail";
 import useCheckAuthNum from "../hooks/user/useCheckAuthNum";
 import usePostSignUpData from "../hooks/user/usePostSignUpData";
 import WelcomeModal from "../components/WelcomeModal";
+import useRequestAuthNum from "../hooks/user/useRequestAuthNum";
 
 const SignUp = () => {
   const {
@@ -59,11 +60,14 @@ const SignUp = () => {
 
   const { data: emailData, refetch: emailRefetch } = useCheckEmail(emailValue);
 
-  const { data: authNumData, refetch: authNumRefetch } = useCheckAuthNum(
-    authNumValue,
-    emailValue,
+  const { data:checkAuth, mutate:checkAuthNumMute } = useCheckAuthNum(
+    {
+      authNum : authNumValue,
+      email : emailValue 
+    }
   );
 
+  const { mutate:postAuthNumMute } = useRequestAuthNum({email : emailValue});
 
   const { data:signupData, mutate:singUpMute } = usePostSignUpData(signUpData);
 
@@ -75,6 +79,7 @@ const SignUp = () => {
 
   const handleAuthClick = () => {
     setAuthInputView(true);
+    postAuthNumMute({email: emailValue});
   };
 
   const handleIdChange = (e: any) => {
@@ -106,10 +111,8 @@ const SignUp = () => {
       e.preventDefault();
       if (idValue.length !== 0 && checkId) {
         idRefetch();
+        console.log(idData);
         setIsCheckId(true);
-        setIsSameId(true);
-      }else {
-        setIsSameId(false)
       }
     }
   };
@@ -119,6 +122,7 @@ const SignUp = () => {
     if (e.keyCode === 13 && checkEmail) {
       // console.log(emailData);
       emailRefetch();
+      console.log(emailData)
       setIsCheckEmail(true);
     }
   };
@@ -152,7 +156,10 @@ const SignUp = () => {
 
   const handleClickAuthNumBtn = () => {
     // 조건문 추가
-    authNumRefetch();
+    checkAuthNumMute(
+      {authNum : authNumValue, email : emailValue }
+    );
+    console.log(checkAuth);
     setCheckAuthNum(true);
     setAuthInputView(false);
     setPwInputView(true);
@@ -172,7 +179,7 @@ const SignUp = () => {
 
   return (
     <>
-      {modalView? <WelcomeModal name={"박성훈"}/> : null}
+      {modalView? <WelcomeModal name={idValue}/> : null}
       
       <CertifyPageLayout>
         <div className="flex flex-col items-start justify-start w-full h-full">
@@ -227,11 +234,11 @@ const SignUp = () => {
               ) : null}
 
               {/* API 구현 뒤 수정 필요 */}
-              {checkId && isCheckId && isSameId && idValue.length !== 0 ? (
+              {checkId && isCheckId && idData?.data && idValue.length !== 0 ? (
                 <div className="flex flex-row items-end justify-end w-full mt-1 text-[10px] md:text-[11px] text-mainOrange h-fit font-SCDream2">
                   사용가능한 ID입니다
                 </div>
-              ) : checkId && isCheckId && !isSameId && idValue.length !== 0 ? (
+              ) : checkId && isCheckId && idData?.response && idValue.length !== 0 ? (
                 <div className="flex flex-row items-end justify-end w-full mt-1 text-[10px] md:text-[11px] text-nagativeMessage h-fit font-SCDream2">
                   이미 사용중인 ID입니다
                 </div>
@@ -258,15 +265,16 @@ const SignUp = () => {
                   type="text"
                   value={emailValue}
                   onKeyUp={handleEmailEnter}
+                  disabled={!idData ? true : idData.response ? true : false}
                   placeholder="Email 입력 후 Enter를 눌러주세요"
                   {...register("emailErrorInput", {
                     required: "Email은 필수 입력입니다.",
                     onChange: handleEmailChange,
                   })}
                 />
-                {emailValue.length !== 0 && isCheckEmail && !checkAuthNum ? (
+                {emailValue.length !== 0 && isCheckEmail && !checkAuthNum && emailData?.data ? (
                   <AuthBtn onClick={handleAuthClick}>인증요청</AuthBtn>
-                ) : emailValue.length !== 0 && isCheckEmail && checkAuthNum ? <AuthBtn onClick={()=>{return 0}}>인증완료</AuthBtn> : null}
+                ) : emailValue.length !== 0 && isCheckEmail && checkAuthNum && emailData?.data ? <AuthBtn onClick={()=>{return 0}}>인증완료</AuthBtn> : null}
                 {/* <AuthBtn>인증완료</AuthBtn> */}
               </div>
 
@@ -287,11 +295,11 @@ const SignUp = () => {
 
               {/* isSameEmail 상태 활용 */}
               {/* api완성 시 수정필요 */}
-              {emailValue.length !== 0 && isSameEmail && isCheckEmail && emailRex.test(emailValue) ? (
+              {emailValue.length !== 0 && emailData?.response && isCheckEmail && emailRex.test(emailValue) ? (
                 <div className="flex flex-row items-end justify-end w-full mt-1 text-[10px] md:text-[11px] text-nagativeMessage h-fit font-SCDream2">
                   이미 존재하는 Email입니다
                 </div>
-              ) : emailValue.length !== 0 && !isSameEmail && isCheckEmail && emailRex.test(emailValue) ? (
+              ) : emailValue.length !== 0 && emailData?.data && isCheckEmail && emailRex.test(emailValue) ? (
                 <div className="flex flex-row items-end justify-end w-full mt-1 text-[10px] md:text-[11px] text-mainOrange h-fit font-SCDream2">
                   사용가능한 Email입니다! 인증요청 버튼을 클릭해주세요
                 </div>
@@ -299,12 +307,12 @@ const SignUp = () => {
             </div>
           </form>
 
-          {authInputView ? (
+          {authInputView || checkAuth?.response ? (
             <EmailCheckNumberLayout>
               <div className="text-xs text-mainOrange font-SCDream4 md:text-sm">
                 입력하신 Email로 인증번호가 발송되었습니다
               </div>
-              {authNumValue.length !== 0 && !checkAuthNum ? ( //요청 응답에 따른 조건 부여
+              {authNumValue.length !== 0 && checkAuth?.response ? ( //요청 응답에 따른 조건 부여
                 <div className=" text-nagativeMessage font-SCDream3 text-[11px] md:text-[12px] mt-2">
                   인증번호가 올바르지 않습니다
                 </div>
@@ -322,7 +330,7 @@ const SignUp = () => {
               />
               <AuthBtn onClick={handleClickAuthNumBtn}>인증</AuthBtn>
             </EmailCheckNumberLayout>
-          ) : isCheckEmail && !authInputView && pwInputView ? (
+          ) : isCheckEmail && !authInputView && pwInputView && checkAuth?.data ? (
             <form className="w-full" onSubmit={handleClickSubmit}>
               <div className="flex flex-col w-full h-fit">
                 <div className="flex flex-col w-full md:flex-row h-fit">

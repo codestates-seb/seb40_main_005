@@ -37,7 +37,7 @@ const LoginForm = () => {
           localStorage.setItem("token", res.token);
           setIsLogin(true);
           setFailedMsg("");
-          router.push("/main");
+          router.push("/calendar");
         }
       })
       .catch(() => {
