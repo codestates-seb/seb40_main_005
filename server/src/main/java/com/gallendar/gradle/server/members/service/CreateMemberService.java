@@ -53,7 +53,6 @@ public class CreateMemberService {
 
             membersRepository.save(signupRequestDto.toEntity());
 
-
         }
 
     }
