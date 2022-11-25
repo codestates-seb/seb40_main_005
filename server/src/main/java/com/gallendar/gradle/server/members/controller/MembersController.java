@@ -1,5 +1,7 @@
 package com.gallendar.gradle.server.members.controller;
 
+import com.gallendar.gradle.server.exception.BusinessLogicException;
+import com.gallendar.gradle.server.exception.ExceptionCode;
 import com.gallendar.gradle.server.exception.Message;
 import com.gallendar.gradle.server.global.auth.jwt.JwtUtils;
 import com.gallendar.gradle.server.members.dto.*;
@@ -64,7 +66,7 @@ public class MembersController {
     @GetMapping("/find-id")
     public FindIdByEmailResponse findIdByEmail(@RequestParam("email") String email) {
         return memberSearchService.idFindByEmail(email);
-    }
+
 
     /**
      * 비밀번호 변경
@@ -81,6 +83,7 @@ public class MembersController {
     @GetMapping("/{email}")
     public List<MemberSearchResponse> searchMemberByEmail(@PathVariable(value = "email") String email) {
         return memberSearchService.MemberSearchById(email);
+
     }
 
     @GetMapping("/checkId/{id}")
@@ -100,9 +103,13 @@ public class MembersController {
 
 
     @PostMapping
-    public ResponseEntity<String> postMember(@Valid @RequestBody SignupRequestDto signupRequestDto) {
+    public ResponseEntity postMember(@Valid @RequestBody SignupRequestDto signupRequestDto) {
 
-        createMemberService.createMember(signupRequestDto);
+        try {
+            createMemberService.createMember(signupRequestDto);
+        } catch (BusinessLogicException businessLogicException) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("This email or Id is already in use");
+        }
 
         return ResponseEntity.status(HttpStatus.CREATED).body("successful");
     }

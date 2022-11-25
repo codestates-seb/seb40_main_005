@@ -72,6 +72,7 @@ public class AuthenticationController {
         }
         return ResponseEntity.status(HttpStatus.OK).body("successful!");
 
+
     }
 
     //Todo: 비밀번호 변경
