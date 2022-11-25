@@ -3,6 +3,7 @@ package com.gallendar.gradle.server.board.entity;
 import com.gallendar.gradle.server.category.domain.Category;
 import com.gallendar.gradle.server.global.auditing.BaseTimeEntity;
 import com.gallendar.gradle.server.members.domain.Members;
+import com.gallendar.gradle.server.photo.entity.Photo;
 import com.gallendar.gradle.server.tags.domain.BoardTags;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,11 +40,16 @@ public class Board extends BaseTimeEntity {
     @JoinColumn(name="category_id")
     private Category category;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "photo_id")
+    private Photo photo;
+
     @Builder
-    public Board(String title, String content, String music) {
+    public Board(String title, String content, String music, Photo photo) {
         this.title = title;
         this.content = content;
         this.music = music;
+        this.photo = photo;
     }
 
     public void update(String title, String content, String music) {

@@ -48,7 +48,7 @@ public class MembersController {
      * @return
      */
     @ApiOperation(value = "유저 찾기", notes = "유저의 id 값으로 요청이 들어오면 해당 요청이 포함된 모든 결과를 리스트로 반환한다.")
-    @GetMapping("/members/search")
+    @GetMapping("/search")
     public List<MemberSearchResponse> searchMemberById(@RequestParam(value = "id") String id) {
         return memberSearchService.MemberSearchById(id);
     }
@@ -64,28 +64,43 @@ public class MembersController {
     @ApiResponses({
             @ApiResponse(code = 200, message = "id")
     })
-    @GetMapping("/members/find-id")
+    @GetMapping("/find-id")
     public FindIdByEmailResponse findIdByEmail(@RequestParam("email") String email) {
         return memberSearchService.idFindByEmail(email);
     }
 
-
-    @GetMapping("/checkId/{id}")
+    /**
+     * 아이디 중복 확인
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "아이디 중복 확인", notes = "입력한 아이디가 이미 가입되어있는지 확인 할 수 있다.")
+    @GetMapping("/{id}")
     public ResponseEntity<String> checkMemberId(@PathVariable String id) {
         return (createMemberService.checkMemberIdDuplication(id) ?
                 ResponseEntity.status(HttpStatus.CONFLICT).body("This ID is already in use.")
                 : ResponseEntity.status(HttpStatus.OK).body("This ID is available."));
     }
 
-
-    @GetMapping("/checkEmail/{email}")
+    /**
+     * 이메일 중복확인
+     * @param email
+     * @return
+     */
+    @ApiOperation(value = "이메일 중복 확인", notes = "입력한 이메일이 이미 가입되어있는지 확인 할 수 있다.")
+    @GetMapping("/{email}")
     public ResponseEntity<String> checkMemberEmail(@PathVariable String email) {
         return (createMemberService.checkMemberEmailDuplication(email) ?
                 ResponseEntity.status(HttpStatus.CONFLICT).body("This Email is already in use.")
                 : ResponseEntity.status(HttpStatus.OK).body("This email is available."));
     }
 
-
+    /**
+     * 회원가입
+     * @param signupRequestDto
+     * @return
+     */
+    @ApiOperation(value = "회원가입", notes = "가입되어 있지 않은 아이디와 이메일 그리고 이메일 인증을 통해 회원가입을 할 수 있다.")
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody SignupRequestDto signupRequestDto) {
 

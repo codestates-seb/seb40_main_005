@@ -1,6 +1,7 @@
 package com.gallendar.gradle.server.board.dto;
 
 import com.gallendar.gradle.server.board.entity.Board;
+import com.gallendar.gradle.server.photo.entity.Photo;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ public class BoardListResponseDto {
     private String title;
     private String content;
     private String music;
+    private Photo photo;
     private LocalDateTime modefiedDate;
 
     public BoardListResponseDto(Board entity){
@@ -18,6 +20,7 @@ public class BoardListResponseDto {
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.music = entity.getMusic();
+        this.photo = entity.getPhoto();
         this.modefiedDate = entity.getUpdatedAt();
     }
 }
