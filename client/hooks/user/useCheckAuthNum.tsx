@@ -1,14 +1,15 @@
-import {
-    useQuery,
-    useQueryClient,
-    useQueryErrorResetBoundary,
-  } from "react-query";
-import checkAuthNum from "../../apis/user/checkAuthNum";
-  
-  const useCheckAuthNum = (authNum:string, email:string) => {
-    return useQuery(["get/authAfterClick"], () => checkAuthNum(authNum, email), {
-      enabled: false,
-    });
-  };
-  
-  export default useCheckAuthNum;
+import { Dispatch, SetStateAction } from "react";
+import { useMutation } from "react-query";
+import checkAuthNum from "../../apis/auth/checkAuthNum";
+
+
+interface authNumData {
+    authNum : string,
+    email : string
+  }
+
+const useCheckAuthNum = ({authNum, email}:authNumData) => {
+    return useMutation(checkAuthNum);
+}
+
+export default useCheckAuthNum;
