@@ -10,7 +10,7 @@ const Dot = ({ num, scrollIdx }: { num: number; scrollIdx: number }) => {
     <div
       onClick={handleScroll}
       className={`${
-        scrollIdx === num ? "bg-orange" : "bg-lightOrange"
+        scrollIdx === num ? "bg-mainOrange" : "bg-lightOrange"
       } duration-1000 w-3.5 h-3.5 border-solid rounded-full cursor-pointer`}
     ></div>
   );
