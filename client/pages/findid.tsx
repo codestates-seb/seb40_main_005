@@ -1,10 +1,10 @@
-import CertifyPageLayout from "../../client/components/CertifyPageLayout";
+import CertifyPageLayout from "../components/CertifyPageLayout";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { ErrorMessage } from "@hookform/error-message";
 import { useState, useCallback } from "react";
 import { useQuery, useQueryClient, useMutation } from "react-query";
-import getIdByEmail from "../../client/apis/user/getIdByEmail";
+import getIdByEmail from "../apis/user/getIdByEmail";
 
 function FindId() {
   const {

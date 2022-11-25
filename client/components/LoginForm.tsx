@@ -137,11 +137,11 @@ const LoginForm = () => {
 
             <div className="flex text-[6px]">
               <div className="mr-[0.3rem] md:mr-6">
-                <Link href={"/signup"} className="mr-4">
+                <Link href={"/findid"} className="mr-4">
                   아이디찾기
                 </Link>
               </div>
-              <Link href={"/signup"}>비밀번호재설정</Link>
+              <Link href={"/resetpw"}>비밀번호재설정</Link>
             </div>
           </div>
           <input
