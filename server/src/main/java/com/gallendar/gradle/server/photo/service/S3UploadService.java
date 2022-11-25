@@ -1,8 +1,14 @@
 package com.gallendar.gradle.server.photo.service;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.gallendar.gradle.server.board.dto.BoardUpdateRequestDto;
+import com.gallendar.gradle.server.board.entity.Board;
 import com.gallendar.gradle.server.photo.dto.PhotoCreateRequestDto;
+import com.gallendar.gradle.server.photo.dto.PhotoResponseDto;
+import com.gallendar.gradle.server.photo.dto.PhotoUpdateRequestDto;
+import com.gallendar.gradle.server.photo.entity.Photo;
 import com.gallendar.gradle.server.photo.repository.PhotoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -53,6 +60,30 @@ public class S3UploadService{
     @Transactional
     public void savePhoto(PhotoCreateRequestDto requestDto){
         photoRepository.save(requestDto.toEntity());
+    }
+
+
+    @Transactional
+    public String update(Long photoId, PhotoUpdateRequestDto requestDto){
+        photoRepository.findById(photoId).orElseThrow(() -> new IllegalArgumentException("사진이 존재하지 않습니다."));
+
+        Optional.ofNullable(requestDto.getPath())
+                .ifPresent(path -> requestDto.setPath(path));
+
+        return requestDto.getPath();
+    }
+
+    @Transactional
+    public String find(Long photoId){
+        photoRepository.findById(photoId).orElseThrow(()-> new IllegalArgumentException("사진이 존재하지 않습니다."));
+        String key = photoRepository.findById(photoId).get().getPath() + "/"+ photoRepository.findById(photoId).get().getFileName();
+        return key;
+    }
+
+    public void delete(Long photoId){
+        photoRepository.findById(photoId);
+        String key = photoRepository.findById(photoId).get().getPath() + "/"+ photoRepository.findById(photoId).get().getFileName();
+        amazonS3.deleteObject(new DeleteObjectRequest(bucket,key));
     }
 
 }
