@@ -34,6 +34,10 @@ import java.util.UUID;
 @Service
 public class S3UploadService{
 
+
+
+
+
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
@@ -58,6 +62,7 @@ public class S3UploadService{
         photoRepository.save(requestDto.toEntity());
     }
 
+
     @Transactional
     public String update(Long photoId, PhotoUpdateRequestDto requestDto){
         photoRepository.findById(photoId).orElseThrow(() -> new IllegalArgumentException("사진이 존재하지 않습니다."));
@@ -80,5 +85,6 @@ public class S3UploadService{
         String key = photoRepository.findById(photoId).get().getPath() + "/"+ photoRepository.findById(photoId).get().getFileName();
         amazonS3.deleteObject(new DeleteObjectRequest(bucket,key));
     }
+
 }
 // db -> S3 이미지 주소 저장 -> 이미지 주소가 필요하다,,,

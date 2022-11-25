@@ -37,5 +37,5 @@ out/
 .vscode/
 
 ### Custom ###
-*.yml
+/src/main/resources/*.yml
 

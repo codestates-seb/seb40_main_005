@@ -20,12 +20,14 @@ public class BoardCreateRequestDto {
     private String music;
     private Photo photo;
 
+
     @Builder
-    public BoardCreateRequestDto(String title, String content, String music, Long boardId){
+    public BoardCreateRequestDto(String title, String content, String music, Photo photo){
         this.title = title;
         this.content = content;
         this.music = music;
         this.photo = photo;
+
     }
 
     public Board toEntity(){

@@ -1,5 +1,6 @@
 package com.gallendar.gradle.server.photo.controller;
 
+
 import com.gallendar.gradle.server.board.dto.BoardUpdateRequestDto;
 import com.gallendar.gradle.server.photo.dto.PhotoCreateRequestDto;
 import com.gallendar.gradle.server.photo.dto.PhotoUpdateRequestDto;
@@ -21,6 +22,7 @@ import java.io.IOException;
 public class PhotoController {
 
     private final S3UploadService s3UploadService;
+
 
     /**
      * 사진 저장

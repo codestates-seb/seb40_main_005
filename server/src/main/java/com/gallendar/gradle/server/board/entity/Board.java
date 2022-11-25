@@ -46,6 +46,7 @@ public class Board extends BaseTimeEntity {
 
     @Builder
     public Board(String title, String content, String music, Photo photo) {
+
         this.title = title;
         this.content = content;
         this.music = music;

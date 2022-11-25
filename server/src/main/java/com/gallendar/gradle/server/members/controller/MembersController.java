@@ -4,9 +4,8 @@ import com.gallendar.gradle.server.exception.BusinessLogicException;
 import com.gallendar.gradle.server.exception.ExceptionCode;
 import com.gallendar.gradle.server.exception.Message;
 import com.gallendar.gradle.server.global.auth.jwt.JwtUtils;
-import com.gallendar.gradle.server.members.dto.FindIdByEmailResponse;
-import com.gallendar.gradle.server.members.dto.MemberSearchResponse;
-import com.gallendar.gradle.server.members.dto.SignupRequestDto;
+import com.gallendar.gradle.server.members.dto.*;
+import com.gallendar.gradle.server.members.service.ChangePasswordService;
 import com.gallendar.gradle.server.members.service.CreateMemberService;
 import com.gallendar.gradle.server.members.service.MemberSearchService;
 import io.swagger.annotations.ApiOperation;
@@ -35,10 +34,10 @@ import javax.validation.Valid;
 public class MembersController {
 
 
-    private final JwtUtils jwtUtils;
     private final MemberSearchService memberSearchService;
 
     private final CreateMemberService createMemberService;
+    private final ChangePasswordService changePasswordService;
 
 
     /**
@@ -67,15 +66,31 @@ public class MembersController {
     @GetMapping("/find-id")
     public FindIdByEmailResponse findIdByEmail(@RequestParam("email") String email) {
         return memberSearchService.idFindByEmail(email);
-    }
+
 
     /**
+     * 비밀번호 변경
+     *
+     * @param changePasswordRequest
+     * @return
+     */
+    @ApiOperation(value = "비밀번호 변경", notes = "가입된 회원의 패스워드를 변경한다, 기존 설정된 비밀번호 패턴을 맞추지 않는다면 예외처리")
+    @PatchMapping("/password")
+    public ChangePasswordResponse changePasswordById(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
+        return changePasswordService.passwordChangeById(changePasswordRequest);
+    }
+
+  
+    
+     /**
      * 아이디 중복 확인
      * @param id
      * @return
      */
     @ApiOperation(value = "아이디 중복 확인", notes = "입력한 아이디가 이미 가입되어있는지 확인 할 수 있다.")
     @GetMapping("/{id}")
+    @GetMapping("/checkId/{id}")
+
     public ResponseEntity<String> checkMemberId(@PathVariable String id) {
         return (createMemberService.checkMemberIdDuplication(id) ?
                 ResponseEntity.status(HttpStatus.CONFLICT).body("This ID is already in use.")

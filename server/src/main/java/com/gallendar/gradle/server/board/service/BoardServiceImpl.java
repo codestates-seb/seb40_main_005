@@ -41,9 +41,6 @@ public class BoardServiceImpl implements BoardService{
                 .ifPresent(content->requestDto.setContent(content));
         Optional.ofNullable(requestDto.getMusic())
                 .ifPresent(music->requestDto.setMusic(music));
-        board.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getMusic());
-
-        board.update(requestDto.getTitle(),requestDto.getContent(),requestDto.getMusic());
 
         return boardId;
     }
