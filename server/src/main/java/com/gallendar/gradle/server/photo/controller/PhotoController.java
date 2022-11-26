@@ -27,14 +27,12 @@ public class PhotoController {
     /**
      * 사진 저장
      * @param multipartFile
-     * @param requestDto
      * @return
      * @throws IOException
      */
     @PostMapping
-    public String uploadPhoto(@RequestPart("images") MultipartFile multipartFile,
-                              @RequestBody PhotoCreateRequestDto requestDto) throws IOException{
-        s3UploadService.savePhoto(requestDto);
+    public String uploadPhoto(@RequestPart("images") MultipartFile multipartFile) throws IOException{
+
         return s3UploadService.upload(multipartFile);
     }
 
@@ -45,28 +43,28 @@ public class PhotoController {
      * @param requestDto
      * @return
      */
-    @PatchMapping("/{photo-id}")
-    public String updatePhoto(@PathVariable("photo-id") @Positive long photoId,
-                              @Valid @RequestBody PhotoUpdateRequestDto requestDto){
-        return s3UploadService.update(photoId, requestDto);
-    }
+//    @PatchMapping("/{photo-id}")
+//    public String updatePhoto(@PathVariable("photo-id") @Positive long photoId,
+//                              @Valid @RequestBody PhotoUpdateRequestDto requestDto){
+//        return s3UploadService.update(photoId, requestDto);
+//    }
 
     /**
      * 사진 조회
      * @param photoId
      * @return
      */
-    @GetMapping("/{photo-id}")
-    public String findPhoto(@PathVariable("photo-id") @Positive long photoId){
-        return s3UploadService.find(photoId);
-    }
+//    @GetMapping("/{photo-id}")
+//    public String findPhoto(@PathVariable("photo-id") @Positive long photoId){
+//        return s3UploadService.find(photoId);
+//    }
 
     /**
      * 사진 삭제
      * @param photoId
      */
-    @DeleteMapping("/{photo-id}")
-    public void deletePhoto(@PathVariable("photo-id") @Positive long photoId){
-        s3UploadService.delete(photoId);
-    }
+//    @DeleteMapping("/{photo-id}")
+//    public void deletePhoto(@PathVariable("photo-id") @Positive long photoId){
+//        s3UploadService.delete(photoId);
+//    }
 }
