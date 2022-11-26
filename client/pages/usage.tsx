@@ -1,6 +1,6 @@
 import Image from "next/image";
-import ScrollImg from "../components/scrollImg";
-import TopBtn from "../components/topBtn";
+import ScrollImg from "../components/ScrollImg";
+import TopBtn from "../components/TopBtn";
 import { motion } from "framer-motion";
 
 import Link from "next/link";
