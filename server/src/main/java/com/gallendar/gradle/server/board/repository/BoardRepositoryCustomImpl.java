@@ -3,6 +3,7 @@ package com.gallendar.gradle.server.board.repository;
 import com.gallendar.gradle.server.board.entity.Board;
 import com.gallendar.gradle.server.board.entity.QBoard;
 import com.gallendar.gradle.server.category.domain.QCategory;
+import com.gallendar.gradle.server.exception.Status;
 import com.gallendar.gradle.server.members.domain.QMembers;
 import com.gallendar.gradle.server.tags.domain.QBoardTags;
 import com.gallendar.gradle.server.tags.domain.QTags;
@@ -39,14 +40,13 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
     }
 
     @Override
-    public List<Board> findByBoard(Integer year, Integer month, Integer day, String category, Long id) {
+    public List<Board> findByBoard(Integer year, Integer month, String category, String id) {
         List<Board> list = jpaQueryFactory
                 .selectFrom(qBoard)
                 .leftJoin(qBoard.members, qMembers)
-                .where(qMembers.membersId.eq(id)
+                .where(qMembers.id.eq(id)
                         , eqYear(year)
-                        , eqMonth(month)
-                        , eqDay(day)).fetchJoin()
+                        , eqMonth(month)).fetchJoin()
                 .leftJoin(qBoard.category, qCategory)
                 .where(eqCategory(category)).fetchJoin()
                 .leftJoin(qBoard.boardTags, qBoardTags).fetchJoin()
