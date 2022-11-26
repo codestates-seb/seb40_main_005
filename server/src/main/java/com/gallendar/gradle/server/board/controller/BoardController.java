@@ -80,7 +80,7 @@ public class BoardController {
 
 
     /**
-     * 캘린더 조건별로 조회
+     * 캘린더 조회
      *
      * @param year
      * @param month
@@ -88,7 +88,7 @@ public class BoardController {
      * @return
      */
     @GetMapping
-    @ApiOperation(value = "조건별로 게시글 조회", notes = "year,month,day,category 은 조건에 따라 조회가능하고, id는 현재 로그인한 회원의 id 값입니다. id 값은 필수적으로 값을 넘겨줘야 합니다.")
+    @ApiOperation(value = "캘린더 조회", notes = "(year, month, category) request 받아서 검색")
     public List<BoardSearchResponse> boardSearchByYearAndMonthAndCategory(@RequestParam int year, @RequestParam int month, @RequestParam String category, @RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token) {
         return boardSearchService.SearchBoardByYearAndMonthAndCategory(year, month, category, token);
     }
