@@ -1,19 +1,22 @@
 package com.gallendar.gradle.server.board.controller;
 
 import com.gallendar.gradle.server.board.dto.*;
-import com.gallendar.gradle.server.board.mapper.BoardMapper;
 import com.gallendar.gradle.server.board.service.BoardSearchService;
 import com.gallendar.gradle.server.board.service.BoardServiceImpl;
 import com.gallendar.gradle.server.global.auth.jwt.JwtRequestFilter;
+import com.gallendar.gradle.server.tags.dto.TagsCreateDto;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +27,7 @@ public class BoardController {
 
     @Autowired
     private final BoardServiceImpl boardService;
-    private final BoardMapper mapper;
+//    private final BoardMapper mapper;
     private final BoardSearchService boardSearchService;
 
     /**
@@ -34,8 +37,10 @@ public class BoardController {
      * @return
      */
     @PostMapping
-    public Long save(@RequestBody BoardCreateRequestDto requestDto) {
-        return boardService.save(requestDto);
+    public ResponseEntity save(BoardCreateRequestDto requestDto, @RequestParam(value = "tags") List<String> tagsMembers) throws IOException {
+        boardService.save(requestDto, tagsMembers);
+
+        return new ResponseEntity(HttpStatus.OK);
 
     }
 
@@ -47,9 +52,9 @@ public class BoardController {
      * @return
      */
     @PatchMapping("/{board-id}")
-    public Long update(@PathVariable("board-id") @Positive long boardId,
+    public ResponseEntity update(@PathVariable("board-id") @Positive long boardId,
                        @Valid @RequestBody BoardUpdateRequestDto requestDto) {
-        return boardService.update(boardId, requestDto);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 
