@@ -37,7 +37,7 @@ public class Board extends BaseTimeEntity {
     private Members members;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="category_id")
+    @JoinColumn(name = "category_id")
     private Category category;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -61,5 +61,9 @@ public class Board extends BaseTimeEntity {
 
     public void setMembers(Members members) {
         this.members = members;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

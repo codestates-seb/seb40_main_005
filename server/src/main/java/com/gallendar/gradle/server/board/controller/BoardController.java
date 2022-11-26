@@ -4,10 +4,12 @@ import com.gallendar.gradle.server.board.dto.*;
 import com.gallendar.gradle.server.board.mapper.BoardMapper;
 import com.gallendar.gradle.server.board.service.BoardSearchService;
 import com.gallendar.gradle.server.board.service.BoardServiceImpl;
+import com.gallendar.gradle.server.global.auth.jwt.JwtRequestFilter;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,6 +29,7 @@ public class BoardController {
 
     /**
      * 게시글 작성
+     *
      * @param requestDto
      * @return
      */
@@ -38,6 +41,7 @@ public class BoardController {
 
     /**
      * 게시글 수정
+     *
      * @param boardId
      * @param requestDto
      * @return
@@ -51,6 +55,7 @@ public class BoardController {
 
     /**
      * 단일 게시글 조회
+     *
      * @param boardId
      * @return
      */
@@ -61,11 +66,9 @@ public class BoardController {
     }
 
 
-
-
-
     /**
      * 게시글 삭제
+     *
      * @param boardId
      * @return
      */
@@ -76,21 +79,17 @@ public class BoardController {
     }
 
 
-
-
     /**
      * 캘린더 조건별로 조회
      *
      * @param year
      * @param month
-     * @param day
      * @param category
-     * @param id
      * @return
      */
     @GetMapping
     @ApiOperation(value = "조건별로 게시글 조회", notes = "year,month,day,category 은 조건에 따라 조회가능하고, id는 현재 로그인한 회원의 id 값입니다. id 값은 필수적으로 값을 넘겨줘야 합니다.")
-    public List<BoardSearchResponse> boardSearchByYearAndMonthAndDayAndCategory(@RequestParam int year, @RequestParam int month, @RequestParam int day, @RequestParam String category, @RequestParam Long id) {
-        return boardSearchService.SearchBoardByYearAndMonthAndDayAndCategory(year, month, day, category, id);
+    public List<BoardSearchResponse> boardSearchByYearAndMonthAndCategory(@RequestParam int year, @RequestParam int month, @RequestParam String category, @RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token) {
+        return boardSearchService.SearchBoardByYearAndMonthAndCategory(year, month, category, token);
     }
 }

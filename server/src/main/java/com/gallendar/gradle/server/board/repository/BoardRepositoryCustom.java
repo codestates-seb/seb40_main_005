@@ -7,5 +7,5 @@ import java.util.List;
 public interface BoardRepositoryCustom {
     Board findById(Long boardId, String userId);
 
-    List<Board> findByBoard(Integer year, Integer month, Integer day, String category, Long id);
+    List<Board> findByBoard(Integer year, Integer month, String category, String id);
 }

@@ -3,42 +3,35 @@ package com.gallendar.gradle.server.board.dto;
 import com.gallendar.gradle.server.board.entity.Board;
 import com.gallendar.gradle.server.tags.domain.BoardTags;
 import com.gallendar.gradle.server.tags.domain.Tags;
+import com.gallendar.gradle.server.tags.type.TagStatus;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Builder
 public class BoardSearchResponse {
     private Long boardId;
     private String title;
-    private String content;
     private LocalDateTime createdPost;
-    private LocalDateTime modifiedPost;
-    private String writer;
     private String category;
-    private List<String> tagMember;
+    private Map<String, TagStatus> tagsMember;
 
-    public static BoardSearchResponse from(Board board, List<String> tagsMembers) {
+    public static BoardSearchResponse from(Board board, Map<String, TagStatus> tagsMember) {
         Long boardId = board.getBoardId();
         String title = board.getTitle();
-        String content = board.getContent();
         LocalDateTime createdPost = board.getCreatedAt();
-        LocalDateTime modifiedPost = board.getUpdatedAt();
-        String writer = board.getMembers().getId();
         String category = board.getCategory().getCategoryTitle();
-        List<String> tagsMember = tagsMembers;
+        Map<String, TagStatus> tagMember = tagsMember;
 
         return BoardSearchResponse.builder()
                 .boardId(boardId)
                 .title(title)
-                .content(content)
                 .createdPost(createdPost)
-                .modifiedPost(modifiedPost)
-                .writer(writer)
-                .tagMember(tagsMember)
+                .tagsMember(tagMember)
                 .category(category)
                 .build();
     }
