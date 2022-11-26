@@ -8,20 +8,20 @@ import DayInput from "./DayInput";
 
 const CalendarContainer = () => {
   const [currMonth, setCurrMonth] = useState(getMonth(new Date()) + 1);
-  const [selectedDate, setSelectedDate] = useState(getYear(new Date()));
+  const [currYear, setCurrYear] = useState(getYear(new Date()));
 
   const changeMonth = (month: number) => {
     setCurrMonth(month);
   };
 
   const changeYear = (year: number) => {
-    setSelectedDate(year);
+    setCurrYear(year);
   };
 
   const handleLeftClick = () => {
     if (currMonth === 1) {
       setCurrMonth(12);
-      setSelectedDate(selectedDate - 1);
+      setCurrYear(currYear - 1);
     } else {
       setCurrMonth(currMonth - 1);
     }
@@ -30,7 +30,7 @@ const CalendarContainer = () => {
   const handleRightClick = () => {
     if (currMonth === 12) {
       setCurrMonth(1);
-      setSelectedDate(selectedDate + 1);
+      setCurrYear(currYear + 1);
     } else {
       setCurrMonth(currMonth + 1);
     }
@@ -45,7 +45,7 @@ const CalendarContainer = () => {
           <div className="w-full h-fit flex flex-row justify-center items-center mt-3">
             <LeftBtn onClick={handleLeftClick} />
             <DayInput
-              year={selectedDate}
+              year={currYear}
               month={currMonth}
               setMonth={changeMonth}
               setYear={changeYear}
