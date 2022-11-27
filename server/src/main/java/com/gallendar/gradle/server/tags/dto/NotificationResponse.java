@@ -13,15 +13,18 @@ import java.time.LocalDateTime;
 @Getter
 public class NotificationResponse {
     private String shareId;
+    private Long boardId;
     private String title;
     private LocalDateTime shareDateTime;
 
     public static NotificationResponse from(BoardTags boardTags){
         String shareId=boardTags.getBoard().getMembers().getId();
+        Long boardId=boardTags.getBoard().getBoardId();
         String title=boardTags.getBoard().getTitle();
         LocalDateTime shareDateTime=boardTags.getTags().getCreatedAt();
         return NotificationResponse.builder()
                 .shareId(shareId)
+                .boardId(boardId)
                 .title(title)
                 .shareDateTime(shareDateTime)
                 .build();
