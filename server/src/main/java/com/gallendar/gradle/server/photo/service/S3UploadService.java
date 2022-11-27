@@ -36,14 +36,11 @@ public class S3UploadService{
 
 
 
-
-
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
 
     private final AmazonS3 amazonS3;
-    private final PhotoRepository photoRepository;
 
     @Transactional
     public String upload(MultipartFile multipartFile) throws IOException{
@@ -53,38 +50,34 @@ public class S3UploadService{
         objectMetadata.setContentLength(multipartFile.getInputStream().available());
         amazonS3.putObject(bucket,fileName,multipartFile.getInputStream(),objectMetadata);
         System.out.println(amazonS3.getUrl(bucket,fileName).toString());
-
-        return amazonS3.getUrl(bucket,fileName).toString();
-    }
-
-    @Transactional
-    public void savePhoto(PhotoCreateRequestDto requestDto){
-        photoRepository.save(requestDto.toEntity());
+        String path = amazonS3.getUrl(bucket,fileName).toString();
+        return path;
     }
 
 
-    @Transactional
-    public String update(Long photoId, PhotoUpdateRequestDto requestDto){
-        photoRepository.findById(photoId).orElseThrow(() -> new IllegalArgumentException("사진이 존재하지 않습니다."));
 
-        Optional.ofNullable(requestDto.getPath())
-                .ifPresent(path -> requestDto.setPath(path));
-
-        return requestDto.getPath();
-    }
-
-    @Transactional
-    public String find(Long photoId){
-        photoRepository.findById(photoId).orElseThrow(()-> new IllegalArgumentException("사진이 존재하지 않습니다."));
-        String key = photoRepository.findById(photoId).get().getPath() + "/"+ photoRepository.findById(photoId).get().getFileName();
-        return key;
-    }
-
-    public void delete(Long photoId){
-        photoRepository.findById(photoId);
-        String key = photoRepository.findById(photoId).get().getPath() + "/"+ photoRepository.findById(photoId).get().getFileName();
-        amazonS3.deleteObject(new DeleteObjectRequest(bucket,key));
-    }
+//    @Transactional
+//    public String update(Long photoId, PhotoUpdateRequestDto requestDto){
+//        photoRepository.findById(photoId).orElseThrow(() -> new IllegalArgumentException("사진이 존재하지 않습니다."));
+//
+//        Optional.ofNullable(requestDto.getPath())
+//                .ifPresent(path -> requestDto.setPath(path));
+//
+//        return requestDto.getPath();
+//    }
+//
+//    @Transactional
+//    public String find(Long photoId){
+//        photoRepository.findById(photoId).orElseThrow(()-> new IllegalArgumentException("사진이 존재하지 않습니다."));
+//        String key = photoRepository.findById(photoId).get().getPath() + "/"+ photoRepository.findById(photoId).get().getFileName();
+//        return key;
+//    }
+//
+//    public void delete(Long photoId){
+//        photoRepository.findById(photoId);
+//        String key = photoRepository.findById(photoId).get().getPath() + "/"+ photoRepository.findById(photoId).get().getFileName();
+//        amazonS3.deleteObject(new DeleteObjectRequest(bucket,key));
+//    }
 
 }
 // db -> S3 이미지 주소 저장 -> 이미지 주소가 필요하다,,,
