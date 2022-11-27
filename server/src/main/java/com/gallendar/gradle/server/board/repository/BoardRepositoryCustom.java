@@ -8,4 +8,6 @@ public interface BoardRepositoryCustom {
     Board findById(Long boardId, String userId);
 
     List<Board> findByBoard(Integer year, Integer month, String category, String id);
+
+    List<Board> findByBoardId(Long boardId,String id);
 }
