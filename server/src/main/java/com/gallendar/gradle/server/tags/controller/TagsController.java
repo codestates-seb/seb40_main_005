@@ -2,30 +2,30 @@ package com.gallendar.gradle.server.tags.controller;
 
 import com.gallendar.gradle.server.exception.Message;
 import com.gallendar.gradle.server.exception.Status;
+import com.gallendar.gradle.server.global.auth.jwt.JwtRequestFilter;
 import com.gallendar.gradle.server.tags.dto.NotificationResponse;
 import com.gallendar.gradle.server.tags.service.NotificationService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/notification")
+@Slf4j
 public class TagsController {
     private final NotificationService notificationService;
 
     /**
-     * 태그 알림 요청
+     * 태그 알림
      *
-     * @param userId
+     * @param token
      * @return
      */
     @ApiOperation(value = "태그 알림", notes = "현재 로그인 한 유저의 태그된 게시글에 대한 정보를 간단히 응답한다.")
@@ -33,14 +33,15 @@ public class TagsController {
             @ApiResponse(code = 200, message = "리스트 형식의 공유한 사람의 ID, 제목, 공유 된 시간")
     })
     @GetMapping
-    public List<NotificationResponse> findTagsById(@RequestParam(value = "userId") String userId) {
-        return notificationService.tagsFindById(userId);
+    public List<NotificationResponse> findTagsById(@RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token) {
+        log.info("태그 알림 요청");
+        return notificationService.tagsFindById(token);
     }
 
     /**
-     * 태그된 게시글 수락
+     * 태그 수락
      *
-     * @param userId
+     * @param token
      * @param boardId
      * @return
      */
@@ -49,14 +50,15 @@ public class TagsController {
             @ApiResponse(code = 200, message = "공유가 수락되었습니다.")
     })
     @GetMapping("/accept")
-    public ResponseEntity<Message> acceptByTagBoard(@RequestParam(value = "userId") String userId, @RequestParam(value = "boardId") Long boardId) {
-        return notificationService.acceptTagBoard(userId, boardId);
+    public ResponseEntity<Message> acceptByTagBoard(@RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token, @RequestParam(value = "boardId") Long boardId) {
+        log.info("태그된 게시글 수락 요청");
+        return notificationService.acceptTagBoard(token, boardId);
     }
 
     /**
-     * 태그된 게시글 거절
+     * 태그 거절
      *
-     * @param userId
+     * @param token
      * @param boardId
      * @return
      */
@@ -65,7 +67,8 @@ public class TagsController {
             @ApiResponse(code = 200, message = "공유가 거절되었습니다.")
     })
     @GetMapping("/deny")
-    public ResponseEntity<Message> passByTagBoard(@RequestParam(value = "userId") String userId, @RequestParam(value = "boardId") Long boardId) {
-        return notificationService.denyTagBoard(userId, boardId);
+    public ResponseEntity<Message> passByTagBoard(@RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token, @RequestParam(value = "boardId") Long boardId) {
+        log.info("태그된 게시글 거절 요청");
+        return notificationService.denyTagBoard(token, boardId);
     }
 }
