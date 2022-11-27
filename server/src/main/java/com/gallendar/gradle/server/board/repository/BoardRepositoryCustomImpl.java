@@ -3,7 +3,9 @@ package com.gallendar.gradle.server.board.repository;
 import com.gallendar.gradle.server.board.entity.Board;
 import com.gallendar.gradle.server.board.entity.QBoard;
 import com.gallendar.gradle.server.category.domain.QCategory;
+import com.gallendar.gradle.server.exception.Status;
 import com.gallendar.gradle.server.members.domain.QMembers;
+import com.gallendar.gradle.server.photo.entity.QPhoto;
 import com.gallendar.gradle.server.tags.domain.QBoardTags;
 import com.gallendar.gradle.server.tags.domain.QTags;
 import com.gallendar.gradle.server.tags.type.TagStatus;
@@ -26,6 +28,7 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
     QMembers qMembers = QMembers.members;
     QCategory qCategory = QCategory.category;
     QTags qTags = QTags.tags;
+    QPhoto qPhoto=QPhoto.photo;
 
     @Override
     public Board findById(Long boardId, String userId) {
@@ -39,14 +42,13 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
     }
 
     @Override
-    public List<Board> findByBoard(Integer year, Integer month, Integer day, String category, Long id) {
+    public List<Board> findByBoard(Integer year, Integer month, String category, String id) {
         List<Board> list = jpaQueryFactory
                 .selectFrom(qBoard)
                 .leftJoin(qBoard.members, qMembers)
-                .where(qMembers.membersId.eq(id)
+                .where(qMembers.id.eq(id)
                         , eqYear(year)
-                        , eqMonth(month)
-                        , eqDay(day)).fetchJoin()
+                        , eqMonth(month)).fetchJoin()
                 .leftJoin(qBoard.category, qCategory)
                 .where(eqCategory(category)).fetchJoin()
                 .leftJoin(qBoard.boardTags, qBoardTags).fetchJoin()
@@ -54,6 +56,21 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
                 .fetch();
         return list;
     }
+
+    @Override
+    public List<Board> findByBoardId(Long boardId,String id) {
+        List<Board> list=jpaQueryFactory
+                .selectFrom(qBoard)
+                .leftJoin(qBoard.members,qMembers)
+                .where(qMembers.id.eq(id)
+                ,qBoard.boardId.eq(boardId)).fetchJoin()
+                .leftJoin(qBoard.photo,qPhoto).fetchJoin()
+                .leftJoin(qBoard.category,qCategory).fetchJoin()
+                .leftJoin(qBoard.boardTags,qBoardTags).fetchJoin()
+                .fetch();
+        return list;
+    }
+
 
     private BooleanExpression eqYear(Integer year) {
         if (year == null) {

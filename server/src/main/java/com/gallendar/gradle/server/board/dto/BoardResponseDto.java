@@ -5,6 +5,7 @@ import com.gallendar.gradle.server.photo.entity.Photo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -17,7 +18,7 @@ public class BoardResponseDto {
     private String title;
     private String content;
     private String music;
-    private Photo photo;
+    private MultipartFile photo;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -26,7 +27,6 @@ public class BoardResponseDto {
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.music = entity.getMusic();
-        this.photo = entity.getPhoto();
         this.createdAt = entity.getCreatedAt();
         this.updatedAt = entity.getUpdatedAt();
     }
