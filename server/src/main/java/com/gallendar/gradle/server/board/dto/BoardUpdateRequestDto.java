@@ -18,6 +18,7 @@ public class BoardUpdateRequestDto {
     private MultipartFile photo;
     private String memberId;
     private List<String> tags;
+    private String categoryTitle;
 
     @Builder
     public BoardUpdateRequestDto(String title, String content, String music){

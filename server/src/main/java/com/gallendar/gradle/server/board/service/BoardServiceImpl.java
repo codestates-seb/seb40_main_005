@@ -6,6 +6,9 @@ import com.gallendar.gradle.server.board.dto.BoardResponseDto;
 import com.gallendar.gradle.server.board.dto.BoardUpdateRequestDto;
 import com.gallendar.gradle.server.board.entity.Board;
 import com.gallendar.gradle.server.board.repository.BoardRepository;
+import com.gallendar.gradle.server.category.domain.Category;
+import com.gallendar.gradle.server.category.dto.CategoryCreateDto;
+import com.gallendar.gradle.server.category.service.CategoryService;
 import com.gallendar.gradle.server.members.domain.Members;
 import com.gallendar.gradle.server.members.domain.MembersRepository;
 import com.gallendar.gradle.server.photo.entity.Photo;
@@ -36,19 +39,23 @@ public class BoardServiceImpl implements BoardService{
     private final BoardRepository boardRepository;
     private final MembersRepository membersRepository;
     private final S3UploadService photoService;
+    private final CategoryService categoryService;
     private final PhotoRepository photoRepository;
     private final BoardTagsRepository boardTagsRepository;
     private final TagsRepository tagsRepository;
 
     /* 게시글 저장 */
     @Transactional
-    public Long save(BoardCreateRequestDto requestDto, List<String> tagsMembers, Members members) throws IOException {
+    public Long save(BoardCreateRequestDto requestDto, List<String> tagsMembers, Members members, String categoryTitle) throws IOException {
 
         verifyMember(members);
         String fileName= UUID.randomUUID()+"-"+requestDto.getPhoto().getOriginalFilename();
         String path = photoService.upload(requestDto.getPhoto());
         Photo photo = Photo.builder().fileName(fileName).path(path).build();
 
+        CategoryCreateDto categoryDto = CategoryCreateDto.builder().categoryTitle(categoryTitle).build();
+        categoryService.save(categoryDto,members);
+        Category category = Category.builder().categoryTitle(categoryTitle).build();
         Members member = membersRepository.findById(requestDto.getMemberId())
                 .orElseThrow(() -> new IllegalArgumentException());
 
@@ -56,6 +63,7 @@ public class BoardServiceImpl implements BoardService{
 
         board.setMembers(member);
         board.setPhoto(photo);
+        board.setCategory(category);
         boardRepository.save(board);
         photoRepository.save(photo);
 
@@ -91,6 +99,8 @@ public class BoardServiceImpl implements BoardService{
                 .ifPresent(music->requestDto.setMusic(music));
         Optional.ofNullable(requestDto.getPhoto())
                 .ifPresent(photo->requestDto.setPhoto(photo));
+        Optional.ofNullable(requestDto.getCategoryTitle())
+                        .ifPresent(categoryTitle -> requestDto.setCategoryTitle(categoryTitle));
         Optional.ofNullable(tagsMembers)
                 .ifPresent(setTagsMembers -> tagsMembers.forEach(m -> {
 
