@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
 import { useMutation } from "react-query";
 import petchPassword from "../../apis/user/petchPassword";
 
