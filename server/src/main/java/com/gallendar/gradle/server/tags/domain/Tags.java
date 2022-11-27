@@ -38,4 +38,8 @@ public class Tags extends BaseTimeEntity {
     public void changeStatus(TagStatus tagStatus) {
         this.status = tagStatus;
     }
+    public void addBoardTags(BoardTags boardTag){
+        boardTags.add(boardTag);
+        boardTag.setTags(this);
+    }
 }
