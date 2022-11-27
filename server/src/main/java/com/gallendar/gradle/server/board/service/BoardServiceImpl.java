@@ -124,6 +124,11 @@ public class BoardServiceImpl implements BoardService{
     public void delete (Long boardId){
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardId="+boardId));
 
+        BoardTags boardTags = boardTagsRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("태그가 없습니다."));
+
+        Tags tags = tagsRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("태그가 없습니다."));
+        tagsRepository.delete(tags);
+        boardTagsRepository.delete(boardTags);
         boardRepository.delete(board);
     }
 
