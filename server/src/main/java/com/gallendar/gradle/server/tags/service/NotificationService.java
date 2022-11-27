@@ -3,13 +3,13 @@ package com.gallendar.gradle.server.tags.service;
 import com.gallendar.gradle.server.board.entity.Board;
 import com.gallendar.gradle.server.board.repository.BoardRepository;
 import com.gallendar.gradle.server.board.repository.BoardRepositoryCustomImpl;
+import com.gallendar.gradle.server.category.domain.Category;
+import com.gallendar.gradle.server.category.domain.CategoryRepository;
 import com.gallendar.gradle.server.exception.Message;
 import com.gallendar.gradle.server.exception.Status;
 import com.gallendar.gradle.server.members.domain.Members;
 import com.gallendar.gradle.server.members.domain.MembersRepository;
-import com.gallendar.gradle.server.tags.domain.Tags;
-import com.gallendar.gradle.server.tags.domain.TagsRepository;
-import com.gallendar.gradle.server.tags.domain.TagsRepositoryCustomImpl;
+import com.gallendar.gradle.server.tags.domain.*;
 import com.gallendar.gradle.server.tags.dto.NotificationResponse;
 import com.gallendar.gradle.server.tags.type.TagStatus;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +30,7 @@ public class NotificationService {
     private final BoardRepositoryCustomImpl boardRepositoryCustom;
     private final BoardRepository boardRepository;
     private final MembersRepository membersRepository;
+    private final BoardTagsRepository boardTagsRepository;
 
     @Transactional
     public List<NotificationResponse> tagsFindById(String userId) {
@@ -48,15 +49,26 @@ public class NotificationService {
         Message message = new Message();
         message.setMessage("공유가 수락되었습니다.");
         message.setStatus(Status.OK);
+
         Board board = boardRepositoryCustom.findById(boardId, userId);
         Members members = membersRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException());
+
+        board.getBoardTags().forEach(boardTags -> {
+            boardTags.getTags().changeStatus(TagStatus.accept);
+        });
 
         Board shareBoard = Board.builder().title(board.getTitle()).content(board.getTitle()).music(board.getMusic()).build();
         shareBoard.setMembers(members);
         boardRepository.save(shareBoard);
-        board.getBoardTags().forEach(boardTags -> {
-            boardTags.getTags().changeStatus(TagStatus.accept);
-        });
+
+        Tags tags = Tags.builder().tagStatus(TagStatus.shared).tagsMember(board.getMembers().getId()).build();
+        tagsRepository.save(tags);
+
+        BoardTags shareBoardTags = new BoardTags();
+        shareBoardTags.setBoard(shareBoard);
+        shareBoardTags.setTags(tags);
+        boardTagsRepository.save(shareBoardTags);
+
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
 

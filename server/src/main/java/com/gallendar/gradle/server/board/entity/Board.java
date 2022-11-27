@@ -5,6 +5,7 @@ import com.gallendar.gradle.server.global.auditing.BaseTimeEntity;
 import com.gallendar.gradle.server.members.domain.Members;
 import com.gallendar.gradle.server.photo.entity.Photo;
 import com.gallendar.gradle.server.tags.domain.BoardTags;
+import com.gallendar.gradle.server.tags.domain.Tags;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,20 +38,21 @@ public class Board extends BaseTimeEntity {
     private Members members;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="category_id")
+    @JoinColumn(name = "category_id")
     private Category category;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "photo_id")
     private Photo photo;
 
+
     @Builder
-    public Board(String title, String content, String music, Photo photo) {
+    public Board(String title, String content, String music) {
 
         this.title = title;
         this.content = content;
         this.music = music;
-        this.photo = photo;
+
     }
 
     public void update(String title, String content, String music) {
@@ -62,4 +64,10 @@ public class Board extends BaseTimeEntity {
     public void setMembers(Members members) {
         this.members = members;
     }
+
+    public void setPhoto(Photo photo) { this.photo = photo; }
+
+    public void setCategory(Category category) { this.category = category;}
+
+    public void setBoardTags(List<BoardTags> boardTags) {this.boardTags = boardTags; }
 }
