@@ -26,6 +26,9 @@ public class JwtUtils {
     public String getUsernameFromToken(String token) {
         return getClaimFromToken(token, Claims::getId);
     }
+    public String getMemberIdFromToken(String token){
+        return getClaimFromToken(splitToken(token),Claims::getId);
+    }
 
     public Date getIssuedAtDateFromToken(String token) {
         return getClaimFromToken(token, Claims::getIssuedAt);

@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -12,6 +13,8 @@ public class BoardUpdateRequestDto {
     private String title;
     private String content;
     private String music;
+    private MultipartFile photo;
+    private String memberId;
 
     @Builder
     public BoardUpdateRequestDto(String title, String content, String music){
