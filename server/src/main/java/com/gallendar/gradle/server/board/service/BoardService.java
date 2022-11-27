@@ -5,6 +5,7 @@ import com.gallendar.gradle.server.board.dto.BoardListResponseDto;
 import com.gallendar.gradle.server.board.dto.BoardResponseDto;
 import com.gallendar.gradle.server.board.dto.BoardUpdateRequestDto;
 import com.gallendar.gradle.server.board.entity.Board;
+import com.gallendar.gradle.server.category.domain.Category;
 import com.gallendar.gradle.server.members.domain.Members;
 import com.gallendar.gradle.server.tags.dto.TagsCreateDto;
 import org.springframework.data.domain.Page;
@@ -13,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface BoardService {
-    Long save(BoardCreateRequestDto requestDto, List<String> tagsMembers, Members members) throws IOException;
+    Long save(BoardCreateRequestDto requestDto, List<String> tagsMembers, Members members, String Category) throws IOException;
     Long update(Long boardId, BoardUpdateRequestDto requestDto, List<String> tagsMembers);
     BoardResponseDto findById (Long boardId, Members members);
     //    Page<Board> findAllDesc(int page, int size);
