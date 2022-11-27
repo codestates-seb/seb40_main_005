@@ -4,12 +4,9 @@ import com.gallendar.gradle.server.board.dto.*;
 import com.gallendar.gradle.server.board.service.BoardSearchService;
 import com.gallendar.gradle.server.board.service.BoardServiceImpl;
 import com.gallendar.gradle.server.global.auth.jwt.JwtRequestFilter;
-import com.gallendar.gradle.server.tags.dto.TagsCreateDto;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +15,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -27,7 +23,6 @@ public class BoardController {
 
     @Autowired
     private final BoardServiceImpl boardService;
-//    private final BoardMapper mapper;
     private final BoardSearchService boardSearchService;
 
     /**
@@ -58,17 +53,7 @@ public class BoardController {
     }
 
 
-    /**
-     * 단일 게시글 조회
-     *
-     * @param boardId
-     * @return
-     */
-    @GetMapping("/{board-id}")
-    public BoardResponseDto findById(@PathVariable("board-id") Long boardId) {
 
-        return boardService.findById(boardId);
-    }
 
 
     /**
@@ -96,5 +81,17 @@ public class BoardController {
     @ApiOperation(value = "캘린더 조회", notes = "(year, month, category) request 받아서 검색")
     public List<BoardSearchResponse> boardSearchByYearAndMonthAndCategory(@RequestParam int year, @RequestParam int month, @RequestParam String category, @RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token) {
         return boardSearchService.SearchBoardByYearAndMonthAndCategory(year, month, category, token);
+    }
+
+    /**
+     * 게시글 조회
+     * @param boardId
+     * @param token
+     * @return
+     */
+    @ApiOperation(value = "게시글 조회", notes = "boardId로 해당 게시글의 상세 내용을 볼 수 있다.")
+    @GetMapping("/{boardId}")
+    public List<BoardSearchByIdResponse> boardSearchByBoardId(@PathVariable(value = "boardId")Long boardId,@RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token){
+        return boardSearchService.SearchBoardByBoardId(boardId,token);
     }
 }

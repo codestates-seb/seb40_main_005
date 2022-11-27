@@ -1,5 +1,6 @@
 package com.gallendar.gradle.server.board.service;
 
+import com.gallendar.gradle.server.board.dto.BoardSearchByIdResponse;
 import com.gallendar.gradle.server.board.dto.BoardSearchResponse;
 import com.gallendar.gradle.server.board.entity.Board;
 import com.gallendar.gradle.server.board.repository.BoardRepositoryCustomImpl;
@@ -31,6 +32,22 @@ public class BoardSearchService {
                 tags.put(boardTags.getTags().getTagsMember(), boardTags.getTags().getStatus());
             });
             list.add(BoardSearchResponse.from(board, tags));
+        });
+        return list;
+    }
+    @Transactional
+    public List<BoardSearchByIdResponse> SearchBoardByBoardId(Long boardId,String token){
+        String memberId= jwtUtils.getMemberIdFromToken(token);
+        System.out.println("memberId = " + memberId);
+        List<Board> boards=boardRepositoryCustom.findByBoardId(boardId,memberId);
+        List<BoardSearchByIdResponse> list =new ArrayList<>();
+        boards.forEach(board -> {
+            System.out.println("board = " + board.getBoardId());
+            List<String> tags=new ArrayList<>();
+            board.getBoardTags().forEach(boardTags -> {
+                tags.add(boardTags.getTags().getTagsMember());
+            });
+            list.add(BoardSearchByIdResponse.from(board,tags));
         });
         return list;
     }
