@@ -70,6 +70,7 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
                 .fetch();
         return list;
     }
+
     @Override
     public List<Board> findByCategory(Long id){
         List<Board> list=jpaQueryFactory
@@ -79,6 +80,18 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
                 .leftJoin(qBoard.category,qCategory).fetchJoin()
                 .fetch();
         return list;
+    }
+
+
+
+    @Override
+    public int findByCategoryCount(Long id){
+        int count=jpaQueryFactory
+                .selectFrom(qBoard)
+                .leftJoin(qBoard.category,qCategory)
+                .where(qCategory.id.eq(id)).fetchJoin()
+                .fetch().size();
+        return count;
     }
 
     private BooleanExpression eqYear(Integer year) {
