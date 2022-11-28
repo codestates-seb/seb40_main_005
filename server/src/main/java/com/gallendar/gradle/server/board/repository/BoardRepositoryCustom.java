@@ -11,7 +11,7 @@ public interface BoardRepositoryCustom {
 
     List<Board> findByBoardId(Long boardId,String id);
 
-    List<Board> findByCategory(Long id);
+    List<Board> findByCategory(String id);
 
     int findByCategoryCount(Long id);
 
