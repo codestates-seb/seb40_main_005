@@ -8,6 +8,7 @@ import com.gallendar.gradle.server.board.repository.BoardRepository;
 import com.gallendar.gradle.server.board.repository.BoardRepositoryCustomImpl;
 import com.gallendar.gradle.server.category.domain.Category;
 import com.gallendar.gradle.server.category.domain.CategoryRepository;
+import com.gallendar.gradle.server.global.auth.jwt.JwtUtils;
 import com.gallendar.gradle.server.members.domain.Members;
 import com.gallendar.gradle.server.members.domain.MembersRepository;
 import com.gallendar.gradle.server.photo.entity.Photo;
@@ -40,6 +41,7 @@ public class BoardServiceImpl implements BoardService{
     private final TagsRepository tagsRepository;
     private final CategoryRepository categoryRepository;
     private final BoardRepositoryCustomImpl boardRepositoryCustom;
+    private final JwtUtils jwtUtils;
 
     /* 게시글 저장 */
     @Transactional
@@ -153,23 +155,18 @@ public class BoardServiceImpl implements BoardService{
     public void delete (Long boardId){
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardId="+boardId));
 
-
         /**
          * Todo:
          * tag 상태가 alert인 tag만 tag status를 delete로 바꾼다.
          */
-//        BoardTags boardTags = boardTagsRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("태그가 없습니다."));
 
+//        Tags tags = tagsRepository.
+        board.getBoardTags().forEach(boardTag -> {
+            if(boardTag.getTags().getStatus()==TagStatus.alert) {
+                boardTag.getTags().changeStatus(TagStatus.delete);
+            }
+        });
 
-//        Tags tags = tagsRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("태그가 없습니다."));
-//        tagsRepository.(tags);
-//        boardTagsRepository.delete(boardTags);
-
-        /**
-         * Todo:
-         * board의 categoryId가 같은 board의 갯수가 1개(자기자신)이면 category를 삭제한다.
-         * Board의 CategoryId가 categoryId이고 Board의 member가 member인 데이터 찾기.
-         */
         int count= boardRepositoryCustom.findByCategoryCount(board.getCategory().getId());
         System.out.println("count = " + count);
         if(count == 1){
