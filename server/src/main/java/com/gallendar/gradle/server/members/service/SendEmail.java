@@ -21,7 +21,7 @@ public class SendEmail {
 
     public MimeMessage createEmailForm(String email) throws MessagingException {
         String setFrom = "5kamjas.gallender@gmail.com";
-        String title = "Gallendar 회원가입 인증 번호";
+        String title = "Gallendar 인증 번호";
 
         MimeMessage message = emailSender.createMimeMessage();
         message.addRecipients(MimeMessage.RecipientType.TO, email);
@@ -35,7 +35,7 @@ public class SendEmail {
         content += "<tbody><tr>";
         content += "<td style='background-color:#fff;color:#444;font-family:\"Amazon Ember\",\"Helvetica Neue\",Roboto,Arial,sans-serif;font-size:14px;line-height:140%;padding:25px 35px'>";
         content += "<h1 style='font-size:20px;font-weight:bold;line-height:1.3;margin:0 0 15px 0'>이메일 주소 확인</h1>";
-        content += "<p style='margin:0;padding:0'>Gallendar 에 회원가입을 요청해주셔서 감사합니다. 사용자가 본인임을 확인하기 위해 아래 코드를 입력해주세요.</p>";
+        content += "<p style='margin:0;padding:0'>안녕하세요, Gallendar입니다. 사용자가 본인임을 확인하기 위해 아래 인증번호를 입력해주세요.</p>";
         content += "<p style='margin:0;padding:0'></p>";
         content += "</td>";
         content += "</tr>";
