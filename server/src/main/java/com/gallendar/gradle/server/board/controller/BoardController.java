@@ -31,14 +31,15 @@ public class BoardController {
      * 게시글 작성
      *
      * @param requestDto
+     * @param token
      * @return
+     * @throws IOException
      */
     @PostMapping
-    public ResponseEntity save(BoardCreateRequestDto requestDto,@RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token) throws IOException {
-        boardService.save(requestDto,token);
-
+    public ResponseEntity save(BoardCreateRequestDto requestDto, @RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token) throws IOException {
+        log.info("게시글 작성 요청");
+        boardService.save(requestDto, token);
         return new ResponseEntity(HttpStatus.OK);
-
     }
 
     /**
@@ -46,17 +47,16 @@ public class BoardController {
      *
      * @param boardId
      * @param requestDto
+     * @param token
      * @return
      */
     @PatchMapping("/{board-id}")
-    public ResponseEntity update(@PathVariable("board-id") @Positive long boardId,
-                       @Valid @RequestBody BoardUpdateRequestDto requestDto,@RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token) {
-        boardService.update(boardId,requestDto,token);
+    public ResponseEntity update(@PathVariable("board-id") @Positive Long boardId,
+                                 BoardUpdateRequestDto requestDto, @RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token) {
+        log.info("게시글 수정 요청");
+        boardService.update(boardId, requestDto, token);
         return new ResponseEntity(HttpStatus.OK);
     }
-
-
-
 
 
     /**
@@ -66,8 +66,8 @@ public class BoardController {
      * @return
      */
     @DeleteMapping("/{board-id}")
-    public Long delete(@PathVariable("board-id") Long boardId) {
-        boardService.delete(boardId);
+    public Long delete(@PathVariable("board-id") Long boardId,@RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token) {
+        boardService.delete(boardId,token);
         return boardId;
     }
 
@@ -89,14 +89,15 @@ public class BoardController {
 
     /**
      * 게시글 조회
+     *
      * @param boardId
      * @param token
      * @return
      */
     @ApiOperation(value = "게시글 조회", notes = "boardId로 해당 게시글의 상세 내용을 볼 수 있다.")
     @GetMapping("/{boardId}")
-    public List<BoardSearchByIdResponse> boardSearchByBoardId(@PathVariable(value = "boardId")Long boardId,@RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token){
+    public List<BoardSearchByIdResponse> boardSearchByBoardId(@PathVariable(value = "boardId") Long boardId, @RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token) {
         log.info("게시글 상세정보 요청");
-        return boardSearchService.SearchBoardByBoardId(boardId,token);
+        return boardSearchService.SearchBoardByBoardId(boardId, token);
     }
 }
