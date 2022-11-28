@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,6 +24,7 @@ import javax.validation.Valid;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/members")
+@Slf4j
 public class MembersController {
 
 
@@ -41,6 +43,7 @@ public class MembersController {
     @ApiOperation(value = "유저 찾기", notes = "유저의 id 값으로 요청이 들어오면 해당 요청이 포함된 모든 결과를 리스트로 반환한다.")
     @GetMapping("/search")
     public List<MemberSearchResponse> searchMemberById(@RequestParam(value = "id") String id) {
+        log.info("태그 하려는 유저 찾기 요청");
         return memberSearchService.MemberSearchById(id);
     }
 
@@ -57,6 +60,7 @@ public class MembersController {
     })
     @GetMapping("/find-id")
     public FindIdByEmailResponse findIdByEmail(@RequestParam("email") String email) {
+        log.info("아이디 찾기 요청");
         return memberSearchService.idFindByEmail(email);
     }
 
@@ -68,6 +72,7 @@ public class MembersController {
      */
     @PatchMapping("/password")
     public ChangePasswordResponse changePasswordById(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
+        log.info("비밀번호 변경 요청");
         return changePasswordService.passwordChangeById(changePasswordRequest);
     }
 
