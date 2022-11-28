@@ -24,7 +24,6 @@ public class BoardCreateRequestDto {
     private String content;
     private String music;
     private MultipartFile photo;
-    private String memberId;
     private String category;
     private List<String> tags;
 

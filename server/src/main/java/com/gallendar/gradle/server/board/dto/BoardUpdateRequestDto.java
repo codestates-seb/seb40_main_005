@@ -16,7 +16,6 @@ public class BoardUpdateRequestDto {
     private String content;
     private String music;
     private MultipartFile photo;
-    private String memberId;
     private List<String> tags;
     private String categoryTitle;
 

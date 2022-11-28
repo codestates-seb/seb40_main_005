@@ -16,9 +16,6 @@ public class Category {
     @Column(name = "category_id")
     private Long id;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "members_id")
-    private Members members;
 
     @Column
     private String categoryTitle;
@@ -28,8 +25,6 @@ public class Category {
         this.categoryTitle = categoryTitle;
     }
 
-    public void setMembers(Members members){
-        this.members = members;
-    }
+
 
 }
