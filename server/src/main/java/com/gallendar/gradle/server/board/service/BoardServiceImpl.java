@@ -1,21 +1,20 @@
 package com.gallendar.gradle.server.board.service;
 
 import com.gallendar.gradle.server.board.dto.BoardCreateRequestDto;
-import com.gallendar.gradle.server.board.dto.BoardListResponseDto;
 import com.gallendar.gradle.server.board.dto.BoardResponseDto;
 import com.gallendar.gradle.server.board.dto.BoardUpdateRequestDto;
 import com.gallendar.gradle.server.board.entity.Board;
 import com.gallendar.gradle.server.board.repository.BoardRepository;
+import com.gallendar.gradle.server.board.repository.BoardRepositoryCustomImpl;
 import com.gallendar.gradle.server.category.domain.Category;
-import com.gallendar.gradle.server.category.dto.CategoryCreateDto;
-import com.gallendar.gradle.server.category.service.CategoryService;
+import com.gallendar.gradle.server.category.domain.CategoryRepository;
+import com.gallendar.gradle.server.global.auth.jwt.JwtUtils;
 import com.gallendar.gradle.server.members.domain.Members;
 import com.gallendar.gradle.server.members.domain.MembersRepository;
 import com.gallendar.gradle.server.photo.entity.Photo;
 import com.gallendar.gradle.server.photo.repository.PhotoRepository;
 import com.gallendar.gradle.server.photo.service.S3UploadService;
 import com.gallendar.gradle.server.tags.domain.*;
-import com.gallendar.gradle.server.tags.dto.TagsCreateDto;
 import com.gallendar.gradle.server.tags.domain.BoardTags;
 import com.gallendar.gradle.server.tags.type.TagStatus;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +28,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -39,29 +36,36 @@ public class BoardServiceImpl implements BoardService{
     private final BoardRepository boardRepository;
     private final MembersRepository membersRepository;
     private final S3UploadService photoService;
-    private final CategoryService categoryService;
     private final PhotoRepository photoRepository;
     private final BoardTagsRepository boardTagsRepository;
     private final TagsRepository tagsRepository;
+    private final CategoryRepository categoryRepository;
+    private final BoardRepositoryCustomImpl boardRepositoryCustom;
+    private final JwtUtils jwtUtils;
 
     /* 게시글 저장 */
     @Transactional
-    public Long save(BoardCreateRequestDto requestDto, List<String> tagsMembers, Members members, String categoryTitle) throws IOException {
+    public Long save(BoardCreateRequestDto requestDto, List<String> tagsMembers) throws IOException {
+
+        Members members = membersRepository.findById(requestDto.getMemberId())
+                .orElseThrow(() -> new IllegalArgumentException());
 
         verifyMember(members);
         String fileName= UUID.randomUUID()+"-"+requestDto.getPhoto().getOriginalFilename();
         String path = photoService.upload(requestDto.getPhoto());
         Photo photo = Photo.builder().fileName(fileName).path(path).build();
 
-        CategoryCreateDto categoryDto = CategoryCreateDto.builder().categoryTitle(categoryTitle).build();
-        categoryService.save(categoryDto,members);
-        Category category = Category.builder().categoryTitle(categoryTitle).build();
-        Members member = membersRepository.findById(requestDto.getMemberId())
-                .orElseThrow(() -> new IllegalArgumentException());
+        if(categoryRepository.findByCategoryTitle(requestDto.getCategory())==null){
+            Category category = Category.builder()
+                    .categoryTitle(requestDto.getCategory()).build();
+            categoryRepository.save(category);
+        }
+
+        Category category = categoryRepository.findByCategoryTitle(requestDto.getCategory());
 
         Board board = requestDto.toEntity();
 
-        board.setMembers(member);
+        board.setMembers(members);
         board.setPhoto(photo);
         board.setCategory(category);
         boardRepository.save(board);
@@ -88,6 +92,7 @@ public class BoardServiceImpl implements BoardService{
     /* 게시글 수정 */
     @Transactional
     public Long update(Long boardId, BoardUpdateRequestDto requestDto, List<String> tagsMembers) {
+
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardId =" + boardId));
 
@@ -122,11 +127,10 @@ public class BoardServiceImpl implements BoardService{
 
     /* boardId로 게시글 조회 */
     @Transactional
-    public BoardResponseDto findById (Long boardId, Members members){
+    public BoardResponseDto findById (Long boardId){
 
         Board entity = boardRepository.findById(boardId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardId =" + boardId));
-        isAuthorized(entity, members);
         return new BoardResponseDto(entity);
     }
 
@@ -148,16 +152,28 @@ public class BoardServiceImpl implements BoardService{
 
     /* 게시글 삭제 */
     @Transactional
-    public void delete (Long boardId, Members members){
+    public void delete (Long boardId){
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardId="+boardId));
 
-        isAuthorized(board, members);
+        /**
+         * Todo:
+         * tag 상태가 alert인 tag만 tag status를 delete로 바꾼다.
+         */
 
-        BoardTags boardTags = boardTagsRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("태그가 없습니다."));
+//        Tags tags = tagsRepository.
+        board.getBoardTags().forEach(boardTag -> {
+            if(boardTag.getTags().getStatus()==TagStatus.alert) {
+                boardTag.getTags().changeStatus(TagStatus.delete);
+            }
+        });
 
-        Tags tags = tagsRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("태그가 없습니다."));
-        tagsRepository.delete(tags);
-        boardTagsRepository.delete(boardTags);
+        int count= boardRepositoryCustom.findByCategoryCount(board.getCategory().getId());
+        System.out.println("count = " + count);
+        if(count == 1){
+            Category category = categoryRepository.findByCategoryTitle(board.getCategory().getCategoryTitle());
+            categoryRepository.delete(category);
+        }
+
         boardRepository.delete(board);
     }
 
