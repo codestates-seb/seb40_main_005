@@ -8,7 +8,7 @@ const postAuthNum = async ( {email}:authNumData )=> {
     const data = {
         "email" : email
     }
-    return await axios.post(`http://13.209.7.184:8080/authentication/email`, data)
+    return await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/authentication/email`, data)
 }
 
 export default postAuthNum;
