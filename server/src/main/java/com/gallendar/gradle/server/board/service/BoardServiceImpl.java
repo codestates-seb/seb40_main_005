@@ -6,6 +6,9 @@ import com.gallendar.gradle.server.board.dto.BoardResponseDto;
 import com.gallendar.gradle.server.board.dto.BoardUpdateRequestDto;
 import com.gallendar.gradle.server.board.entity.Board;
 import com.gallendar.gradle.server.board.repository.BoardRepository;
+import com.gallendar.gradle.server.category.domain.Category;
+import com.gallendar.gradle.server.category.dto.CategoryCreateDto;
+import com.gallendar.gradle.server.category.service.CategoryService;
 import com.gallendar.gradle.server.members.domain.Members;
 import com.gallendar.gradle.server.members.domain.MembersRepository;
 import com.gallendar.gradle.server.photo.entity.Photo;
@@ -36,18 +39,23 @@ public class BoardServiceImpl implements BoardService{
     private final BoardRepository boardRepository;
     private final MembersRepository membersRepository;
     private final S3UploadService photoService;
+    private final CategoryService categoryService;
     private final PhotoRepository photoRepository;
     private final BoardTagsRepository boardTagsRepository;
     private final TagsRepository tagsRepository;
 
     /* 게시글 저장 */
     @Transactional
-    public Long save(BoardCreateRequestDto requestDto, List<String> tagsMembers) throws IOException {
+    public Long save(BoardCreateRequestDto requestDto, List<String> tagsMembers, Members members, String categoryTitle) throws IOException {
 
+        verifyMember(members);
         String fileName= UUID.randomUUID()+"-"+requestDto.getPhoto().getOriginalFilename();
         String path = photoService.upload(requestDto.getPhoto());
         Photo photo = Photo.builder().fileName(fileName).path(path).build();
 
+        CategoryCreateDto categoryDto = CategoryCreateDto.builder().categoryTitle(categoryTitle).build();
+        categoryService.save(categoryDto,members);
+        Category category = Category.builder().categoryTitle(categoryTitle).build();
         Members member = membersRepository.findById(requestDto.getMemberId())
                 .orElseThrow(() -> new IllegalArgumentException());
 
@@ -55,6 +63,7 @@ public class BoardServiceImpl implements BoardService{
 
         board.setMembers(member);
         board.setPhoto(photo);
+        board.setCategory(category);
         boardRepository.save(board);
         photoRepository.save(photo);
 
@@ -78,7 +87,7 @@ public class BoardServiceImpl implements BoardService{
     }
     /* 게시글 수정 */
     @Transactional
-    public Long update(Long boardId, BoardUpdateRequestDto requestDto){
+    public Long update(Long boardId, BoardUpdateRequestDto requestDto, List<String> tagsMembers) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardId =" + boardId));
 
@@ -90,16 +99,34 @@ public class BoardServiceImpl implements BoardService{
                 .ifPresent(music->requestDto.setMusic(music));
         Optional.ofNullable(requestDto.getPhoto())
                 .ifPresent(photo->requestDto.setPhoto(photo));
+        Optional.ofNullable(requestDto.getCategoryTitle())
+                        .ifPresent(categoryTitle -> requestDto.setCategoryTitle(categoryTitle));
+        Optional.ofNullable(tagsMembers)
+                .ifPresent(setTagsMembers -> tagsMembers.forEach(m -> {
+
+                    BoardTags boardTags = new BoardTags();
+                    Tags tags = Tags.builder()
+                            .tagsMember(m)
+                            .tagStatus(TagStatus.alert)
+                            .build();
+                    boardTags.setBoard(board);
+                    boardTags.setTags(tags);
+
+                    boardTagsRepository.save(boardTags);
+                    tagsRepository.save(tags);
+
+                }));
 
         return boardId;
     }
 
     /* boardId로 게시글 조회 */
     @Transactional
-    public BoardResponseDto findById (Long boardId){
+    public BoardResponseDto findById (Long boardId, Members members){
+
         Board entity = boardRepository.findById(boardId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardId =" + boardId));
-
+        isAuthorized(entity, members);
         return new BoardResponseDto(entity);
     }
 
@@ -121,9 +148,16 @@ public class BoardServiceImpl implements BoardService{
 
     /* 게시글 삭제 */
     @Transactional
-    public void delete (Long boardId){
+    public void delete (Long boardId, Members members){
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardId="+boardId));
 
+        isAuthorized(board, members);
+
+        BoardTags boardTags = boardTagsRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("태그가 없습니다."));
+
+        Tags tags = tagsRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("태그가 없습니다."));
+        tagsRepository.delete(tags);
+        boardTagsRepository.delete(boardTags);
         boardRepository.delete(board);
     }
 
@@ -135,6 +169,11 @@ public class BoardServiceImpl implements BoardService{
         if(!board.getMembers().equals(members)) {
             throw new IllegalArgumentException("사용자가 일치하지 않습니다.");
         }
+    }
+
+    private void verifyMember(Members members){
+        membersRepository.findById(members.getId())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
     }
 
 }

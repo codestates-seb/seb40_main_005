@@ -6,6 +6,7 @@ import com.gallendar.gradle.server.board.service.BoardServiceImpl;
 import com.gallendar.gradle.server.global.auth.jwt.JwtRequestFilter;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/boards")
+@Slf4j
 public class BoardController {
 
     @Autowired
@@ -80,6 +82,7 @@ public class BoardController {
     @GetMapping
     @ApiOperation(value = "캘린더 조회", notes = "(year, month, category) request 받아서 검색")
     public List<BoardSearchResponse> boardSearchByYearAndMonthAndCategory(@RequestParam int year, @RequestParam int month, @RequestParam String category, @RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token) {
+        log.info("캘린더 조회 요청");
         return boardSearchService.SearchBoardByYearAndMonthAndCategory(year, month, category, token);
     }
 
@@ -92,6 +95,7 @@ public class BoardController {
     @ApiOperation(value = "게시글 조회", notes = "boardId로 해당 게시글의 상세 내용을 볼 수 있다.")
     @GetMapping("/{boardId}")
     public List<BoardSearchByIdResponse> boardSearchByBoardId(@PathVariable(value = "boardId")Long boardId,@RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token){
+        log.info("게시글 상세정보 요청");
         return boardSearchService.SearchBoardByBoardId(boardId,token);
     }
 }
