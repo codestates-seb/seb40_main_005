@@ -26,7 +26,7 @@ module.exports = {
         "lightOrange": "rgb(235 ,130 ,83 ,0.3)",
         "mainOrange": "#EB8253",
         "btnOrange": "#FF9264",
-        "textBlack" : "rgb(0,0,0, 0.5)",
+        "textBlack" : "rgba(0,0,0, 0.5)",
         'underbar': "rgb(255, 174, 140)",
         "bgGray": "#F8F9FD",
         "bgWhite": "#FEFEFE",
@@ -40,6 +40,7 @@ module.exports = {
       screens: {
         md: "376px",
       },
+      display:["group-hover"],
     },
   },
   plugins: [],

@@ -10,4 +10,9 @@ public interface BoardRepositoryCustom {
     List<Board> findByBoard(Integer year, Integer month, String category, String id);
 
     List<Board> findByBoardId(Long boardId,String id);
+
+    List<Board> findByCategory(String id);
+
+    int findByCategoryCount(Long id);
+
 }

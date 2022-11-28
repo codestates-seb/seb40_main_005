@@ -34,8 +34,8 @@ public class BoardController {
      * @return
      */
     @PostMapping
-    public ResponseEntity save(BoardCreateRequestDto requestDto, @RequestParam(value = "tags") List<String> tagsMembers) throws IOException {
-        boardService.save(requestDto, tagsMembers);
+    public ResponseEntity save(BoardCreateRequestDto requestDto,@RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token) throws IOException {
+        boardService.save(requestDto,token);
 
         return new ResponseEntity(HttpStatus.OK);
 
