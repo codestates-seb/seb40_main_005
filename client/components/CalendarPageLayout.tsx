@@ -3,6 +3,7 @@ import CalendarNav from "./CalendarNav";
 import Sidebar from "./Sidebar";
 import BoardContainer from "./BoardContainer";
 import { useRef, useState } from "react";
+import CreateModalLayout from "./CreateModalLayout";
 
 const CalendarPageLayout = () => {
   const boardModal = useRef<HTMLDivElement>(null);
@@ -45,7 +46,9 @@ const CalendarPageLayout = () => {
           모달사라져라
         </button>
 
-        <BoardContainer boardRef={boardModal}>hello</BoardContainer>
+        <BoardContainer boardRef={boardModal}>
+          <CreateModalLayout />
+        </BoardContainer>
         <Sidebar />
         <div className="w-full p-4 lg:pr-20">
           <CalendarNav />
