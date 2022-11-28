@@ -7,10 +7,12 @@ import com.gallendar.gradle.server.members.domain.MembersRepository;
 import com.gallendar.gradle.server.members.dto.LoginRequest;
 import com.gallendar.gradle.server.members.dto.LoginResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class LoginService {
     private final JwtUtils jwtUtils;
     private final MembersRepository membersRepository;
@@ -18,7 +20,9 @@ public class LoginService {
 
     public LoginResponse LoginMembers(LoginRequest loginRequest) {
         Members members = membersRepository.findById(loginRequest.getId()).orElseThrow(() -> new IllegalArgumentException("아이디 또는 비밀번호를 확인해주세요."));
+        log.info("아이디가 존재하지 않습니다."+loginRequest.getClass());
         if (!commonEncoder.matches(loginRequest.getPassword(), members.getPassword())) {
+            log.info("비밀번호가 일치하지 않습니다."+loginRequest.getClass());
             throw new IllegalArgumentException("아이디 또는 비밀번호를 확인해주세요.");
         }
         String token = jwtUtils.generateToken(loginRequest.getId());
