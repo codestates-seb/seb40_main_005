@@ -45,9 +45,9 @@ public class BoardServiceImpl implements BoardService{
 
     /* 게시글 저장 */
     @Transactional
-    public Long save(BoardCreateRequestDto requestDto, List<String> tagsMembers) throws IOException {
-
-        Members members = membersRepository.findById(requestDto.getMemberId())
+    public void save(BoardCreateRequestDto requestDto, String token) throws IOException {
+        String memberId= jwtUtils.getMemberIdFromToken(token);
+        Members members = membersRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException());
 
         verifyMember(members);
@@ -72,7 +72,7 @@ public class BoardServiceImpl implements BoardService{
         photoRepository.save(photo);
 
 
-        tagsMembers.forEach(m -> {
+        requestDto.getTags().forEach(m -> {
 
             BoardTags boardTags = new BoardTags();
             Tags tags = Tags.builder()
@@ -86,8 +86,6 @@ public class BoardServiceImpl implements BoardService{
             tagsRepository.save(tags);
 
         });
-            return null;
-
     }
     /* 게시글 수정 */
     @Transactional
