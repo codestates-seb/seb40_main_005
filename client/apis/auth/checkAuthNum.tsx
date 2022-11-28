@@ -10,7 +10,7 @@ const checkAuthNum = async ( {authNum, email}:authNumData )=> {
         authNum : authNum,
         email : email
     }
-    return await axios.post(`http://13.209.7.184:8080/authentication/email/verify`, data)
+    return await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/authentication/email/verify`, data)
     .catch((err)=> {
         return err;
     })
