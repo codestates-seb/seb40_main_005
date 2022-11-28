@@ -1,5 +1,6 @@
 package com.gallendar.gradle.server.category.domain;
 
+import com.gallendar.gradle.server.members.domain.Members;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,10 @@ public class Category {
     @Column(name = "category_id")
     private Long id;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "members_id")
+    private Members members;
+
     @Column
     private String categoryTitle;
 
@@ -22,4 +27,9 @@ public class Category {
     public Category(String categoryTitle) {
         this.categoryTitle = categoryTitle;
     }
+
+    public void setMembers(Members members){
+        this.members = members;
+    }
+
 }
