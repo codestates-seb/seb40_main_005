@@ -3,7 +3,7 @@ import HeadPhone from "./HeadPhone";
 import Image from "next/image";
 import BoardModalContainer from "./BoardModalContainer";
 
-const MusicContainer = () => {
+const AddMusicContainer = () => {
   return (
     <>
       <BoardModalContainer>
@@ -34,4 +34,4 @@ const MusicContainer = () => {
   );
 };
 
-export default MusicContainer;
+export default AddMusicContainer;
