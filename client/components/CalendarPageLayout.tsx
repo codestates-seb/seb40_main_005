@@ -39,15 +39,8 @@ const CalendarPageLayout = () => {
           모달나와라
         </button>
 
-        <button
-          className="left-28 font-SCDream3 bg-mainOrange text-bgWhite fixed w-[100px] h-10 rounded-lg z-50"
-          onClick={handleCloseBtnClick}
-        >
-          모달사라져라
-        </button>
-
         <BoardContainer boardRef={boardModal}>
-          <CreateModalLayout />
+          <CreateModalLayout handleCloseClick={handleCloseBtnClick}/>
         </BoardContainer>
         <Sidebar />
         <div className="w-full p-4 lg:pr-20">
