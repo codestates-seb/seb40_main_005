@@ -12,7 +12,7 @@ const postSignUp = async ( {id, email, password}:SignUpData )=> {
         "email" : email,
         "password" : password
     }
-    return await axios.post(`http://13.209.7.184:8080/members`, data)
+    return await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/members`, data)
 }
 
 export default postSignUp;

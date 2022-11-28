@@ -8,7 +8,7 @@ interface LoginValue {
 const postLogin = async (payload: LoginValue) => {
   // 요청메소드 + 요청정보
   const { data } = await axios.post(
-    `http://13.209.7.184:8080/authentication`,
+    `${process.env.NEXT_PUBLIC_API_URL}/authentication`,
     payload,
   );
 
