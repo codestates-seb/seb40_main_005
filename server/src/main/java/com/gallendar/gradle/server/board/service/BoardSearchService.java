@@ -38,11 +38,9 @@ public class BoardSearchService {
     @Transactional
     public List<BoardSearchByIdResponse> SearchBoardByBoardId(Long boardId,String token){
         String memberId= jwtUtils.getMemberIdFromToken(token);
-        System.out.println("memberId = " + memberId);
         List<Board> boards=boardRepositoryCustom.findByBoardId(boardId,memberId);
         List<BoardSearchByIdResponse> list =new ArrayList<>();
         boards.forEach(board -> {
-            System.out.println("board = " + board.getBoardId());
             List<String> tags=new ArrayList<>();
             board.getBoardTags().forEach(boardTags -> {
                 tags.add(boardTags.getTags().getTagsMember());

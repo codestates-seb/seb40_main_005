@@ -83,6 +83,11 @@ dependencies {
     //swagger
     implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
 
+    //logback
+    implementation (
+            'ch.qos.logback:logback-classic:1.2.3',
+            'ch.qos.logback:logback-core:1.2.3',
+    )
 
 }
 
