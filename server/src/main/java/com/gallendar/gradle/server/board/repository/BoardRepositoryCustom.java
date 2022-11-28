@@ -15,4 +15,5 @@ public interface BoardRepositoryCustom {
 
     int findByCategoryCount(Long id);
 
+    List<Board> findByTagMembers(Long boardId);
 }

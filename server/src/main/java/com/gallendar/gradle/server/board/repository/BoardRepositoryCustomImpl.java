@@ -94,6 +94,18 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
         return count;
     }
 
+    @Override
+    public List<Board> findByTagMembers(Long boardId) {
+        List<Board> list=jpaQueryFactory
+                .selectFrom(qBoard)
+                .where(qBoard.boardId.eq(boardId))
+                .leftJoin(qBoard.boardTags,qBoardTags).fetchJoin()
+                .leftJoin(qBoardTags.tags,qTags).fetchJoin()
+                .distinct()
+                .fetch();
+        return list;
+    }
+
     private BooleanExpression eqYear(Integer year) {
         if (year == null) {
             return null;
