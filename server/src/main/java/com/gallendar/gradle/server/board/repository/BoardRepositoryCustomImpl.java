@@ -70,7 +70,16 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
                 .fetch();
         return list;
     }
-
+    @Override
+    public List<Board> findByCategory(Long id){
+        List<Board> list=jpaQueryFactory
+                .selectFrom(qBoard)
+                .leftJoin(qBoard.members,qMembers)
+                .where(qMembers.membersId.eq(id))
+                .leftJoin(qBoard.category,qCategory).fetchJoin()
+                .fetch();
+        return list;
+    }
 
     private BooleanExpression eqYear(Integer year) {
         if (year == null) {
