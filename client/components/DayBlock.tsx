@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getDate, getMonth, getYear } from "date-fns";
-import AddBtn from "./addBtn";
+import AddBtn from "./AddBtn";
 
 interface PropsValue {
   currMonth: number;
