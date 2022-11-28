@@ -14,10 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface BoardService {
-    Long save(BoardCreateRequestDto requestDto, List<String> tagsMembers) throws IOException;
-    Long update(Long boardId, BoardUpdateRequestDto requestDto, List<String> tagsMembers);
-    BoardResponseDto findById (Long boardId);
-    //    Page<Board> findAllDesc(int page, int size);
-    List<Board> findAllDesc(int page, int size);
+    void save(BoardCreateRequestDto requestDto, String token) throws IOException;
 
+    Long update(Long boardId, BoardUpdateRequestDto requestDto, List<String> tagsMembers);
 }

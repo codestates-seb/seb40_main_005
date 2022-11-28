@@ -72,11 +72,11 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
     }
 
     @Override
-    public List<Board> findByCategory(Long id){
+    public List<Board> findByCategory(String id){
         List<Board> list=jpaQueryFactory
                 .selectFrom(qBoard)
                 .leftJoin(qBoard.members,qMembers)
-                .where(qMembers.membersId.eq(id))
+                .where(qMembers.id.eq(id))
                 .leftJoin(qBoard.category,qCategory).fetchJoin()
                 .fetch();
         return list;

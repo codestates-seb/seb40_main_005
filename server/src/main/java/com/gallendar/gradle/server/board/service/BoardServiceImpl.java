@@ -31,7 +31,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
     private final MembersRepository membersRepository;
@@ -45,17 +45,17 @@ public class BoardServiceImpl implements BoardService{
 
     /* 게시글 저장 */
     @Transactional
-    public Long save(BoardCreateRequestDto requestDto, List<String> tagsMembers) throws IOException {
-
-        Members members = membersRepository.findById(requestDto.getMemberId())
+    public void save(BoardCreateRequestDto requestDto, String token) throws IOException {
+        String memberId = jwtUtils.getMemberIdFromToken(token);
+        Members members = membersRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException());
 
         verifyMember(members);
-        String fileName= UUID.randomUUID()+"-"+requestDto.getPhoto().getOriginalFilename();
+        String fileName = UUID.randomUUID() + "-" + requestDto.getPhoto().getOriginalFilename();
         String path = photoService.upload(requestDto.getPhoto());
         Photo photo = Photo.builder().fileName(fileName).path(path).build();
 
-        if(categoryRepository.findByCategoryTitle(requestDto.getCategory())==null){
+        if (categoryRepository.findByCategoryTitle(requestDto.getCategory()) == null) {
             Category category = Category.builder()
                     .categoryTitle(requestDto.getCategory()).build();
             categoryRepository.save(category);
@@ -72,7 +72,7 @@ public class BoardServiceImpl implements BoardService{
         photoRepository.save(photo);
 
 
-        tagsMembers.forEach(m -> {
+        requestDto.getTags().forEach(m -> {
 
             BoardTags boardTags = new BoardTags();
             Tags tags = Tags.builder()
@@ -86,9 +86,8 @@ public class BoardServiceImpl implements BoardService{
             tagsRepository.save(tags);
 
         });
-            return null;
-
     }
+
     /* 게시글 수정 */
     @Transactional
     public Long update(Long boardId, BoardUpdateRequestDto requestDto, List<String> tagsMembers) {
@@ -97,15 +96,15 @@ public class BoardServiceImpl implements BoardService{
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardId =" + boardId));
 
         Optional.ofNullable(requestDto.getTitle())
-                .ifPresent(title->requestDto.setTitle(title));
+                .ifPresent(title -> requestDto.setTitle(title));
         Optional.ofNullable(requestDto.getContent())
-                .ifPresent(content->requestDto.setContent(content));
+                .ifPresent(content -> requestDto.setContent(content));
         Optional.ofNullable(requestDto.getMusic())
-                .ifPresent(music->requestDto.setMusic(music));
+                .ifPresent(music -> requestDto.setMusic(music));
         Optional.ofNullable(requestDto.getPhoto())
-                .ifPresent(photo->requestDto.setPhoto(photo));
+                .ifPresent(photo -> requestDto.setPhoto(photo));
         Optional.ofNullable(requestDto.getCategoryTitle())
-                        .ifPresent(categoryTitle -> requestDto.setCategoryTitle(categoryTitle));
+                .ifPresent(categoryTitle -> requestDto.setCategoryTitle(categoryTitle));
         Optional.ofNullable(tagsMembers)
                 .ifPresent(setTagsMembers -> tagsMembers.forEach(m -> {
 
@@ -125,69 +124,42 @@ public class BoardServiceImpl implements BoardService{
         return boardId;
     }
 
-    /* boardId로 게시글 조회 */
-    @Transactional
-    public BoardResponseDto findById (Long boardId){
-
-        Board entity = boardRepository.findById(boardId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardId =" + boardId));
-        return new BoardResponseDto(entity);
-    }
-
-    /* 전체 게시글 조회 */
-    @Transactional(readOnly = true)
-    public List<Board> findAllDesc(int page, int size){
-
-        Page<Board> findAllBoard = findAllBoard(page, size);
-
-        List<Board> boards = findAllBoard.getContent();
-
-        return boards;
-
-    }
-
-    public Page<Board> findAllBoard(int page, int size){
-        return boardRepository.findAllDescBy(PageRequest.of(page-1, size, Sort.by("boardId").descending()));
-    }
-
     /* 게시글 삭제 */
     @Transactional
-    public void delete (Long boardId){
-        Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardId="+boardId));
+    public void delete(Long boardId) {
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardId=" + boardId));
 
         /**
          * Todo:
          * tag 상태가 alert인 tag만 tag status를 delete로 바꾼다.
          */
 
-//        Tags tags = tagsRepository.
         board.getBoardTags().forEach(boardTag -> {
-            if(boardTag.getTags().getStatus()==TagStatus.alert) {
+            if (boardTag.getTags().getStatus() == TagStatus.alert) {
                 boardTag.getTags().changeStatus(TagStatus.delete);
             }
         });
 
-        int count= boardRepositoryCustom.findByCategoryCount(board.getCategory().getId());
-        System.out.println("count = " + count);
-        if(count == 1){
+        int count = boardRepositoryCustom.findByCategoryCount(board.getCategory().getId());
+        if (count == 1) {
             Category category = categoryRepository.findByCategoryTitle(board.getCategory().getCategoryTitle());
             categoryRepository.delete(category);
         }
-
         boardRepository.delete(board);
     }
+
 
     /**
      * Todo:
      * ExceptionCode 작성후 error response 수정
      */
-    private void isAuthorized(Board board, Members members){
-        if(!board.getMembers().equals(members)) {
+    private void isAuthorized(Board board, Members members) {
+        if (!board.getMembers().equals(members)) {
             throw new IllegalArgumentException("사용자가 일치하지 않습니다.");
         }
     }
 
-    private void verifyMember(Members members){
+    private void verifyMember(Members members) {
         membersRepository.findById(members.getId())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
     }
