@@ -50,7 +50,8 @@ public class BoardController {
      */
     @PatchMapping("/{board-id}")
     public ResponseEntity update(@PathVariable("board-id") @Positive long boardId,
-                       @Valid @RequestBody BoardUpdateRequestDto requestDto) {
+                       @Valid @RequestBody BoardUpdateRequestDto requestDto,@RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token) {
+        boardService.update(boardId,requestDto,token);
         return new ResponseEntity(HttpStatus.OK);
     }
 
