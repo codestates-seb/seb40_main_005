@@ -7,7 +7,7 @@ import axios from "axios";
 const fetchIdByEmail = (userEmail: string) => {
   // 요청메소드 + 요청정보
   return axios.get(
-    `http://13.209.7.184:8080/members/find-id?email=${userEmail}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/members/find-id?email=${userEmail}`,
     // `http://13.209.7.184:8080/members/${userEmail}`,
     // "http://13.209.7.184:8080/members/find-id?email=yw1010@naver.com"
   );
