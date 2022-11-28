@@ -18,6 +18,7 @@ import com.gallendar.gradle.server.tags.domain.*;
 import com.gallendar.gradle.server.tags.domain.BoardTags;
 import com.gallendar.gradle.server.tags.type.TagStatus;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -31,6 +32,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
@@ -50,48 +52,54 @@ public class BoardServiceImpl implements BoardService {
         Members members = membersRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException());
 
-        verifyMember(members);
         String fileName = UUID.randomUUID() + "-" + requestDto.getPhoto().getOriginalFilename();
         String path = photoService.upload(requestDto.getPhoto());
         Photo photo = Photo.builder().fileName(fileName).path(path).build();
+        photoRepository.save(photo);
 
-        if (categoryRepository.findByCategoryTitle(requestDto.getCategory()) == null) {
+        log.info("카테고리 안에 있는지 확인 시작");
+        if (!categoryRepository.existsByCategoryTitle(requestDto.getCategory())) {
+            log.info("카테고리가 없으닌간 삽입해야함");
             Category category = Category.builder()
                     .categoryTitle(requestDto.getCategory()).build();
             categoryRepository.save(category);
         }
-
+        log.info("카테고리 안에 있어서 그대로 냅두고 연관관계중");
         Category category = categoryRepository.findByCategoryTitle(requestDto.getCategory());
-
         Board board = requestDto.toEntity();
-
         board.setMembers(members);
         board.setPhoto(photo);
         board.setCategory(category);
         boardRepository.save(board);
-        photoRepository.save(photo);
 
+        log.info("보드, 포토 저장");
+        if(!requestDto.getTags().isEmpty()) {
+            requestDto.getTags().forEach(m -> {
 
-        requestDto.getTags().forEach(m -> {
+                BoardTags boardTags = new BoardTags();
+                Tags tags = Tags.builder()
+                        .tagsMember(m)
+                        .tagStatus(TagStatus.alert)
+                        .build();
+                boardTags.setBoard(board);
+                boardTags.setTags(tags);
 
-            BoardTags boardTags = new BoardTags();
-            Tags tags = Tags.builder()
-                    .tagsMember(m)
-                    .tagStatus(TagStatus.alert)
-                    .build();
-            boardTags.setBoard(board);
-            boardTags.setTags(tags);
-
-            boardTagsRepository.save(boardTags);
-            tagsRepository.save(tags);
-
-        });
+                boardTagsRepository.save(boardTags);
+                tagsRepository.save(tags);
+            });
+        }
+        log.info("태그 저장");
     }
 
     /* 게시글 수정 */
     @Transactional
-    public Long update(Long boardId, BoardUpdateRequestDto requestDto, List<String> tagsMembers) {
+    public Long update(Long boardId, BoardUpdateRequestDto requestDto,String token) {
+        String memberId = jwtUtils.getMemberIdFromToken(token);
+        log.info("본인이 작성하였는지 확인");
+        Members members = membersRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException());
 
+        log.info("해당 게시글이 있는지 확인");
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardId =" + boardId));
 
@@ -105,9 +113,8 @@ public class BoardServiceImpl implements BoardService {
                 .ifPresent(photo -> requestDto.setPhoto(photo));
         Optional.ofNullable(requestDto.getCategoryTitle())
                 .ifPresent(categoryTitle -> requestDto.setCategoryTitle(categoryTitle));
-        Optional.ofNullable(tagsMembers)
-                .ifPresent(setTagsMembers -> tagsMembers.forEach(m -> {
-
+        Optional.ofNullable(requestDto.getTags())
+                .ifPresent(setTagsMembers -> requestDto.getTags().forEach(m -> {
                     BoardTags boardTags = new BoardTags();
                     Tags tags = Tags.builder()
                             .tagsMember(m)
@@ -158,10 +165,4 @@ public class BoardServiceImpl implements BoardService {
             throw new IllegalArgumentException("사용자가 일치하지 않습니다.");
         }
     }
-
-    private void verifyMember(Members members) {
-        membersRepository.findById(members.getId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
-    }
-
 }

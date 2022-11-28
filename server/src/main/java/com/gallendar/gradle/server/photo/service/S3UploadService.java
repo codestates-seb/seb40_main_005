@@ -49,7 +49,6 @@ public class S3UploadService{
         ObjectMetadata objectMetadata=new ObjectMetadata();
         objectMetadata.setContentLength(multipartFile.getInputStream().available());
         amazonS3.putObject(bucket,fileName,multipartFile.getInputStream(),objectMetadata);
-        System.out.println(amazonS3.getUrl(bucket,fileName).toString());
         String path = amazonS3.getUrl(bucket,fileName).toString();
         return path;
     }
