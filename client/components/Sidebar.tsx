@@ -1,20 +1,47 @@
 import { BuildingStorefrontIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { handleClientScriptLoad } from "next/script";
 
 import SidebarCategory from "./SidebarCategory";
-import React, { useEffect } from "react";
-// import dummy from "../dummy";
+import React, { useEffect, useState } from "react";
 
-interface Props {
-  children: React.ReactNode;
+//테스트용 더미 입니다
+const dummy = [
+  {
+    boardId: 0,
+    categoryTitle: "전체",
+  },
+  {
+    boardId: 1,
+    categoryTitle: "으아아",
+  },
+  {
+    boardId: 2,
+    categoryTitle: "주..ㄱ여.. 주..ㅓ..",
+  },
+];
+
+interface CategoryType {
+  boardId: number;
+  categoryTitle: string;
+  isSelect: boolean;
 }
 
-const Sidebar = ({ children }: Props) => {
-  const handleTagClick = () => {
-    console.log("카테고리클릭");
-    const point = document.getElementById("point");
-    // point.style.display = "none";
+const Sidebar = () => {
+  const [categoryList, setCategoryList] = useState<Array<CategoryType>>([]);
+
+  useEffect(() => {
+    const newCtg = dummy.map(data => ({ ...data, isSelect: false }));
+    setCategoryList(newCtg);
+  }, []);
+
+  const handleTagClick = (id: number) => {
+    const newCtg = categoryList.map(data =>
+      id === data.boardId
+        ? { ...data, isSelect: true }
+        : { ...data, isSelect: false },
+    );
+
+    setCategoryList(newCtg);
   };
 
   return (
@@ -28,11 +55,19 @@ const Sidebar = ({ children }: Props) => {
         </div>
 
         <div className="grid grid-cols-1 text-xs drop-shadow-xl lg:flex lg:flex-col w-full h-1/3 lg:h-5/6 font-SCDream4 overflow-auto">
-          {/* {dummy.map(dummy => (
-            <SidebarCategory onClick={handleTagClick} key={dummy.boardId}>
-              <div>{dummy.content}</div>
+          {categoryList.map(dummy => (
+            <SidebarCategory
+              onClick={() => handleTagClick(dummy.boardId)}
+              key={dummy.boardId}
+            >
+              <div>{dummy.categoryTitle}</div>
+              <div
+                className={`h-full pr-3 ${dummy.isSelect ? null : "hidden"}`}
+              >
+                <div className="flex w-4 h-4  bg-btnOrange aspect-square rounded-full"></div>
+              </div>
             </SidebarCategory>
-          ))} */}
+          ))}
         </div>
 
         <Link href="/commerce">
