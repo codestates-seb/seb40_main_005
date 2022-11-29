@@ -6,16 +6,54 @@ import AddTextContainer from "./AddTextContainer";
 import AddShareContainer from "./AddShareContainer";
 import BoardModalContainer from "./BoardModalContainer";
 import BoardModalBtn from "./BoardModalBtn";
+import { useState } from "react";
 
 interface Props {
   handleCloseClick: () => void;
 }
 
 const CreateModalLayout = ({ handleCloseClick }: Props) => {
-    const handleChange = (e:any) => {
-        console.log(e.target.value);
-    }
 
+  const [date, setDate] = useState<string>("");
+  const [category, setCategory] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+  const [music, setMusic] = useState<string>("");
+  const [youtubeLink, setYoutubeLink] = useState<string>("");
+  const [photo, setPhoto] = useState<File | null>(null);
+  const [context, setContext] = useState<string>("");
+  const [share, setShare] = useState([]);
+
+  const changeDate = (e:any) => {
+    setDate(e.target.value);
+  }
+
+  const changeCategory = (e:any) => {
+    setCategory(e.target.value);
+  }
+
+  const changeTitle = (e:any) => {
+    setTitle(e.target.value);
+  }
+
+  const changeMusic = (music:string) => {
+    setMusic(music);
+  }
+
+  const changeYoutubeLink = (youtubeLink:string) => {
+    setYoutubeLink(youtubeLink);
+  }
+
+  const changePhoto = (photo:File | null) => {
+    setPhoto(photo);
+  }
+
+  const changeContext = (context:string) => {
+    setContext(context);
+  }
+
+  const changeShare = (share:[]) => {
+    setShare(share);
+  }
 
   return (
     <>
@@ -35,9 +73,9 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
               </div>
               <input
                 type="date"
-                value="2022-06-13"
                 className="w-2/3 h-fit font-SCDream3 text-right text-sm lg:text-sm text-gray-700 outline-none"
-                onChange={handleChange}
+                value={date}
+                onChange={changeDate}
               />
             </CategoryInputContainer>
 
@@ -50,6 +88,8 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
               </div>
               <input
                 type="text"
+                value={category}
+                onChange={changeCategory}
                 placeholder="예) 크리스마스"
                 className="w-2/3 h-fit font-SCDream3 text-right text-sm lg:text-sm text-gray-700 outline-none"
               />
@@ -65,6 +105,8 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
               <input
                 type="text"
                 placeholder="입력하세요!"
+                value={title}
+                onChange={changeTitle}
                 className="w-3/4 h-fit font-SCDream3 text-right text-sm lg:text-sm text-gray-700 outline-none"
               />
             </CategoryInputContainer>
@@ -79,7 +121,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
             <div className="absolute top-3.5 left-0.5 right-0 bottom-2  bg-mainOrange/40"></div>
           </div>
 
-          <AddMusicContainer />
+          <AddMusicContainer music={music} youtubeLink={youtubeLink} changeMusic={changeMusic} changeYoutubeLink={changeYoutubeLink}/>
         </div>
 
         <div className="flex flex-col w-full h-fit justify-center items-start mt-2">
@@ -104,7 +146,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
             <div className="absolute top-3.5 left-0.5 right-0 bottom-2  bg-mainOrange/40"></div>
           </div>
 
-          <AddTextContainer />
+          <AddTextContainer context={context} changeContext={changeContext} />
         </div>
 
         <div className="flex flex-col w-full h-fit justify-center items-start mt-1">

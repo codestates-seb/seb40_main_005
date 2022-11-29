@@ -4,7 +4,23 @@ import Image from "next/image";
 import BoardModalContainer from "./BoardModalContainer";
 import YoutubeIcon from "./YoutubeIcon";
 
-const AddMusicContainer = () => {
+interface Props {
+  music : string,
+  youtubeLink : string,
+  changeMusic : (music:string) => void;
+  changeYoutubeLink : (youtubeLink:string) => void;
+}
+
+const AddMusicContainer = ({music, youtubeLink, changeMusic, changeYoutubeLink}:Props) => {
+
+  const handleMusicChange = (e:any) => {
+    changeMusic(e.target.value);
+  }
+
+  const handleLinkChange = (e:any) => {
+    changeYoutubeLink(e.target.value);
+  }
+
   return (
     <>
       <BoardModalContainer>
@@ -18,6 +34,8 @@ const AddMusicContainer = () => {
           <input
             type="text"
             placeholder="오늘의 인상적인 음악에 대해서 자유롭게 적어주세요"
+            value={music}
+            onChange={handleMusicChange}
             className=" w-full font-SCDream3 text-center text-xs md:text-sm lg:text-sm p-1.5 rounded-md border-[1px] border-btnOrange text-gray-700 outline-none"
           />
         </div>
@@ -32,6 +50,8 @@ const AddMusicContainer = () => {
           <input
             type="text"
             placeholder="오늘의 음악에 대한 youtube 링크를 적어주세요"
+            value={youtubeLink}
+            onChange={handleLinkChange}
             className=" w-full font-SCDream3 text-center text-xs md:text-sm lg:text-sm p-1.5 rounded-md border-[1px] border-btnOrange text-gray-700 outline-none"
           />
         </div>
