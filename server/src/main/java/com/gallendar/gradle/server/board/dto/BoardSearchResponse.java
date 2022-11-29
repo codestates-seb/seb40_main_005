@@ -7,6 +7,7 @@ import com.gallendar.gradle.server.tags.type.TagStatus;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -16,14 +17,14 @@ import java.util.Map;
 public class BoardSearchResponse {
     private Long boardId;
     private String title;
-    private LocalDateTime createdPost;
+    private LocalDate createdPost;
     private String category;
     private Map<String, TagStatus> tagsMember;
 
     public static BoardSearchResponse from(Board board, Map<String, TagStatus> tagsMember) {
         Long boardId = board.getBoardId();
         String title = board.getTitle();
-        LocalDateTime createdPost = board.getCreatedAt();
+        LocalDate createdPost = board.getCreated();
         String category = board.getCategory().getCategoryTitle();
         Map<String, TagStatus> tagMember = tagsMember;
 

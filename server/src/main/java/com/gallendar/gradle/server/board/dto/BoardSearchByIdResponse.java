@@ -14,6 +14,7 @@ public class BoardSearchByIdResponse {
     private String title;
     private String photo;
     private String music;
+    private String url;
     private String content;
     private String category;
     private List<String> tagsMembers;
@@ -24,6 +25,7 @@ public class BoardSearchByIdResponse {
         String title=board.getTitle();
         String photo=board.getPhoto().getPath();
         String music=board.getMusic();
+        String url=board.getUrl();
         String content= board.getContent();
         String category=board.getCategory().getCategoryTitle();
         List<String> tagsMembers=tagsMember;
@@ -34,6 +36,7 @@ public class BoardSearchByIdResponse {
                 .title(title)
                 .photo(photo)
                 .music(music)
+                .url(url)
                 .content(content)
                 .category(category)
                 .tagsMembers(tagsMembers)

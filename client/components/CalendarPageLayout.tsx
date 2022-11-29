@@ -2,11 +2,15 @@ import CalendarContainer from "./CalendarContainer";
 import CalendarNav from "./CalendarNav";
 import Sidebar from "./Sidebar";
 import BoardContainer from "./BoardContainer";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CreateModalLayout from "./CreateModalLayout";
+import { useRecoilState } from "recoil";
+import modalOpenState from "../recoil/calendarAtom";
+
 
 const CalendarPageLayout = () => {
   const boardModal = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useRecoilState(modalOpenState);
 
   const handleOpenBtnClick = () => {
     const { current } = boardModal;
@@ -26,18 +30,19 @@ const CalendarPageLayout = () => {
         ? (current.style.transform = "translateY(100%)")
         : (current.style.transform = "translateX(100%)");
     }
+    setOpen(false);
   };
+
+  useEffect(()=> {
+    if(open){
+      handleOpenBtnClick();
+    }
+  },[open])
 
   return (
     <>
       <div className="flex flex-col-reverse h-screen lg:flex-row bg-bgGray">
         {/* <section className="w-1/6 h-full border-2 lg:block">Sidebar</section> */}
-        <button
-          className="font-SCDream3 bg-mainOrange text-bgWhite fixed w-[100px] h-10 rounded-lg z-50"
-          onClick={handleOpenBtnClick}
-        >
-          모달나와라
-        </button>
 
         <BoardContainer boardRef={boardModal}>
           <CreateModalLayout handleCloseClick={handleCloseBtnClick}/>

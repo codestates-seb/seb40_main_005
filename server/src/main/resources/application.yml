@@ -1,0 +1,68 @@
+spring:
+  profiles:
+    include:
+      - aws
+      - credentials
+  autoconfigure:
+    exclude: org.springframework.cloud.aws.autoconfigure.context.ContextStackAutoConfiguration
+  datasource:
+    url: ${mysql-url}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${mysql-username}
+    password: ${mysql-password}
+  jpa:
+    open-in-view: false
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database: mysql
+  mail:
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+    host: smtp.gmail.com
+    username: ${mail-host}
+    password: ${mail-password}
+    port: ${mail-port}
+  redis:
+    host: ${redis-url}
+    port: ${redis-port}
+
+  main:
+    allow-circular-references: true
+  jwt:
+    secret: ${jwt-secret}
+    jwtExpirationMs: ${jws-expi}
+  mvc:
+    path match:
+      matching-strategy: ant_path_matcher
+
+cloud:
+  aws:
+    credentials:
+      accessKey: ${aws-accessKey}
+      secretKey: ${aws-secretKey}
+    s3:
+      bucket: ${bucket-name}
+      dir: /test
+      mock:
+        port: 3306
+    region:
+      static: ${aws-region}
+    stack:
+      auto: false
+logging:
+  level:
+    org:
+      springframework:
+        orm:
+          jpa: DEBUG
+    com:
+      amazonaws:
+        util:
+          EC2MetaDataUtils: error
+
