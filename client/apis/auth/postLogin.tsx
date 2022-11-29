@@ -1,4 +1,5 @@
 import axios from "axios";
+import client from "../../client/client";
 
 interface LoginValue {
   id: string;
@@ -7,8 +8,8 @@ interface LoginValue {
 
 const postLogin = async (payload: LoginValue) => {
   // 요청메소드 + 요청정보
-  const { data } = await axios.post(
-    `${process.env.NEXT_PUBLIC_API_URL}/authentication`,
+  const { data } = await client.post(
+    "/authentication",
     payload,
   );
 

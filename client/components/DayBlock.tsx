@@ -1,25 +1,41 @@
 import { useEffect, useState } from "react";
 import { getDate, getMonth, getYear } from "date-fns";
 import AddBtn from "./AddBtn";
+import { useRecoilState } from "recoil";
+import { modalOpenState, selectDayState, selectMonthState, selectYearState } from "../recoil/calendarAtom";
+
 
 interface PropsValue {
   currMonth: number;
   currYear: number;
   children: React.ReactNode;
+  currDay: number;
 }
 
-const DayBlock = ({ children, currMonth, currYear }: PropsValue) => {
+const DayBlock = ({ children, currMonth, currYear, currDay }: PropsValue) => {
   const [isToay, setIsToday] = useState(false);
   const today = new Date();
   let month = getMonth(today) + 1;
   let year = getYear(today);
   let day = getDate(today);
 
+  const [open, setOpen] = useRecoilState(modalOpenState);
+  const [dayState, setDayState] = useRecoilState(selectDayState);
+  const [monthState, setMonthState] = useRecoilState(selectMonthState);
+  const [yearState, setYearState] = useRecoilState(selectYearState);
+
   useEffect(() => {
     if (month === currMonth && year === currYear && children === day) {
       setIsToday(true);
     } else setIsToday(false);
   });
+
+  const handleBtnClick = () => {
+    setOpen(true);
+    setDayState(currDay.toString());
+    setMonthState(currMonth.toString());
+    setYearState(currYear.toString());
+  }
 
   return (
     <>
@@ -32,7 +48,7 @@ const DayBlock = ({ children, currMonth, currYear }: PropsValue) => {
           >
             {children}
           </div>
-          <AddBtn />
+          <AddBtn onClick={handleBtnClick}/>
         </div>
       </div>
     </>
