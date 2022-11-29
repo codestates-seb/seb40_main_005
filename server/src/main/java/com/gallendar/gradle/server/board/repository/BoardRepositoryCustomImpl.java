@@ -35,8 +35,10 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
         Board board = jpaQueryFactory
                 .selectFrom(qBoard)
                 .where(qBoard.boardId.eq(boardId))
-                .join(qBoard.boardTags, qBoardTags).fetchJoin()
-                .where(qBoardTags.tags.status.eq(TagStatus.alert), qBoardTags.tags.tagsMember.eq(userId))
+                .leftJoin(qBoard.category,qCategory).fetchJoin()
+                .leftJoin(qBoard.boardTags, qBoardTags).fetchJoin()
+                .leftJoin(qBoardTags.tags,qTags)
+                .where(qTags.status.eq(TagStatus.alert), qTags.tagsMember.eq(userId)).fetchJoin()
                 .fetchOne();
         return board;
     }

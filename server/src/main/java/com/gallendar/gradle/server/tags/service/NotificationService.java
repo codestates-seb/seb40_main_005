@@ -3,8 +3,6 @@ package com.gallendar.gradle.server.tags.service;
 import com.gallendar.gradle.server.board.entity.Board;
 import com.gallendar.gradle.server.board.repository.BoardRepository;
 import com.gallendar.gradle.server.board.repository.BoardRepositoryCustomImpl;
-import com.gallendar.gradle.server.category.domain.Category;
-import com.gallendar.gradle.server.category.domain.CategoryRepository;
 import com.gallendar.gradle.server.exception.Message;
 import com.gallendar.gradle.server.exception.Status;
 import com.gallendar.gradle.server.global.auth.jwt.JwtUtils;
@@ -22,7 +20,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -65,8 +62,10 @@ public class NotificationService {
             boardTags.getTags().changeStatus(TagStatus.accept);
         });
         log.info("공유를 수락하여 게시글 복사 시작");
-        Board shareBoard = Board.builder().title(board.getTitle()).content(board.getContent()).music(board.getMusic()).build();
+        Board shareBoard = Board.builder().title(board.getTitle()).content(board.getContent()).music(board.getMusic()).url(board.getUrl()).created(board.getCreated()).build();
         shareBoard.setMembers(members);
+        shareBoard.setCategory(board.getCategory());
+        shareBoard.setPhoto(board.getPhoto());
         boardRepository.save(shareBoard);
 
         Tags tags = Tags.builder().tagStatus(TagStatus.shared).tagsMember(board.getMembers().getId()).build();
