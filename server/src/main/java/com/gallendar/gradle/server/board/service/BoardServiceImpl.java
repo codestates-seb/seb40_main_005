@@ -146,7 +146,7 @@ public class BoardServiceImpl implements BoardService {
 
         log.info("사진 관련 시작");
 
-        board.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getMusic());
+        board.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getMusic(), requestDto.getUrl());
     }
 
     /* 게시글 삭제 */

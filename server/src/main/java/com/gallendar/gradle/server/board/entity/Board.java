@@ -30,6 +30,8 @@ public class Board extends BaseTimeEntity {
 
     @Column(nullable = true)
     private String music;
+    @Column
+    private String url;
     @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE)
     private List<BoardTags> boardTags;
 
@@ -47,27 +49,33 @@ public class Board extends BaseTimeEntity {
 
 
     @Builder
-    public Board(String title, String content, String music) {
-
+    public Board(String title, String content, String music, String url) {
         this.title = title;
         this.content = content;
         this.music = music;
-
+        this.url = url;
     }
 
-    public void update(String title, String content, String music) {
+    public void update(String title, String content, String music,String url) {
         this.title = title;
         this.content = content;
         this.music = music;
+        this.url=url;
     }
 
     public void setMembers(Members members) {
         this.members = members;
     }
 
-    public void setPhoto(Photo photo) { this.photo = photo; }
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
+    }
 
-    public void setCategory(Category category) { this.category = category;}
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
-    public void setBoardTags(List<BoardTags> boardTags) {this.boardTags = boardTags; }
+    public void setBoardTags(List<BoardTags> boardTags) {
+        this.boardTags = boardTags;
+    }
 }

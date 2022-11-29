@@ -23,24 +23,25 @@ public class BoardCreateRequestDto {
     @NotBlank(message = "내용을 입력하세요.")
     private String content;
     private String music;
+    private String url;
     private MultipartFile photo;
     private String category;
     private List<String> tags;
 
-
     @Builder
-    public BoardCreateRequestDto(String title, String content, String music){
+    public BoardCreateRequestDto(String title, String content, String music, String url) {
         this.title = title;
         this.content = content;
         this.music = music;
-
+        this.url = url;
     }
 
-    public Board toEntity(){
+    public Board toEntity() {
         return Board.builder()
                 .title(title)
                 .content(content)
                 .music(music)
+                .url(url)
                 .build();
     }
 }
