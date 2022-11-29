@@ -52,7 +52,7 @@ public class BoardController {
      */
     @PatchMapping("/{board-id}")
     public ResponseEntity update(@PathVariable("board-id") @Positive Long boardId,
-                                 BoardUpdateRequestDto requestDto, @RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token) {
+                                 BoardUpdateRequestDto requestDto, @RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token) throws IOException {
         log.info("게시글 수정 요청");
         boardService.update(boardId, requestDto, token);
         return new ResponseEntity(HttpStatus.OK);

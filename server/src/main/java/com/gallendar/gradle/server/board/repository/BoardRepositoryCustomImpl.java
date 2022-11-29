@@ -110,21 +110,21 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
         if (year == null) {
             return null;
         }
-        return qBoard.createdAt.year().eq(year);
+        return qBoard.created.year().eq(year);
     }
 
     private BooleanExpression eqMonth(Integer month) {
         if (month == null) {
             return null;
         }
-        return qBoard.createdAt.month().eq(month);
+        return qBoard.created.month().eq(month);
     }
 
     private BooleanExpression eqDay(Integer day) {
         if (day == null) {
             return null;
         }
-        return qBoard.createdAt.dayOfMonth().eq(day);
+        return qBoard.created.dayOfMonth().eq(day);
     }
 
     private BooleanExpression eqCategory(String category) {
