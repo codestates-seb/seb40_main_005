@@ -1,7 +1,6 @@
 package com.gallendar.gradle.server.board.service;
 
 import com.gallendar.gradle.server.board.dto.BoardCreateRequestDto;
-import com.gallendar.gradle.server.board.dto.BoardResponseDto;
 import com.gallendar.gradle.server.board.dto.BoardUpdateRequestDto;
 import com.gallendar.gradle.server.board.entity.Board;
 import com.gallendar.gradle.server.board.repository.BoardRepository;
@@ -18,19 +17,20 @@ import com.gallendar.gradle.server.tags.domain.*;
 import com.gallendar.gradle.server.tags.domain.BoardTags;
 import com.gallendar.gradle.server.tags.type.TagStatus;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BoardServiceImpl implements BoardService {
 
     private final BoardRepository boardRepository;
@@ -50,33 +50,80 @@ public class BoardServiceImpl implements BoardService {
         Members members = membersRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException());
 
-        verifyMember(members);
         String fileName = UUID.randomUUID() + "-" + requestDto.getPhoto().getOriginalFilename();
         String path = photoService.upload(requestDto.getPhoto());
         Photo photo = Photo.builder().fileName(fileName).path(path).build();
+        photoRepository.save(photo);
 
-        if (categoryRepository.findByCategoryTitle(requestDto.getCategory()) == null) {
+        log.info("카테고리 안에 있는지 확인 시작");
+        if (!categoryRepository.existsByCategoryTitle(requestDto.getCategory())) {
+            log.info("카테고리가 없으닌간 삽입해야함");
             Category category = Category.builder()
                     .categoryTitle(requestDto.getCategory()).build();
             categoryRepository.save(category);
         }
-
+        log.info("카테고리 안에 있어서 그대로 냅두고 연관관계중");
         Category category = categoryRepository.findByCategoryTitle(requestDto.getCategory());
-
         Board board = requestDto.toEntity();
-
         board.setMembers(members);
         board.setPhoto(photo);
         board.setCategory(category);
         boardRepository.save(board);
-        photoRepository.save(photo);
 
+        log.info("보드, 포토 저장");
+        if (!requestDto.getTags().isEmpty()) {
+            requestDto.getTags().forEach(m -> {
 
-        requestDto.getTags().forEach(m -> {
+                BoardTags boardTags = new BoardTags();
+                Tags tags = Tags.builder()
+                        .tagsMember(m)
+                        .tagStatus(TagStatus.alert)
+                        .build();
+                boardTags.setBoard(board);
+                boardTags.setTags(tags);
 
+                boardTagsRepository.save(boardTags);
+                tagsRepository.save(tags);
+            });
+        }
+        log.info("태그 저장");
+    }
+
+    /* 게시글 수정 */
+    @Transactional
+    public void update(Long boardId, BoardUpdateRequestDto requestDto, String token) {
+        String memberId = jwtUtils.getMemberIdFromToken(token);
+        log.info("본인이 작성하였는지 확인");
+        Members members = membersRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException());
+
+        log.info("해당 게시글이 있는지 확인");
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardId =" + boardId));
+
+        log.info("태그 관련 로직 시작");
+        List<Board> oldTagsMember = boardRepositoryCustom.findByTagMembers(boardId);
+        List<String> oldTagsList = new ArrayList<>();
+        List<String> newTagsMember = requestDto.getTags();
+
+        oldTagsMember.forEach(board1 -> {
+            board1.getBoardTags().forEach(boardTags -> {
+                oldTagsList.add(boardTags.getTags().getTagsMember());
+            });
+        });
+
+        List<String> oldNoneMatchList = oldTagsList.stream().filter(o -> newTagsMember.stream().noneMatch(Predicate.isEqual(o))).collect(Collectors.toList());
+        List<String> newNoneMatchList = newTagsMember.stream().filter(n -> oldTagsList.stream().noneMatch(Predicate.isEqual(n))).collect(Collectors.toList());
+        oldNoneMatchList.forEach(o -> {
+            Tags tags = tagsRepository.findByTagsMember(o);
+            if (tags.getStatus().equals(TagStatus.alert)) {
+                tags.changeStatus(TagStatus.deleteTag);
+            }
+        });
+        newNoneMatchList.forEach(n -> {
             BoardTags boardTags = new BoardTags();
             Tags tags = Tags.builder()
-                    .tagsMember(m)
+                    .tagsMember(n)
                     .tagStatus(TagStatus.alert)
                     .build();
             boardTags.setBoard(board);
@@ -84,49 +131,31 @@ public class BoardServiceImpl implements BoardService {
 
             boardTagsRepository.save(boardTags);
             tagsRepository.save(tags);
-
         });
-    }
+        log.info("카테고리 관련 로직 시작");
+        log.info(requestDto.getCategoryTitle());
+        if (!categoryRepository.existsByCategoryTitle(requestDto.getCategoryTitle())) {
+            log.info("카테고리가 없으닌간 삽입해야함");
+            Category category = Category.builder()
+                    .categoryTitle(requestDto.getCategoryTitle()).build();
+            categoryRepository.save(category);
+        }
 
-    /* 게시글 수정 */
-    @Transactional
-    public Long update(Long boardId, BoardUpdateRequestDto requestDto, List<String> tagsMembers) {
+        Category category = categoryRepository.findByCategoryTitle(requestDto.getCategoryTitle());
+        board.setCategory(category);
 
-        Board board = boardRepository.findById(boardId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardId =" + boardId));
+        log.info("사진 관련 시작");
 
-        Optional.ofNullable(requestDto.getTitle())
-                .ifPresent(title -> requestDto.setTitle(title));
-        Optional.ofNullable(requestDto.getContent())
-                .ifPresent(content -> requestDto.setContent(content));
-        Optional.ofNullable(requestDto.getMusic())
-                .ifPresent(music -> requestDto.setMusic(music));
-        Optional.ofNullable(requestDto.getPhoto())
-                .ifPresent(photo -> requestDto.setPhoto(photo));
-        Optional.ofNullable(requestDto.getCategoryTitle())
-                .ifPresent(categoryTitle -> requestDto.setCategoryTitle(categoryTitle));
-        Optional.ofNullable(tagsMembers)
-                .ifPresent(setTagsMembers -> tagsMembers.forEach(m -> {
-
-                    BoardTags boardTags = new BoardTags();
-                    Tags tags = Tags.builder()
-                            .tagsMember(m)
-                            .tagStatus(TagStatus.alert)
-                            .build();
-                    boardTags.setBoard(board);
-                    boardTags.setTags(tags);
-
-                    boardTagsRepository.save(boardTags);
-                    tagsRepository.save(tags);
-
-                }));
-
-        return boardId;
+        board.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getMusic());
     }
 
     /* 게시글 삭제 */
     @Transactional
-    public void delete(Long boardId) {
+    public void delete(Long boardId, String token) {
+        String memberId = jwtUtils.getMemberIdFromToken(token);
+        log.info("본인이 작성하였는지 확인");
+        Members members = membersRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException());
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardId=" + boardId));
 
         /**
@@ -140,28 +169,11 @@ public class BoardServiceImpl implements BoardService {
             }
         });
 
-        int count = boardRepositoryCustom.findByCategoryCount(board.getCategory().getId());
+        int count = boardRepositoryCustom.findByCategoryCount(board.getCategory().getCategoryId());
         if (count == 1) {
             Category category = categoryRepository.findByCategoryTitle(board.getCategory().getCategoryTitle());
             categoryRepository.delete(category);
         }
         boardRepository.delete(board);
     }
-
-
-    /**
-     * Todo:
-     * ExceptionCode 작성후 error response 수정
-     */
-    private void isAuthorized(Board board, Members members) {
-        if (!board.getMembers().equals(members)) {
-            throw new IllegalArgumentException("사용자가 일치하지 않습니다.");
-        }
-    }
-
-    private void verifyMember(Members members) {
-        membersRepository.findById(members.getId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
-    }
-
 }
