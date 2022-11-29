@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -46,10 +47,11 @@ public class BoardServiceImpl implements BoardService {
     /* 게시글 저장 */
     @Transactional
     public void save(BoardCreateRequestDto requestDto, String token) throws IOException {
+        log.info("게시글 작성 유저 확인");
         String memberId = jwtUtils.getMemberIdFromToken(token);
         Members members = membersRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException());
-
+        log.info("사진 업로드");
         String fileName = UUID.randomUUID() + "-" + requestDto.getPhoto().getOriginalFilename();
         String path = photoService.upload(requestDto.getPhoto());
         Photo photo = Photo.builder().fileName(fileName).path(path).build();
@@ -62,7 +64,6 @@ public class BoardServiceImpl implements BoardService {
                     .categoryTitle(requestDto.getCategory()).build();
             categoryRepository.save(category);
         }
-        log.info("카테고리 안에 있어서 그대로 냅두고 연관관계중");
         Category category = categoryRepository.findByCategoryTitle(requestDto.getCategory());
         Board board = requestDto.toEntity();
         board.setMembers(members);
@@ -91,7 +92,7 @@ public class BoardServiceImpl implements BoardService {
 
     /* 게시글 수정 */
     @Transactional
-    public void update(Long boardId, BoardUpdateRequestDto requestDto, String token) {
+    public void update(Long boardId, BoardUpdateRequestDto requestDto, String token) throws IOException {
         String memberId = jwtUtils.getMemberIdFromToken(token);
         log.info("본인이 작성하였는지 확인");
         Members members = membersRepository.findById(memberId)
@@ -145,8 +146,15 @@ public class BoardServiceImpl implements BoardService {
         board.setCategory(category);
 
         log.info("사진 관련 시작");
+        if(!requestDto.getPhoto().isEmpty()){
+            String fileName = UUID.randomUUID() + "-" + requestDto.getPhoto().getOriginalFilename();
+            String path = photoService.upload(requestDto.getPhoto());
+            Photo photo = Photo.builder().fileName(fileName).path(path).build();
+            board.setPhoto(photo);
+            photoRepository.save(photo);
+        }
 
-        board.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getMusic());
+        board.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getMusic(), requestDto.getUrl(),requestDto.getCreated());
     }
 
     /* 게시글 삭제 */

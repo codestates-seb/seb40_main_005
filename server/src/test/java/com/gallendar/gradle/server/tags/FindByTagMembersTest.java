@@ -27,4 +27,13 @@ public class FindByTagMembersTest {
             });
         });
     }
+    @Test
+    @Transactional
+    public void findByIdTest(){
+        Board board=boardRepositoryCustom.findById(9L,"usertest1");
+        System.out.println("board.getCategory().getCategoryTitle() = " + board.getCategory().getCategoryTitle());
+        board.getBoardTags().forEach(boardTags -> {
+            System.out.println("boardTags.getTags().getTagsMember(); = " + boardTags.getTags().getTagsMember());
+        });
+    }
 }

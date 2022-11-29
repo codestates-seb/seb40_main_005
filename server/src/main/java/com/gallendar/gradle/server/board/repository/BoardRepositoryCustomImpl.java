@@ -35,8 +35,10 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
         Board board = jpaQueryFactory
                 .selectFrom(qBoard)
                 .where(qBoard.boardId.eq(boardId))
-                .join(qBoard.boardTags, qBoardTags).fetchJoin()
-                .where(qBoardTags.tags.status.eq(TagStatus.alert), qBoardTags.tags.tagsMember.eq(userId))
+                .leftJoin(qBoard.category,qCategory).fetchJoin()
+                .leftJoin(qBoard.boardTags, qBoardTags).fetchJoin()
+                .leftJoin(qBoardTags.tags,qTags)
+                .where(qTags.status.eq(TagStatus.alert), qTags.tagsMember.eq(userId)).fetchJoin()
                 .fetchOne();
         return board;
     }
@@ -89,7 +91,7 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
         int count=jpaQueryFactory
                 .selectFrom(qBoard)
                 .leftJoin(qBoard.category,qCategory)
-                .where(qCategory.id.eq(id)).fetchJoin()
+                .where(qCategory.categoryId.eq(id)).fetchJoin()
                 .fetch().size();
         return count;
     }
@@ -110,21 +112,21 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
         if (year == null) {
             return null;
         }
-        return qBoard.createdAt.year().eq(year);
+        return qBoard.created.year().eq(year);
     }
 
     private BooleanExpression eqMonth(Integer month) {
         if (month == null) {
             return null;
         }
-        return qBoard.createdAt.month().eq(month);
+        return qBoard.created.month().eq(month);
     }
 
     private BooleanExpression eqDay(Integer day) {
         if (day == null) {
             return null;
         }
-        return qBoard.createdAt.dayOfMonth().eq(day);
+        return qBoard.created.dayOfMonth().eq(day);
     }
 
     private BooleanExpression eqCategory(String category) {

@@ -2,7 +2,8 @@ import axios from "axios";
 import client from "../../client/client";
 
 /**
- * @description userEmail을 props로 받아서 id를 return하는 hook
+ * @author yeowool
+ * @description userEmail을 props로 받아서 id를 return
  **/
 
 const fetchIdByEmail = (userEmail: string) => {
