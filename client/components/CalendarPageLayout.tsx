@@ -5,12 +5,13 @@ import BoardContainer from "./BoardContainer";
 import { useEffect, useRef, useState } from "react";
 import CreateModalLayout from "./CreateModalLayout";
 import { useRecoilState } from "recoil";
-import modalOpenState from "../recoil/calendarAtom";
+import {modalOpenState, pickDayState} from "../recoil/calendarAtom";
 
 
 const CalendarPageLayout = () => {
   const boardModal = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useRecoilState(modalOpenState);
+  const [date, setDate] = useRecoilState(pickDayState);
 
   const handleOpenBtnClick = () => {
     const { current } = boardModal;
@@ -31,6 +32,7 @@ const CalendarPageLayout = () => {
         : (current.style.transform = "translateX(100%)");
     }
     setOpen(false);
+    setDate("");
   };
 
   useEffect(()=> {
