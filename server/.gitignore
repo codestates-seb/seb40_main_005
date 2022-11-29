@@ -38,4 +38,5 @@ out/
 
 ### Custom ###
 /src/main/resources/*.yml
+/src/$buildDir/
 

@@ -89,7 +89,7 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
         int count=jpaQueryFactory
                 .selectFrom(qBoard)
                 .leftJoin(qBoard.category,qCategory)
-                .where(qCategory.id.eq(id)).fetchJoin()
+                .where(qCategory.categoryId.eq(id)).fetchJoin()
                 .fetch().size();
         return count;
     }
