@@ -4,6 +4,9 @@ import Link from "next/link";
 import SidebarCategory from "./SidebarCategory";
 import React, { useEffect, useState } from "react";
 
+// import useGetCategoryTltie from "../hooks/user/useGetCategoryTltie";
+// import { accessTokenState } from "../recoil/authAtom";
+
 //테스트용 더미 입니다
 const dummy = [
   {
@@ -20,6 +23,9 @@ const dummy = [
   },
 ];
 
+// const { data, refetch, isLoading, isFetching } = useGetCategoryTltie();
+// console.log(accessTokenState);
+// console.log(data);
 interface CategoryType {
   boardId: number;
   categoryTitle: string;
@@ -54,17 +60,21 @@ const Sidebar = () => {
           <div className="absolute top-4 lg:top-5 left-0.5 right-0 bottom-1.5 lg:bottom-0.5  bg-mainOrange/40"></div>
         </div>
 
-        <div className="grid grid-cols-1 text-xs drop-shadow-xl lg:flex lg:flex-col w-full h-1/3 lg:h-5/6 font-SCDream4 overflow-auto">
+        <div className="grid grid-cols-1 text-sm drop-shadow-xl lg:flex lg:flex-col w-full h-1/3 lg:h-5/6 font-SCDream4 overflow-auto">
           {categoryList.map(dummy => (
             <SidebarCategory
               onClick={() => handleTagClick(dummy.boardId)}
               key={dummy.boardId}
             >
-              <div>{dummy.categoryTitle}</div>
+              <div className="w-full flex justify-center">
+                {dummy.categoryTitle}
+              </div>
               <div
-                className={`h-full pr-3 ${dummy.isSelect ? null : "hidden"}`}
+                className={` flex items-center pr-3 w-3 h-full aspect-square rounded-full ${
+                  dummy.isSelect ? " bg-btnOrange" : " bg-white "
+                }`}
               >
-                <div className="flex w-4 h-4  bg-btnOrange aspect-square rounded-full"></div>
+                {/* <div className="flex w-4 h-4  bg-btnOrange aspect-square rounded-full"></div> */}
               </div>
             </SidebarCategory>
           ))}
