@@ -16,5 +16,6 @@ import java.util.List;
 public interface BoardService {
     void save(BoardCreateRequestDto requestDto, String token) throws IOException;
 
-    Long update(Long boardId, BoardUpdateRequestDto requestDto, List<String> tagsMembers);
+    void update(Long boardId, BoardUpdateRequestDto requestDto,String token);
+    void delete(Long boardId,String token);
 }
