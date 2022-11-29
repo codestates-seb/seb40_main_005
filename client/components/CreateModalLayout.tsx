@@ -7,13 +7,28 @@ import AddShareContainer from "./AddShareContainer";
 import BoardModalContainer from "./BoardModalContainer";
 import BoardModalBtn from "./BoardModalBtn";
 import { useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { selectDayState, selectMonthState, selectYearState, pickDayState } from "../recoil/calendarAtom";
+
 
 interface Props {
   handleCloseClick: () => void;
 }
 
 const CreateModalLayout = ({ handleCloseClick }: Props) => {
-  const [date, setDate] = useState<string>("");
+  const currYear = useRecoilValue(selectYearState);
+  const currMonth = useRecoilValue(selectMonthState);
+  let realMonth = currMonth;
+  if(currMonth.length < 2){
+    realMonth = "0" + currMonth
+  }
+  const currDay= useRecoilValue(selectDayState);
+  let realDay = currDay;
+  if(currDay.length < 2){
+    realDay = "0" + currDay
+  }
+
+  const [date, setDate] = useRecoilState(pickDayState);
   const [category, setCategory] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [music, setMusic] = useState<string>("");
@@ -22,8 +37,9 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   const [showImg, setShowImg] = useState<string>("");
   const [context, setContext] = useState<string>("");
   const [share, setShare] = useState([]);
+  
 
-  const changeDate = (e: any) => {
+  const changeDate = (e:any) => {
     setDate(e.target.value);
   };
 
@@ -78,8 +94,8 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
               </div>
               <input
                 type="date"
-                className="w-2/3 text-sm text-right text-gray-700 outline-none h-fit font-SCDream3 lg:text-sm"
-                value={date}
+                className="w-2/3 h-fit font-SCDream3 text-right text-sm lg:text-sm text-gray-700 outline-none"
+                value={date === "" ? `${currYear}-${realMonth}-${realDay}` : date}
                 onChange={changeDate}
               />
             </CategoryInputContainer>

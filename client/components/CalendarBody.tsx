@@ -70,7 +70,7 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
         );
       } else {
         days.push(
-          <DayBlock currMonth={currMonth} currYear={currYear} key={startDate}>
+          <DayBlock currMonth={currMonth} currYear={currYear} currDay={startDate} key={startDate}>
             {startDate}
           </DayBlock>,
         );

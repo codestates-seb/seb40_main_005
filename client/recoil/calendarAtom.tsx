@@ -5,4 +5,24 @@ const modalOpenState = atom({
   default: false,
 });
 
-export default modalOpenState;
+const selectYearState = atom({
+  key: "selectYearState",
+  default : "1234"
+});
+
+const selectMonthState = atom({
+  key: "selectMonthState",
+  default : "5"
+});
+
+const selectDayState = atom({
+  key: "selectDayState",
+  default : "6"
+});
+
+const pickDayState = atom({
+  key : "pickDayState",
+  default : ""
+})
+
+export {modalOpenState, selectYearState, selectMonthState, selectDayState, pickDayState};
