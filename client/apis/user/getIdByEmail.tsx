@@ -1,4 +1,5 @@
 import axios from "axios";
+import client from "../../client/client";
 
 /**
  * @author yeowool
@@ -7,8 +8,8 @@ import axios from "axios";
 
 const fetchIdByEmail = (userEmail: string) => {
   // 요청메소드 + 요청정보
-  return axios.get(
-    `${process.env.NEXT_PUBLIC_API_URL}/members/find-id?email=${userEmail}`,
+  return client.get(
+    `/members/find-id?email=${userEmail}`,
   );
 };
 
