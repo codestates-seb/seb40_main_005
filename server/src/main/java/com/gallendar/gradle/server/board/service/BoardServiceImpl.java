@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -46,14 +47,15 @@ public class BoardServiceImpl implements BoardService {
     /* 게시글 저장 */
     @Transactional
     public void save(BoardCreateRequestDto requestDto, String token) throws IOException {
+        log.info("게시글 작성 유저 확인");
         String memberId = jwtUtils.getMemberIdFromToken(token);
         Members members = membersRepository.findById(memberId)
                 .orElseThrow(() -> new IllegalArgumentException());
-
-        String fileName = UUID.randomUUID() + "-" + requestDto.getPhoto().getOriginalFilename();
-        String path = photoService.upload(requestDto.getPhoto());
-        Photo photo = Photo.builder().fileName(fileName).path(path).build();
-        photoRepository.save(photo);
+        log.info("사진 업로드");
+//        String fileName = UUID.randomUUID() + "-" + requestDto.getPhoto().getOriginalFilename();
+//        String path = photoService.upload(requestDto.getPhoto());
+//        Photo photo = Photo.builder().fileName(fileName).path(path).build();
+//        photoRepository.save(photo);
 
         log.info("카테고리 안에 있는지 확인 시작");
         if (!categoryRepository.existsByCategoryTitle(requestDto.getCategory())) {
@@ -62,11 +64,10 @@ public class BoardServiceImpl implements BoardService {
                     .categoryTitle(requestDto.getCategory()).build();
             categoryRepository.save(category);
         }
-        log.info("카테고리 안에 있어서 그대로 냅두고 연관관계중");
         Category category = categoryRepository.findByCategoryTitle(requestDto.getCategory());
         Board board = requestDto.toEntity();
         board.setMembers(members);
-        board.setPhoto(photo);
+        //board.setPhoto(photo);
         board.setCategory(category);
         boardRepository.save(board);
 
