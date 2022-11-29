@@ -8,6 +8,6 @@ import java.io.IOException;
 public interface BoardService {
     void save(BoardCreateRequestDto requestDto, String token) throws IOException;
 
-    void update(Long boardId, BoardUpdateRequestDto requestDto,String token);
+    void update(Long boardId, BoardUpdateRequestDto requestDto,String token) throws IOException;
     void delete(Long boardId,String token);
 }

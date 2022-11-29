@@ -59,11 +59,12 @@ public class Board extends BaseTimeEntity {
         this.created=created;
     }
 
-    public void update(String title, String content, String music,String url) {
+    public void update(String title, String content, String music,String url,LocalDate created) {
         this.title = title;
         this.content = content;
         this.music = music;
         this.url=url;
+        this.created=created;
     }
 
     public void setMembers(Members members) {

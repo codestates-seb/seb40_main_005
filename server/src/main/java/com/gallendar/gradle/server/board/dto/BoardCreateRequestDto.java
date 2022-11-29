@@ -34,16 +34,6 @@ public class BoardCreateRequestDto {
     private List<String> tags;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate created;
-
-    @Builder
-    public BoardCreateRequestDto(String title, String content, String music, String url,LocalDate created) {
-        this.title = title;
-        this.content = content;
-        this.music = music;
-        this.url = url;
-        this.created=created;
-    }
-
     public Board toEntity() {
         return Board.builder()
                 .title(title)

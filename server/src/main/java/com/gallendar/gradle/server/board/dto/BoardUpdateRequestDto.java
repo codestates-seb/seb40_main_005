@@ -4,8 +4,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -16,25 +18,11 @@ public class BoardUpdateRequestDto {
     private String content;
     private String music;
     private String url;
-    //private MultipartFile photo;
+    private MultipartFile photo;
     private List<String> tags;
     private String categoryTitle;
-
-    @Builder
-    public BoardUpdateRequestDto(String title, String content, String music,String url){
-        this.title = title;
-        this.content = content;
-        this.music = music;
-        this.url=url;
-    }
-
-    public void update(String title, String content, String music,String url) {
-        this.title = title;
-        this.content = content;
-        this.music = music;
-        this.url=url;
-    }
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate created;
 }
 
 
