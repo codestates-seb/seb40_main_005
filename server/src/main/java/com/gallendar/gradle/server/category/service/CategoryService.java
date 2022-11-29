@@ -10,11 +10,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
 @RequiredArgsConstructor
-public class ReadCategoryService {
+public class CategoryService {
 
     private final BoardRepositoryCustomImpl boardRepositoryCustom;
     private final JwtUtils jwtUtils;
@@ -24,10 +25,12 @@ public class ReadCategoryService {
         List<CategoryListResponseDto> categoryList = new ArrayList<>();
         List<Board> boards = boardRepositoryCustom.findByCategory(membersId);
 
-        boards.forEach(board -> {
-            categoryList.add(CategoryListResponseDto.from(board.getCategory()));
+        List<String> distinctCategory = boards.stream()
+                .map(board -> board.getCategory().getCategoryTitle()).distinct().collect(Collectors.toList());
+        distinctCategory.forEach(categoryTitle -> {
+            categoryList.add(CategoryListResponseDto.from(categoryTitle));
         });
-
         return categoryList;
+
     }
 }
