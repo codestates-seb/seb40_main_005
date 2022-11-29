@@ -47,7 +47,7 @@ const CalendarContainer = () => {
 
   return (
     <>
-      <div className="w-full h-fit px-4 py-8 lg:py-5 rounded-lg md:px-6 lg:h-[90%] lg:px-12 lg:drop-shadow-2xl bg-bgGray lg:bg-bgWhite">
+      <div className="w-full h-full px-4 py-8 lg:py-5 rounded-lg md:px-6 lg:max-h-[90%] lg:px-12 lg:drop-shadow-2xl bg-bgGray lg:bg-bgWhite">
         {/* calendar header */}
         <div className="flex flex-col items-center justify-center w-full h-fit">
           <TodayBtn setMonth={changeMonth} setYear={changeYear} />
