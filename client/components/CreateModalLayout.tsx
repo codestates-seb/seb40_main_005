@@ -39,7 +39,6 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   const [share, setShare] = useState([]);
   
 
-
   const changeDate = (e:any) => {
     setDate(e.target.value);
   };
