@@ -39,4 +39,4 @@ out/
 ### Custom ###
 #/src/main/resources/*.yml
 /src/$buildDir/
-
+/src/main/resources/*.sh
