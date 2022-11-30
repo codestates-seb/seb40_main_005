@@ -26,7 +26,7 @@ public class QuitMemberTest {
         boards.forEach(board -> {
             board.getBoardTags().forEach(boardTags -> {
                 if(boardTags.getTags().getStatus().equals(TagStatus.alert)){
-                        boardTags.getTags().changeStatus(TagStatus.quit);
+                        boardTags.getTags().changeStatus(TagStatus.quitMember);
                 }
             });
         });
