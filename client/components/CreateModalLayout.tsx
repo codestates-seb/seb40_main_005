@@ -6,7 +6,7 @@ import AddTextContainer from "./AddTextContainer";
 import AddShareContainer from "./AddShareContainer";
 import BoardModalContainer from "./BoardModalContainer";
 import BoardModalBtn from "./BoardModalBtn";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { selectDayState, selectMonthState, selectYearState, pickDayState } from "../recoil/calendarAtom";
 import usePostBoard from "../hooks/calendar/usePostBoard";
@@ -16,32 +16,20 @@ interface Props {
 }
 
 const CreateModalLayout = ({ handleCloseClick }: Props) => {
-  const currYear = useRecoilValue(selectYearState);
-  const currMonth = useRecoilValue(selectMonthState);
-  let realMonth = currMonth;
-  if(currMonth.length < 2){
-    realMonth = "0" + currMonth
-  }
-  const currDay= useRecoilValue(selectDayState);
-  let realDay = currDay;
-  if(currDay.length < 2){
-    realDay = "0" + currDay
-  }
 
   const [date, setDate] = useRecoilState(pickDayState);
   const [category, setCategory] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [music, setMusic] = useState<string>("");
   const [youtubeLink, setYoutubeLink] = useState<string>("");
-  const [photo, setPhoto] = useState<File | null>(null);
+  const [photo, setPhoto] = useState<any>("");
   const [showImg, setShowImg] = useState<string>("");
   const [context, setContext] = useState<string>("");
-  const [share, setShare] = useState([]);
-  
-  const [dataObj, setDataObj] = useState({});
+  const [share, setShare] = useState<any>([]);
 
   const changeDate = (e:any) => {
     setDate(e.target.value);
+    console.log(date);
   };
 
   const changeCategory = (e: any) => {
@@ -77,7 +65,16 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     setShowImg("");
   };
 
-  const { data:submitRes , mutate:submitMutate } = usePostBoard(dataObj);
+  const { data:submitRes , mutate:submitMutate } = usePostBoard({
+    category : category,
+    content : context,
+    created : date,
+    music : music,
+    photo : photo,
+    tags : share,
+    title : title,
+    url : youtubeLink
+  });
 
   const handleSubmit = () => {
     const submitData = {
@@ -90,10 +87,23 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
       title : title,
       url : youtubeLink
     }
-    setDataObj(submitData);
-    // submitMutate(submitData);
+    submitMutate(submitData);
+    // console.log(submitRes)
+    alert('등록되었습니다');
+
+    setDate("");
+    setCategory("");
+    setTitle("");
+    setMusic("");
+    setYoutubeLink("");
+    setPhoto("");
+    setShowImg("");
+    setContext("");
+    setShare([]);
+    deleteImg();
 
   }
+
 
   return (
     <>
@@ -114,7 +124,8 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
               <input
                 type="date"
                 className="w-2/3 h-fit font-SCDream3 text-right text-sm lg:text-sm text-gray-700 outline-none"
-                value={date === "" ? `${currYear}-${realMonth}-${realDay}` : date}
+                value={date}
+                // value={date}
                 onChange={changeDate}
               />
             </CategoryInputContainer>

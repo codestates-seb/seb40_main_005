@@ -4,30 +4,39 @@ import React, { useState } from "react";
 import { extractExifTags } from "exif-parser-ts";
 
 interface Props {
-  photo: File | null;
-  setPhoto: (file: File) => void;
+  photo: any;
+  setPhoto: (file:any) => void;
   showImg: string;
-  setShowImg: (url: string) => void;
+  setShowImg: (url:any) => void;
 }
 
 const AddPhotoContainer = ({ photo, setPhoto, showImg, setShowImg }: Props) => {
   const uploadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
+    // const formData = new FormData();
 
+    
+    
+    // console.log(fileList);
     if (fileList !== null) {
+      // formData.append("file", fileList[0])
+      // console.log(fileList[0]);
       setPhoto(fileList[0]);
       setShowImg(URL.createObjectURL(fileList[0]));
     }
   };
+  
+  // console.log(photo?.getAll("file"));
 
+  
   return (
     <>
       <BoardModalContainer>
         <div className="flex flex-col items-center justify-center w-full p-2 cursor-pointer h-fit">
-          {photo !== null ? (
+          {photo !== "" ? (
             <img src={showImg} />
           ) : (
-            <form>
+            <form encType="multipart/form-data">
               <input
                 id="file"
                 type="file"

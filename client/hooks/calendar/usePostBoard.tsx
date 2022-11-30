@@ -1,8 +1,19 @@
 import { useMutation } from "react-query";
-import checkAuthNum from "../../apis/auth/checkAuthNum";
+import postBoardData from "../../apis/board/postBoardData";
 
-const usePostBoard = (dataObj:object) => {
-  return useMutation(checkAuthNum);
+interface boardData {
+  category : string,
+  content : string,
+  created : string,
+  music : string,
+  photo : any,
+  tags : any,
+  title : string,
+  url : string
+}
+
+const usePostBoard = ({category, content, created, music, photo, tags, title, url}:boardData) => {
+  return useMutation(postBoardData);
 };
 
 export default usePostBoard;
