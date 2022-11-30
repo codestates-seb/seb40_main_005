@@ -9,16 +9,26 @@ import {
   selectYearState,
   pickDayState,
 } from "../recoil/calendarAtom";
+import MyBoard from "./MyBoard";
 
 interface PropsValue {
   currMonth: number;
   currYear: number;
   children: React.ReactNode;
   currDay: number;
+  hasBoard: boolean;
+  post: string | null;
 }
 
-const DayBlock = ({ children, currMonth, currYear, currDay }: PropsValue) => {
-  const [isToay, setIsToday] = useState(false);
+const DayBlock = ({
+  children,
+  currMonth,
+  currYear,
+  currDay,
+  hasBoard,
+  post,
+}: PropsValue) => {
+  const [isToday, setIsToday] = useState(false);
   const today = new Date();
   let month = getMonth(today) + 1;
   let year = getYear(today);
@@ -36,11 +46,26 @@ const DayBlock = ({ children, currMonth, currYear, currDay }: PropsValue) => {
     } else setIsToday(false);
   });
 
+  console.log(month, year, day, children, isToday);
+
   const handleBtnClick = () => {
     setOpen(true);
     setDayState(currDay.toString());
     setMonthState(currMonth.toString());
     setYearState(currYear.toString());
+
+    let realMonth = currMonth.toString();
+    if (realMonth.length < 2) {
+      realMonth = "0" + currMonth.toString();
+    }
+    let realDay = currDay.toString();
+    if (realDay.length < 2) {
+      realDay = "0" + currDay.toString();
+    }
+
+    setDate(`${currYear.toString()}-${realMonth}-${realDay}`);
+
+    console.log("active");
   };
 
   return (
@@ -48,14 +73,15 @@ const DayBlock = ({ children, currMonth, currYear, currDay }: PropsValue) => {
       <div className="group w-[13%] h-16 md:h-18 lg:h-[6.3rem] pt-2 md:pt-3 lg:pt-0 text-textBlack font-SCDream5 text-xs md:text-sm lg:text-base">
         <div className="flex flex-row items-center py-1">
           <div
-            className={`w-fit h-fit px-[0.3rem] py-[0.2rem] md:px-[0.58rem] md:py-[0.4rem] ${
-              isToay ? "bg-btnOrange rounded-full text-white" : null
+            className={`w-fit h-fit px-[0.3rem] py-[0.2rem] md:px-[0.65rem] lg:px-[0.75rem] md:py-[0.3rem] ${
+              isToday ? "bg-btnOrange rounded-full text-white" : null
             }`}
           >
             {children}
           </div>
-          <AddBtn onClick={handleBtnClick} />
+          {hasBoard ? null : <AddBtn onClick={handleBtnClick} />}
         </div>
+        {post !== null ? <MyBoard post={post}></MyBoard> : null}
       </div>
     </>
   );

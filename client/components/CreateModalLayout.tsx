@@ -70,15 +70,15 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     setShowImg("");
   };
 
-  const { data:submitRes , mutate:submitMutate } = usePostBoard({
-    category : category,
-    content : context,
-    created : date,
-    music : music,
-    photo : photo,
-    tags : share,
-    title : title,
-    url : youtubeLink
+  const { data: submitRes, mutate: submitMutate } = usePostBoard({
+    category: category,
+    content: context,
+    created: date,
+    music: music,
+    photo: photo,
+    tags: share,
+    title: title,
+    url: youtubeLink,
   });
 
   const handleSubmit = () => {
@@ -94,7 +94,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     }
     submitMutate(submitData);
     // console.log(submitRes)
-    alert('등록되었습니다');
+    alert("등록되었습니다");
 
     setDate("");
     setCategory("");
@@ -106,9 +106,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     setContext("");
     setShare([]);
     deleteImg();
-
-  }
-
+  };
 
   return (
     <>
