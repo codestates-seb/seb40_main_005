@@ -1,6 +1,7 @@
 package com.gallendar.gradle.server.board.controller;
 
 import com.gallendar.gradle.server.board.dto.*;
+import com.gallendar.gradle.server.board.service.BoardCountService;
 import com.gallendar.gradle.server.board.service.BoardSearchService;
 import com.gallendar.gradle.server.board.service.BoardServiceImpl;
 import com.gallendar.gradle.server.global.auth.jwt.JwtRequestFilter;
@@ -12,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.io.IOException;
 import java.util.List;
@@ -26,6 +26,7 @@ public class BoardController {
     @Autowired
     private final BoardServiceImpl boardService;
     private final BoardSearchService boardSearchService;
+    private final BoardCountService boardCountService;
 
     /**
      * 게시글 작성
@@ -66,8 +67,8 @@ public class BoardController {
      * @return
      */
     @DeleteMapping("/{board-id}")
-    public Long delete(@PathVariable("board-id") Long boardId,@RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token) {
-        boardService.delete(boardId,token);
+    public Long delete(@PathVariable("board-id") Long boardId, @RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token) {
+        boardService.delete(boardId, token);
         return boardId;
     }
 
@@ -99,5 +100,20 @@ public class BoardController {
     public List<BoardSearchByIdResponse> boardSearchByBoardId(@PathVariable(value = "boardId") Long boardId, @RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token) {
         log.info("게시글 상세정보 요청");
         return boardSearchService.SearchBoardByBoardId(boardId, token);
+    }
+
+    /**
+     * 게시글 작성 여부 반환
+     * @param token
+     * @param year
+     * @param month
+     * @param day
+     * @return
+     */
+    @ApiOperation(value = "게시글 작성 여부 반환", notes = "false = 게시글 작성 불가능, true = 게시글 작성 가능")
+    @GetMapping("/count")
+    public BoardCountResponse boardCountById(@RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token, @RequestParam int year, @RequestParam int month, @RequestParam int day) {
+        log.info("게시글 작성 여부 반환 요청");
+        return boardCountService.countBoardById(token, year, month, day);
     }
 }

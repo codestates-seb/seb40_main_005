@@ -11,9 +11,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 @RequiredArgsConstructor
@@ -27,11 +26,13 @@ public class BoardSearchService {
         List<BoardSearchResponse> list = new ArrayList<>();
         List<Board> boards = boardRepositoryCustom.findByBoard(year, month, category, memberId);
         boards.forEach(board -> {
-            Map<String, TagStatus> tags = new HashMap<>();
+            AtomicBoolean atomicBoolean= new AtomicBoolean(false);
             board.getBoardTags().forEach(boardTags -> {
-                tags.put(boardTags.getTags().getTagsMember(), boardTags.getTags().getStatus());
+                if(boardTags.getTags().getStatus().equals(TagStatus.shared)){
+                    atomicBoolean.set(true);
+                }
             });
-            list.add(BoardSearchResponse.from(board, tags));
+            list.add(BoardSearchResponse.from(board, atomicBoolean.get()));
         });
         return list;
     }

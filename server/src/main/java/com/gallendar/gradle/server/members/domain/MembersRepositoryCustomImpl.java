@@ -1,11 +1,13 @@
 package com.gallendar.gradle.server.members.domain;
 
 import com.gallendar.gradle.server.board.entity.QBoard;
+import com.gallendar.gradle.server.tags.domain.QBoardTags;
+import com.gallendar.gradle.server.tags.domain.QTags;
+import com.gallendar.gradle.server.tags.type.TagStatus;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -14,6 +16,8 @@ public class MembersRepositoryCustomImpl implements MembersRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
     QMembers qMembers = QMembers.members;
     QBoard qBoard = QBoard.board;
+    QBoardTags qBoardTags = QBoardTags.boardTags;
+    QTags qTags = QTags.tags;
 
     @Override
     public List<Members> findByUser(String id) {
@@ -30,9 +34,25 @@ public class MembersRepositoryCustomImpl implements MembersRepositoryCustom {
                 .selectFrom(qBoard)
                 .leftJoin(qBoard.members, qMembers).fetchJoin()
                 .where(qMembers.id.eq(id)
-                        , qBoard.createdAt.year().eq(year)
-                        , qBoard.createdAt.month().eq(month)
-                        , qBoard.createdAt.dayOfMonth().eq(day))
+                        , qBoard.created.year().eq(year)
+                        , qBoard.created.month().eq(month)
+                        , qBoard.created.dayOfMonth().eq(day))
+                .fetch().size();
+        return count;
+    }
+
+    @Override
+    public int CountBoardByTag(String id, Integer year, Integer month, Integer day) {
+        int count = jpaQueryFactory
+                .selectFrom(qBoard)
+                .leftJoin(qBoard.members, qMembers)
+                .where(qMembers.id.eq(id),
+                        qBoard.created.year().eq(year),
+                        qBoard.created.month().eq(month),
+                        qBoard.created.dayOfMonth().eq(day)).fetchJoin()
+                .leftJoin(qBoard.boardTags, qBoardTags).fetchJoin()
+                .leftJoin(qBoardTags.tags, qTags)
+                .where(qTags.status.eq(TagStatus.shared)).fetchJoin()
                 .fetch().size();
         return count;
     }
