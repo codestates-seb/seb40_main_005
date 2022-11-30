@@ -6,10 +6,10 @@ spring:
   autoconfigure:
     exclude: org.springframework.cloud.aws.autoconfigure.context.ContextStackAutoConfiguration
   datasource:
-    url: ${mysql-url}
+    url: ${MYSQL_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${mysql-username}
-    password: ${mysql-password}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
   jpa:
     open-in-view: false
     generate-ddl: true
@@ -25,12 +25,12 @@ spring:
             enable: true
           auth: true
     host: smtp.gmail.com
-    username: ${mail-host}
-    password: ${mail-password}
-    port: ${mail-port}
+    username: ${MAIL_HOST}
+    password: ${MAIL_PASSWORD}
+    port: ${MAIL_PORT}
   redis:
-    host: ${redis-url}
-    port: ${redis-port}
+    host: ${REDIS_URL}
+    port: ${REDIS_PORT}
 
   main:
     allow-circular-references: true
@@ -65,4 +65,3 @@ logging:
       amazonaws:
         util:
           EC2MetaDataUtils: error
-

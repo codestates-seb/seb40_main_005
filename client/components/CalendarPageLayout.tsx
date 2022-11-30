@@ -5,8 +5,7 @@ import BoardContainer from "./BoardContainer";
 import { useEffect, useRef, useState } from "react";
 import CreateModalLayout from "./CreateModalLayout";
 import { useRecoilState } from "recoil";
-import {modalOpenState, pickDayState} from "../recoil/calendarAtom";
-
+import { modalOpenState, pickDayState } from "../recoil/calendarAtom";
 
 const CalendarPageLayout = () => {
   const boardModal = useRef<HTMLDivElement>(null);
@@ -35,19 +34,17 @@ const CalendarPageLayout = () => {
     setDate("");
   };
 
-  useEffect(()=> {
-    if(open){
+  useEffect(() => {
+    if (open) {
       handleOpenBtnClick();
     }
-  },[open])
+  }, [open]);
 
   return (
     <>
-      <div className="flex flex-col-reverse h-screen lg:flex-row bg-bgGray">
-        {/* <section className="w-1/6 h-full border-2 lg:block">Sidebar</section> */}
-
+      <div className="flex flex-col-reverse h-full lg:flex-row bg-bgGray">
         <BoardContainer boardRef={boardModal}>
-          <CreateModalLayout handleCloseClick={handleCloseBtnClick}/>
+          <CreateModalLayout handleCloseClick={handleCloseBtnClick} />
         </BoardContainer>
         <Sidebar />
         <div className="w-full p-4 lg:pr-20">

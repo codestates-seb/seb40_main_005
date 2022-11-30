@@ -11,12 +11,11 @@ public class CategoryListResponseDto {
     private String categoryTitle;
 
 
-    public static CategoryListResponseDto from(Category category) {
-
-        String categoryTitle = category.getCategoryTitle();
+    public static CategoryListResponseDto from(String categoryTitle) {
 
         return CategoryListResponseDto.builder()
                 .categoryTitle(categoryTitle)
                 .build();
     }
 }
+
