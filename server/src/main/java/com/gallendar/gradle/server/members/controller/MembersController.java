@@ -5,6 +5,7 @@ import com.gallendar.gradle.server.members.dto.*;
 import com.gallendar.gradle.server.members.service.ChangePasswordService;
 import com.gallendar.gradle.server.members.service.CreateMemberService;
 import com.gallendar.gradle.server.members.service.MemberSearchService;
+import com.gallendar.gradle.server.members.service.QuitMemberService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -118,13 +119,6 @@ public class MembersController {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).body("successful");
-    }
-
-    //Todo: 회원 탈퇴
-    @DeleteMapping("/{members-id}")
-    public String deleteMembers() {
-        String response = "회원탈퇴";
-        return response;
     }
 
     //Todo: 마이페이지 조회
