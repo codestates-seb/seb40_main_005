@@ -6,5 +6,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class CountBoardResponse {
-    private int count;
+    private boolean status;
 }
