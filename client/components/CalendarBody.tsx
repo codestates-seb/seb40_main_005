@@ -6,13 +6,22 @@ import {
   getWeekOfMonth,
   getDay,
   endOfMonth,
-  getMonth,
 } from "date-fns";
 import DayBlock from "./DayBlock";
+import useGetBoards from "../hooks/calendar/useGetBoards";
+import { useEffect } from "react";
+import MyBoard from "./MyBoard";
 
 interface PropsValue {
   currMonth: number;
   currYear: number;
+}
+
+interface Boards {
+  boardId: number;
+  title: string;
+  createdPost: string[];
+  category: string;
 }
 
 const GetDayOfWeek = () => {
@@ -48,7 +57,17 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
   const rows = [];
   let days = [];
 
-  let cloneDay = day;
+  const { data: boardsData, refetch: boardRefetch } = useGetBoards({
+    currYear,
+    currMonth,
+  });
+
+  useEffect(() => {
+    boardRefetch();
+  }, [currMonth]);
+
+  const boardList = boardsData?.data;
+  // console.log(boardList);
 
   while (monthStart <= monthEnd) {
     //해당 달의 일 수만큼 반복
@@ -69,14 +88,50 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
           </div>,
         );
       } else {
-        days.push(
-          <DayBlock currMonth={currMonth} currYear={currYear} currDay={startDate} key={startDate}>
-            {startDate}
-          </DayBlock>,
-        );
+        let hasPost = false;
+
+        boardList?.forEach((el: Boards) => {
+          let createdYear = parseInt(el.createdPost[0]);
+          let createdMonth = parseInt(el.createdPost[1]);
+          let createdDay = parseInt(el.createdPost[2]);
+
+          if (
+            createdYear === currYear &&
+            createdMonth === currMonth &&
+            startDate === createdDay
+          ) {
+            days.push(
+              <DayBlock
+                hasBoard={true}
+                currMonth={currMonth}
+                currYear={currYear}
+                currDay={startDate}
+                key={startDate}
+              >
+                {startDate}
+                <MyBoard post={el.title}></MyBoard>
+              </DayBlock>,
+            );
+
+            hasPost = true;
+          }
+        });
+
+        if (!hasPost) {
+          days.push(
+            <DayBlock
+              hasBoard={false}
+              currMonth={currMonth}
+              currYear={currYear}
+              currDay={startDate}
+              key={startDate}
+            >
+              {startDate}
+            </DayBlock>,
+          );
+        }
         monthStart = addDays(monthStart, 1);
         startDate = getDate(monthStart);
-        cloneDay = getDay(monthStart);
       }
     }
 
