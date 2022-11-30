@@ -5,7 +5,7 @@ import SidebarCategory from "./SidebarCategory";
 import React, { useEffect, useState } from "react";
 import useGetCategory from "../hooks/calendar/useGetCategory";
 
-// import useGetCategoryTitie from "../hooks/user/useGetCategoryTitle";
+import useGetCategoryTitie from "../hooks/calendar/useGetCategory";
 
 interface CategoryType {
   categoryTitle: string;
@@ -14,23 +14,22 @@ interface CategoryType {
 
 const Sidebar = () => {
   const [categoryList, setCategoryList] = useState<Array<CategoryType>>([]);
-  const { data: category, refetch: categoryRefetch } = useGetCategory();
 
-  // const { data: categoryTitie, refetch: categoryRefetch } =
-  //   useGetCategoryTitie();
+  const { data: categoryTitie, refetch: categoryRefetch } =
+    useGetCategoryTitie();
 
-  // useEffect(() => {
-  //   categoryRefetch();
-  //   if (categoryTitie !== undefined) {
-  //     const newCtg = categoryTitie.data.map(
-  //       (el: { categoryTitle: string }) => ({
-  //         ...el,
-  //         isSelect: false,
-  //       }),
-  //     );
-  //     setCategoryList(newCtg);
-  //   }
-  // }, []);
+  useEffect(() => {
+    categoryRefetch();
+    if (categoryTitie !== undefined) {
+      const newCtg = categoryTitie.data.map(
+        (el: { categoryTitle: string }) => ({
+          ...el,
+          isSelect: false,
+        }),
+      );
+      setCategoryList(newCtg);
+    }
+  }, []);
 
   const handleTagClick = (categoryTitle: string) => {
     const newCtg = categoryList.map(data =>
@@ -53,7 +52,7 @@ const Sidebar = () => {
         </div>
 
         <div className="grid w-full grid-cols-1 overflow-auto text-sm drop-shadow-xl lg:flex lg:flex-col h-1/3 lg:h-5/6 font-SCDream4">
-          {/* {categoryList.map(data => (
+          {categoryList.map(data => (
             <SidebarCategory onClick={() => handleTagClick(data.categoryTitle)}>
               <div className="flex justify-center w-full">
                 {data.categoryTitle}
@@ -62,12 +61,9 @@ const Sidebar = () => {
                 className={` flex items-center pr-3 w-3 h-full aspect-square rounded-full ${
                   data.isSelect ? " bg-btnOrange" : " bg-white "
                 }`}
-              >
-              <div className="flex w-4 h-4 rounded-full bg-btnOrange aspect-square"></div>
-              </div>
               ></div>
             </SidebarCategory>
-          ))} */}
+          ))}
         </div>
 
         <Link href="/commerce">
