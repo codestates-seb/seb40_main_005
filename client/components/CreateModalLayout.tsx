@@ -9,7 +9,7 @@ import BoardModalBtn from "./BoardModalBtn";
 import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { selectDayState, selectMonthState, selectYearState, pickDayState } from "../recoil/calendarAtom";
-
+import usePostBoard from "../hooks/calendar/usePostBoard";
 
 interface Props {
   handleCloseClick: () => void;
@@ -38,6 +38,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   const [context, setContext] = useState<string>("");
   const [share, setShare] = useState([]);
   
+  const [dataObj, setDataObj] = useState({});
 
   const changeDate = (e:any) => {
     setDate(e.target.value);
@@ -75,6 +76,24 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     URL.revokeObjectURL(showImg);
     setShowImg("");
   };
+
+  const { data:submitRes , mutate:submitMutate } = usePostBoard(dataObj);
+
+  const handleSubmit = () => {
+    const submitData = {
+      category : category,
+      content : context,
+      created : date,
+      music : music,
+      photo : photo,
+      tags : share,
+      title : title,
+      url : youtubeLink
+    }
+    setDataObj(submitData);
+    // submitMutate(submitData);
+
+  }
 
   return (
     <>
@@ -192,7 +211,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
         </div>
 
         <div className="flex flex-row items-center justify-center w-full h-8 mt-5">
-          <BoardModalBtn onClick={() => {}}>저 장</BoardModalBtn>
+          <BoardModalBtn onClick={handleSubmit}>저 장</BoardModalBtn>
         </div>
       </div>
     </>
