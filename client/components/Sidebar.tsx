@@ -5,30 +5,9 @@ import SidebarCategory from "./SidebarCategory";
 import React, { useEffect, useState } from "react";
 import useGetCategory from "../hooks/calendar/useGetCategory";
 
-// import useGetCategoryTltie from "../hooks/user/useGetCategoryTltie";
-// import { accessTokenState } from "../recoil/authAtom";
+// import useGetCategoryTitie from "../hooks/user/useGetCategoryTitle";
 
-//테스트용 더미 입니다
-// const dummy = [
-//   {
-//     boardId: 0,
-//     categoryTitle: "전체",
-//   },
-//   {
-//     boardId: 1,
-//     categoryTitle: "으아아",
-//   },
-//   {
-//     boardId: 2,
-//     categoryTitle: "주..ㄱ여.. 주..ㅓ..",
-//   },
-// ];
-
-// const { data, refetch, isLoading, isFetching } = useGetCategoryTltie();
-// console.log(accessTokenState);
-// console.log(data);
 interface CategoryType {
-  boardId: number;
   categoryTitle: string;
   isSelect: boolean;
 }
@@ -37,20 +16,25 @@ const Sidebar = () => {
   const [categoryList, setCategoryList] = useState<Array<CategoryType>>([]);
   const { data: category, refetch: categoryRefetch } = useGetCategory();
 
-  useEffect(() => {
-    categoryRefetch();
-  }, []);
-
-  console.log(category);
+  // const { data: categoryTitie, refetch: categoryRefetch } =
+  //   useGetCategoryTitie();
 
   // useEffect(() => {
-  //   const newCtg = dummy.map(data => ({ ...data, isSelect: false }));
-  //   setCategoryList(newCtg);
+  //   categoryRefetch();
+  //   if (categoryTitie !== undefined) {
+  //     const newCtg = categoryTitie.data.map(
+  //       (el: { categoryTitle: string }) => ({
+  //         ...el,
+  //         isSelect: false,
+  //       }),
+  //     );
+  //     setCategoryList(newCtg);
+  //   }
   // }, []);
 
-  const handleTagClick = (id: number) => {
+  const handleTagClick = (categoryTitle: string) => {
     const newCtg = categoryList.map(data =>
-      id === data.boardId
+      categoryTitle === data.categoryTitle
         ? { ...data, isSelect: true }
         : { ...data, isSelect: false },
     );
@@ -61,7 +45,7 @@ const Sidebar = () => {
   return (
     <>
       <section className="flex flex-col items-center justify-center w-full h-full pl-4 pr-4 lg:justify-around lg:w-1/6 lg:pr-0 pt-14">
-        <div className="relative items-center justify-center mb-5 cursor-pointer w-fit h-7 lg:mb-0">
+        <div className="relative items-center justify-center cursor-pointer w-fit h-7 mb-[1rem] ">
           <div className="z-10 ml-0.5 text-base lg:text-xl text-gray-700 font-SCDream4">
             카테고리
           </div>
@@ -69,23 +53,21 @@ const Sidebar = () => {
         </div>
 
         <div className="grid w-full grid-cols-1 overflow-auto text-sm drop-shadow-xl lg:flex lg:flex-col h-1/3 lg:h-5/6 font-SCDream4">
-          {categoryList.map(dummy => (
-            <SidebarCategory
-              onClick={() => handleTagClick(dummy.boardId)}
-              key={dummy.boardId}
-            >
+          {/* {categoryList.map(data => (
+            <SidebarCategory onClick={() => handleTagClick(data.categoryTitle)}>
               <div className="flex justify-center w-full">
-                {dummy.categoryTitle}
+                {data.categoryTitle}
               </div>
               <div
                 className={` flex items-center pr-3 w-3 h-full aspect-square rounded-full ${
-                  dummy.isSelect ? " bg-btnOrange" : " bg-white "
+                  data.isSelect ? " bg-btnOrange" : " bg-white "
                 }`}
               >
                 {/* <div className="flex w-4 h-4 rounded-full bg-btnOrange aspect-square"></div> */}
               </div>
+              ></div>
             </SidebarCategory>
-          ))}
+          ))} */}
         </div>
 
         <Link href="/commerce">

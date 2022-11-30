@@ -6,7 +6,7 @@ import AddTextContainer from "./AddTextContainer";
 import AddShareContainer from "./AddShareContainer";
 import BoardModalContainer from "./BoardModalContainer";
 import BoardModalBtn from "./BoardModalBtn";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   selectDayState,
@@ -38,7 +38,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   const [title, setTitle] = useState<string>("");
   const [music, setMusic] = useState<string>("");
   const [youtubeLink, setYoutubeLink] = useState<string>("");
-  const [photo, setPhoto] = useState<File | null>(null);
+  const [photo, setPhoto] = useState<any>("");
   const [showImg, setShowImg] = useState<string>("");
   const [context, setContext] = useState<string>("");
   const [share, setShare] = useState([]);
@@ -46,7 +46,11 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   const [dataObj, setDataObj] = useState({});
 
   const changeDate = (e: any) => {
+  const [share, setShare] = useState<any>([]);
+
+  const changeDate = (e: any) => {
     setDate(e.target.value);
+    console.log(date);
   };
 
   const changeCategory = (e: any) => {
@@ -82,7 +86,16 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     setShowImg("");
   };
 
-  const { data: submitRes, mutate: submitMutate } = usePostBoard(dataObj);
+  const { data:submitRes , mutate:submitMutate } = usePostBoard({
+    category : category,
+    content : context,
+    created : date,
+    music : music,
+    photo : photo,
+    tags : share,
+    title : title,
+    url : youtubeLink
+  });
 
   const handleSubmit = () => {
     const submitData = {
@@ -98,6 +111,32 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     setDataObj(submitData);
     // submitMutate(submitData);
   };
+      category : category,
+      content : context,
+      created : date,
+      music : music,
+      photo : photo,
+      tags : share,
+      title : title,
+      url : youtubeLink
+    }
+    submitMutate(submitData);
+    // console.log(submitRes)
+    alert('등록되었습니다');
+
+    setDate("");
+    setCategory("");
+    setTitle("");
+    setMusic("");
+    setYoutubeLink("");
+    setPhoto("");
+    setShowImg("");
+    setContext("");
+    setShare([]);
+    deleteImg();
+
+  }
+
 
   return (
     <>
@@ -121,6 +160,9 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
                 value={
                   date === "" ? `${currYear}-${realMonth}-${realDay}` : date
                 }
+                className="w-2/3 h-fit font-SCDream3 text-right text-sm lg:text-sm text-gray-700 outline-none"
+                value={date}
+                // value={date}
                 onChange={changeDate}
               />
             </CategoryInputContainer>

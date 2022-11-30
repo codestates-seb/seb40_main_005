@@ -7,6 +7,7 @@ import {
   selectDayState,
   selectMonthState,
   selectYearState,
+  pickDayState,
 } from "../recoil/calendarAtom";
 
 interface PropsValue {
@@ -14,16 +15,9 @@ interface PropsValue {
   currYear: number;
   children: React.ReactNode;
   currDay: number;
-  hasBoard: boolean;
 }
 
-const DayBlock = ({
-  children,
-  currMonth,
-  currYear,
-  currDay,
-  hasBoard,
-}: PropsValue) => {
+const DayBlock = ({ children, currMonth, currYear, currDay }: PropsValue) => {
   const [isToay, setIsToday] = useState(false);
   const today = new Date();
   let month = getMonth(today) + 1;
@@ -34,6 +28,7 @@ const DayBlock = ({
   const [dayState, setDayState] = useRecoilState(selectDayState);
   const [monthState, setMonthState] = useRecoilState(selectMonthState);
   const [yearState, setYearState] = useRecoilState(selectYearState);
+  const [date, setDate] = useRecoilState(pickDayState);
 
   useEffect(() => {
     if (month === currMonth && year === currYear && children === day) {
@@ -59,7 +54,7 @@ const DayBlock = ({
           >
             {children}
           </div>
-          {hasBoard ? null : <AddBtn onClick={handleBtnClick} />}
+          <AddBtn onClick={handleBtnClick} />
         </div>
       </div>
     </>
