@@ -50,27 +50,26 @@ const SignUp = () => {
   const [authNumValue, setAuthNumValue] = useState<string>("");
   const [checkAuthNum, setCheckAuthNum] = useState<boolean>(false);
   const [pwInputView, setPwInputView] = useState<boolean>(false);
-  const [signUpData, setSignUpData] = useState<SignUpData>({id: idValue, email:emailValue, password:pwValue});
+  const [signUpData, setSignUpData] = useState<SignUpData>({
+    id: idValue,
+    email: emailValue,
+    password: pwValue,
+  });
   const [modalView, setModalView] = useState<boolean>(false);
 
-  const {
-    data: idData,
-    refetch: idRefetch,
-  } = useCheckUserId(idValue);
+  const { data: idData, refetch: idRefetch } = useCheckUserId(idValue);
 
   const { data: emailData, refetch: emailRefetch } = useCheckEmail(emailValue);
 
-  const { data:checkAuth, mutate:checkAuthNumMute } = useCheckAuthNum(
-    {
-      authNum : authNumValue,
-      email : emailValue 
-    }
-  );
+  const { data: checkAuth, mutate: checkAuthNumMute } = useCheckAuthNum({
+    authNum: authNumValue,
+    email: emailValue,
+  });
 
-  const { mutate:postAuthNumMute } = useRequestAuthNum({email : emailValue});
+  const { mutate: postAuthNumMute } = useRequestAuthNum({ email: emailValue });
 
-  const { data:signupData, mutate:singUpMute } = usePostSignUpData(signUpData);
-
+  const { data: signupData, mutate: singUpMute } =
+    usePostSignUpData(signUpData);
 
   const emailRex = /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi;
   const pwRex =
@@ -79,24 +78,26 @@ const SignUp = () => {
 
   const handleAuthClick = () => {
     setAuthInputView(true);
-    postAuthNumMute({email: emailValue});
+    postAuthNumMute({ email: emailValue });
   };
 
   const handleIdChange = (e: any) => {
     setIdValue(e.target.value);
     setIsCheckId(false);
-    if(e.target.value.length !== 0 
-      && (e.target.value.length < 5 || !idRex.test(e.target.value))){
-        setCheckId(false);
-      }else{
-        setCheckId(true);
-      }
+    if (
+      e.target.value.length !== 0 &&
+      (e.target.value.length < 5 || !idRex.test(e.target.value))
+    ) {
+      setCheckId(false);
+    } else {
+      setCheckId(true);
+    }
   };
 
   const handleEmailChange = (e: any) => {
-    if (isCheckEmail){
-      setAuthInputView(false)
-      setIsCheckEmail(false)
+    if (isCheckEmail) {
+      setAuthInputView(false);
+      setIsCheckEmail(false);
     }
     if (emailRex.test(e.target.value)) {
       setCheckEmail(true);
@@ -122,7 +123,7 @@ const SignUp = () => {
     if (e.keyCode === 13 && checkEmail) {
       // console.log(emailData);
       emailRefetch();
-      console.log(emailData)
+      console.log(emailData);
       setIsCheckEmail(true);
     }
   };
@@ -140,10 +141,10 @@ const SignUp = () => {
     if (e.target.value === pwValue) {
       setCheckRePw(true);
       setSignUpData({
-        id : idValue,
-        email : emailValue,
-        password : e.target.value
-      })
+        id: idValue,
+        email: emailValue,
+        password: e.target.value,
+      });
     } else {
       setCheckRePw(false);
     }
@@ -156,19 +157,16 @@ const SignUp = () => {
 
   const handleClickAuthNumBtn = () => {
     // 조건문 추가
-    checkAuthNumMute(
-      {authNum : authNumValue, email : emailValue }
-    );
+    checkAuthNumMute({ authNum: authNumValue, email: emailValue });
     console.log(checkAuth);
     setCheckAuthNum(true);
     setAuthInputView(false);
     setPwInputView(true);
   };
 
-
-  const handleClickSubmit = (e:any) => {
+  const handleClickSubmit = (e: any) => {
     e.preventDefault();
-    
+
     // console.log(idValue, emailValue, pwValue);
     singUpMute(signUpData);
     setModalView(true);
@@ -179,8 +177,8 @@ const SignUp = () => {
 
   return (
     <>
-      {modalView? <WelcomeModal name={idValue}/> : null}
-      
+      {modalView ? <WelcomeModal name={idValue} /> : null}
+
       <CertifyPageLayout>
         <div className="flex flex-col items-start justify-start w-full h-full">
           <div className="relative items-center justify-center w-fit h-7 ">
@@ -238,7 +236,10 @@ const SignUp = () => {
                 <div className="flex flex-row items-end justify-end w-full mt-1 text-[10px] md:text-[11px] text-mainOrange h-fit font-SCDream2">
                   사용가능한 ID입니다
                 </div>
-              ) : checkId && isCheckId && idData?.response && idValue.length !== 0 ? (
+              ) : checkId &&
+                isCheckId &&
+                idData?.response &&
+                idValue.length !== 0 ? (
                 <div className="flex flex-row items-end justify-end w-full mt-1 text-[10px] md:text-[11px] text-nagativeMessage h-fit font-SCDream2">
                   이미 사용중인 ID입니다
                 </div>
@@ -248,7 +249,7 @@ const SignUp = () => {
 
           <form className="w-full" onSubmit={handleEmailEnter}>
             <div className="flex flex-col w-full h-fit">
-              <div className="relative items-center justify-center w-fit h-7 mt-5">
+              <div className="relative items-center justify-center mt-5 w-fit h-7">
                 <label
                   htmlFor="email"
                   className="text-base text-gray-500 font-SCDream5"
@@ -272,9 +273,23 @@ const SignUp = () => {
                     onChange: handleEmailChange,
                   })}
                 />
-                {emailValue.length !== 0 && isCheckEmail && !checkAuthNum && emailData?.data ? (
+                {emailValue.length !== 0 &&
+                isCheckEmail &&
+                !checkAuthNum &&
+                emailData?.data ? (
                   <AuthBtn onClick={handleAuthClick}>인증요청</AuthBtn>
-                ) : emailValue.length !== 0 && isCheckEmail && checkAuthNum && emailData?.data ? <AuthBtn onClick={()=>{return 0}}>인증완료</AuthBtn> : null}
+                ) : emailValue.length !== 0 &&
+                  isCheckEmail &&
+                  checkAuthNum &&
+                  emailData?.data ? (
+                  <AuthBtn
+                    onClick={() => {
+                      return 0;
+                    }}
+                  >
+                    인증완료
+                  </AuthBtn>
+                ) : null}
                 {/* <AuthBtn>인증완료</AuthBtn> */}
               </div>
 
@@ -295,11 +310,17 @@ const SignUp = () => {
 
               {/* isSameEmail 상태 활용 */}
               {/* api완성 시 수정필요 */}
-              {emailValue.length !== 0 && emailData?.response && isCheckEmail && emailRex.test(emailValue) ? (
+              {emailValue.length !== 0 &&
+              emailData?.response &&
+              isCheckEmail &&
+              emailRex.test(emailValue) ? (
                 <div className="flex flex-row items-end justify-end w-full mt-1 text-[10px] md:text-[11px] text-nagativeMessage h-fit font-SCDream2">
                   이미 존재하는 Email입니다
                 </div>
-              ) : emailValue.length !== 0 && emailData?.data && isCheckEmail && emailRex.test(emailValue) ? (
+              ) : emailValue.length !== 0 &&
+                emailData?.data &&
+                isCheckEmail &&
+                emailRex.test(emailValue) ? (
                 <div className="flex flex-row items-end justify-end w-full mt-1 text-[10px] md:text-[11px] text-mainOrange h-fit font-SCDream2">
                   사용가능한 Email입니다! 인증요청 버튼을 클릭해주세요
                 </div>
@@ -330,11 +351,14 @@ const SignUp = () => {
               />
               <AuthBtn onClick={handleClickAuthNumBtn}>인증</AuthBtn>
             </EmailCheckNumberLayout>
-          ) : isCheckEmail && !authInputView && pwInputView && checkAuth?.data ? (
+          ) : isCheckEmail &&
+            !authInputView &&
+            pwInputView &&
+            checkAuth?.data ? (
             <form className="w-full" onSubmit={handleClickSubmit}>
               <div className="flex flex-col w-full h-fit">
                 <div className="flex flex-col w-full md:flex-row h-fit">
-                  <div className="relative items-center justify-center w-fit h-7 mt-5">
+                  <div className="relative items-center justify-center mt-5 w-fit h-7">
                     <label
                       htmlFor="password"
                       className="text-base text-gray-500 font-SCDream5"
@@ -381,7 +405,7 @@ const SignUp = () => {
               </div>
 
               <div className="flex flex-col w-full h-fit">
-                <div className="relative items-center justify-center w-fit h-7 mt-3">
+                <div className="relative items-center justify-center mt-3 w-fit h-7">
                   <label
                     htmlFor="checkpassword"
                     className="text-base text-gray-500 font-SCDream5"
@@ -422,10 +446,11 @@ const SignUp = () => {
                   </div>
                 ) : null}
               </div>
-              {isCheckId && isCheckEmail && checkPw && checkRePw ? <div className="flex flex-row items-center justify-end w-full h-fit mt-4">
-                <SubmitBtn onClick={()=> handleClickSubmit} />
-              </div> : null}
-              
+              {isCheckId && isCheckEmail && checkPw && checkRePw ? (
+                <div className="flex flex-row items-center justify-end w-full mt-4 h-fit">
+                  <SubmitBtn onClick={() => handleClickSubmit} />
+                </div>
+              ) : null}
             </form>
           ) : (
             <EmailCheckNumberLayout>

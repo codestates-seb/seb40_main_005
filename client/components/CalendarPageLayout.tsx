@@ -42,7 +42,7 @@ const CalendarPageLayout = () => {
 
   return (
     <>
-      <div className="flex flex-col-reverse h-full lg:flex-row bg-bgGray">
+      <div className="flex flex-col-reverse h-full pb-6 lg:flex-row bg-bgGray">
         <BoardContainer boardRef={boardModal}>
           <CreateModalLayout handleCloseClick={handleCloseBtnClick} />
         </BoardContainer>
