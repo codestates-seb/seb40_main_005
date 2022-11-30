@@ -13,7 +13,8 @@ const client = axios.create({
   headers: {
     withCredentials: true,
     Authorization: `Bearer ${accessToken}`,
-    "Content-Type": `application/json`,
+    // "Content-Type": `application/json`,
+   "Content-Type": "multipart/form-data"
   },
 });
 
