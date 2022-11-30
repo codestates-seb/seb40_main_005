@@ -19,21 +19,21 @@ public class BoardSearchResponse {
     private String title;
     private LocalDate createdPost;
     private String category;
-    private Map<String, TagStatus> tagsMember;
+    private boolean shared;
 
-    public static BoardSearchResponse from(Board board, Map<String, TagStatus> tagsMember) {
+    public static BoardSearchResponse from(Board board,boolean share) {
         Long boardId = board.getBoardId();
         String title = board.getTitle();
         LocalDate createdPost = board.getCreated();
         String category = board.getCategory().getCategoryTitle();
-        Map<String, TagStatus> tagMember = tagsMember;
+        boolean shared=share;
 
         return BoardSearchResponse.builder()
                 .boardId(boardId)
                 .title(title)
                 .createdPost(createdPost)
-                .tagsMember(tagMember)
                 .category(category)
+                .shared(shared)
                 .build();
     }
 }
