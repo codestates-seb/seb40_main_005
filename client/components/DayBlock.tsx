@@ -10,9 +10,16 @@ interface PropsValue {
   currYear: number;
   children: React.ReactNode;
   currDay: number;
+  hasBoard: boolean;
 }
 
-const DayBlock = ({ children, currMonth, currYear, currDay }: PropsValue) => {
+const DayBlock = ({
+  children,
+  currMonth,
+  currYear,
+  currDay,
+  hasBoard,
+}: PropsValue) => {
   const [isToay, setIsToday] = useState(false);
   const today = new Date();
   let month = getMonth(today) + 1;
@@ -62,7 +69,7 @@ const DayBlock = ({ children, currMonth, currYear, currDay }: PropsValue) => {
           >
             {children}
           </div>
-          <AddBtn onClick={handleBtnClick}/>
+          {hasBoard ? null : <AddBtn onClick={handleBtnClick} />}
         </div>
       </div>
     </>

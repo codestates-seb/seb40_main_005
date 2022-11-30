@@ -8,7 +8,12 @@ import BoardModalContainer from "./BoardModalContainer";
 import BoardModalBtn from "./BoardModalBtn";
 import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { selectDayState, selectMonthState, selectYearState, pickDayState } from "../recoil/calendarAtom";
+import {
+  selectDayState,
+  selectMonthState,
+  selectYearState,
+  pickDayState,
+} from "../recoil/calendarAtom";
 import usePostBoard from "../hooks/calendar/usePostBoard";
 
 interface Props {
@@ -27,7 +32,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   const [context, setContext] = useState<string>("");
   const [share, setShare] = useState<any>([]);
 
-  const changeDate = (e:any) => {
+  const changeDate = (e: any) => {
     setDate(e.target.value);
     console.log(date);
   };

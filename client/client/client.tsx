@@ -12,7 +12,7 @@ const client = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     withCredentials: true,
-    Authorization: `${accessToken}`,
+    Authorization: `Bearer ${accessToken}`,
     "Content-Type": `application/json`,
   },
 });
