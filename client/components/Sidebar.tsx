@@ -63,7 +63,7 @@ const Sidebar = () => {
                   data.isSelect ? " bg-btnOrange" : " bg-white "
                 }`}
               >
-                {/* <div className="flex w-4 h-4 rounded-full bg-btnOrange aspect-square"></div> */}
+              <div className="flex w-4 h-4 rounded-full bg-btnOrange aspect-square"></div>
               </div>
               ></div>
             </SidebarCategory>

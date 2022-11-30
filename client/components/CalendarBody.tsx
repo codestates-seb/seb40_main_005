@@ -107,9 +107,9 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
                 currYear={currYear}
                 currDay={startDate}
                 key={startDate}
+                post={el.title}
               >
                 {startDate}
-                <MyBoard post={el.title}></MyBoard>
               </DayBlock>,
             );
 
@@ -125,6 +125,7 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
               currYear={currYear}
               currDay={startDate}
               key={startDate}
+              post={null}
             >
               {startDate}
             </DayBlock>,
