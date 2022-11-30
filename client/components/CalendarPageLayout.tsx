@@ -10,7 +10,7 @@ import { modalOpenState, pickDayState } from "../recoil/calendarAtom";
 const CalendarPageLayout = () => {
   const boardModal = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useRecoilState(modalOpenState);
-  const [date, setDate] = useRecoilState(pickDayState);
+  // const [date, setDate] = useRecoilState(pickDayState);
 
   const handleOpenBtnClick = () => {
     const { current } = boardModal;
@@ -31,7 +31,7 @@ const CalendarPageLayout = () => {
         : (current.style.transform = "translateX(100%)");
     }
     setOpen(false);
-    setDate("");
+    // setDate("");
   };
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const CalendarPageLayout = () => {
 
   return (
     <>
-      <div className="flex flex-col-reverse h-full lg:flex-row bg-bgGray">
+      <div className="flex flex-col-reverse h-full pb-6 lg:flex-row bg-bgGray">
         <BoardContainer boardRef={boardModal}>
           <CreateModalLayout handleCloseClick={handleCloseBtnClick} />
         </BoardContainer>

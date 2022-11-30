@@ -9,28 +9,30 @@ import Link from "next/link";
 const CertifyPageLayout = (props: { children: React.ReactNode }) => {
   return (
     <>
-      <div className="flex flex-col justify-center md:justify-evenly lg:justify-center bg-bgGray items-center  h-screen">
+      <div className="flex flex-col items-center justify-center h-screen md:justify-evenly lg:justify-center bg-bgGray">
         <Link href="/">
-          <Image
-            className="cursor-pointer"
-            src="/images/logo export(orange).svg"
-            width={200}
-            height={50}
-          />
+          <a>
+            <Image
+              className="cursor-pointer"
+              src="/images/logo export(orange).svg"
+              width={200}
+              height={50}
+            />
+          </a>
         </Link>
         <div className="flex h-4/5 w-80 lg:mt-11 lg:mb-10 lg:h-[32rem] md:w-4/6 lg:w-3/5 drop-shadow-2xl">
           <div className="lg:w-1/2 hidden md:hidden lg:block h-full bg-gradient-to-t from-[#FE4C00] to-[#FF9264]">
-            <div className="flex justify-center	 items-center lg:h-full">
+            <div className="flex items-center justify-center lg:h-full">
               <div className="absolute top-0 bottom-0 left-0 right-0 w-1/2 h-full bg-white/60"></div>
 
               <img
-                className="flex  lg:h-4/6 "
+                className="flex lg:h-4/6 "
                 src="/images/시계누끼.png"
                 alt="시계 이미지"
               />
             </div>
           </div>
-          <div className="w-full p-8 lg:w-1/2  h-full bg-bgWhite">
+          <div className="w-full h-full p-8 lg:w-1/2 bg-bgWhite">
             {props.children}
           </div>
         </div>

@@ -12,19 +12,9 @@ const Calendar = () => {
   useEffect(() => {
     if (!loginState) {
       let res = window.confirm("로그인이 필요합니다 \n로그인 하시겠습니까?");
-      res ? router.push("/login") : router.push("/")
+      res ? router.push("/login") : router.push("/");
     }
-  },[]);
-
-  // if(loginState){
-  //   return (
-  //     <>
-  //       <CalendarPageLayout />
-  //     </>
-  //   )
-  // }else {
-  //   return router.push("/login")
-  // }
+  }, []);
 
   return (
     <>

@@ -1,4 +1,5 @@
 import { atom } from "recoil";
+import { useRecoilValue } from "recoil";
 
 const modalOpenState = atom({
   key: "modalOpenState",
