@@ -2,24 +2,22 @@ import { useEffect, useState } from "react";
 import { getDate, getMonth, getYear } from "date-fns";
 import AddBtn from "./AddBtn";
 import { useRecoilState } from "recoil";
-import { modalOpenState, selectDayState, selectMonthState, selectYearState, pickDayState } from "../recoil/calendarAtom";
-
+import {
+  modalOpenState,
+  selectDayState,
+  selectMonthState,
+  selectYearState,
+  pickDayState,
+} from "../recoil/calendarAtom";
 
 interface PropsValue {
   currMonth: number;
   currYear: number;
   children: React.ReactNode;
   currDay: number;
-  hasBoard: boolean;
 }
 
-const DayBlock = ({
-  children,
-  currMonth,
-  currYear,
-  currDay,
-  hasBoard,
-}: PropsValue) => {
+const DayBlock = ({ children, currMonth, currYear, currDay }: PropsValue) => {
   const [isToay, setIsToday] = useState(false);
   const today = new Date();
   let month = getMonth(today) + 1;
@@ -43,20 +41,7 @@ const DayBlock = ({
     setDayState(currDay.toString());
     setMonthState(currMonth.toString());
     setYearState(currYear.toString());
-    
-    let realMonth = currMonth.toString();
-    if(realMonth.length < 2){
-      realMonth = "0" + currMonth.toString()
-    }
-    let realDay = currDay.toString();
-    if(realDay.length < 2){
-      realDay = "0" + currDay.toString()
-    }
-
-    setDate(`${currYear.toString()}-${realMonth}-${realDay}`);
-
-    console.log('active');
-  }
+  };
 
   return (
     <>
@@ -69,7 +54,7 @@ const DayBlock = ({
           >
             {children}
           </div>
-          {hasBoard ? null : <AddBtn onClick={handleBtnClick} />}
+          <AddBtn onClick={handleBtnClick} />
         </div>
       </div>
     </>
