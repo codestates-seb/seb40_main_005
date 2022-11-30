@@ -35,6 +35,7 @@ const LoginForm = () => {
       .then(res => {
         if (res.token) {
           localStorage.setItem("token", res.token);
+          localStorage.setItem("memberId", res.memberId);
           setIsLogin(true);
           setFailedMsg("");
           router.push("/calendar");
