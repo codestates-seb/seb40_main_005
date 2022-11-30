@@ -21,6 +21,7 @@ interface Props {
 }
 
 const CreateModalLayout = ({ handleCloseClick }: Props) => {
+
   const [date, setDate] = useRecoilState(pickDayState);
   const [category, setCategory] = useState<string>("");
   const [title, setTitle] = useState<string>("");
@@ -82,15 +83,15 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
 
   const handleSubmit = () => {
     const submitData = {
-      category: category,
-      content: context,
-      created: date,
-      music: music,
-      photo: photo,
-      tags: share,
-      title: title,
-      url: youtubeLink,
-    };
+      category : category,
+      content : context,
+      created : date,
+      music : music,
+      photo : photo,
+      tags : share,
+      title : title,
+      url : youtubeLink
+    }
     submitMutate(submitData);
     // console.log(submitRes)
     alert("등록되었습니다");
@@ -125,7 +126,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
               </div>
               <input
                 type="date"
-                className="w-2/3 text-sm text-right text-gray-700 outline-none h-fit font-SCDream3 lg:text-sm"
+                className="w-2/3 h-fit font-SCDream3 text-right text-sm lg:text-sm text-gray-700 outline-none"
                 value={date}
                 // value={date}
                 onChange={changeDate}
