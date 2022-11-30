@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import SidebarCategory from "./SidebarCategory";
 import React, { useEffect, useState } from "react";
+import useGetCategory from "../hooks/calendar/useGetCategory";
 
 // import useGetCategoryTitie from "../hooks/user/useGetCategoryTitle";
 
@@ -13,6 +14,7 @@ interface CategoryType {
 
 const Sidebar = () => {
   const [categoryList, setCategoryList] = useState<Array<CategoryType>>([]);
+  const { data: category, refetch: categoryRefetch } = useGetCategory();
 
   // const { data: categoryTitie, refetch: categoryRefetch } =
   //   useGetCategoryTitie();
@@ -66,8 +68,8 @@ const Sidebar = () => {
         </div>
 
         <Link href="/commerce">
-          <div className="flex flex-row justify-center items-center w-fit h-fit cursor-pointer mt-10 lg:mt-0">
-            <span className="w-fit h-fit bg-mainOrange p-1 rounded-lg mr-1">
+          <div className="flex flex-row items-center justify-center mt-10 cursor-pointer w-fit h-fit lg:mt-0">
+            <span className="p-1 mr-1 rounded-lg w-fit h-fit bg-mainOrange">
               <BuildingStorefrontIcon className="w-4 h-4 text-white" />
             </span>
             <div className="relative items-center justify-center w-fit h-7 mt-1.5">
