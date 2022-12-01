@@ -57,15 +57,15 @@ server:
 cloud:
   aws:
     credentials:
-      accessKey: ${AWS_ACCESSKEY}
-      secretKey: ${AWS_SECRETKEY}
+      accessKey: AWS_ACCESSKEY
+      secretKey: AWS_SECRETKEY
     s3:
-      bucket: ${BUCKET_NAME}
+      bucket: BUCKET_NAME
       dir: /test
       mock:
         port: 3306
     region:
-      static: ${AWS_REGION}
+      static: AWS_REGION
     stack:
       auto: false
 logging:
