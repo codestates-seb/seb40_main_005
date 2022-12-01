@@ -26,4 +26,9 @@ const pickDayState = atom({
   default : ""
 })
 
-export {modalOpenState, selectYearState, selectMonthState, selectDayState, pickDayState};
+const readModalOpenState = atom({
+  key: "readModalOpenState",
+  default : false
+})
+
+export {modalOpenState, selectYearState, selectMonthState, selectDayState, pickDayState, readModalOpenState};

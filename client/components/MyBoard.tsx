@@ -1,12 +1,13 @@
 interface Props {
   post: string;
+  onClick : ()=>void;
 }
 
-const MyBoard = ({ post }: Props) => {
+const MyBoard = ({ post,onClick }: Props) => {
   return (
     <>
       <div
-        onClick={() => {}}
+        onClick={onClick}
         className="flex flex-row pt-2 ml-1 cursor-pointer"
       >
         <div className="w-5 h-2 md:w-6 md:h-[0.6rem] rounded-full lg:w-[0.18rem] lg:h-4 md:rounded-sm lg:rounded-none bg-coral"></div>

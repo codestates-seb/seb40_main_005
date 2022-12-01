@@ -16,11 +16,11 @@ const DayInput = ({ year, month, setMonth, setYear }: Props) => {
   };
 
   const handleYearChange = (e:any) => {
-    setYear(e.target.value);
+    setYear(Number(e.target.value));
   }
 
   const handleMonthChange = (e:any) => {
-    setMonth(e.target.value);
+    setMonth(Number(e.target.value));
   }
 
   const handlePressEnter = (e:any) => {

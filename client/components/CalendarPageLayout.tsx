@@ -5,11 +5,14 @@ import BoardContainer from "./BoardContainer";
 import { useEffect, useRef, useState } from "react";
 import CreateModalLayout from "./CreateModalLayout";
 import { useRecoilState } from "recoil";
-import { modalOpenState, pickDayState } from "../recoil/calendarAtom";
+import { modalOpenState, pickDayState, readModalOpenState } from "../recoil/calendarAtom";
+import ReadModalLayout from "./ReadModalLayout";
 
 const CalendarPageLayout = () => {
   const boardModal = useRef<HTMLDivElement>(null);
+  const CreateBoardModal = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useRecoilState(modalOpenState);
+  const [readOpen, setReadOpen]= useRecoilState(readModalOpenState);
   // const [date, setDate] = useRecoilState(pickDayState);
 
   const handleOpenBtnClick = () => {
@@ -34,17 +37,46 @@ const CalendarPageLayout = () => {
     // setDate("");
   };
 
+  const handleReadOpenBtnClick = () => {
+    const { current } = CreateBoardModal;
+
+    if (current?.style.transform !== undefined) {
+      window.innerWidth < 376
+        ? (current.style.transform = "translateY(0)")
+        : (current.style.transform = "translateX(0)");
+    }
+  };
+
+  const handleReadCloseBtnClick = () => {
+    const { current } = CreateBoardModal;
+
+    if (current?.style.transform !== undefined) {
+      window.innerWidth < 376
+        ? (current.style.transform = "translateY(100%)")
+        : (current.style.transform = "translateX(100%)");
+    }
+    setReadOpen(false);
+    // setDate("");
+  };
+
   useEffect(() => {
     if (open) {
       handleOpenBtnClick();
+    }else if (readOpen){
+      handleReadOpenBtnClick();
     }
-  }, [open]);
+    
+
+  }, [open, readOpen]);
 
   return (
     <>
       <div className="flex flex-col-reverse h-full pb-6 lg:flex-row bg-bgGray">
         <BoardContainer boardRef={boardModal}>
           <CreateModalLayout handleCloseClick={handleCloseBtnClick} />
+        </BoardContainer>
+        <BoardContainer boardRef={CreateBoardModal}>
+          <ReadModalLayout handleCloseClick={handleReadCloseBtnClick} />
         </BoardContainer>
         <Sidebar />
         <div className="w-full p-4 lg:pr-20">

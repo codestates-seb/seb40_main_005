@@ -8,6 +8,7 @@ import {
   selectMonthState,
   selectYearState,
   pickDayState,
+  readModalOpenState
 } from "../recoil/calendarAtom";
 import MyBoard from "./MyBoard";
 
@@ -18,6 +19,7 @@ interface PropsValue {
   currDay: number;
   hasBoard: boolean;
   post: string | null;
+  // boardId: number | null;
 }
 
 const DayBlock = ({
@@ -27,6 +29,7 @@ const DayBlock = ({
   currDay,
   hasBoard,
   post,
+  // boardId
 }: PropsValue) => {
   const [isToday, setIsToday] = useState(false);
   const today = new Date();
@@ -39,6 +42,7 @@ const DayBlock = ({
   const [monthState, setMonthState] = useRecoilState(selectMonthState);
   const [yearState, setYearState] = useRecoilState(selectYearState);
   const [date, setDate] = useRecoilState(pickDayState);
+  const [readOpen, setReadOpen]= useRecoilState(readModalOpenState);
 
   useEffect(() => {
     if (month === currMonth && year === currYear && children === day) {
@@ -68,6 +72,10 @@ const DayBlock = ({
     console.log("active");
   };
 
+  const handleBoardClick = () => {
+    setReadOpen(true);
+  }
+
   return (
     <>
       <div className="group w-[13%] h-16 md:h-18 lg:h-[6.3rem] pt-2 md:pt-3 lg:pt-0 text-textBlack font-SCDream5 text-xs md:text-sm lg:text-base">
@@ -81,7 +89,7 @@ const DayBlock = ({
           </div>
           {hasBoard ? null : <AddBtn onClick={handleBtnClick} />}
         </div>
-        {post !== null ? <MyBoard post={post}></MyBoard> : null}
+        {post !== null ? <MyBoard post={post} onClick={handleBoardClick}></MyBoard> : null}
       </div>
     </>
   );
