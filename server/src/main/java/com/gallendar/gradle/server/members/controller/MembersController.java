@@ -120,26 +120,4 @@ public class MembersController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body("successful");
     }
-
-    //Todo: 마이페이지 조회
-    @GetMapping("/mypage/{members-id}")
-    public String getMyPage(@PathVariable("members-id") String id) {
-        String response = "마에페이지 조회 ";
-        return response;
-    }
-
-    //Todo: 회원정보 수정
-    @PatchMapping("/user")
-    public String patchMember() {
-        String response = " 회원정보 수정";
-        return response;
-
-    }
-
-    //Todo: 회원정보 조회
-    @GetMapping("/user/(members-id}")
-    public String getMember(@PathVariable("members-id") String id) {
-        String response = "회원정보 조회";
-        return response;
-    }
 }
