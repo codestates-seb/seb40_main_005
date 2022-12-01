@@ -8,9 +8,11 @@ import {
   selectMonthState,
   selectYearState,
   pickDayState,
-  readModalOpenState
+  readModalOpenState,
+  boardItemState,
 } from "../recoil/calendarAtom";
 import MyBoard from "./MyBoard";
+import useGetBoardItem from "../hooks/calendar/useGetBoardItem";
 
 interface PropsValue {
   currMonth: number;
@@ -19,7 +21,7 @@ interface PropsValue {
   currDay: number;
   hasBoard: boolean;
   post: string | null;
-  // boardId: number | null;
+  boardId: number | null;
 }
 
 const DayBlock = ({
@@ -29,7 +31,7 @@ const DayBlock = ({
   currDay,
   hasBoard,
   post,
-  // boardId
+  boardId,
 }: PropsValue) => {
   const [isToday, setIsToday] = useState(false);
   const today = new Date();
@@ -42,13 +44,22 @@ const DayBlock = ({
   const [monthState, setMonthState] = useRecoilState(selectMonthState);
   const [yearState, setYearState] = useRecoilState(selectYearState);
   const [date, setDate] = useRecoilState(pickDayState);
-  const [readOpen, setReadOpen]= useRecoilState(readModalOpenState);
+  const [readOpen, setReadOpen] = useRecoilState(readModalOpenState);
+  const [boardItemValue, setBoardItemValue] = useRecoilState(boardItemState);
+
+  const { data: boardItem, refetch: boardItemRefetch } = useGetBoardItem({
+    boardId,
+  });
 
   useEffect(() => {
     if (month === currMonth && year === currYear && children === day) {
       setIsToday(true);
     } else setIsToday(false);
-  });
+
+    if (boardItem) {
+      setBoardItemValue(boardItem);
+    }
+  }, [boardItem]);
 
   const handleBtnClick = () => {
     setOpen(true);
@@ -72,7 +83,19 @@ const DayBlock = ({
 
   const handleBoardClick = () => {
     setReadOpen(true);
-  }
+    boardItemRefetch();
+
+    let realMonth = currMonth.toString();
+    if (realMonth.length < 2) {
+      realMonth = "0" + currMonth.toString();
+    }
+    let realDay = currDay.toString();
+    if (realDay.length < 2) {
+      realDay = "0" + currDay.toString();
+    }
+
+    setDate(`${currYear.toString()}-${realMonth}-${realDay}`);
+  };
 
   return (
     <>
@@ -87,7 +110,9 @@ const DayBlock = ({
           </div>
           {hasBoard ? null : <AddBtn onClick={handleBtnClick} />}
         </div>
-        {post !== null ? <MyBoard post={post} onClick={handleBoardClick}></MyBoard> : null}
+        {post !== null ? (
+          <MyBoard post={post} onClick={handleBoardClick}></MyBoard>
+        ) : null}
       </div>
     </>
   );

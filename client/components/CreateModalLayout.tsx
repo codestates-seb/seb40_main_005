@@ -17,7 +17,7 @@ import {
 import usePostBoard from "../hooks/calendar/usePostBoard";
 
 //yeowool
-import SelectBar from "./SelectBar";
+// import SelectBar from "./SelectBar";
 
 interface Props {
   handleCloseClick: () => void;
@@ -143,7 +143,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
                 </div>
                 <div className="absolute top-3.5 left-0.5 right-0 bottom-2  bg-mainOrange/40"></div>
               </div>
-              <SelectBar />
+              {/* <SelectBar /> */}
             </div>
             {/* <CategoryInputContainer>
               <div className="relative items-center justify-center mt-2 w-fit h-7">
