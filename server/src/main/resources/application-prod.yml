@@ -9,10 +9,10 @@ spring:
   autoconfigure:
     exclude: org.springframework.cloud.aws.autoconfigure.context.ContextStackAutoConfiguration
   datasource:
-    url: ${MYSQL_URL}
+    url: {MYSQL_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${MYSQL_USERNAME}
-    password: ${MYSQL_PASSWORD}
+    username: {MYSQL_USERNAME}
+    password: {MYSQL_PASSWORD}
   jpa:
     open-in-view: false
     generate-ddl: true
@@ -28,18 +28,18 @@ spring:
             enable: true
           auth: true
     host: smtp.gmail.com
-    username: ${MAIL_HOST}
-    password: ${MAIL_PASSWORD}
-    port: ${MAIL_PORT}
+    username: {MAIL_HOST}
+    password: {MAIL_PASSWORD}
+    port: {MAIL_PORT}
   redis:
-    host: ${REDIS_URL}
-    port: ${REDIS_PORT}
+    host: {REDIS_URL}
+    port: {REDIS_PORT}
 
   main:
     allow-circular-references: true
   jwt:
-    secret: ${JWT_SECRET}
-    jwtExpirationMs: ${JWT_EXPI}
+    secret: {JWT_SECRET}
+    jwtExpirationMs: {JWT_EXPI}
   mvc:
     path match:
       matching-strategy: ant_path_matcher
@@ -57,15 +57,15 @@ server:
 cloud:
   aws:
     credentials:
-      accessKey: ${AWS_ACCESSKEY}
-      secretKey: ${AWS_SECRETKEY}
+      accessKey: {AWS_ACCESSKEY}
+      secretKey: {AWS_SECRETKEY}
     s3:
-      bucket: ${BUCKET_NAME}
+      bucket: {BUCKET_NAME}
       dir: /test
       mock:
         port: 3306
     region:
-      static: ${AWS_REGION}
+      static: {AWS_REGION}
       auto: false
       use-default-aws-region-chain: true
     stack:
