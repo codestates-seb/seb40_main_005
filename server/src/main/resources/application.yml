@@ -6,10 +6,10 @@ spring:
   autoconfigure:
     exclude: org.springframework.cloud.aws.autoconfigure.context.ContextStackAutoConfiguration
   datasource:
-    url: ${MYSQL_URL}
+    url: jdbc:mysql://localhost:3306/gallendar?createDatabaseIfNotExist=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${MYSQL_USERNAME}
-    password: ${MYSQL_PASSWORD}
+    username: root
+    password: Tkatka55**
   jpa:
     open-in-view: false
     generate-ddl: true
@@ -25,18 +25,15 @@ spring:
             enable: true
           auth: true
     host: smtp.gmail.com
-    username: ${MAIL_HOST}
-    password: ${MAIL_PASSWORD}
-    port: ${MAIL_PORT}
-  redis:
-    host: ${REDIS_URL}
-    port: ${REDIS_PORT}
+    username: 5kamjas.gallender@gmail.com
+    password: iphzjygcvcgoxmsy
+    port: 587
 
   main:
     allow-circular-references: true
   jwt:
-    secret: ${jwt-secret}
-    jwtExpirationMs: ${jws-expi}
+    secret: 1234asd
+    jwtExpirationMs: 3600000
   mvc:
     path match:
       matching-strategy: ant_path_matcher
@@ -44,15 +41,16 @@ spring:
 cloud:
   aws:
     credentials:
-      accessKey: ${aws-accessKey}
-      secretKey: ${aws-secretKey}
+      accessKey: AKIA3EWIUSTJMY6KYUW2       # AWS IAM AccessKey 적기
+      secretKey: eETjkVO7A6j1N19OABOI2IGP9W3N6Q04NrmWW2cv    # AWS IAM SecretKey 적기
     s3:
-      bucket: ${bucket-name}
+      bucket: gallendar
+      #      bucket: test
       dir: /test
       mock:
         port: 3306
     region:
-      static: ${aws-region}
+      static: ap-northeast-2
     stack:
       auto: false
 logging:
@@ -65,3 +63,4 @@ logging:
       amazonaws:
         util:
           EC2MetaDataUtils: error
+
