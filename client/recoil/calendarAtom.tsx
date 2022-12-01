@@ -36,4 +36,9 @@ const readModalOpenState = atom({
   default : false
 })
 
-export {modalOpenState, selectYearState, selectMonthState, selectDayState, pickDayState, readModalOpenState};
+const boardItemState = atom<any>({
+  key: "boardItemState",
+  default : "123"
+})
+
+export {modalOpenState, selectYearState, selectMonthState, selectDayState, pickDayState, readModalOpenState, boardItemState};

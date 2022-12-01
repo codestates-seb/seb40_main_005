@@ -18,7 +18,7 @@ interface PropsValue {
 }
 
 interface Boards {
-  boardId: number;
+  boardId: number | null;
   title: string;
   createdPost: string[];
   category: string;
@@ -110,7 +110,7 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
                 currDay={startDate}
                 key={startDate}
                 post={el.title}
-                // boardId={el.boardId}
+                boardId={el.boardId}
               >
                 {startDate}
               </DayBlock>,
@@ -130,7 +130,7 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
               currDay={startDate}
               key={startDate}
               post={null}
-              // boardId={null}
+              boardId={null}
             >
               {startDate}
             </DayBlock>,
