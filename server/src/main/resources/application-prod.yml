@@ -48,15 +48,15 @@ spring:
 cloud:
   aws:
     credentials:
-      accessKey: ${aws-accessKey}
-      secretKey: ${aws-secretKey}
+      accessKey: ${AWS_ACCESSKEY}
+      secretKey: ${AWS_SECRETKEY}
     s3:
-      bucket: ${bucket-name}
+      bucket: ${BUCKET_NAME}
       dir: /test
       mock:
         port: 3306
     region:
-      static: ${aws-region}
+      static: ${AWS_REGION}
     stack:
       auto: false
 logging:
