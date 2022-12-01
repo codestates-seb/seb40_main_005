@@ -37,6 +37,6 @@ out/
 .vscode/
 
 ### Custom ###
-/src/main/resources/*.yml
+/src/main/resources/application-develop.yml
 /src/$buildDir/
 /src/main/resources/*.sh
