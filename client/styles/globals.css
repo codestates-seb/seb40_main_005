@@ -50,11 +50,18 @@
 .speech-bubble {
   position: relative;
   background: #fff;
-  border: 1px solid #000;
+  border: 2px solid #ffc0ac;
   border-radius: 10px;
-  width: 20rem;
+  width: 13.3rem;
   padding: 0.8rem;
 }
+
+@media screen and (min-width: 768px) {
+  .speech-bubble {
+    width: 17rem;
+  }
+}
+
 .speech-bubble:after,
 .speech-bubble:before {
   bottom: 100%;
@@ -70,12 +77,12 @@
 .speech-bubble:after {
   border-color: rgba(255, 255, 255, 0);
   border-bottom-color: #fff;
-  border-width: 12px;
-  margin-left: -12px;
+  border-width: 10px;
+  margin-left: -10px;
 }
 .speech-bubble:before {
   border-color: rgba(0, 0, 0, 0);
-  border-bottom-color: #000;
+  border-bottom-color: #ffc0ac;
   border-width: 13px;
   margin-left: -13px;
 }
