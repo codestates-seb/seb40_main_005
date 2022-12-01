@@ -1,7 +1,7 @@
 spring:
   profiles:
     active:
-      on-profile: ${profile}
+      on-profile: dev
   http:
     encoding:
       charset: UTF-8
