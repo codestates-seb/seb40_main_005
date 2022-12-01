@@ -1,106 +1,114 @@
-// import React, { Component } from "react";
-// import { CreatableSelect, OptionType, ValueType } from "@atlaskit/select";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// // import { categoryState } from "../recoil/calendarAtom";
+import React, { useState, useEffect } from "react";
+import useGetCategoryTitie from "../hooks/calendar/useGetCategory";
 
-// // import useGetCategoryTitie from "../hooks/calendar/useGetCategory";
+interface CategoryTitle {
+  categoryTitle: string;
+}
 
-// // const { data: categoryTitie, refetch: categoryRefetch } =
-// // useGetCategoryTitie();
+interface CategoryType {
+  setCategory: (category: string) => void;
+}
 
-// let data = [
-//   {
-//     label: "snow",
-//     value: "snow",
-//   },
-//   {
-//     label: "hello",
-//     value: "hello",
-//   },
-//   {
-//     label: "루피",
-//     value: "루피",
-//   },
-//   {
-//     label: "잔망루피",
-//     value: "잔망루피",
-//   },
-// ];
+const SelectBar = ({ setCategory }: CategoryType) => {
+  const [custom, setCustom] = useState<boolean>(false);
+  const [select, isSelect] = useState<string>("");
+  const [categoryList, setCategoryList] = useState<Array<CategoryTitle>>([]);
 
-// const defaultOptions = data;
+  const { data: categoryTitie, refetch: categoryRefetch } =
+    useGetCategoryTitie();
+  const getCtategoryClick = () => {
+    categoryRefetch();
+    if (categoryTitie !== undefined) {
+      const category = categoryTitie.data;
+      console.log(category);
+      setCategoryList(category);
+    }
+  };
+  // useEffect(() => {
+  //   categoryRefetch();
+  //   if (categoryTitie !== undefined) {
+  //     // console.log(categoryTitie.data);
+  //     const category = categoryTitie.data;
+  //     console.log(category);
+  //     setCategoryList(category);
+  //   }
+  // }, []);
+  // console.log(categoryTitie);
+  // event: React.ChangeEvent<HTMLSelectElement>
+  const selectChange = (event: any) => {
+    const value = event.target.value;
+    if (select) {
+      isSelect("");
+      setCategory(value);
+    } else if (!select) {
+      setCategory(value);
+    }
+    // isSelect(value);
+    // console.log(value);
+    // category(value);
+    console.log(select);
+  };
 
-// const createOption = (label: string) => ({
-//   label,
-//   value: label.toLowerCase().replace(/\W/g, ""),
-// });
+  const selectedControl = (e: any) => {
+    if (!custom) {
+      setCustom(true);
+    } else if (custom) {
+      setCustom(false);
+    }
+  };
+  const pressEnter = (e: any) => {
+    if (e.keyCode == 13) {
+      const value = e.target.value;
+      setCategory(value);
+      // isSelect(value);
+      // category(value);
+      console.log(select);
+    }
+  };
 
-// interface State {
-//   isLoading: boolean;
-//   options: Array<{ label: string; value: string }>;
-//   value?: ValueType<OptionType>;
-// }
+  return (
+    <>
+      {custom ? (
+        <div className="flex flex-row justify-end text-sm SCDream3">
+          <input
+            type="text"
+            id="change"
+            className=" w-4/6 lg:w-[9rem] "
+            placeholder="입력 후 Enter"
+            onKeyDown={pressEnter}
+          ></input>
+          <button
+            onClick={selectedControl}
+            className="h-6 bg-btnOrange hover:bg-lightOrange text-white font-bold py-0.5 px-4 rounded-md"
+          >
+            선택
+          </button>
+        </div>
+      ) : (
+        <div className="flex flex-row justify-end text-sm SCDream3">
+          <select
+            id="select-box"
+            onClick={getCtategoryClick}
+            onChange={selectChange}
+            className=""
+          >
+            <option>개인 카테고리</option>
+            {categoryList.map(option => (
+              <option key={option.categoryTitle} value={option.categoryTitle}>
+                {option.categoryTitle}
+              </option>
+            ))}
+          </select>
+          <button
+            className="h-6 bg-btnOrange hover:bg-lightOrange text-white font-bold py-0.5 px-4 rounded-md"
+            onClick={selectedControl}
+          >
+            직접입력
+          </button>
+        </div>
+      )}
+    </>
+  );
+};
 
-// // const [newCategory, setNewCategory] = useRecoilState(categoryState);
-// export default class CreatableAdvanced extends Component<{}, State> {
-//   state: State = {
-//     isLoading: false,
-//     options: defaultOptions,
-//     value: undefined,
-//   };
-
-//   handleChange = (newValue: any, actionMeta: any) => {
-//     // console.group("Value Changed");
-//     console.log(newValue);
-//     // setNewCategory(newValue.target);
-//     console.log(`action: ${actionMeta.action}`);
-//     // console.groupEnd();
-//     this.setState({ value: newValue });
-//   };
-
-//   handleCreate = (inputValue: any) => {
-//     // We do not assume how users would like to add newly created options to the existing options list.
-//     // Instead we pass users through the new value in the onCreate prop
-//     this.setState({ isLoading: true });
-//     // console.group("Option created");
-//     // console.log("Wait a moment...");
-//     const { options } = this.state;
-//     const newOption = createOption(inputValue);
-//     // console.log(newOption);
-//     // console.groupEnd();
-//     this.setState({
-//       isLoading: false,
-//       options: [...options, newOption],
-//       value: newOption,
-//     });
-//   };
-
-//   render() {
-//     const { isLoading, options, value } = this.state;
-//     console.log(value);
-//     return (
-//       <>
-//         <label htmlFor="createable-select-example"></label>
-//         <CreatableSelect
-//           className="z-50 w-4/6 text-sm text-right text-gray-700 outline-none bg-none hover:bg-noen h-fit font-SCDream3 lg:text-sm rounded-xl"
-//           inputId="createable-select-example"
-//           isClearable
-//           isDisabled={isLoading}
-//           isLoading={isLoading}
-//           onChange={this.handleChange}
-//           onCreateOption={this.handleCreate}
-//           options={options}
-//           value={value}
-//           theme={theme => ({
-//             ...theme,
-//             borderRadius: 0,
-//             colors: {
-//               ...theme.colors,
-//               primary25: "dangerLight",
-//               primary: "black",
-//             },
-//           })}
-//         />
-//       </>
-//     );
-//   }
-// }
+export default SelectBar;
