@@ -59,16 +59,6 @@ public class AuthenticationController {
         return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
     }
 
-
-    //Todo: 유저 확인 ( 비밀번호 변경전 , 유저가 맞는지 확인한다 )
-    @GetMapping("/user")
-    public String userAuthentication(@RequestParam String id,
-                                     @RequestParam String password) {
-        String response = "비밀번호 변경전 이루어지는 유저확인";
-        return response;
-    }
-
-
     /**
      * 인증번호 발송
      *
@@ -100,42 +90,4 @@ public class AuthenticationController {
 
 
     }
-
-    //Todo: 비밀번호 변경
-    @PatchMapping("/password")
-    public String patchUserPassword(@RequestBody String password,
-                                    @RequestBody String checkPassword) {
-        String response = "비밀번호 변경";
-        return response;
-    }
-
-    //Todo: 회원탈퇴
-    @DeleteMapping("/{member-id}")
-    public String deleteUser(@PathVariable(value = "member-id") String id) {
-        String response = "회원탈퇴";
-        return response;
-    }
-
-    //Todo: 마이페이지 조회
-    @GetMapping("/mypage/{member-id}")
-    public String getMyPage() {
-        String response = "마이페이지 조회";
-        return response;
-    }
-
-    //Todo: 회원정보 조회
-    @GetMapping("/user/{member-id}")
-    public String getUserInformation(@PathVariable("member-id") String id) {
-        String response = "회원정보 조회";
-        return response;
-    }
-
-    //Todo: 회원정보 수정
-    @PatchMapping("/user")
-    public String patchUserInformation() {
-        String response = "회원정보 수정";
-        return response;
-    }
-
-
 }
