@@ -41,10 +41,16 @@ spring:
     path match:
       matching-strategy: ant_path_matcher
   http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
     multipart:
       maxFileSize: 10MB
       maxRequestSize: 10MB
-
+server:
+  tomcat:
+    uri-encoding: UTF-8
 cloud:
   aws:
     credentials:
