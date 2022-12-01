@@ -120,3 +120,11 @@ configurations {
     }
     querydsl.extendsFrom compileClasspath
 }
+
+/**
+ * comileQuerydsl.doFirst 추가
+ */
+compileQuerydsl.doFirst {
+    if(file(querydslDir).exists() )
+        delete(file(querydslDir))
+}
