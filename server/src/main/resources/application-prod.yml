@@ -60,7 +60,7 @@ cloud:
       accessKey: ${AWS_ACCESSKEY}
       secretKey: ${AWS_SECRETKEY}
     s3:
-      bucket: BUCKET_NAME
+      bucket: ${BUCKET_NAME}
       dir: /test
       mock:
         port: 3306
