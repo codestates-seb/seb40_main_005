@@ -1,8 +1,12 @@
+import NoticeLayout from "../components/NoticeLayout";
+
 const MyPage = () => {
-    return (
-        <>
-        </>
-    )
-}
+  return (
+    <>
+      <div>알림</div>
+      <NoticeLayout />
+    </>
+  );
+};
 
 export default MyPage;
