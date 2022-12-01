@@ -67,7 +67,7 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
   }, [currMonth]);
 
   const boardList = boardsData?.data;
-  // console.log(boardList);
+  console.log(boardList);
 
   while (monthStart <= monthEnd) {
     //해당 달의 일 수만큼 반복

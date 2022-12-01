@@ -50,8 +50,6 @@ const DayBlock = ({
     } else setIsToday(false);
   });
 
-  console.log(month, year, day, children, isToday);
-
   const handleBtnClick = () => {
     setOpen(true);
     setDayState(currDay.toString());
