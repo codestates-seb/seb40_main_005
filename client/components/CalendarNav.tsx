@@ -1,18 +1,32 @@
 import Link from "next/link";
+import { useState } from "react";
+import ShareNoticeContainer from "../components/ShareNoticeContainer";
 
 const CalendarNav = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleNotice = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <>
       <nav className="flex justify-between w-full py-3 space-x-2 lg:py-5 md:justify-evenly lg:justify-end lg:space-x-12 font-SCDream4 text-textGray">
         <div className="relative">
-          <Link href={"/myPage"}>마이페이지</Link>
+          <Link href={"/mypage"}>마이페이지</Link>
           <div className="absolute w-[4.8rem] h-2 top-[0.8rem] md:top-3 lg:w-18 lg:top-[0.8rem] bg-mainOrange/40"></div>
         </div>
         <div className="relative">
           {/* 알림 스타일 */}
+          <div className="absolute left-[-7.3rem] md:left-[-10rem] z-10 top-10">
+            {isOpen ? null : <ShareNoticeContainer />}
+          </div>
+
           <div className="absolute w-2 h-2 rounded-full top-[-4px] left-[3.8rem] bg-noticeRed"></div>
 
-          <button type="button">공유알림</button>
+          <button onClick={handleNotice} type="button">
+            공유알림
+          </button>
           <div className="absolute w-[3.9rem] h-2 top-[0.8rem] md:top-3 lg:w-18 lg:top-[0.8rem] bg-mainOrange/40"></div>
         </div>
         <div className="relative">

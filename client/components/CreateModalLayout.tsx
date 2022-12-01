@@ -17,7 +17,7 @@ import {
 import usePostBoard from "../hooks/calendar/usePostBoard";
 
 //yeowool
-import SelectBar from "./SelectBar";
+// import SelectBar from "./SelectBar";
 
 interface Props {
   handleCloseClick: () => void;
@@ -128,7 +128,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
               </div>
               <input
                 type="date"
-                className="w-2/3 h-fit font-SCDream3 text-right text-sm lg:text-sm text-gray-700 outline-none"
+                className="w-2/3 text-sm text-right text-gray-700 outline-none h-fit font-SCDream3 lg:text-sm"
                 value={date}
                 // value={date}
                 onChange={changeDate}
