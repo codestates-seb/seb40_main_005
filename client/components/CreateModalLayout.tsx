@@ -16,12 +16,14 @@ import {
 } from "../recoil/calendarAtom";
 import usePostBoard from "../hooks/calendar/usePostBoard";
 
+//yeowool
+import SelectBar from "./SelectBar";
+
 interface Props {
   handleCloseClick: () => void;
 }
 
 const CreateModalLayout = ({ handleCloseClick }: Props) => {
-
   const [date, setDate] = useRecoilState(pickDayState);
   const [category, setCategory] = useState<string>("");
   const [title, setTitle] = useState<string>("");
@@ -83,15 +85,15 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
 
   const handleSubmit = () => {
     const submitData = {
-      category : category,
-      content : context,
-      created : date,
-      music : music,
-      photo : photo,
-      tags : share,
-      title : title,
-      url : youtubeLink
-    }
+      category: category,
+      content: context,
+      created: date,
+      music: music,
+      photo: photo,
+      tags: share,
+      title: title,
+      url: youtubeLink,
+    };
     submitMutate(submitData);
     // console.log(submitRes)
     alert("등록되었습니다");
@@ -133,7 +135,17 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
               />
             </CategoryInputContainer>
 
-            <CategoryInputContainer>
+            {/* yeowool */}
+            <div className="flex flex-row justify-between px-4 items-center w-full md:w-3/4 h-8 drop-shadow-md rounded-xl mb-3">
+              <div className="relative items-center justify-center mt-2 w-fit h-7">
+                <div className="z-10 ml-0.5 text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5">
+                  카테고리
+                </div>
+                <div className="absolute top-3.5 left-0.5 right-0 bottom-2  bg-mainOrange/40"></div>
+              </div>
+              <SelectBar />
+            </div>
+            {/* <CategoryInputContainer>
               <div className="relative items-center justify-center mt-2 w-fit h-7">
                 <div className="z-10 ml-0.5 text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5">
                   카테고리
@@ -147,7 +159,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
                 placeholder="예) 크리스마스"
                 className="w-2/3 text-sm text-right text-gray-700 outline-none h-fit font-SCDream3 lg:text-sm"
               />
-            </CategoryInputContainer>
+            </CategoryInputContainer> */}
 
             <CategoryInputContainer>
               <div className="relative items-center justify-center mt-2 w-fit h-7">
