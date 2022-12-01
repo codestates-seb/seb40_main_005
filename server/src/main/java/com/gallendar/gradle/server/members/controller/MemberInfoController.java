@@ -21,4 +21,9 @@ public class MemberInfoController {
         log.info("마이페이지 조회 요청");
         return memberInfoService.myInfoGetById(token);
     }
+    @GetMapping("/tag")
+    public void getMySharedStatusById(@RequestHeader(value = JwtRequestFilter.HEADER_KEY) String token){
+        log.info("태그 로그 조회 요청");
+
+    }
 }
