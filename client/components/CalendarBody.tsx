@@ -18,10 +18,11 @@ interface PropsValue {
 }
 
 interface Boards {
-  boardId: number;
+  boardId: number | null;
   title: string;
   createdPost: string[];
   category: string;
+  shared: boolean;
 }
 
 const GetDayOfWeek = () => {
@@ -102,13 +103,14 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
           ) {
             days.push(
               <DayBlock
+                shared={el.shared}
                 hasBoard={true}
                 currMonth={currMonth}
                 currYear={currYear}
                 currDay={startDate}
                 key={startDate}
                 post={el.title}
-                // boardId={el.boardId}
+                boardId={el.boardId}
               >
                 {startDate}
               </DayBlock>,
@@ -121,13 +123,14 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
         if (!hasPost) {
           days.push(
             <DayBlock
+              shared={null}
               hasBoard={false}
               currMonth={currMonth}
               currYear={currYear}
               currDay={startDate}
               key={startDate}
               post={null}
-              // boardId={null}
+              boardId={null}
             >
               {startDate}
             </DayBlock>,

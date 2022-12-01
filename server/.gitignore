@@ -38,5 +38,6 @@ out/
 
 ### Custom ###
 /src/main/resources/application-develop.yml
+
 /src/$buildDir/
 /src/main/resources/*.sh

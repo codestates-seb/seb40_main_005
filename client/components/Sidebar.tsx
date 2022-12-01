@@ -30,6 +30,7 @@ const Sidebar = () => {
       setCategoryList(newCtg);
     }
   }, []);
+  console.log(categoryTitie);
 
   const handleTagClick = (categoryTitle: string) => {
     const newCtg = categoryList.map(data =>
