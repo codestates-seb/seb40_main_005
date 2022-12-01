@@ -22,6 +22,7 @@ interface Boards {
   title: string;
   createdPost: string[];
   category: string;
+  shared: boolean;
 }
 
 const GetDayOfWeek = () => {
@@ -102,6 +103,7 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
           ) {
             days.push(
               <DayBlock
+                shared={el.shared}
                 hasBoard={true}
                 currMonth={currMonth}
                 currYear={currYear}
@@ -121,6 +123,7 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
         if (!hasPost) {
           days.push(
             <DayBlock
+              shared={null}
               hasBoard={false}
               currMonth={currMonth}
               currYear={currYear}

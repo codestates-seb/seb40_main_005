@@ -1,5 +1,4 @@
 package com.gallendar.gradle.server.category.dto;
-
 import com.gallendar.gradle.server.category.domain.Category;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,16 +7,13 @@ import lombok.Getter;
 @Builder
 public class CategoryListResponseDto {
 
-    private String label;
-    private String value;
+    private String categoryTitle;
 
 
     public static CategoryListResponseDto from(String categoryTitle) {
 
         return CategoryListResponseDto.builder()
-                .label(categoryTitle)
-                .value(categoryTitle)
+                .categoryTitle(categoryTitle)
                 .build();
     }
 }
-

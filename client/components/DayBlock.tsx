@@ -11,8 +11,9 @@ import {
   readModalOpenState,
   boardItemState,
 } from "../recoil/calendarAtom";
-import MyBoard from "./MyBoard";
 import useGetBoardItem from "../hooks/calendar/useGetBoardItem";
+import MyBoard from "./MyBoard";
+import SharedBoard from "./SharedBoard";
 
 interface PropsValue {
   currMonth: number;
@@ -22,6 +23,7 @@ interface PropsValue {
   hasBoard: boolean;
   post: string | null;
   boardId: number | null;
+  shared: boolean | null;
 }
 
 const DayBlock = ({
@@ -32,7 +34,9 @@ const DayBlock = ({
   hasBoard,
   post,
   boardId,
-}: PropsValue) => {
+  shared,
+}:
+PropsValue) => {
   const [isToday, setIsToday] = useState(false);
   const today = new Date();
   let month = getMonth(today) + 1;
@@ -110,9 +114,11 @@ const DayBlock = ({
           </div>
           {hasBoard ? null : <AddBtn onClick={handleBtnClick} />}
         </div>
-        {post !== null ? (
-          <MyBoard post={post} onClick={handleBoardClick}></MyBoard>
-        ) : null}
+        {post === null ? null : shared ? (
+          <SharedBoard post={post} onClick={handleBoardClick} />
+        ) : (
+          <MyBoard post={post} onClick={handleBoardClick} />
+        )}
       </div>
     </>
   );

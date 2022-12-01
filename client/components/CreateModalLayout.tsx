@@ -128,7 +128,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
               </div>
               <input
                 type="date"
-                className="w-2/3 h-fit font-SCDream3 text-right text-sm lg:text-sm text-gray-700 outline-none"
+                className="w-2/3 text-sm text-right text-gray-700 outline-none h-fit font-SCDream3 lg:text-sm"
                 value={date}
                 // value={date}
                 onChange={changeDate}
@@ -136,30 +136,23 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
             </CategoryInputContainer>
 
             {/* yeowool */}
-            <div className="flex flex-row justify-between px-4 items-center w-full md:w-3/4 h-8 drop-shadow-md rounded-xl mb-3">
-              <div className="relative items-center justify-center mt-2 w-fit h-7">
+
+            <CategoryInputContainer>
+              <div className="relative items-center justify-center mt-2 w-[3.5rem] h-7">
                 <div className="z-10 ml-0.5 text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5">
                   카테고리
                 </div>
                 <div className="absolute top-3.5 left-0.5 right-0 bottom-2  bg-mainOrange/40"></div>
               </div>
-              {/* <SelectBar /> */}
-            </div>
-            {/* <CategoryInputContainer>
-              <div className="relative items-center justify-center mt-2 w-fit h-7">
-                <div className="z-10 ml-0.5 text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5">
-                  카테고리
-                </div>
-                <div className="absolute top-3.5 left-0.5 right-0 bottom-2  bg-mainOrange/40"></div>
-              </div>
-              <input
+              <SelectBar setCategory={changeCategory} />
+              {/* <input
                 type="text"
                 value={category}
                 onChange={changeCategory}
                 placeholder="예) 크리스마스"
                 className="w-2/3 text-sm text-right text-gray-700 outline-none h-fit font-SCDream3 lg:text-sm"
-              />
-            </CategoryInputContainer> */}
+              /> */}
+            </CategoryInputContainer>
 
             <CategoryInputContainer>
               <div className="relative items-center justify-center mt-2 w-fit h-7">
