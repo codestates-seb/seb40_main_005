@@ -31,11 +31,9 @@ const categoryState = atom({
   default: "",
 });
 
-export {
-  modalOpenState,
-  selectYearState,
-  selectMonthState,
-  selectDayState,
-  pickDayState,
-  categoryState,
-};
+const readModalOpenState = atom({
+  key: "readModalOpenState",
+  default : false
+})
+
+export {modalOpenState, selectYearState, selectMonthState, selectDayState, pickDayState, readModalOpenState};

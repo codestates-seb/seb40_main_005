@@ -5,7 +5,7 @@ interface Props {
 const BoardModalContainer = ({children}:Props) => {
   return (
     <>
-      <div className="flex flex-col justify-center items-center w-full h-fit bg-bgWhite drop-shadow-md rounded-xl p-2">
+      <div className="mb-2 flex flex-col justify-center items-center w-full h-fit bg-bgWhite drop-shadow-md rounded-xl p-2">
         {children}
       </div>
     </>
