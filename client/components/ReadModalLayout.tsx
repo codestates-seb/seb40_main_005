@@ -5,33 +5,88 @@ import CategoryReadContainer from "./CategoryReadContainer";
 import BoardModalContainer from "./BoardModalContainer";
 import Link from "next/link";
 import HeadPhone from "./HeadPhone";
-import { boardItemState, pickDayState } from "../recoil/calendarAtom";
+import {
+  boardItemState,
+  pickDayState,
+  boardSharedState,
+  editModeState
+} from "../recoil/calendarAtom";
 import { useRecoilState } from "recoil";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import OptionModal from "./OptionModal";
+import CrossIcon from "./CrossIcon";
+import useDeleteBoard from "../hooks/calendar/useDeleteBoard";
+import Router, { useRouter } from "next/router";
 
 interface Props {
-  handleCloseClick: () => void;
+  handleReadCloseClick: () => void;
+  handleOpenBtnClick: () => void;
 }
 
-const ReadModalLayout = ({ handleCloseClick }: Props) => {
+const ReadModalLayout = ({ handleReadCloseClick, handleOpenBtnClick }: Props) => {
   const [boardData, setBoardData] = useRecoilState(boardItemState);
   const [date, setDate] = useRecoilState(pickDayState);
+  const [optionView, setOptionView] = useState<boolean>(false);
+  const [shared, setShared] = useRecoilState(boardSharedState);
+  const [editMode, setEditMode] = useRecoilState(editModeState);
 
   // useEffect(()=> {
   //     console.log(boardData);
   //   },[boardData])
   // console.log(date);
   let splitDate = date.split("-");
-  console.log(boardData);
+  // console.log(boardData);
+
+  let boardId: number | null = null;
+
+  if (boardData.data) {
+    boardId = boardData.data[0].boardId;
+  }
+
+  // console.log(boardId);
+
+  const { mutate: deleteMute } = useDeleteBoard({ boardId });
+
+  const handleOptionClick = () => {
+    setOptionView(true);
+  };
+
+  const handleCloseOptionClick = () => {
+    setOptionView(false);
+  };
+
+  const handleDelete = () => {
+    let res = window.confirm("게시글을 삭제하시겠습니까?");
+    if (res) {
+      deleteMute({ boardId });
+      handleReadCloseClick();
+      // Router.push("/calendar");
+      window.location.reload();
+    }
+  };
+
+  const handleUpdate = () => {
+    let res = window.confirm("게시글을 수정하시겠습니까?");
+    if (res) {
+      handleReadCloseClick();
+      handleOpenBtnClick();
+      setOptionView(false);
+      setEditMode(true);
+    }
+  }
+
+  const handleCancelBtn = () => {
+    handleReadCloseClick();
+    setOptionView(false);
+  }
 
   return (
     <>
-      <div className="flex flex-col items-center justify-start w-full h-full p-5 overflow-auto">
+      <div className="flex flex-col items-center justify-between w-full h-full p-5 overflow-auto">
         <div className="flex flex-row items-center justify-around w-full h-fit">
           <div className="w-1/4 h-full flex flex-col justify-between items-start">
-            <LeftArrow onClick={handleCloseClick} />
+            <LeftArrow onClick={handleCancelBtn} />
             <div className="flex flex-row w-fit h-fit justify-center items-center pb-3">
               <MapIcon />
               <div className="ml-0.5  text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5">
@@ -40,7 +95,41 @@ const ReadModalLayout = ({ handleCloseClick }: Props) => {
             </div>
           </div>
           <div className="flex flex-col items-end justify-center w-3/4 h-full">
-            <OptionBtn onClick={() => {}} />
+            <OptionBtn onClick={handleOptionClick} />
+            {optionView ? (
+              <div className="relative w-full h-fit">
+                {shared ? (
+                  <OptionModal>
+                    <div className="flex flex-col justify-center items-end mb-3">
+                      <CrossIcon onClick={handleCloseOptionClick} />
+                    </div>
+                    <div
+                      className="ml-0.5 mt-3 text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5 cursor-pointer"
+                      onClick={handleDelete}
+                    >
+                      삭제하기
+                    </div>
+                  </OptionModal>
+                ) : (
+                  <OptionModal>
+                    <div className="flex flex-col justify-center items-end mb-3">
+                      <CrossIcon onClick={handleCloseOptionClick} />
+                    </div>
+                    <div className="ml-0.5  text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5 cursor-pointer"
+                      onClick={handleUpdate}
+                    >
+                      수정하기
+                    </div>
+                    <div
+                      className="ml-0.5 mt-3 text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5 cursor-pointer"
+                      onClick={handleDelete}
+                    >
+                      삭제하기
+                    </div>
+                  </OptionModal>
+                )}
+              </div>
+            ) : null}
 
             <CategoryReadContainer>
               <div className="z-10 ml-0.5 text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5">

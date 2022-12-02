@@ -41,6 +41,16 @@ const categorySelectState = atom({
   default: false,
 });
 
+const boardSharedState = atom<boolean | null>({
+  key: "boardSharedState",
+  default: false,
+});
+
+const editModeState = atom<boolean>({
+  key: "editModeState",
+  default : false
+})
+
 export {
   modalOpenState,
   selectYearState,
@@ -50,4 +60,6 @@ export {
   readModalOpenState,
   boardItemState,
   categorySelectState,
+  boardSharedState,
+  editModeState
 };

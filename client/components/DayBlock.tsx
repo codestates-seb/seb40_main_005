@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { getDate, getMonth, getYear } from "date-fns";
 import AddBtn from "./AddBtn";
 import { useRecoilState } from "recoil";
@@ -10,20 +10,19 @@ import {
   pickDayState,
   readModalOpenState,
   boardItemState,
+  boardSharedState
 } from "../recoil/calendarAtom";
 import useGetBoardItem from "../hooks/calendar/useGetBoardItem";
 import MyBoard from "./MyBoard";
 import SharedBoard from "./SharedBoard";
+import postSignUp from "../apis/user/postSignUp";
 
 interface PropsValue {
   currMonth: number;
   currYear: number;
   children: React.ReactNode;
   currDay: number;
-  hasBoard: boolean;
-  post: string | null;
-  boardId: number | null;
-  shared: boolean | null;
+  boards: any[] | null;
 }
 
 const DayBlock = ({
@@ -31,12 +30,8 @@ const DayBlock = ({
   currMonth,
   currYear,
   currDay,
-  hasBoard,
-  post,
-  boardId,
-  shared,
-}:
-PropsValue) => {
+  boards,
+}: PropsValue) => {
   const [isToday, setIsToday] = useState(false);
   const today = new Date();
   let month = getMonth(today) + 1;
@@ -50,10 +45,15 @@ PropsValue) => {
   const [date, setDate] = useRecoilState(pickDayState);
   const [readOpen, setReadOpen] = useRecoilState(readModalOpenState);
   const [boardItemValue, setBoardItemValue] = useRecoilState(boardItemState);
+  const [shareValue, setShareValue] = useRecoilState(boardSharedState);
+
+  const [boardId, setBoardId] = useState<number | null>(null);
 
   const { data: boardItem, refetch: boardItemRefetch } = useGetBoardItem({
     boardId,
   });
+
+  let hasMyPost = false;
 
   useEffect(() => {
     if (month === currMonth && year === currYear && children === day) {
@@ -63,7 +63,11 @@ PropsValue) => {
     if (boardItem) {
       setBoardItemValue(boardItem);
     }
-  }, [boardItem]);
+
+    if (boardId) {
+      boardItemRefetch();
+    }
+  }, [boardItem, boardId]);
 
   const handleBtnClick = () => {
     setOpen(true);
@@ -85,9 +89,9 @@ PropsValue) => {
     console.log("active");
   };
 
-  const handleBoardClick = () => {
+  const handleBoardClick = (boardId: number, shared: number) => {
     setReadOpen(true);
-    boardItemRefetch();
+    setBoardId(boardId);
 
     let realMonth = currMonth.toString();
     if (realMonth.length < 2) {
@@ -99,8 +103,36 @@ PropsValue) => {
     }
 
     setDate(`${currYear.toString()}-${realMonth}-${realDay}`);
+    setShareValue(shared)
   };
 
+  const renderPosts = () => {
+    let day: ReactElement[] = [];
+
+    boards?.map(post => {
+      if (post.shared) {
+        day.push(
+          <SharedBoard
+            key={post.boardId}
+            post={post.title}
+            onClick={() => handleBoardClick(post.boardId, post.shared)}
+          />,
+        );
+      } else {
+        day.push(
+          <MyBoard
+            key={post.boardId}
+            post={post.title}
+            onClick={() => handleBoardClick(post.boardId, post.shared)}
+          />,
+        );
+
+        hasMyPost = true;
+      }
+    });
+
+    return day;
+  };
   return (
     <>
       <div className="group w-[13%] h-16 md:h-18 lg:h-[6.3rem] pt-2 md:pt-3 lg:pt-0 text-textBlack font-SCDream5 text-xs md:text-sm lg:text-base">
@@ -112,13 +144,9 @@ PropsValue) => {
           >
             {children}
           </div>
-          {hasBoard ? null : <AddBtn onClick={handleBtnClick} />}
+          {hasMyPost ? null : <AddBtn onClick={handleBtnClick} />}
         </div>
-        {post === null ? null : shared ? (
-          <SharedBoard post={post} onClick={handleBoardClick} />
-        ) : (
-          <MyBoard post={post} onClick={handleBoardClick} />
-        )}
+        {boards?.length !== 0 ? <div>{renderPosts()}</div> : null}
       </div>
     </>
   );
