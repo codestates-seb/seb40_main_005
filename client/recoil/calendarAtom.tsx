@@ -28,7 +28,7 @@ const selectDayState = atom({
 
 const pickDayState = atom({
   key: "pickDayState",
-  default: "",
+  default: "2022-12-02",
 });
 
 const readModalOpenState = atom({

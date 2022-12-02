@@ -5,6 +5,8 @@ import Dots from "../components/Dots";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { isLoginState } from "../recoil/authAtom";
 
 function Home() {
   const logoAnimate = {
@@ -64,6 +66,7 @@ function Home() {
   // 은비 작업부분
   // const outerDivRef = useRef<any>(null);
   const [scrollIdx, setScrollIndex] = useState<number>(1);
+  const loginState = useRecoilValue(isLoginState);
   // const [currPage, setCurrPage] = useState<number>(1);
 
   useEffect(() => {
@@ -248,12 +251,14 @@ function Home() {
                 </div>
               </Link>
             </div>
+            
+              
           </div>
         </div>
 
         <div
           id="2"
-          className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/lending_두번째이미지.png')]"
+          className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/두번째.jpg')]"
         >
           {/* 반응형 이슈 */}
           <div className="flex flex-col items-center justify-center w-full pl-5 pr-5 sm:items-start h-1/2 sm:pl-28 sm:pr-20">
