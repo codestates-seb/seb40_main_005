@@ -65,7 +65,7 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
 
   useEffect(() => {
     boardRefetch();
-  }, [currMonth, boardsData]);
+  }, [currMonth]);
 
   const boardList = boardsData?.data;
 
