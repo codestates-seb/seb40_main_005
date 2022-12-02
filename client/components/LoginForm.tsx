@@ -63,7 +63,7 @@ const LoginForm = () => {
             console.log(localStorage.getItem("token"));
 
             boardRefetch();
-            // router.push("/calendar");
+            router.push("/calendar");
           }
         })
         // if (isLogin) {

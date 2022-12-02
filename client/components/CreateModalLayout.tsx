@@ -16,8 +16,8 @@ import {
   editModeState,
   boardItemState,
   readModalOpenState,
+  readModalOpenState,
   modalOpenState
-} from "../recoil/calendarAtom";
 import usePostBoard from "../hooks/calendar/usePostBoard";
 import usePatchBoard from "../hooks/calendar/usePatchBoard";
 import useCheckDate from "../hooks/calendar/useCheckDate";
@@ -43,9 +43,10 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   const [share, setShare] = useState<any>([]);
   const [pickDate, SetPickDate] = useState<string>("");
   const [readOpen, setReadOpen] = useRecoilState(readModalOpenState);
+
+
   const [open, setOpen] = useRecoilState(modalOpenState);
 
-  const changeDate = (e: any) => {
     // console.log("바뀜?")
     setDate(e.target.value);
     // if (!checkDateLoading){
@@ -61,8 +62,8 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
 
   const changeCategory = (category: string) => {
     setCategory(category);
-    console.log(category);
   };
+    console.log(category);
 
   const changeTitle = (e: any) => {
     setTitle(e.target.value);
@@ -143,8 +144,8 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     data: checkDateData,
     refetch: checkDateRefetch,
     isLoading: checkDateLoading,
+    isSuccess: checkDateSuccess
     isSuccess: checkDateSuccess,
-  } = useCheckDate({
     day,
     month,
     year,
@@ -186,8 +187,8 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     handleCloseClick();
     setEditMode(false);
 
+    setDate("");
     setDate("2022-02-21");
-    setCategory("");
     setTitle("");
     setMusic("");
     setYoutubeLink("");
@@ -205,8 +206,8 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
 
       setEditMode(false);
 
+      setDate("");
       setDate("2022-02-21");
-      setCategory("");
       setTitle("");
       setMusic("");
       setYoutubeLink("");
@@ -215,8 +216,8 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
       setContext("");
       setShare([]);
       deleteImg();
+      window.location.reload();
       // window.location.reload();
-    }
 
     if (EditSuccess && editMode) {
       alert("수정되었습니다");
@@ -224,8 +225,8 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
 
       setEditMode(false);
 
+      setDate("");
       setDate("2022-02-21");
-      setCategory("");
       setTitle("");
       setMusic("");
       setYoutubeLink("");
@@ -234,12 +235,12 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
       setContext("");
       setShare([]);
       deleteImg();
+      window.location.reload();
       // window.location.reload();
-    }
 
     if (editMode) {
-      console.log(boardData.data[0].category)
       setCategory(boardData.data[0].category);
+      console.log(boardData.data[0].category)
       setTitle(boardData.data[0].title);
       setMusic(boardData.data[0].music);
       setYoutubeLink(boardData.data[0].url);
@@ -260,12 +261,13 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   }, [postSuccess, editMode, EditSuccess]);
 
   useEffect(() => {
+    if (!readOpen){
     if (!readOpen) {
-      checkDateRefetch();
     }
   }, [date]);
-  // console.log("acitve");
 
+  // console.log("acitve");
+  useEffect(()=> {
   useEffect(() => {
     if (readOpen || open){
       if (checkDateData?.data.status === false) {
@@ -274,16 +276,16 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
         );
         setDate("");
       }
-    }
+  }, [checkDateData])
   }, [checkDateData]);
-  // console.log(checkDateData);
 
   return (
     <>
       <div className="flex flex-col items-center justify-between w-full h-full p-5 overflow-auto">
         {EditLoading ? (
           <div className="absolute z-50 flex flex-col items-center justify-center w-1/2 text-lg rounded-lg top-60 h-1/3 bg-mainOrange/70 font-SCDream5 text-bgWhite">
-            <div className="z-10 ml-0.5 text-lg md:text-lg lg:text-lg text-bgWhite font-SCDream5">
+          <div className="absolute z-50 flex flex-col items-center justify-center w-1/2 text-lg rounded-lg top-60 h-1/3 bg-mainOrange/70 font-SCDream5 text-bgWhite">
+          <div className="absolute z-50 flex flex-col items-center justify-center w-1/2 text-lg rounded-lg top-60 h-1/3 bg-mainOrange/70 font-SCDream5 text-bgWhite">
               여러분의 추억을 수정하고있습니다
             </div>
             <div className="z-10 ml-0.5 text-sm md:text-sm lg:text-sm text-bgWhite font-SCDream5">
@@ -293,7 +295,8 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
         ) : null}
         {postLoading ? (
           <div className="absolute z-50 flex flex-col items-center justify-center w-1/2 text-lg rounded-lg top-60 h-1/3 bg-mainOrange/70 font-SCDream5 text-bgWhite">
-            <div className="z-10 ml-0.5 text-lg md:text-lg lg:text-lg text-bgWhite font-SCDream5">
+          <div className="absolute z-50 flex flex-col items-center justify-center w-1/2 text-lg rounded-lg top-60 h-1/3 bg-mainOrange/70 font-SCDream5 text-bgWhite">
+          <div className="absolute z-50 flex flex-col items-center justify-center w-1/2 text-lg rounded-lg top-60 h-1/3 bg-mainOrange/70 font-SCDream5 text-bgWhite">
               여러분의 추억을 저장하고있습니다
             </div>
             <div className="z-10 ml-0.5 text-sm md:text-sm lg:text-sm text-bgWhite font-SCDream5">
@@ -418,6 +421,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
         </div>
 
         <div className="flex flex-row items-center justify-center w-full h-8 mt-5">
+          <BoardModalBtn onClick={handleSubmit}>저 장</BoardModalBtn>
           {category !== "" && title !== "" ? (
             <BoardModalBtn onClick={handleSubmit}>저 장</BoardModalBtn>
           ) : (
@@ -425,7 +429,6 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
               카테고리와 제목은 필수 입력입니다!
             </div>
           )}
-        </div>
       </div>
     </>
   );
