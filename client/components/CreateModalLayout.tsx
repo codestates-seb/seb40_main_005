@@ -16,22 +16,19 @@ import {
   editModeState,
   boardItemState,
   readModalOpenState,
-  readModalOpenState,
-  modalOpenState
+  modalOpenState,
+} from "../recoil/calendarAtom";
 import usePostBoard from "../hooks/calendar/usePostBoard";
 import usePatchBoard from "../hooks/calendar/usePatchBoard";
 import useCheckDate from "../hooks/calendar/useCheckDate";
 //yeowool
 import SelectBar from "./SelectBar";
-
 interface Props {
   handleCloseClick: () => void;
 }
-
 const CreateModalLayout = ({ handleCloseClick }: Props) => {
   const [editMode, setEditMode] = useRecoilState(editModeState);
   const [boardData, setBoardData] = useRecoilState(boardItemState);
-
   const [date, setDate] = useRecoilState(pickDayState);
   const [category, setCategory] = useState<string>("");
   const [title, setTitle] = useState<string>("");
@@ -43,10 +40,9 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   const [share, setShare] = useState<any>([]);
   const [pickDate, SetPickDate] = useState<string>("");
   const [readOpen, setReadOpen] = useRecoilState(readModalOpenState);
-
-
   const [open, setOpen] = useRecoilState(modalOpenState);
 
+  const changeDate = (e: any) => {
     // console.log("바뀜?")
     setDate(e.target.value);
     // if (!checkDateLoading){
@@ -62,38 +58,31 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
 
   const changeCategory = (category: string) => {
     setCategory(category);
-  };
     console.log(category);
+  };
 
   const changeTitle = (e: any) => {
     setTitle(e.target.value);
   };
-
   const changeMusic = (music: string) => {
     setMusic(music);
   };
-
   const changeYoutubeLink = (youtubeLink: string) => {
     setYoutubeLink(youtubeLink);
   };
-
   const changePhoto = (photo: File | null) => {
     setPhoto(photo);
   };
-
   const changeContext = (context: string) => {
     setContext(context);
   };
-
   const changeShare = (share: string) => {
     setShare(share);
   };
-
   const deleteImg = () => {
     URL.revokeObjectURL(showImg);
     setShowImg("");
   };
-
   const {
     data: submitRes,
     mutate: submitMutate,
@@ -109,13 +98,10 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     title: title,
     url: youtubeLink,
   });
-
   let boardId: number | null = null;
-
   if (boardData.data) {
     boardId = boardData.data[0].boardId;
   }
-
   const {
     data: EditRes,
     mutate: EditMute,
@@ -132,25 +118,21 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     url: youtubeLink,
     boardId: boardId,
   });
-
   let splitDate = date.split("-");
   let year = splitDate[0];
   let month = splitDate[1];
   let day = splitDate[2];
-
   // console.log(year, month, day);
-
   const {
     data: checkDateData,
     refetch: checkDateRefetch,
     isLoading: checkDateLoading,
-    isSuccess: checkDateSuccess
     isSuccess: checkDateSuccess,
+  } = useCheckDate({
     day,
     month,
     year,
   });
-
   const handleSubmit = () => {
     const submitData = {
       category: category,
@@ -162,7 +144,6 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
       title: title,
       url: youtubeLink,
     };
-
     const editData = {
       category: category,
       content: context,
@@ -174,7 +155,6 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
       url: youtubeLink,
       boardId: boardId,
     };
-
     if (editMode) {
       EditMute(editData);
     } else {
@@ -182,13 +162,13 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     }
     // console.log(submitRes)
   };
-
   const handleCancel = () => {
     handleCloseClick();
     setEditMode(false);
 
     setDate("");
     setDate("2022-02-21");
+    setCategory("");
     setTitle("");
     setMusic("");
     setYoutubeLink("");
@@ -198,7 +178,6 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     setShare([]);
     deleteImg();
   };
-
   useEffect(() => {
     if (postSuccess && !editMode) {
       alert("등록되었습니다");
@@ -208,6 +187,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
 
       setDate("");
       setDate("2022-02-21");
+      setCategory("");
       setTitle("");
       setMusic("");
       setYoutubeLink("");
@@ -218,6 +198,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
       deleteImg();
       window.location.reload();
       // window.location.reload();
+    }
 
     if (EditSuccess && editMode) {
       alert("수정되었습니다");
@@ -227,6 +208,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
 
       setDate("");
       setDate("2022-02-21");
+      setCategory("");
       setTitle("");
       setMusic("");
       setYoutubeLink("");
@@ -237,10 +219,11 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
       deleteImg();
       window.location.reload();
       // window.location.reload();
+    }
 
     if (editMode) {
+      console.log(boardData.data[0].category);
       setCategory(boardData.data[0].category);
-      console.log(boardData.data[0].category)
       setTitle(boardData.data[0].title);
       setMusic(boardData.data[0].music);
       setYoutubeLink(boardData.data[0].url);
@@ -259,33 +242,36 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
       setShare([]);
     }
   }, [postSuccess, editMode, EditSuccess]);
-
   useEffect(() => {
-    if (!readOpen){
     if (!readOpen) {
+      checkDateRefetch();
     }
   }, [date]);
-
   // console.log("acitve");
-  useEffect(()=> {
-  useEffect(() => {
-    if (readOpen || open){
-      if (checkDateData?.data.status === false) {
-        window.alert(
-          "해당날짜는 게시글이 등록되어있습니다! \n다른 날짜를 선택해주세요",
-        );
-        setDate("");
-      }
-  }, [checkDateData])
-  }, [checkDateData]);
 
+  useEffect(() => {
+    if (checkDateData?.data.status === false) {
+      window.alert(
+        "해당날짜는 게시글이 등록되어있습니다! \n다른 날짜를 선택해주세요",
+      );
+      setDate("");
+      if (readOpen || open) {
+        if (checkDateData?.data.status === false) {
+          window.alert(
+            "해당날짜는 게시글이 등록되어있습니다! \n다른 날짜를 선택해주세요",
+          );
+          setDate("");
+        }
+      }
+    }
+  }, [checkDateData]);
+  // console.log(checkDateData);
   return (
     <>
       <div className="flex flex-col items-center justify-between w-full h-full p-5 overflow-auto">
         {EditLoading ? (
           <div className="absolute z-50 flex flex-col items-center justify-center w-1/2 text-lg rounded-lg top-60 h-1/3 bg-mainOrange/70 font-SCDream5 text-bgWhite">
-          <div className="absolute z-50 flex flex-col items-center justify-center w-1/2 text-lg rounded-lg top-60 h-1/3 bg-mainOrange/70 font-SCDream5 text-bgWhite">
-          <div className="absolute z-50 flex flex-col items-center justify-center w-1/2 text-lg rounded-lg top-60 h-1/3 bg-mainOrange/70 font-SCDream5 text-bgWhite">
+            <div className="z-10 ml-0.5 text-lg md:text-lg lg:text-lg text-bgWhite font-SCDream5">
               여러분의 추억을 수정하고있습니다
             </div>
             <div className="z-10 ml-0.5 text-sm md:text-sm lg:text-sm text-bgWhite font-SCDream5">
@@ -295,8 +281,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
         ) : null}
         {postLoading ? (
           <div className="absolute z-50 flex flex-col items-center justify-center w-1/2 text-lg rounded-lg top-60 h-1/3 bg-mainOrange/70 font-SCDream5 text-bgWhite">
-          <div className="absolute z-50 flex flex-col items-center justify-center w-1/2 text-lg rounded-lg top-60 h-1/3 bg-mainOrange/70 font-SCDream5 text-bgWhite">
-          <div className="absolute z-50 flex flex-col items-center justify-center w-1/2 text-lg rounded-lg top-60 h-1/3 bg-mainOrange/70 font-SCDream5 text-bgWhite">
+            <div className="z-10 ml-0.5 text-lg md:text-lg lg:text-lg text-bgWhite font-SCDream5">
               여러분의 추억을 저장하고있습니다
             </div>
             <div className="z-10 ml-0.5 text-sm md:text-sm lg:text-sm text-bgWhite font-SCDream5">
@@ -308,7 +293,6 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
           <div className="w-1/4 h-full">
             <LeftArrow onClick={handleCancel} />
           </div>
-
           <div className="flex flex-col items-end justify-center w-3/4 h-full">
             <CategoryInputContainer>
               <div className="relative items-center justify-center mt-2 w-fit h-7">
@@ -325,9 +309,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
                 onChange={changeDate}
               />
             </CategoryInputContainer>
-
             {/* yeowool */}
-
             <CategoryInputContainer>
               <div className="relative items-center justify-center mt-2  min-w-fit w-[3.5rem] h-7">
                 <div className="z-10 ml-0.5 text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5">
@@ -344,7 +326,6 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
                 className="w-2/3 text-sm text-right text-gray-700 outline-none h-fit font-SCDream3 lg:text-sm"
               /> */}
             </CategoryInputContainer>
-
             <CategoryInputContainer>
               <div className="relative items-center justify-center mt-2 w-fit h-7">
                 <div className="z-10 ml-0.5 text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5">
@@ -362,7 +343,6 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
             </CategoryInputContainer>
           </div>
         </div>
-
         <div className="flex flex-col items-start justify-center w-full h-fit">
           <div className="relative items-center justify-center mt-2 ml-2 w-fit h-7">
             <div className="z-10 ml-0.5 text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5">
@@ -370,7 +350,6 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
             </div>
             <div className="absolute top-3.5 left-0.5 right-0 bottom-2  bg-mainOrange/40"></div>
           </div>
-
           <AddMusicContainer
             music={music}
             youtubeLink={youtubeLink}
@@ -378,7 +357,6 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
             changeYoutubeLink={changeYoutubeLink}
           />
         </div>
-
         <div className="flex flex-col items-start justify-center w-full mt-2 h-fit">
           <div className="relative items-center justify-center mt-2 ml-2 w-fit h-7">
             <div className="z-10 ml-0.5 text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5">
@@ -386,7 +364,6 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
             </div>
             <div className="absolute top-3.5 left-0.5 right-0 bottom-2  bg-mainOrange/40"></div>
           </div>
-
           <AddPhothoContainer
             photo={photo}
             setPhoto={setPhoto}
@@ -397,7 +374,6 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
             사진은 한 게시물당 1개만 올릴 수 있습니다
           </div>
         </div>
-
         <div className="flex flex-col items-start justify-center w-full h-fit">
           <div className="relative items-center justify-center mt-2 ml-2 w-fit h-7">
             <div className="z-10 ml-0.5 text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5">
@@ -405,10 +381,8 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
             </div>
             <div className="absolute top-3.5 left-0.5 right-0 bottom-2  bg-mainOrange/40"></div>
           </div>
-
           <AddTextContainer context={context} changeContext={changeContext} />
         </div>
-
         <div className="flex flex-col items-start justify-center w-full mt-1 h-fit">
           <div className="relative items-center justify-center mt-2 ml-2 w-fit h-7">
             <div className="z-10 ml-0.5 text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5">
@@ -416,7 +390,6 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
             </div>
             <div className="absolute top-3.5 left-0.5 right-0 bottom-2  bg-mainOrange/40"></div>
           </div>
-
           <AddShareContainer changeShare={changeShare} />
         </div>
 
@@ -429,9 +402,9 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
               카테고리와 제목은 필수 입력입니다!
             </div>
           )}
+        </div>
       </div>
     </>
   );
 };
-
 export default CreateModalLayout;
