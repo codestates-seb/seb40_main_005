@@ -17,8 +17,7 @@ import javax.transaction.Transactional;
 @Slf4j
 public class ChangePasswordService {
     private final MembersRepository membersRepository;
-    @Autowired
-    private CommonEncoder commonEncoder;
+    private final CommonEncoder commonEncoder;
 
     @Transactional
     public ChangePasswordResponse passwordChangeById(ChangePasswordRequest changePasswordRequest) {

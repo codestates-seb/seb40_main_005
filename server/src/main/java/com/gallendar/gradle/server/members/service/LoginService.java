@@ -17,8 +17,7 @@ import org.springframework.stereotype.Service;
 public class LoginService {
     private final JwtUtils jwtUtils;
     private final MembersRepository membersRepository;
-    @Autowired
-    private CommonEncoder commonEncoder;
+    private final CommonEncoder commonEncoder;
 
     public LoginResponse LoginMembers(LoginRequest loginRequest) {
         Members members = membersRepository.findById(loginRequest.getId()).orElseThrow(() -> new IllegalArgumentException("아이디 또는 비밀번호를 확인해주세요."));
