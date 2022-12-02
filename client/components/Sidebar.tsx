@@ -1,80 +1,74 @@
 import { BuildingStorefrontIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import SidebarCategory from "./SidebarCategory";
-import React, { useEffect, useState } from "react";
+import React, {
+  JSXElementConstructor,
+  ReactComponentElement,
+  ReactElement,
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
 import useGetCategoryTitie from "../hooks/calendar/useGetCategory";
 import { useRecoilState } from "recoil";
 import { categorySelectState } from "../recoil/calendarAtom";
+import { categorySelectTitle } from "../recoil/calendarAtom";
 
 interface CategoryType {
   categoryTitle: string;
   isSelect: boolean;
 }
 
+interface CategoryValue {
+  categoryTitle: string;
+}
 const Sidebar = () => {
-  const [categoryList, setCategoryList] = useState<Array<CategoryType>>([]);
   const [selectedCategory, setSelectedCategory] =
     useRecoilState<boolean>(categorySelectState);
+
+  const [categoryTitle, setcategoryTitle] =
+    useRecoilState<string>(categorySelectTitle);
 
   const { data: categoryDatas, refetch: categoryRefetch } =
     useGetCategoryTitie();
 
-  useEffect(() => {
-    MyCategoryTitie();
-  }, [categoryDatas]);
+  const renderNotices = () => {
+    const categoryListArr: any[] = [];
 
-  const MyCategoryTitie = () => {
-    categoryRefetch();
-    if (categoryDatas !== undefined) {
-      const newCtg = categoryDatas.data;
+    if (categoryDatas) {
+      let categories = categoryDatas.data;
 
-      setCategoryList(newCtg);
+      categoryListArr?.push(
+        <SidebarCategory
+          key={0}
+          categoryTitle={"전체"}
+          selectedTitle={categoryTitle}
+          onClick={() => handleClick("전체")}
+        ></SidebarCategory>,
+      );
+
+      categories.map((data: CategoryValue, idx: number) => {
+        categoryListArr?.push(
+          <SidebarCategory
+            key={idx + 1}
+            categoryTitle={data.categoryTitle}
+            selectedTitle={categoryTitle}
+            onClick={() => handleClick(data.categoryTitle)}
+          ></SidebarCategory>,
+        );
+      });
     }
+
+    return categoryListArr;
   };
 
-  //   if (categoryDatas !== undefined) {
-  //     const newCtg = categoryDatas.data.map(
-  //       (el: { categoryTitle: string }) => ({
-  //         ...el,
-  //         isSelect: false,
-  //       }),
-  //     );
-  //     setCategoryList(newCtg);
-  //   }
-  // };
+  useEffect(() => {
+    categoryRefetch();
+    renderNotices();
+  }, []);
 
-  // useEffect(() => {
-  //   if (categoryDatas !== undefined) {
-  //     const newCtg = categoryDatas.data.map(
-  //       (el: { categoryTitle: string }) => ({
-  //         ...el,
-  //         isSelect: false,
-  //       }),
-  //     );
-  //     setCategoryList(newCtg);
-  //   }
-  // }, []);
-
-  // console.log(categoryDatas);
-  // const handleTagClick = (categoryTitle: string) => {
-  //   console.log(categoryList);
-  //   const newCtg = categoryList.map(data =>
-  //     categoryTitle === data.categoryTitle
-  //       ? { ...data, isSelect: true }
-  //       : { ...data, isSelect: false },
-  //   );
-
-  //   setCategoryList(newCtg);
-  //   // console.log(categoyList);
-  // };
-
-  const handleClick = (e: any) => {
-    if (selectedCategory) {
-      setSelectedCategory(false);
-    } else if (!selectedCategory) {
-      setSelectedCategory(true);
-    }
-    console.log(selectedCategory);
+  const handleClick = (title: string) => {
+    setcategoryTitle(title);
   };
 
   return (
@@ -86,23 +80,8 @@ const Sidebar = () => {
           </div>
           <div className="absolute top-4 lg:top-5 left-0.5 right-0 bottom-1.5 lg:bottom-0.5  bg-mainOrange/40"></div>
         </div>
-        <button onClick={handleClick}>버튼</button>
         <div className="grid w-full grid-cols-1 overflow-auto text-sm drop-shadow-xl lg:flex lg:flex-col h-1/3 lg:h-5/6 font-SCDream4">
-          {categoryList.map((data, index) => (
-            <SidebarCategory
-              // onClick={() => handleTagClick(data.categoryTitle)}
-              onClick={() => handleClick}
-            >
-              <div key={index} className="flex justify-center w-full">
-                {data.categoryTitle}
-              </div>
-              <div
-                className={` flex items-center pr-3 w-3 h-full aspect-square rounded-full ${
-                  data.isSelect ? " bg-btnOrange" : " bg-white  "
-                }`}
-              ></div>
-            </SidebarCategory>
-          ))}
+          {renderNotices()}
         </div>
 
         <Link href="/commerce">
