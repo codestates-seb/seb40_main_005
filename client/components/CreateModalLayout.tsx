@@ -15,7 +15,7 @@ import {
   pickDayState,
   editModeState,
   boardItemState,
-  readModalOpenState
+  readModalOpenState,
 } from "../recoil/calendarAtom";
 import usePostBoard from "../hooks/calendar/usePostBoard";
 import usePatchBoard from "../hooks/calendar/usePatchBoard";
@@ -42,7 +42,6 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   const [share, setShare] = useState<any>([]);
   const [pickDate, SetPickDate] = useState<string>("");
   const [readOpen, setReadOpen] = useRecoilState(readModalOpenState);
-
 
   const changeDate = (e: any) => {
     // console.log("바뀜?")
@@ -141,7 +140,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     data: checkDateData,
     refetch: checkDateRefetch,
     isLoading: checkDateLoading,
-    isSuccess: checkDateSuccess
+    isSuccess: checkDateSuccess,
   } = useCheckDate({
     day,
     month,
@@ -257,26 +256,26 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   }, [postSuccess, editMode, EditSuccess]);
 
   useEffect(() => {
-    if (!readOpen){
+    if (!readOpen) {
       checkDateRefetch();
     }
   }, [date]);
 
-  useEffect(()=> {
+  useEffect(() => {
     if (checkDateData?.data.status === false) {
       window.alert(
         "해당날짜는 게시글이 등록되어있습니다! \n다른 날짜를 선택해주세요",
       );
       setDate("");
     }
-  }, [checkDateData])
+  }, [checkDateData]);
   // console.log(checkDateData);
 
   return (
     <>
       <div className="flex flex-col items-center justify-between w-full h-full p-5 overflow-auto">
         {EditLoading ? (
-          <div className="absolute top-60 w-1/2 h-1/3 rounded-lg z-50 flex flex-col justify-center items-center bg-mainOrange/70 font-SCDream5 text-lg text-bgWhite">
+          <div className="absolute z-50 flex flex-col items-center justify-center w-1/2 text-lg rounded-lg top-60 h-1/3 bg-mainOrange/70 font-SCDream5 text-bgWhite">
             <div className="z-10 ml-0.5 text-lg md:text-lg lg:text-lg text-bgWhite font-SCDream5">
               여러분의 추억을 수정하고있습니다
             </div>
@@ -286,7 +285,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
           </div>
         ) : null}
         {postLoading ? (
-          <div className="absolute top-60 w-1/2 h-1/3 rounded-lg z-50 flex flex-col justify-center items-center bg-mainOrange/70 font-SCDream5 text-lg text-bgWhite">
+          <div className="absolute z-50 flex flex-col items-center justify-center w-1/2 text-lg rounded-lg top-60 h-1/3 bg-mainOrange/70 font-SCDream5 text-bgWhite">
             <div className="z-10 ml-0.5 text-lg md:text-lg lg:text-lg text-bgWhite font-SCDream5">
               여러분의 추억을 저장하고있습니다
             </div>

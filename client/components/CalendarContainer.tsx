@@ -48,7 +48,7 @@ const CalendarContainer = () => {
   return (
     <>
       <div className="flex flex-col justify-center  w-full h-fit px-4 mb-3 rounded-lg lg:py-5 md:px-6 lg:max-h-[90%] lg:px-12 lg:drop-shadow-2xl bg-bgGray lg:bg-bgWhite">
-      {/* <div className="w-full h-fit my-3 pt-5 pb-5 px-5 rounded-lg lg:drop-shadow-2xl bg-bgGray lg:bg-bgWhite"> */}
+        {/* <div className="w-full px-5 pt-5 pb-5 my-3 rounded-lg h-fit lg:drop-shadow-2xl bg-bgGray lg:bg-bgWhite"> */}
         {/* calendar header */}
 
         <div className="flex flex-col items-center justify-center w-full h-fit">
