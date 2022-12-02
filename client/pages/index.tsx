@@ -185,7 +185,7 @@ function Home() {
 
   return (
     <>
-      <TopBtn setScroll={setScroll} />
+      <TopBtn />
       <ScrollImg />
       <Dots scrollIdx={scrollIdx} />
       <div className="flex-col items-center justify-center h-screen">
@@ -251,8 +251,6 @@ function Home() {
                 </div>
               </Link>
             </div>
-            
-              
           </div>
         </div>
 

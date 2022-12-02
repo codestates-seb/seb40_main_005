@@ -58,13 +58,13 @@ public class BoardServiceImpl implements BoardService {
         photoRepository.save(photo);
 
         log.info("카테고리 안에 있는지 확인 시작");
-        if (!categoryRepository.existsByCategoryTitle(requestDto.getCategory())) {
+        if (!categoryRepository.existsByCategoryTitle(requestDto.getCategoryTitle())) {
             log.info("카테고리가 없으닌간 삽입해야함");
             Category category = Category.builder()
-                    .categoryTitle(requestDto.getCategory()).build();
+                    .categoryTitle(requestDto.getCategoryTitle()).build();
             categoryRepository.save(category);
         }
-        Category category = categoryRepository.findByCategoryTitle(requestDto.getCategory());
+        Category category = categoryRepository.findByCategoryTitle(requestDto.getCategoryTitle());
         Board board = requestDto.toEntity();
         board.setMembers(members);
         board.setPhoto(photo);

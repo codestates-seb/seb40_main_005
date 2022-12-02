@@ -30,7 +30,7 @@ public class BoardCreateRequestDto {
     private String music;
     private String url;
     private MultipartFile photo;
-    private String category;
+    private String categoryTitle;
     private List<String> tags;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate created;
