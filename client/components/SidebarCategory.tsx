@@ -1,9 +1,11 @@
 interface Props {
   onClick: () => void;
-  children: React.ReactNode;
+  // children: React.ReactNode;
+  categoryTitle: string;
+  selectedTitle: string;
 }
 
-const SidebarCategory = ({ onClick, children }: Props) => {
+const SidebarCategory = ({ onClick, categoryTitle, selectedTitle }: Props) => {
   return (
     <>
       <div
@@ -11,8 +13,17 @@ const SidebarCategory = ({ onClick, children }: Props) => {
         onClick={onClick}
       >
         <div className="w-3 h-full bg-btnOrange rounded-l-[0.2rem]"></div>
-        <div className="flex justify-between w-full p-2 h-fit mt-1">
-          {children}
+
+        <div className="flex flex-row justify-between w-full mx-2">
+          <div className="flex justify-between w-full p-2 mt-1 h-fit">
+            {categoryTitle}
+          </div>
+
+          {selectedTitle === categoryTitle ? (
+            <div
+              className={`w-3 h-3 self-center rounded-full bg-btnOrange`}
+            ></div>
+          ) : null}
         </div>
       </div>
     </>

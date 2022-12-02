@@ -73,8 +73,6 @@ function Home() {
       const totalHeight = document.body.scrollHeight; // 전체 화면크기
       const currY = pageHeight;
 
-      // console.log(scrollTop, totalHeight - pageHeight);
-
       if (scrollTop < pageHeight) {
         setScrollIndex(1);
 
@@ -85,10 +83,6 @@ function Home() {
         scrollTop < totalHeight - pageHeight
       ) {
         setScrollIndex(2);
-
-        if (scrollTop >= Math.floor(currY / 2)) {
-          // console.log("here!");
-        }
       } else if (scrollTop >= totalHeight - pageHeight) {
         setScrollIndex(6);
       }
@@ -418,7 +412,8 @@ function Home() {
             >
               당신의 모든 순간들을
             </motion.div>
-            <motion.div className="flex flex-col items-center justify-center md:flex-row lg:flex-row w-fit"
+            <motion.div
+              className="flex flex-col items-center justify-center md:flex-row lg:flex-row w-fit"
               variants={landingH1TextAnimate}
               initial={"offscreen"}
               whileInView={"onscreen"}

@@ -65,7 +65,7 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
 
   useEffect(() => {
     boardRefetch();
-  }, [currMonth]);
+  }, [currMonth, boardsData]);
 
   const boardList = boardsData?.data;
 
@@ -88,8 +88,8 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
           </div>,
         );
       } else {
-        let hasPost = false;
         let posts: any[] = [];
+        let hasMine = false;
 
         boardList?.map((el: Boards) => {
           let createdYear = parseInt(el.createdPost[0]);
@@ -102,6 +102,10 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
             startDate === createdDay
           ) {
             posts.push(el);
+
+            if (!el.shared) {
+              hasMine = true;
+            }
           }
         });
 
@@ -112,6 +116,7 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
             currDay={startDate}
             key={startDate}
             boards={posts}
+            hasMine={hasMine}
           >
             {startDate}
           </DayBlock>,
