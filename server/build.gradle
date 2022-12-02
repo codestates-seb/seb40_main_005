@@ -71,7 +71,7 @@ dependencies {
     //querydsl
     implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
     implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
-
+    implementation "com.querydsl:querydsl-core:${queryDslVersion}"
 
 
     //s3 starter aws
