@@ -1,31 +1,15 @@
 import { BuildingStorefrontIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import SidebarCategory from "./SidebarCategory";
-import React, {
-  JSXElementConstructor,
-  ReactComponentElement,
-  ReactElement,
-  ReactNode,
-  useEffect,
-  useState,
-} from "react";
+import React, { useEffect } from "react";
 import useGetCategoryTitie from "../hooks/calendar/useGetCategory";
 import { useRecoilState } from "recoil";
-import { categorySelectState } from "../recoil/calendarAtom";
 import { categorySelectTitle } from "../recoil/calendarAtom";
-
-interface CategoryType {
-  categoryTitle: string;
-  isSelect: boolean;
-}
 
 interface CategoryValue {
   categoryTitle: string;
 }
 const Sidebar = () => {
-  const [selectedCategory, setSelectedCategory] =
-    useRecoilState<boolean>(categorySelectState);
-
   const [categoryTitle, setcategoryTitle] =
     useRecoilState<string>(categorySelectTitle);
 

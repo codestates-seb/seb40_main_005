@@ -83,7 +83,7 @@ const CalendarPageLayout = () => {
           handleOpenBtnClick={handleOpenBtnClick}
         />
       </BoardContainer>
-      <div className="flex flex-col-reverse w-full h-fit lg:flex-row mb-5 pb-3 bg-bgGray">
+      <div className="flex flex-col-reverse w-full h-full lg:flex-row mb-5 pb-3 bg-bgGray">
         <Sidebar />
         <div className="w-full h-full lg:pr-10 lg:pl-5">
           <CalendarNav />

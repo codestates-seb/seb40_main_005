@@ -1,5 +1,10 @@
 import { atom } from "recoil";
 import { useRecoilValue } from "recoil";
+import { getMonth, getYear } from "date-fns";
+
+const date = new Date();
+let month = getMonth(date) + 1;
+let year = getYear(date);
 
 const modalOpenState = atom({
   key: "modalOpenState",
@@ -8,12 +13,12 @@ const modalOpenState = atom({
 
 const selectYearState = atom({
   key: "selectYearState",
-  default: "1234",
+  default: `${year}`,
 });
 
 const selectMonthState = atom({
   key: "selectMonthState",
-  default: "5",
+  default: `${month}`,
 });
 
 const selectDayState = atom({
@@ -23,7 +28,7 @@ const selectDayState = atom({
 
 const pickDayState = atom({
   key: "pickDayState",
-  default: "",
+  default: "2022-12-02",
 });
 
 const readModalOpenState = atom({

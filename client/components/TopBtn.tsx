@@ -1,4 +1,10 @@
-const TopBtn = () => {
+import { Dispatch, SetStateAction } from "react";
+
+interface Props {
+  setScroll: () => void;
+}
+
+const TopBtn = (setScroll: Props) => {
   const handleScrollUp = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -7,6 +13,8 @@ const TopBtn = () => {
       left: 0,
       behavior: "smooth",
     });
+
+    setScroll;
   };
 
   return (

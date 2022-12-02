@@ -1,4 +1,4 @@
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 import { isLoginState } from "../recoil/authAtom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
@@ -7,7 +7,8 @@ import { Dispatch, SetStateAction, useState } from "react";
 import postLogin from "../apis/auth/postLogin";
 import { useMutation } from "react-query";
 import { useRouter } from "next/router";
-// import { client } from "../client/client";
+import useGetBoards from "../hooks/calendar/useGetBoards";
+import { selectYearState, selectMonthState } from "../recoil/calendarAtom";
 
 interface FormValues {
   id: string;
@@ -27,23 +28,59 @@ const LoginForm = () => {
 
   const router = useRouter();
   const loginMutation = useMutation(postLogin);
+  // const [isLogin, setIsLogin] = useRecoilState(isLoginState);
+  const isLogin = useRecoilValue(isLoginState);
   const setIsLogin = useSetRecoilState(isLoginState);
 
+  const [curMonth, setCurMonth] = useRecoilState(selectMonthState);
+  const [curYear, setCurYear] = useRecoilState(selectYearState);
+
+  const {
+    data: boardData,
+    refetch: boardRefetch,
+    isSuccess: success,
+  } = useGetBoards({
+    curYear,
+    curMonth,
+  });
+
   const useLogin = ({ id, password }: FormValues) => {
-    return loginMutation
-      .mutateAsync({ id, password })
-      .then(res => {
-        if (res.token) {
-          localStorage.setItem("token", res.token);
-          localStorage.setItem("memberId", res.memberId);
-          setIsLogin(true);
-          setFailedMsg("");
-          router.push("/calendar");
-        }
-      })
-      .catch(() => {
-        setFailedMsg("ID 혹은 비밀번호가 일치하지 않습니다.");
-      });
+    return (
+      loginMutation
+        .mutateAsync({ id, password })
+        .then(res => {
+          if (res.token) {
+            localStorage.setItem("token", res.token);
+            localStorage.setItem("memberId", res.memberId);
+            setIsLogin(true);
+            setFailedMsg("");
+
+            return res.token;
+          }
+        })
+        .then(res => {
+          if (res) {
+            console.log(localStorage.getItem("token"));
+
+            boardRefetch();
+            // router.push("/calendar");
+          }
+        })
+        // if (isLogin) {
+        //   boardRefetch();
+        //   console.log("requset ok");
+        //   console.log(success);
+
+        //   // if (success) {
+        //   router.push("/calendar");
+        //   console.log("token ok, calendar ok!");
+        //   // }
+        // }
+        // }
+        .catch(() => {
+          setFailedMsg("ID 혹은 비밀번호가 일치하지 않습니다.");
+        })
+    );
   };
 
   const handleIdChange = (e: any) => {
