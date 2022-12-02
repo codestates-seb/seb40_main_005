@@ -85,6 +85,7 @@ public class MembersController {
     @ApiOperation(value = "아이디 중복 확인", notes = "입력한 아이디가 이미 가입되어있는지 확인 할 수 있다.")
     @GetMapping("/checkId/{id}")
     public ResponseEntity<String> checkMemberId(@PathVariable String id) {
+        log.info("아이디 중복 확인 요청");
         return (createMemberService.checkMemberIdDuplication(id) ?
                 ResponseEntity.status(HttpStatus.CONFLICT).body("This ID is already in use.")
                 : ResponseEntity.status(HttpStatus.OK).body("This ID is available."));
@@ -98,6 +99,7 @@ public class MembersController {
     @ApiOperation(value = "이메일 중복 확인", notes = "입력한 이메일이 이미 가입되어있는지 확인 할 수 있다.")
     @GetMapping("/checkEmail/{email}")
     public ResponseEntity<String> checkMemberEmail(@PathVariable String email) {
+        log.info("이메일 중복 확인 요청");
         return (createMemberService.checkMemberEmailDuplication(email) ?
                 ResponseEntity.status(HttpStatus.CONFLICT).body("This Email is already in use.")
                 : ResponseEntity.status(HttpStatus.OK).body("This email is available."));
@@ -111,7 +113,7 @@ public class MembersController {
     @ApiOperation(value = "회원가입", notes = "가입되어 있지 않은 아이디와 이메일 그리고 이메일 인증을 통해 회원가입을 할 수 있다.")
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody SignupRequestDto signupRequestDto) {
-
+        log.info("회원가입 요청");
         try {
             createMemberService.createMember(signupRequestDto);
         } catch (BusinessLogicException businessLogicException) {
