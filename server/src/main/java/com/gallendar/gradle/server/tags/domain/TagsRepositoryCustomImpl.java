@@ -4,6 +4,7 @@ import com.gallendar.gradle.server.board.entity.Board;
 import com.gallendar.gradle.server.board.entity.QBoard;
 import com.gallendar.gradle.server.members.domain.QMembers;
 import com.gallendar.gradle.server.tags.type.TagStatus;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -17,8 +18,8 @@ public class TagsRepositoryCustomImpl implements TagsRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
     QTags qTags = QTags.tags;
     QBoardTags qBoardTags = QBoardTags.boardTags;
-    QBoard qBoard=QBoard.board;
-    QMembers qMembers=QMembers.members;
+    QBoard qBoard = QBoard.board;
+    QMembers qMembers = QMembers.members;
 
     @Override
     public List<Tags> findByTagsMember(String tagsMember) {
@@ -32,16 +33,38 @@ public class TagsRepositoryCustomImpl implements TagsRepositoryCustom {
     }
 
     @Override
-    public List<Board> getSharedStatusById(String id, Pageable pageable) {
-        List<Board> list=jpaQueryFactory
+    public List<Board> getSharedStatusById(String id, Integer year, Integer month, Integer day, Pageable pageable) {
+        List<Board> list = jpaQueryFactory
                 .selectFrom(qBoard)
-                .leftJoin(qBoard.members,qMembers)
-                .where(qMembers.id.eq(id)).fetchJoin()
-                .leftJoin(qBoard.boardTags,qBoardTags).fetchJoin()
-                .leftJoin(qBoardTags.tags,qTags).fetchJoin()
+                .leftJoin(qBoard.members, qMembers)
+                .where(qMembers.id.eq(id),eqYear(year),eqMonth(month),eqDay(day)).fetchJoin()
+                .leftJoin(qBoard.boardTags, qBoardTags).fetchJoin()
+                .leftJoin(qBoardTags.tags, qTags).fetchJoin()
+                .distinct()
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
         return list;
+    }
+
+    private BooleanExpression eqYear(Integer year) {
+        if (year == null) {
+            return null;
+        }
+        return qBoard.created.year().eq(year);
+    }
+
+    private BooleanExpression eqMonth(Integer month) {
+        if (month == null) {
+            return null;
+        }
+        return qBoard.created.month().eq(month);
+    }
+
+    private BooleanExpression eqDay(Integer day) {
+        if (day == null) {
+            return null;
+        }
+        return qBoard.created.dayOfMonth().eq(day);
     }
 }

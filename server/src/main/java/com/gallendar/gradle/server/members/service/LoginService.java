@@ -8,6 +8,7 @@ import com.gallendar.gradle.server.members.dto.LoginRequest;
 import com.gallendar.gradle.server.members.dto.LoginResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +17,8 @@ import org.springframework.stereotype.Service;
 public class LoginService {
     private final JwtUtils jwtUtils;
     private final MembersRepository membersRepository;
-    private final CommonEncoder commonEncoder;
+    @Autowired
+    private CommonEncoder commonEncoder;
 
     public LoginResponse LoginMembers(LoginRequest loginRequest) {
         Members members = membersRepository.findById(loginRequest.getId()).orElseThrow(() -> new IllegalArgumentException("아이디 또는 비밀번호를 확인해주세요."));
