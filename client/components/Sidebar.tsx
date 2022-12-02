@@ -1,11 +1,10 @@
 import { BuildingStorefrontIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
-
 import SidebarCategory from "./SidebarCategory";
 import React, { useEffect, useState } from "react";
-import useGetCategory from "../hooks/calendar/useGetCategory";
-
 import useGetCategoryTitie from "../hooks/calendar/useGetCategory";
+import { useRecoilState } from "recoil";
+import { categorySelectState } from "../recoil/calendarAtom";
 
 interface CategoryType {
   categoryTitle: string;
@@ -14,32 +13,68 @@ interface CategoryType {
 
 const Sidebar = () => {
   const [categoryList, setCategoryList] = useState<Array<CategoryType>>([]);
+  const [selectedCategory, setSelectedCategory] =
+    useRecoilState<boolean>(categorySelectState);
 
-  const { data: categoryTitie, refetch: categoryRefetch } =
+  const { data: categoryDatas, refetch: categoryRefetch } =
     useGetCategoryTitie();
 
   useEffect(() => {
+    MyCategoryTitie();
+  }, [categoryDatas]);
+
+  const MyCategoryTitie = () => {
     categoryRefetch();
-    if (categoryTitie !== undefined) {
-      const newCtg = categoryTitie.data.map(
-        (el: { categoryTitle: string }) => ({
-          ...el,
-          isSelect: false,
-        }),
-      );
+    if (categoryDatas !== undefined) {
+      const newCtg = categoryDatas.data;
+
       setCategoryList(newCtg);
     }
-  }, []);
-  console.log(categoryTitie);
+  };
 
-  const handleTagClick = (categoryTitle: string) => {
-    const newCtg = categoryList.map(data =>
-      categoryTitle === data.categoryTitle
-        ? { ...data, isSelect: true }
-        : { ...data, isSelect: false },
-    );
+  //   if (categoryDatas !== undefined) {
+  //     const newCtg = categoryDatas.data.map(
+  //       (el: { categoryTitle: string }) => ({
+  //         ...el,
+  //         isSelect: false,
+  //       }),
+  //     );
+  //     setCategoryList(newCtg);
+  //   }
+  // };
 
-    setCategoryList(newCtg);
+  // useEffect(() => {
+  //   if (categoryDatas !== undefined) {
+  //     const newCtg = categoryDatas.data.map(
+  //       (el: { categoryTitle: string }) => ({
+  //         ...el,
+  //         isSelect: false,
+  //       }),
+  //     );
+  //     setCategoryList(newCtg);
+  //   }
+  // }, []);
+
+  // console.log(categoryDatas);
+  // const handleTagClick = (categoryTitle: string) => {
+  //   console.log(categoryList);
+  //   const newCtg = categoryList.map(data =>
+  //     categoryTitle === data.categoryTitle
+  //       ? { ...data, isSelect: true }
+  //       : { ...data, isSelect: false },
+  //   );
+
+  //   setCategoryList(newCtg);
+  //   // console.log(categoyList);
+  // };
+
+  const handleClick = (e: any) => {
+    if (selectedCategory) {
+      setSelectedCategory(false);
+    } else if (!selectedCategory) {
+      setSelectedCategory(true);
+    }
+    console.log(selectedCategory);
   };
 
   return (
@@ -51,16 +86,19 @@ const Sidebar = () => {
           </div>
           <div className="absolute top-4 lg:top-5 left-0.5 right-0 bottom-1.5 lg:bottom-0.5  bg-mainOrange/40"></div>
         </div>
-
+        <button onClick={handleClick}>버튼</button>
         <div className="grid w-full grid-cols-1 overflow-auto text-sm drop-shadow-xl lg:flex lg:flex-col h-1/3 lg:h-5/6 font-SCDream4">
-          {categoryList.map(data => (
-            <SidebarCategory onClick={() => handleTagClick(data.categoryTitle)}>
-              <div className="flex justify-center w-full">
+          {categoryList.map((data, index) => (
+            <SidebarCategory
+              // onClick={() => handleTagClick(data.categoryTitle)}
+              onClick={() => handleClick}
+            >
+              <div key={index} className="flex justify-center w-full">
                 {data.categoryTitle}
               </div>
               <div
                 className={` flex items-center pr-3 w-3 h-full aspect-square rounded-full ${
-                  data.isSelect ? " bg-btnOrange" : " bg-white "
+                  data.isSelect ? " bg-btnOrange" : " bg-white  "
                 }`}
               ></div>
             </SidebarCategory>

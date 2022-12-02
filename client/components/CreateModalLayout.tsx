@@ -17,7 +17,7 @@ import {
 import usePostBoard from "../hooks/calendar/usePostBoard";
 
 //yeowool
-// import SelectBar from "./SelectBar";
+import SelectBar from "./SelectBar";
 
 interface Props {
   handleCloseClick: () => void;
@@ -39,8 +39,8 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     console.log(date);
   };
 
-  const changeCategory = (e: any) => {
-    setCategory(e.target.value);
+  const changeCategory = (category: string) => {
+    setCategory(category);
   };
 
   const changeTitle = (e: any) => {
@@ -63,7 +63,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     setContext(context);
   };
 
-  const changeShare = (share: []) => {
+  const changeShare = (share: string) => {
     setShare(share);
   };
 
@@ -138,7 +138,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
             {/* yeowool */}
 
             <CategoryInputContainer>
-              <div className="relative items-center justify-center mt-2 w-[3.5rem] h-7">
+              <div className="relative items-center justify-center mt-2  min-w-fit w-[3.5rem] h-7">
                 <div className="z-10 ml-0.5 text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5">
                   카테고리
                 </div>
@@ -226,7 +226,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
             <div className="absolute top-3.5 left-0.5 right-0 bottom-2  bg-mainOrange/40"></div>
           </div>
 
-          <AddShareContainer />
+          <AddShareContainer changeShare={changeShare} />
         </div>
 
         <div className="flex flex-row items-center justify-center w-full h-8 mt-5">

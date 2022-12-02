@@ -26,19 +26,28 @@ const pickDayState = atom({
   default: "",
 });
 
-const categoryState = atom({
-  key: "categoryState",
-  default: "",
-});
-
 const readModalOpenState = atom({
   key: "readModalOpenState",
-  default : false
-})
+  default: false,
+});
 
 const boardItemState = atom<any>({
   key: "boardItemState",
-  default : "123"
-})
+  default: "123",
+});
 
-export {modalOpenState, selectYearState, selectMonthState, selectDayState, pickDayState, readModalOpenState, boardItemState};
+const categorySelectState = atom({
+  key: "categorySelectState",
+  default: false,
+});
+
+export {
+  modalOpenState,
+  selectYearState,
+  selectMonthState,
+  selectDayState,
+  pickDayState,
+  readModalOpenState,
+  boardItemState,
+  categorySelectState,
+};
