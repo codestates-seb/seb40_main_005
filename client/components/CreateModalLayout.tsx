@@ -17,7 +17,7 @@ import {
 import usePostBoard from "../hooks/calendar/usePostBoard";
 
 //yeowool
-// import SelectBar from "./SelectBar";
+import SelectBar from "./SelectBar";
 
 interface Props {
   handleCloseClick: () => void;

@@ -13,11 +13,6 @@ const ShareNoticeContainer = () => {
     useGetShareNotice();
   let SharedList = shareNotice?.data;
 
-  useEffect(() => {
-    shareNoticeRefetch();
-    renderNotices;
-  }, []);
-
   const renderNotices = (): ReactNode => {
     let shareNoticeLi: any[] = [];
 
@@ -27,12 +22,18 @@ const ShareNoticeContainer = () => {
           key={share.boardId}
           shareId={share.shareId}
           title={share.title}
+          boardId={share.boardId}
         />,
       );
     });
 
     return shareNoticeLi;
   };
+
+  useEffect(() => {
+    shareNoticeRefetch();
+    renderNotices();
+  }, []);
 
   return (
     <>
