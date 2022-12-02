@@ -92,6 +92,9 @@ function Home() {
     });
   });
 
+  const setScroll = () => {
+    setScrollIndex(1);
+  };
   // const wheelHandler = (e: { preventDefault: any; deltaY: number }) => {
   // e.preventDefault();
   // scrollY === pageYOffset(구버전 호환성위해 사용)
@@ -182,7 +185,7 @@ function Home() {
 
   return (
     <>
-      <TopBtn />
+      <TopBtn setScroll={setScroll} />
       <ScrollImg />
       <Dots scrollIdx={scrollIdx} />
       <div className="flex-col items-center justify-center h-screen">

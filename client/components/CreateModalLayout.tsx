@@ -282,7 +282,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     <>
       <div className="flex flex-col items-center justify-between w-full h-full p-5 overflow-auto">
         {EditLoading ? (
-          <div className="absolute top-60 w-1/2 h-1/3 rounded-lg z-50 flex flex-col justify-center items-center bg-mainOrange/70 font-SCDream5 text-lg text-bgWhite">
+          <div className="absolute z-50 flex flex-col items-center justify-center w-1/2 text-lg rounded-lg top-60 h-1/3 bg-mainOrange/70 font-SCDream5 text-bgWhite">
             <div className="z-10 ml-0.5 text-lg md:text-lg lg:text-lg text-bgWhite font-SCDream5">
               여러분의 추억을 수정하고있습니다
             </div>
@@ -292,7 +292,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
           </div>
         ) : null}
         {postLoading ? (
-          <div className="absolute top-60 w-1/2 h-1/3 rounded-lg z-50 flex flex-col justify-center items-center bg-mainOrange/70 font-SCDream5 text-lg text-bgWhite">
+          <div className="absolute z-50 flex flex-col items-center justify-center w-1/2 text-lg rounded-lg top-60 h-1/3 bg-mainOrange/70 font-SCDream5 text-bgWhite">
             <div className="z-10 ml-0.5 text-lg md:text-lg lg:text-lg text-bgWhite font-SCDream5">
               여러분의 추억을 저장하고있습니다
             </div>
