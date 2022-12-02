@@ -18,7 +18,9 @@ const Calendar = () => {
 
   return (
     <>
-      <CalendarPageLayout />
+      <div className="justify-center items-center w-full h-full bg-bgGray overflow-auto">
+        <CalendarPageLayout />
+      </div>
     </>
   );
 };
