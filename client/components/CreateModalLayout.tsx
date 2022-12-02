@@ -13,9 +13,12 @@ import {
   selectMonthState,
   selectYearState,
   pickDayState,
+  editModeState,
+  boardItemState,
 } from "../recoil/calendarAtom";
 import usePostBoard from "../hooks/calendar/usePostBoard";
-
+import usePatchBoard from "../hooks/calendar/usePatchBoard";
+import useCheckDate from "../hooks/calendar/useCheckDate";
 //yeowool
 import SelectBar from "./SelectBar";
 
@@ -24,6 +27,9 @@ interface Props {
 }
 
 const CreateModalLayout = ({ handleCloseClick }: Props) => {
+  const [editMode, setEditMode] = useRecoilState(editModeState);
+  const [boardData, setBoardData] = useRecoilState(boardItemState);
+
   const [date, setDate] = useRecoilState(pickDayState);
   const [category, setCategory] = useState<string>("");
   const [title, setTitle] = useState<string>("");
@@ -33,10 +39,22 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   const [showImg, setShowImg] = useState<string>("");
   const [context, setContext] = useState<string>("");
   const [share, setShare] = useState<any>([]);
+  const [datePick, setDatePick] = useState<string>("");
+
+  // console.log(boardData.data[0].boardId);
 
   const changeDate = (e: any) => {
-    setDate(e.target.value);
-    console.log(date);
+    // console.log("바뀜?")
+    setDatePick(e.target.value);
+
+    if (checkDateData?.data.status) {
+      setDate(e.target.value);
+    } else {
+      window.alert(
+        "해당날짜는 게시글이 등록되어있습니다! \n다른 날짜를 선택해주세요",
+      );
+    }
+    // console.log(checkDateData);
   };
 
   const changeCategory = (e: any) => {
@@ -72,7 +90,12 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     setShowImg("");
   };
 
-  const { data: submitRes, mutate: submitMutate } = usePostBoard({
+  const {
+    data: submitRes,
+    mutate: submitMutate,
+    isSuccess: postSuccess,
+    isLoading: postLoading,
+  } = usePostBoard({
     category: category,
     content: context,
     created: date,
@@ -81,6 +104,40 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     tags: share,
     title: title,
     url: youtubeLink,
+  });
+
+  let boardId: number | null = null;
+
+  if (boardData.data) {
+    boardId = boardData.data[0].boardId;
+  }
+
+  const {
+    data: EditRes,
+    mutate: EditMute,
+    isLoading: EditLoading,
+    isSuccess: EditSuccess,
+  } = usePatchBoard({
+    category: category,
+    content: context,
+    created: date,
+    music: music,
+    photo: photo,
+    tags: share,
+    title: title,
+    url: youtubeLink,
+    boardId: boardId,
+  });
+
+  let splitDate = datePick.split("-");
+  let year = splitDate[0];
+  let month = splitDate[1];
+  let day = splitDate[2];
+
+  const { data: checkDateData, refetch: checkDateRefetch } = useCheckDate({
+    day,
+    month,
+    year,
   });
 
   const handleSubmit = () => {
@@ -94,9 +151,30 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
       title: title,
       url: youtubeLink,
     };
-    submitMutate(submitData);
+
+    const editData = {
+      category: category,
+      content: context,
+      created: date,
+      music: music,
+      photo: photo,
+      tags: share,
+      title: title,
+      url: youtubeLink,
+      boardId: boardId,
+    };
+
+    if (editMode) {
+      EditMute(editData);
+    } else {
+      submitMutate(submitData);
+    }
     // console.log(submitRes)
-    alert("등록되었습니다");
+  };
+
+  const handleCancel = () => {
+    handleCloseClick();
+    setEditMode(false);
 
     setDate("");
     setCategory("");
@@ -110,12 +188,96 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     deleteImg();
   };
 
+  useEffect(() => {
+    if (postSuccess && !editMode) {
+      alert("등록되었습니다");
+      handleCloseClick();
+
+      setEditMode(false);
+
+      setDate("");
+      setCategory("");
+      setTitle("");
+      setMusic("");
+      setYoutubeLink("");
+      setPhoto("");
+      setShowImg("");
+      setContext("");
+      setShare([]);
+      deleteImg();
+      window.location.reload();
+    }
+
+    if (EditSuccess && editMode) {
+      alert("수정되었습니다");
+      handleCloseClick();
+
+      setEditMode(false);
+
+      setDate("");
+      setCategory("");
+      setTitle("");
+      setMusic("");
+      setYoutubeLink("");
+      setPhoto("");
+      setShowImg("");
+      setContext("");
+      setShare([]);
+      deleteImg();
+      window.location.reload();
+    }
+
+    if (editMode) {
+      setCategory(boardData.data[0].category);
+      setTitle(boardData.data[0].title);
+      setMusic(boardData.data[0].music);
+      setYoutubeLink(boardData.data[0].url);
+      setPhoto("");
+      setShowImg(boardData.data[0].photo);
+      setContext(boardData.data[0].content);
+      setShare(boardData.data[0].tagsMembers);
+    } else if (!editMode) {
+      setCategory("");
+      setTitle("");
+      setMusic("");
+      setYoutubeLink("");
+      setPhoto("");
+      setShowImg("");
+      setContext("");
+      setShare([]);
+    }
+
+    if (datePick !== "") {
+      checkDateRefetch();
+    }
+  }, [postSuccess, editMode, EditSuccess, datePick]);
+
   return (
     <>
       <div className="flex flex-col items-center justify-between w-full h-full p-5 overflow-auto">
+        {EditLoading ? (
+          <div className="absolute top-60 w-1/2 h-1/3 rounded-lg z-50 flex flex-col justify-center items-center bg-mainOrange/70 font-SCDream5 text-lg text-bgWhite">
+            <div className="z-10 ml-0.5 text-lg md:text-lg lg:text-lg text-bgWhite font-SCDream5">
+              여러분의 추억을 수정하고있습니다
+            </div>
+            <div className="z-10 ml-0.5 text-sm md:text-sm lg:text-sm text-bgWhite font-SCDream5">
+              잠시만 기다려주세요
+            </div>
+          </div>
+        ) : null}
+        {postLoading ? (
+          <div className="absolute top-60 w-1/2 h-1/3 rounded-lg z-50 flex flex-col justify-center items-center bg-mainOrange/70 font-SCDream5 text-lg text-bgWhite">
+            <div className="z-10 ml-0.5 text-lg md:text-lg lg:text-lg text-bgWhite font-SCDream5">
+              여러분의 추억을 저장하고있습니다
+            </div>
+            <div className="z-10 ml-0.5 text-sm md:text-sm lg:text-sm text-bgWhite font-SCDream5">
+              잠시만 기다려주세요
+            </div>
+          </div>
+        ) : null}
         <div className="flex flex-row items-center justify-around w-full h-fit">
           <div className="w-1/4 h-full">
-            <LeftArrow onClick={handleCloseClick} />
+            <LeftArrow onClick={handleCancel} />
           </div>
 
           <div className="flex flex-col items-end justify-center w-3/4 h-full">

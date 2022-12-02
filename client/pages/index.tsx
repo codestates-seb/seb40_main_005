@@ -260,10 +260,24 @@ function Home() {
         >
           {/* 반응형 이슈 */}
           <div className="flex flex-col items-center justify-center w-full pl-5 pr-5 sm:items-start h-1/2 sm:pl-28 sm:pr-20">
-            <div className="flex flex-row items-center justify-center text-2xl text-gray-700 font-SCDream3 md:text-3xl lg:text-4xl">
+            <motion.div
+              className="flex flex-row items-center justify-center text-2xl text-gray-700 font-SCDream3 md:text-3xl lg:text-4xl"
+              variants={logoAnimate}
+              initial={"offscreen"}
+              whileInView={"onscreen"}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ staggerChildren: 0.5 }}
+            >
               오늘 나에게
-            </div>
-            <div className="flex flex-col items-center w-full mt-4 sm:flex-row sm:items-start h-fit sm:mt-5">
+            </motion.div>
+            <motion.div
+              className="flex flex-col items-center w-full mt-4 sm:flex-row sm:items-start h-fit sm:mt-5"
+              variants={landingH1TextAnimate}
+              initial={"offscreen"}
+              whileInView={"onscreen"}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ staggerChildren: 0.5 }}
+            >
               <div className="relative items-center justify-center w-fit h-13">
                 <div className="flex flex-row text-3xl text-gray-700 font-SCDream6 md:text-4xl lg:text-5xl">
                   가장 특별했던 사진
@@ -273,7 +287,7 @@ function Home() {
               <div className="flex flex-row mt-2 text-2xl text-gray-700 font-SCDream3 md:text-3xl lg:text-4xl sm:mt-1">
                 이 뭘까?
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 
@@ -283,10 +297,24 @@ function Home() {
         >
           {/* 반응형 이슈 */}
           <div className="z-10 flex flex-col items-center justify-center w-full pl-5 pr-5 sm:items-start h-1/2 sm:pl-28 sm:pr-20">
-            <div className="text-2xl text-gray-200 font-SCDream3 md:text-3xl lg:text-4xl">
+            <motion.div
+              className="text-2xl text-gray-200 font-SCDream3 md:text-3xl lg:text-4xl"
+              variants={logoAnimate}
+              initial={"offscreen"}
+              whileInView={"onscreen"}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ staggerChildren: 0.5 }}
+            >
               오늘 나의
-            </div>
-            <div className="flex flex-col items-center w-full mt-4 sm:flex-row sm:items-start h-fit sm:mt-5">
+            </motion.div>
+            <motion.div
+              className="flex flex-col items-center w-full mt-4 sm:flex-row sm:items-start h-fit sm:mt-5"
+              variants={landingH1TextAnimate}
+              initial={"offscreen"}
+              whileInView={"onscreen"}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ staggerChildren: 0.5 }}
+            >
               <div className="relative items-center justify-center w-fit h-13">
                 <div className="z-10 text-3xl text-gray-200 font-SCDream6 md:text-4xl lg:text-5xl">
                   무드에 맞는 음악
@@ -296,7 +324,7 @@ function Home() {
               <div className="mt-2 text-2xl text-gray-200 font-SCDream3 md:text-3xl lg:text-4xl sm:mt-1">
                 이 뭘까?
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 
@@ -306,10 +334,24 @@ function Home() {
         >
           {/* 반응형 이슈 */}
           <div className="z-10 flex flex-col items-center justify-center w-full pl-5 pr-5 sm:items-start h-1/2 sm:pl-28 sm:pr-20">
-            <div className="text-2xl text-gray-700 font-SCDream3 md:text-3xl lg:text-4xl">
+            <motion.div
+              className="text-2xl text-gray-700 font-SCDream3 md:text-3xl lg:text-4xl"
+              variants={logoAnimate}
+              initial={"offscreen"}
+              whileInView={"onscreen"}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ staggerChildren: 0.5 }}
+            >
               오늘 나를
-            </div>
-            <div className="flex flex-col items-center w-full mt-4 sm:flex-row sm:items-start h-fit sm:mt-5">
+            </motion.div>
+            <motion.div
+              className="flex flex-col items-center w-full mt-4 sm:flex-row sm:items-start h-fit sm:mt-5"
+              variants={landingH1TextAnimate}
+              initial={"offscreen"}
+              whileInView={"onscreen"}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ staggerChildren: 0.5 }}
+            >
               <div className="relative items-center justify-center w-fit h-13">
                 <div className="z-10 text-3xl text-gray-700 font-SCDream6 md:text-4xl lg:text-5xl">
                   설명해주는 문구
@@ -319,7 +361,7 @@ function Home() {
               <div className="mt-2 text-2xl text-gray-700 font-SCDream3 md:text-3xl lg:text-4xl sm:mt-1">
                 는 뭘까?
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 
@@ -329,10 +371,24 @@ function Home() {
         >
           {/* 반응형 이슈 */}
           <div className="z-10 flex flex-col items-center justify-center w-full pl-5 pr-5 sm:items-start h-1/2 sm:pl-28 sm:pr-20">
-            <div className="text-2xl text-gray-700 font-SCDream3 md:text-3xl lg:text-4xl">
+            <motion.div
+              className="text-2xl text-gray-700 font-SCDream3 md:text-3xl lg:text-4xl"
+              variants={logoAnimate}
+              initial={"offscreen"}
+              whileInView={"onscreen"}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ staggerChildren: 0.5 }}
+            >
               인상깊은 나의
-            </div>
-            <div className="flex flex-col items-center w-full mt-4 sm:flex-row sm:items-start h-fit sm:mt-5">
+            </motion.div>
+            <motion.div
+              className="flex flex-col items-center w-full mt-4 sm:flex-row sm:items-start h-fit sm:mt-5"
+              variants={landingH1TextAnimate}
+              initial={"offscreen"}
+              whileInView={"onscreen"}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ staggerChildren: 0.5 }}
+            >
               <div className="relative items-center justify-center w-fit h-13">
                 <div className="z-10 text-3xl text-gray-700 font-SCDream6 md:text-4xl lg:text-5xl">
                   하루를 공유
@@ -342,7 +398,7 @@ function Home() {
               <div className="mt-2 text-2xl text-gray-700 font-SCDream3 md:text-3xl lg:text-4xl sm:mt-1">
                 할 수는 없을까?
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 
@@ -352,10 +408,23 @@ function Home() {
         >
           {/* 반응형 이슈 */}
           <div className="z-10 flex flex-col items-center justify-center w-full pl-5 pr-3 sm:flex-row sm:items-center h-fit sm:pl-3 sm:pr-5">
-            <div className="text-base text-gray-100 font-SCDream3 md:text-xl lg:text-3xl">
+            <motion.div
+              className="text-base text-gray-100 font-SCDream3 md:text-xl lg:text-3xl"
+              variants={logoAnimate}
+              initial={"offscreen"}
+              whileInView={"onscreen"}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ staggerChildren: 0.5 }}
+            >
               당신의 모든 순간들을
-            </div>
-            <div className="flex flex-col items-center justify-center md:flex-row lg:flex-row w-fit">
+            </motion.div>
+            <motion.div className="flex flex-col items-center justify-center md:flex-row lg:flex-row w-fit"
+              variants={landingH1TextAnimate}
+              initial={"offscreen"}
+              whileInView={"onscreen"}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ staggerChildren: 0.5 }}
+            >
               <div className="flex items-center ml-3 mr-3 justify-left w-fit">
                 <Image
                   src="/images/logo export(white).svg"
@@ -366,7 +435,7 @@ function Home() {
               <div className="text-base text-gray-100 font-SCDream3 md:text-xl lg:text-3xl">
                 와 함께 하세요!
               </div>
-            </div>
+            </motion.div>
           </div>
           <div className="flex flex-row items-center mt-10 justify-left w-fit">
             <Link href="/login">

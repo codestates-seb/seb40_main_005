@@ -49,6 +49,9 @@ const AddPhotoContainer = ({ photo, setPhoto, showImg, setShowImg }: Props) => {
                 <div className="mt-2 text-sm text-left text-gray-400 font-SCDream5 md:text-sm lg:text-sm">
                   클릭하여 이미지를 첨부하세요!
                 </div>
+                <div className="mt-2 text-xs text-left text-mainOrange font-SCDream5 md:text-xs lg:text-xs">
+                  사진은 10MB 이하만 업로드 가능합니다!
+                </div>
               </label>
             </form>
           )}

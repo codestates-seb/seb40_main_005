@@ -10,6 +10,7 @@ import {
   pickDayState,
   readModalOpenState,
   boardItemState,
+  boardSharedState
 } from "../recoil/calendarAtom";
 import useGetBoardItem from "../hooks/calendar/useGetBoardItem";
 import MyBoard from "./MyBoard";
@@ -44,6 +45,7 @@ const DayBlock = ({
   const [date, setDate] = useRecoilState(pickDayState);
   const [readOpen, setReadOpen] = useRecoilState(readModalOpenState);
   const [boardItemValue, setBoardItemValue] = useRecoilState(boardItemState);
+  const [shareValue, setShareValue] = useRecoilState(boardSharedState);
 
   const [boardId, setBoardId] = useState<number | null>(null);
 
@@ -101,6 +103,7 @@ const DayBlock = ({
     }
 
     setDate(`${currYear.toString()}-${realMonth}-${realDay}`);
+    setShareValue(shared)
   };
 
   const renderPosts = () => {
