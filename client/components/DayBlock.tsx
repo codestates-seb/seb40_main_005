@@ -86,10 +86,9 @@ const DayBlock = ({
 
     setDate(`${currYear.toString()}-${realMonth}-${realDay}`);
 
-    console.log("active");
   };
 
-  const handleBoardClick = (boardId: number, shared: number) => {
+  const handleBoardClick = (boardId: number, shared: boolean) => {
     setReadOpen(true);
     setBoardId(boardId);
 
