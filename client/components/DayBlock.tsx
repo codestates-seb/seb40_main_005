@@ -64,10 +64,13 @@ const DayBlock = ({
       setBoardItemValue(boardItem);
     }
 
+  }, [boardItem]);
+
+  useEffect(()=> {
     if (boardId) {
       boardItemRefetch();
     }
-  }, [boardItem, boardId]);
+  }, [boardId])
 
   const handleBtnClick = () => {
     setOpen(true);
