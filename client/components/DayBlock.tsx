@@ -63,14 +63,13 @@ const DayBlock = ({
     if (boardItem) {
       setBoardItemValue(boardItem);
     }
+  }, [boardItem, currMonth]);
 
-  }, [boardItem]);
-
-  useEffect(()=> {
+  useEffect(() => {
     if (boardId) {
       boardItemRefetch();
     }
-  }, [boardId])
+  }, [boardId]);
 
   const handleBtnClick = () => {
     setOpen(true);
@@ -88,7 +87,6 @@ const DayBlock = ({
     }
 
     setDate(`${currYear.toString()}-${realMonth}-${realDay}`);
-
   };
 
   const handleBoardClick = (boardId: number, shared: boolean) => {
