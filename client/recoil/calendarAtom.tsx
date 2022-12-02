@@ -26,11 +26,6 @@ const pickDayState = atom({
   default: "",
 });
 
-const categoryState = atom({
-  key: "categoryState",
-  default: "",
-});
-
 const readModalOpenState = atom({
   key: "readModalOpenState",
   default: false,
@@ -39,6 +34,11 @@ const readModalOpenState = atom({
 const boardItemState = atom<any>({
   key: "boardItemState",
   default: "123",
+});
+
+const categorySelectState = atom({
+  key: "categorySelectState",
+  default: false,
 });
 
 const boardSharedState = atom<boolean | null>({
@@ -59,6 +59,7 @@ export {
   pickDayState,
   readModalOpenState,
   boardItemState,
+  categorySelectState,
   boardSharedState,
   editModeState
 };

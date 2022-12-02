@@ -20,33 +20,12 @@ const SelectBar = ({ setCategory }: CategoryType) => {
     categoryRefetch();
     if (categoryTitie !== undefined) {
       const category = categoryTitie.data;
-      console.log(category);
       setCategoryList(category);
     }
   };
-  // useEffect(() => {
-  //   categoryRefetch();
-  //   if (categoryTitie !== undefined) {
-  //     // console.log(categoryTitie.data);
-  //     const category = categoryTitie.data;
-  //     console.log(category);
-  //     setCategoryList(category);
-  //   }
-  // }, []);
-  // console.log(categoryTitie);
-  // event: React.ChangeEvent<HTMLSelectElement>
-  const selectChange = (event: any) => {
+  const selectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
-    if (select) {
-      isSelect("");
-      setCategory(value);
-    } else if (!select) {
-      setCategory(value);
-    }
-    // isSelect(value);
-    // console.log(value);
-    // category(value);
-    console.log(select);
+    setCategory(value);
   };
 
   const selectedControl = (e: any) => {
@@ -60,9 +39,6 @@ const SelectBar = ({ setCategory }: CategoryType) => {
     if (e.keyCode == 13) {
       const value = e.target.value;
       setCategory(value);
-      // isSelect(value);
-      // category(value);
-      console.log(select);
     }
   };
 
@@ -79,31 +55,35 @@ const SelectBar = ({ setCategory }: CategoryType) => {
           ></input>
           <button
             onClick={selectedControl}
-            className="h-6 bg-btnOrange hover:bg-lightOrange text-white font-bold py-0.5 px-4 rounded-md"
+            className="h-6 px-1.5 bg-btnOrange SCDream7 text-[0.8rem]  lg:text-sm hover:bg-lightOrange text-white font-bold lg:py-0.5 lg:px-5 rounded-md"
           >
             선택
           </button>
         </div>
       ) : (
-        <div className="flex flex-row justify-end text-sm SCDream3">
+        <div className="flex flex-row justify-end text-sm ">
           <select
             id="select-box"
             onClick={getCtategoryClick}
             onChange={selectChange}
             className=""
           >
-            <option>개인 카테고리</option>
+            <option className="SCDream3">나의 카테고리</option>
             {categoryList.map(option => (
-              <option key={option.categoryTitle} value={option.categoryTitle}>
+              <option
+                className="SCDream3"
+                key={option.categoryTitle}
+                value={option.categoryTitle}
+              >
                 {option.categoryTitle}
               </option>
             ))}
           </select>
           <button
-            className="h-6 bg-btnOrange hover:bg-lightOrange text-white font-bold py-0.5 px-4 rounded-md"
+            className="h-6 px-1.5 bg-btnOrange SCDream7 text-[0.8rem]  lg:text-sm hover:bg-lightOrange text-white font-bold lg:py-0.5 lg:px-4 rounded-md"
             onClick={selectedControl}
           >
-            직접입력
+            입력
           </button>
         </div>
       )}
