@@ -76,7 +76,7 @@ const CalendarPageLayout = () => {
           <CreateModalLayout handleCloseClick={handleCloseBtnClick} />
         </BoardContainer>
         <BoardContainer boardRef={CreateBoardModal}>
-          <ReadModalLayout handleCloseClick={handleReadCloseBtnClick} />
+          <ReadModalLayout handleReadCloseClick={handleReadCloseBtnClick} handleOpenBtnClick={handleOpenBtnClick}/>
         </BoardContainer>
         <Sidebar />
         <div className="w-full p-4 lg:pr-20">

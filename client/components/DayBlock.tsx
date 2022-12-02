@@ -10,6 +10,7 @@ import {
   pickDayState,
   readModalOpenState,
   boardItemState,
+  boardSharedState
 } from "../recoil/calendarAtom";
 import useGetBoardItem from "../hooks/calendar/useGetBoardItem";
 import MyBoard from "./MyBoard";
@@ -50,6 +51,7 @@ PropsValue) => {
   const [date, setDate] = useRecoilState(pickDayState);
   const [readOpen, setReadOpen] = useRecoilState(readModalOpenState);
   const [boardItemValue, setBoardItemValue] = useRecoilState(boardItemState);
+  const [shareValue, setShareValue] = useRecoilState(boardSharedState);
 
   const { data: boardItem, refetch: boardItemRefetch } = useGetBoardItem({
     boardId,
@@ -99,6 +101,7 @@ PropsValue) => {
     }
 
     setDate(`${currYear.toString()}-${realMonth}-${realDay}`);
+    setShareValue(shared)
   };
 
   return (

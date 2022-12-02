@@ -33,12 +33,32 @@ const categoryState = atom({
 
 const readModalOpenState = atom({
   key: "readModalOpenState",
-  default : false
-})
+  default: false,
+});
 
 const boardItemState = atom<any>({
   key: "boardItemState",
-  default : "123"
+  default: "123",
+});
+
+const boardSharedState = atom<boolean | null>({
+  key: "boardSharedState",
+  default: false,
+});
+
+const editModeState = atom<boolean>({
+  key: "editModeState",
+  default : false
 })
 
-export {modalOpenState, selectYearState, selectMonthState, selectDayState, pickDayState, readModalOpenState, boardItemState};
+export {
+  modalOpenState,
+  selectYearState,
+  selectMonthState,
+  selectDayState,
+  pickDayState,
+  readModalOpenState,
+  boardItemState,
+  boardSharedState,
+  editModeState
+};
