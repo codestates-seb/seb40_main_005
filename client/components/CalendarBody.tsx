@@ -68,7 +68,6 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
   }, [currMonth]);
 
   const boardList = boardsData?.data;
-  console.log(boardList);
 
   while (monthStart <= monthEnd) {
     //해당 달의 일 수만큼 반복
@@ -90,8 +89,9 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
         );
       } else {
         let hasPost = false;
+        let posts: any[] = [];
 
-        boardList?.forEach((el: Boards) => {
+        boardList?.map((el: Boards) => {
           let createdYear = parseInt(el.createdPost[0]);
           let createdMonth = parseInt(el.createdPost[1]);
           let createdDay = parseInt(el.createdPost[2]);
@@ -101,41 +101,22 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
             createdMonth === currMonth &&
             startDate === createdDay
           ) {
-            days.push(
-              <DayBlock
-                shared={el.shared}
-                hasBoard={true}
-                currMonth={currMonth}
-                currYear={currYear}
-                currDay={startDate}
-                key={startDate}
-                post={el.title}
-                boardId={el.boardId}
-              >
-                {startDate}
-              </DayBlock>,
-            );
-
-            hasPost = true;
+            posts.push(el);
           }
         });
 
-        if (!hasPost) {
-          days.push(
-            <DayBlock
-              shared={null}
-              hasBoard={false}
-              currMonth={currMonth}
-              currYear={currYear}
-              currDay={startDate}
-              key={startDate}
-              post={null}
-              boardId={null}
-            >
-              {startDate}
-            </DayBlock>,
-          );
-        }
+        days.push(
+          <DayBlock
+            currMonth={currMonth}
+            currYear={currYear}
+            currDay={startDate}
+            key={startDate}
+            boards={posts}
+          >
+            {startDate}
+          </DayBlock>,
+        );
+
         monthStart = addDays(monthStart, 1);
         startDate = getDate(monthStart);
       }

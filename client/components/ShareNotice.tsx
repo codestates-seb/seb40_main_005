@@ -1,9 +1,16 @@
+import useGetAcceptNotice from "../hooks/notice/useGetAcceptNotice";
+import useGetDenyNotice from "../hooks/notice/useGetDenyNotice";
+
 interface Props {
   shareId: string;
   title: string;
+  boardId: string;
 }
 
-const ShareNotice = ({ shareId, title }: Props) => {
+const ShareNotice = ({ shareId, title, boardId }: Props) => {
+  const { refetch: acceptNoticeRefetch } = useGetAcceptNotice(boardId);
+  const { refetch: denyNoticeRefetch } = useGetDenyNotice(boardId);
+
   return (
     <>
       <div className="font-SCDream4 bg-[#FEFEFE] my-1">
@@ -16,7 +23,11 @@ const ShareNotice = ({ shareId, title }: Props) => {
           </strong>
           {/* 체크버튼 */}
           <div>
-            <button onClick={() => {}} type="button" className="px-2 md:px-3">
+            <button
+              onClick={() => acceptNoticeRefetch()}
+              type="button"
+              className="px-2 md:px-3"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -33,7 +44,7 @@ const ShareNotice = ({ shareId, title }: Props) => {
               </svg>
             </button>
             {/* 엑스버튼 */}
-            <button onClick={() => {}} type="button">
+            <button onClick={() => denyNoticeRefetch()} type="button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
