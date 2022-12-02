@@ -15,6 +15,7 @@ import {
   pickDayState,
   editModeState,
   boardItemState,
+  readModalOpenState
 } from "../recoil/calendarAtom";
 import usePostBoard from "../hooks/calendar/usePostBoard";
 import usePatchBoard from "../hooks/calendar/usePatchBoard";
@@ -39,22 +40,22 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   const [showImg, setShowImg] = useState<string>("");
   const [context, setContext] = useState<string>("");
   const [share, setShare] = useState<any>([]);
-  const [datePick, setDatePick] = useState<string>("");
+  const [pickDate, SetPickDate] = useState<string>("");
+  const [readOpen, setReadOpen] = useRecoilState(readModalOpenState);
 
-  // console.log(boardData.data[0].boardId);
 
   const changeDate = (e: any) => {
     // console.log("바뀜?")
-    setDatePick(e.target.value);
-
-    if (checkDateData?.data.status) {
-      setDate(e.target.value);
-    } else {
-      window.alert(
-        "해당날짜는 게시글이 등록되어있습니다! \n다른 날짜를 선택해주세요",
-      );
-    }
-    // console.log(checkDateData);
+    setDate(e.target.value);
+    // if (!checkDateLoading){
+    //   if (checkDateData?.data.status === true) {
+    //     setDate(e.target.value);
+    //   } else {
+    //     window.alert(
+    //       "해당날짜는 게시글이 등록되어있습니다! \n다른 날짜를 선택해주세요",
+    //     );
+    //   }
+    // }
   };
 
   const changeCategory = (category: string) => {
@@ -129,12 +130,19 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     boardId: boardId,
   });
 
-  let splitDate = datePick.split("-");
+  let splitDate = date.split("-");
   let year = splitDate[0];
   let month = splitDate[1];
   let day = splitDate[2];
 
-  const { data: checkDateData, refetch: checkDateRefetch } = useCheckDate({
+  // console.log(year, month, day);
+
+  const {
+    data: checkDateData,
+    refetch: checkDateRefetch,
+    isLoading: checkDateLoading,
+    isSuccess: checkDateSuccess
+  } = useCheckDate({
     day,
     month,
     year,
@@ -246,11 +254,23 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
       setContext("");
       setShare([]);
     }
+  }, [postSuccess, editMode, EditSuccess]);
 
-    if (datePick !== "") {
+  useEffect(() => {
+    if (!readOpen){
       checkDateRefetch();
     }
-  }, [postSuccess, editMode, EditSuccess, datePick]);
+  }, [date]);
+
+  useEffect(()=> {
+    if (checkDateData?.data.status === false) {
+      window.alert(
+        "해당날짜는 게시글이 등록되어있습니다! \n다른 날짜를 선택해주세요",
+      );
+      setDate("");
+    }
+  }, [checkDateData])
+  // console.log(checkDateData);
 
   return (
     <>

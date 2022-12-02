@@ -68,6 +68,7 @@ public class AuthenticationController {
     @ApiOperation(value = "인증 번호 발송", notes = "가입하려하는 이메일로 인증번호를 발송한다.")
     @PostMapping("/email")
     public void sendAuthEmail(@Valid @RequestBody EmailRequestDto emailRequestDto) throws Exception {
+        log.info("인증 번호 발송 요청");
         mailService.sendAuthEmail(emailRequestDto.getEmail());
     }
 
@@ -81,6 +82,7 @@ public class AuthenticationController {
     @ApiOperation(value = "인증번호 검증", notes = "입력한 인증번호가 맞는지 확인한다.")
     @PostMapping("/email/verify")
     public ResponseEntity getEmailAuthenticationNumber(@Valid @RequestBody AuthNumDto authNumDto) throws BusinessLogicException {
+        log.info("인증 번호 검증 요청");
         try {
             mailService.checkAuthNum(authNumDto.getAuthNum(), authNumDto.getEmail());
         } catch (BusinessLogicException businessLogicException) {
