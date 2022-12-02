@@ -3,6 +3,7 @@ package com.gallendar.gradle.server.members.service;
 import com.gallendar.gradle.server.exception.BusinessLogicException;
 import com.gallendar.gradle.server.exception.ExceptionCode;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import javax.mail.internet.MimeMessage;
 
 @RequiredArgsConstructor
 @Component
+@Slf4j
 public class SendEmail {
 
     private final JavaMailSender emailSender;
@@ -20,6 +22,7 @@ public class SendEmail {
     public static final String authNum = CreateAuthNum.createNum();
 
     public MimeMessage createEmailForm(String email) throws MessagingException {
+        log.info("메일에 담길 내용들 설정 시작");
         String setFrom = "5kamjas.gallender@gmail.com";
         String title = "Gallendar 인증 번호";
 
@@ -53,8 +56,10 @@ public class SendEmail {
     }
 
     public void send(String email) throws Exception {
+        log.info("해당 이메일 주소로 메일에 담길 내용 생성");
         MimeMessage message = createEmailForm(email);
         try {
+            log.info("redis 에 인증번호, 이메일 주소, 유효시간 저장한 뒤 메일 전송");
             redisUtil.setDataExpire(authNum, email, 60 * 5L);
             emailSender.send(message);
         } catch (MailException mailException) {
@@ -64,6 +69,7 @@ public class SendEmail {
     }
 
     public String verifyEmail(String authNum, String email) {
+        log.info("유저가 입력한 이메일로부터 받은 인증번호가 맞는지 확인");
         String memberEmail = redisUtil.getData(authNum);
 
         if (memberEmail == null) {
@@ -71,6 +77,7 @@ public class SendEmail {
         } else if (!memberEmail.equals(email)) {
             throw new BusinessLogicException(ExceptionCode.AUTH_NUMBER_MISS_MATCH);
         } else {
+            log.info("redis 에서 해당 유저의 인증번호 관련 정보 삭제");
             redisUtil.deleteData(authNum);
             return "SUCCESSFUL!";
 
