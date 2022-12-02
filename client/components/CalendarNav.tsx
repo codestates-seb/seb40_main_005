@@ -4,7 +4,7 @@ import ShareNoticeContainer from "./ShareNoticeContainer";
 import { useRecoilState } from "recoil";
 import { isLoginState } from "../recoil/authAtom";
 import { useRouter } from "next/router";
-import ShippingNoticeContainer from "./shippingNoticeContainer";
+import ShippingNoticeContainer from "./ShippingNoticeContainer";
 
 const CalendarNav = () => {
   const [isShareOpen, setIsShareOpen] = useState(false);
