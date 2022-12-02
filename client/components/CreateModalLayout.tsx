@@ -396,12 +396,11 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
         </div>
 
         <div className="flex flex-row items-center justify-center w-full h-8 mt-5">
-          <BoardModalBtn onClick={handleSubmit}>저 장</BoardModalBtn>
-          {category !== "" && title !== "" ? (
+          {category !== "" && title !== "" && photo !== "" ? (
             <BoardModalBtn onClick={handleSubmit}>저 장</BoardModalBtn>
           ) : (
             <div className="flex flex-col items-center justify-center w-full mt-3 text-sm h-fit font-SCDream5 text-mainOrange">
-              카테고리와 제목은 필수 입력입니다!
+              카테고리와 제목과 사진은 필수 입력입니다!
             </div>
           )}
         </div>
