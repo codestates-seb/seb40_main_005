@@ -6,12 +6,12 @@ import {
 import getBoards from "../../apis/board/getBoards";
 
 interface Props {
-  currMonth: number;
-  currYear: number;
+  curMonth: string;
+  curYear: string;
 }
 
-const useGetBoards = ({ currMonth, currYear }: Props) => {
-  return useQuery(["get/boards"], () => getBoards({ currMonth, currYear }), {
+const useGetBoards = ({ curMonth, curYear }: Props) => {
+  return useQuery(["get/boards"], () => getBoards({ curMonth, curYear }), {
     enabled: false,
   });
 };
