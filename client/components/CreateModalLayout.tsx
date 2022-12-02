@@ -250,17 +250,19 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   // console.log("acitve");
 
   useEffect(() => {
-    if (checkDateData?.data.status === false) {
-      window.alert(
-        "해당날짜는 게시글이 등록되어있습니다! \n다른 날짜를 선택해주세요",
-      );
-      setDate("");
-      if (readOpen || open) {
-        if (checkDateData?.data.status === false) {
-          window.alert(
-            "해당날짜는 게시글이 등록되어있습니다! \n다른 날짜를 선택해주세요",
-          );
-          setDate("");
+    if (readOpen || open) {
+      if (checkDateData?.data.status === false) {
+        window.alert(
+          "해당날짜는 게시글이 등록되어있습니다! \n다른 날짜를 선택해주세요",
+        );
+        setDate("");
+        if (readOpen || open) {
+          if (checkDateData?.data.status === false) {
+            window.alert(
+              "해당날짜는 게시글이 등록되어있습니다! \n다른 날짜를 선택해주세요",
+            );
+            setDate("");
+          }
         }
       }
     }
