@@ -30,10 +30,10 @@ const MyPage = () => {
       {sideBar ? <MyPageSidebarToggle onClick={handleChangeSideBar} /> : null}
       {/* <MyPageSidebarToggle onClick={handleChangeSideBar} /> */}
 
-      <div className="justify-center items-center w-full h-screen bg-bgGray overflow-auto">
-        <div className="flex flex-col p-3 md:pt-16 md:pb-14 ">
-          <div className="flex flex-row  justify-between md:justify-center items-center">
-            <Link href="/">
+      <div className="items-center justify-center w-full h-screen p-3 overflow-auto md:pt-4 bg-bgGray">
+        <div className="flex flex-col md:pb-14 ">
+          <div className="flex flex-row items-center justify-between md:justify-center">
+            <Link href="/calendar">
               <a>
                 <Image
                   className="cursor-pointer "
@@ -43,7 +43,7 @@ const MyPage = () => {
                 />
               </a>
             </Link>
-            <div className="md:hidden cursor-pointer">
+            <div className="cursor-pointer md:hidden">
               <svg
                 onClick={handleChangeSideBar}
                 width="24"

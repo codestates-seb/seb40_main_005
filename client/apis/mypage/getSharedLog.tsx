@@ -3,7 +3,7 @@ import axios from "axios";
 
 const getSharedLog = async () => {
   return await axios
-    .get(`/member/tag`, {
+    .get(`/member/tag?page=0&size=8`, {
       baseURL: process.env.NEXT_PUBLIC_API_URL,
       headers: {
         withCredentials: true,
