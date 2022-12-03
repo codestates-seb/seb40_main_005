@@ -2,8 +2,8 @@ import PenImg from "../public/images/pen.svg";
 import MyPageUserBox from "./MyPageUserBox";
 import useGetSharedLog from "../hooks/mypage/useGetSharedLog";
 import { ReactNode, useEffect } from "react";
-import LogContainer from "./logContainer";
-import LogDetail from "./logDetail";
+import LogContainer from "./LogContainer";
+import LogDetail from "./LogDetail";
 
 interface log {
   shareFrom: string;
@@ -133,9 +133,10 @@ const MyLogBox = () => {
             </div>
           </div>
 
-        <div className="mt-2">{renderLogs()}</div>
+          <div className="mt-2">{renderLogs()}</div>
 
-        {/* <div className="pl-2 h-fit w-10 text-[0.5rem] text-red-500">삭제</div> */}
+          {/* <div className="pl-2 h-fit w-10 text-[0.5rem] text-red-500">삭제</div> */}
+        </div>
       </div>
     </>
   );
