@@ -32,22 +32,23 @@ const MyPage = () => {
 
       <div className="justify-center items-center w-full h-screen bg-bgGray overflow-auto">
         <div className="flex flex-col p-3 md:pt-16 md:pb-14 ">
-          <div className="flex flex-row  justify-between md:justify-center items-center">
-            <Link href="/">
+          <div className="flex flex-row  justify-between md:mx-4 lg:justify-center items-center">
+            <Link className="" href="/calendar">
               <a>
                 <Image
-                  className="cursor-pointer "
+                  className="cursor-pointer"
                   src="/images/logo export(orange).svg"
                   width={150}
                   height={50}
                 />
               </a>
             </Link>
-            <div className="md:hidden cursor-pointer">
+
+            <div className="lg:hidden cursor-pointer">
               <svg
                 onClick={handleChangeSideBar}
-                width="24"
-                height="24"
+                width={50}
+                height={40}
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
