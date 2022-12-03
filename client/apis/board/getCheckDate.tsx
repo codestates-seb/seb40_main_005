@@ -1,4 +1,5 @@
 import client from "../../client/client";
+import axios from "axios";
 
 interface Props {
   realDay: number;
@@ -7,10 +8,16 @@ interface Props {
 }
 
 const getCheckDate = async ({ realDay, realMonth, realYear }: Props) => {
-
   console.log(realDay, realMonth, realYear);
-  return await client
-    .get(`/boards/count?day=${realDay}&month=${realMonth}&year=${realYear}`)
+  return await axios
+    .get(`/boards/count?day=${realDay}&month=${realMonth}&year=${realYear}`, {
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
+      headers: {
+        withCredentials: true,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": `application/json`,
+      },
+    })
     .catch(err => console.log(err));
 };
 
