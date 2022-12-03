@@ -45,42 +45,29 @@ const LoginForm = () => {
   });
 
   const useLogin = ({ id, password }: FormValues) => {
-    return (
-      loginMutation
-        .mutateAsync({ id, password })
-        .then(res => {
-          if (res.token) {
-            localStorage.setItem("token", res.token);
-            localStorage.setItem("memberId", res.memberId);
-            setIsLogin(true);
-            setFailedMsg("");
+    return loginMutation
+      .mutateAsync({ id, password })
+      .then(res => {
+        if (res.token) {
+          localStorage.setItem("token", res.token);
+          localStorage.setItem("memberId", res.memberId);
+          setIsLogin(true);
+          setFailedMsg("");
 
-            return res.token;
-          }
-        })
-        .then(res => {
-          if (res) {
-            console.log(localStorage.getItem("token"));
+          return res.token;
+        }
+      })
+      .then(res => {
+        if (res) {
+          console.log(localStorage.getItem("token"));
 
-            boardRefetch();
-            router.push("/calendar");
-          }
-        })
-        // if (isLogin) {
-        //   boardRefetch();
-        //   console.log("requset ok");
-        //   console.log(success);
-
-        //   // if (success) {
-        //   router.push("/calendar");
-        //   console.log("token ok, calendar ok!");
-        //   // }
-        // }
-        // }
-        .catch(() => {
-          setFailedMsg("ID 혹은 비밀번호가 일치하지 않습니다.");
-        })
-    );
+          boardRefetch();
+          router.push("/calendar");
+        }
+      })
+      .catch(() => {
+        setFailedMsg("ID 혹은 비밀번호가 일치하지 않습니다.");
+      });
   };
 
   const handleIdChange = (e: any) => {

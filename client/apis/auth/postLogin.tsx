@@ -8,10 +8,9 @@ interface LoginValue {
 
 const postLogin = async (payload: LoginValue) => {
   // 요청메소드 + 요청정보
-  const { data } = await client.post(
-    "/authentication",
-    payload,
-  );
+  const { data } = await client.post("/authentication", payload, {
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
+  });
 
   return data;
 };
