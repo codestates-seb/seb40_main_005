@@ -53,7 +53,7 @@ const SelectBar = ({ setCategory }: CategoryType) => {
             id="change"
             className=" w-4/6 lg:w-[9rem] "
             placeholder="입력 후 Enter"
-            value={text}
+            // value={text}
             onKeyDown={pressEnter}
           ></input>
           <button
