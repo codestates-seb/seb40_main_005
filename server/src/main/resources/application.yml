@@ -48,9 +48,10 @@ spring:
       charset: UTF-8
       enabled: true
       force: true
+  servlet:
     multipart:
-      maxFileSize: 10MB
-      maxRequestSize: 10MB
+      max-file-size: 10MB
+      max-request-size: 10MB
 server:
   tomcat:
     uri-encoding: UTF-8
