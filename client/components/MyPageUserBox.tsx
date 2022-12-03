@@ -36,10 +36,10 @@ const MyPageUserBox = () => {
 
         <div className="flex flex-row items-center mt-3 text-zinc-500">
           <div className="relative ">
-            <div className="z-10 text-base md:text-xl lg:text-2xl text-zinc-500 font-SCDream6">
+            <div className="z-10 text-sm  md:text-lg text-zinc-500 font-SCDream6 md:min-w-[5rem] ">
               이메일
             </div>
-            <div className="absolute w-12 h-1.5 top-[1rem] md:w-[3.7rem] md:top-4 lg:w-[4.4rem] lg:top-5 bg-mainOrange/40"></div>
+            <div className="absolute w-12  h-1.5 top-[1rem]  md:w-14 md:top-4.5  lg:top-5 bg-mainOrange/40"></div>
           </div>
           <div className="items-end mx-3 SCDream4">{userInfo?.data.email}</div>
 
