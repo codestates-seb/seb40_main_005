@@ -1,9 +1,10 @@
 import PenImg from "../public/images/pen.svg";
 import MyPageUserBox from "./MyPageUserBox";
 import useGetSharedLog from "../hooks/mypage/useGetSharedLog";
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import LogContainer from "./LogContainer";
 import LogDetail from "./LogDetail";
+import Pagination from "react-js-pagination";
 
 interface log {
   shareFrom: string;
@@ -20,6 +21,11 @@ const MyLogBox = () => {
     isSuccess: logSuccess,
   } = useGetSharedLog();
 
+  const [page, setPage] = useState(1);
+
+  const handlePageChange = (page: number) => {
+    setPage(page);
+  };
   console.log(sharedLog);
 
   const renderLogs = () => {
@@ -125,8 +131,72 @@ const MyLogBox = () => {
           </div>
 
           <div className="mt-2">{renderLogs()}</div>
-
           {/* <div className="pl-2 h-fit w-10 text-[0.5rem] text-red-500">삭제</div> */}
+          {/* <div className="pagination-wrapper"> */}
+          {/* <Pagination
+              activePage={page} //현재페이지
+              itemsCountPerPage={8} //한페이지당 보여줄 질문 개수 -> size -> 받아와야함
+              totalItemsCount={10} //총 질문 개수 -> totalElements -> atom에 질문총개수 상태 존재
+              pageRangeDisplayed={5} //페이지네이션에서 보여줄 페이지버튼 개수(범위)
+              prevPageText={"prev"} // 이전 버튼
+              nextPageText={"next"} // 이후 버튼
+              onChange={handlePageChange} //페이지 바뀔 때 페이지상태값 변경함수
+            /> */}
+          {/* </div> */}
+
+          {/* Pagination 하드코딩  */}
+          <div className="flex justify-center mt-12">
+            <div className="flex flex-row items-center justify-between text-lg w-80 font-SCDream5">
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6 text-btnOrange"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15.75 19.5L8.25 12l7.5-7.5"
+                  />
+                </svg>
+              </div>
+              <div className="flex flex-row items-center justify-between space-x-3 w-52">
+                <button type="button">1</button>
+                <span className="text-btnOrange">|</span>
+                <button type="button">2</button>
+                <span className="text-btnOrange">|</span>
+                <button
+                  className="px-3 py-[0.15rem] text-white rounded-full bg-btnOrange/40"
+                  type="button"
+                >
+                  3
+                </button>
+                <span className="text-btnOrange">|</span>
+                <button type="button">4</button>
+                <span className="text-btnOrange">|</span>
+                <button type="button">5</button>
+              </div>
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6 text-btnOrange"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>
