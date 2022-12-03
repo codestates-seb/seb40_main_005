@@ -39,7 +39,7 @@ const postBoardData = async ({
   formData.append("music", music);
   formData.append("photo", photo);
   formData.append("tags", tags);
-  formData.append("category", category);
+  formData.append("categoryTitle", category);
   formData.append("created", created);
   formData.append("url", url);
 
