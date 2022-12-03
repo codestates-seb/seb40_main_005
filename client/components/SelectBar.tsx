@@ -13,6 +13,7 @@ const SelectBar = ({ setCategory }: CategoryType) => {
   const [custom, setCustom] = useState<boolean>(false);
   const [select, isSelect] = useState<string>("");
   const [categoryList, setCategoryList] = useState<Array<CategoryTitle>>([]);
+  const [text, setText] = useState<string>("");
 
   const { data: categoryTitie, refetch: categoryRefetch } =
     useGetCategoryTitie();
@@ -39,6 +40,7 @@ const SelectBar = ({ setCategory }: CategoryType) => {
     if (e.keyCode == 13) {
       const value = e.target.value;
       setCategory(value);
+      setText("");
     }
   };
 
@@ -51,6 +53,7 @@ const SelectBar = ({ setCategory }: CategoryType) => {
             id="change"
             className=" w-4/6 lg:w-[9rem] "
             placeholder="입력 후 Enter"
+            value={text}
             onKeyDown={pressEnter}
           ></input>
           <button
