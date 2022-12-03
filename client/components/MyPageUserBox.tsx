@@ -1,27 +1,49 @@
+import PenImg from "../public/images/pen.svg";
+import useGetUserInfo from "../hooks/mypage/useGetUserInfo";
+import { useEffect, useState } from "react";
+
 const MyPageUserBox = () => {
+  const {
+    data: userInfo,
+    refetch: requestUserInfo,
+    isSuccess: successUserInfo,
+  } = useGetUserInfo();
+  const [userId, setUserId] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+
+  useEffect(() => {
+    requestUserInfo();
+  }, []);
+  //   if (successUserInfo) {
+  //     console.log(successUserInfo);
+
+  //     setUserId(user.id);
+  //     setUserEmail(user.email);
+  //   }
+  // }, []);
+
   return (
     <>
-      <div className=" md:justify-start flex flex-col items-baseline md:flex-row h-[8rem]  md:items-center justify-center bg-white w-full md:h-[8rem] drop-shadow-lg p-3 SCDream3 ">
-        <div className="flex flex-row h-fit md:items-baseline md:ml-10  text-zinc-500 items-end md:min-w-[3rem] md:w-1/3">
-          <div className="z-10 text-xl md:text-2xl font-SCDream6 md:min-w-[5rem]">
-            박여울
+      <div className="flex flex-col justify-center w-full p-3 bg-white h-28 drop-shadow-lg SCDream3">
+        <div className="flex flex-row items-end text-zinc-500">
+          <div className="z-10 text-xl md:text-xl lg:text-2xl font-SCDream6">
+            {userInfo?.data.id}
           </div>
-          <div className="SCDream5 md:SCDream9 text-zinc-500 items-end mx-2 md:m-0 text-sm ">
+          <div className="items-end mx-2 text-sm SCDream5 text-zinc-500">
             님
           </div>
         </div>
 
-        <div className="flex h-fit flex-row text-zinc-500 mt-3 items-center">
+        <div className="flex flex-row items-center mt-3 text-zinc-500">
           <div className="relative ">
             <div className="z-10 text-sm  md:text-lg text-zinc-500 font-SCDream6 md:min-w-[5rem] ">
               이메일
             </div>
             <div className="absolute w-12  h-1.5 top-[1rem]  md:w-14 md:top-4.5  lg:top-5 bg-mainOrange/40"></div>
           </div>
-          <div className="SCDream4 items-end mx-3">qyoong3579@gmail.com</div>
+          <div className="items-end mx-3 SCDream4">{userInfo?.data.email}</div>
 
-          <svg
-            className="cursor-pointer"
+          {/* <svg
             width="11"
             height="11"
             viewBox="0 0 11 11"
@@ -42,7 +64,7 @@ const MyPageUserBox = () => {
                 <rect width="11" height="11" fill="white" />
               </clipPath>
             </defs>
-          </svg>
+          </svg> */}
         </div>
       </div>
     </>

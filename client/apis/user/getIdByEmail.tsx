@@ -8,9 +8,14 @@ import client from "../../client/client";
 
 const fetchIdByEmail = (userEmail: string) => {
   // 요청메소드 + 요청정보
-  return client.get(
-    `/members/find-id?email=${userEmail}`,
-  );
+  return axios.get(`/members/find-id?email=${userEmail}`, {
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    headers: {
+      withCredentials: true,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": `application/json`,
+    },
+  });
 };
 
 export default fetchIdByEmail;

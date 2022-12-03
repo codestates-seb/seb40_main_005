@@ -8,7 +8,14 @@ import client from "../../client/client";
 
 const getAllUserId = (searchInput: string) => {
   // 요청메소드 + 요청정보
-  return client.get(`/members/search?id=${searchInput}`);
+  return axios.get(`/members/search?id=${searchInput}`, {
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    headers: {
+      withCredentials: true,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": `application/json`,
+    },
+  });
 };
 
 export default getAllUserId;

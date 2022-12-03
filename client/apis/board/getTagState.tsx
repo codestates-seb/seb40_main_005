@@ -1,4 +1,5 @@
 import client from "../../client/client";
+import axios from "axios";
 
 /**
  * @author yeowool
@@ -13,8 +14,15 @@ interface Props {
 }
 
 const getTagState = async ({ id, year, month, day }: Props) => {
-  return await client
-    .get(`/tags/count/${id}/${year}/${month}/${day}`)
+  return await axios
+    .get(`/tags/count/${id}/${year}/${month}/${day}`, {
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
+      headers: {
+        withCredentials: true,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": `application/json`,
+      },
+    })
     .catch(err => console.log(err));
 };
 
