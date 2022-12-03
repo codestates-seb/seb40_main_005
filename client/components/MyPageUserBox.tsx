@@ -3,46 +3,34 @@ import useGetUserInfo from "../hooks/mypage/useGetUserInfo";
 import { useEffect, useState } from "react";
 
 const MyPageUserBox = () => {
-  const {
-    data: userInfo,
-    refetch: requestUserInfo,
-    isSuccess: successUserInfo,
-  } = useGetUserInfo();
-  const [userId, setUserId] = useState("");
-  const [userEmail, setUserEmail] = useState("");
+  const { data: userInfo, refetch: requestUserInfo } = useGetUserInfo();
 
   useEffect(() => {
     requestUserInfo();
   }, []);
-  //   if (successUserInfo) {
-  //     console.log(successUserInfo);
-
-  //     setUserId(user.id);
-  //     setUserEmail(user.email);
-  //   }
-  // }, []);
 
   return (
     <>
-      <div className="flex flex-col justify-center w-full p-3 bg-white h-28 drop-shadow-lg SCDream3">
-        <div className="flex flex-row items-end text-zinc-500">
-          <div className="z-10 text-xl md:text-xl lg:text-2xl font-SCDream6">
+      <div className="px-4 bg-white lg:pl-12 text-zinc-500 h-28 drop-shadow-lg">
+        <div className="flex flex-col w-full h-full justify-evenly lg:justify-between lg:items-center lg:ustify-between lg:flex-row lg:w-3/4">
+          <div className="text-xl md:text-2xl lg:text-3xl font-SCDream6">
             {userInfo?.data.id}
+            <span className="pl-2 text-sm lg:pl-4 lg:text-lg font-SCDream5">
+              님
+            </span>
           </div>
-          <div className="items-end mx-2 text-sm SCDream5 text-zinc-500">
-            님
-          </div>
-        </div>
 
-        <div className="flex flex-row items-center mt-3 text-zinc-500">
-          <div className="relative ">
-            <div className="z-10 text-sm  md:text-lg text-zinc-500 font-SCDream6 md:min-w-[5rem] ">
-              이메일
+          <div className="flex flex-row items-center text-zinc-500">
+            <div className="relative ">
+              <span className="text-sm lg:font-semibold md:text-lg font-SCDream5 md:min-w-[5rem] ">
+                이메일
+              </span>
+              <div className="absolute w-10  h-1.5 top-[1rem]  md:w-[3.3rem] md:top-4.5 lg:w-[3.3rem] lg:top-[1.2rem] bg-mainOrange/40"></div>
             </div>
-            <div className="absolute w-12  h-1.5 top-[1rem]  md:w-14 md:top-4.5  lg:top-5 bg-mainOrange/40"></div>
+            <div className="items-end ml-8 SCDream4">
+              {userInfo?.data.email}
+            </div>
           </div>
-          <div className="items-end mx-3 SCDream4">{userInfo?.data.email}</div>
-
           {/* <svg
             width="11"
             height="11"
