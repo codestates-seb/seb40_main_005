@@ -1,13 +1,13 @@
 import client from "../../client/client";
 
 interface Props {
-  currMonth: number;
-  currYear: number;
+  curMonth: string;
+  curYear: string;
 }
 
-const getBoards = async ({ currMonth, currYear }: Props) => {
+const getBoards = async ({ curMonth, curYear }: Props) => {
   return await client
-    .get(`/boards?category=&month=${currMonth}&year=${currYear}`)
+    .get(`/boards?category=&month=${curMonth}&year=${curYear}`)
     .catch(err => console.log(err));
 };
 

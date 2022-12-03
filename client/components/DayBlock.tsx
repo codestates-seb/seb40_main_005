@@ -10,7 +10,7 @@ import {
   pickDayState,
   readModalOpenState,
   boardItemState,
-  boardSharedState
+  boardSharedState,
 } from "../recoil/calendarAtom";
 import useGetBoardItem from "../hooks/calendar/useGetBoardItem";
 import MyBoard from "./MyBoard";
@@ -23,6 +23,7 @@ interface PropsValue {
   children: React.ReactNode;
   currDay: number;
   boards: any[] | null;
+  hasMine: boolean;
 }
 
 const DayBlock = ({
@@ -31,6 +32,7 @@ const DayBlock = ({
   currYear,
   currDay,
   boards,
+  hasMine,
 }: PropsValue) => {
   const [isToday, setIsToday] = useState(false);
   const today = new Date();
@@ -53,8 +55,6 @@ const DayBlock = ({
     boardId,
   });
 
-  let hasMyPost = false;
-
   useEffect(() => {
     if (month === currMonth && year === currYear && children === day) {
       setIsToday(true);
@@ -63,11 +63,13 @@ const DayBlock = ({
     if (boardItem) {
       setBoardItemValue(boardItem);
     }
+  }, [boardItem, currMonth]);
 
+  useEffect(() => {
     if (boardId) {
       boardItemRefetch();
     }
-  }, [boardItem, boardId]);
+  }, [boardId]);
 
   const handleBtnClick = () => {
     setOpen(true);
@@ -85,11 +87,9 @@ const DayBlock = ({
     }
 
     setDate(`${currYear.toString()}-${realMonth}-${realDay}`);
-
-    console.log("active");
   };
 
-  const handleBoardClick = (boardId: number, shared: number) => {
+  const handleBoardClick = (boardId: number, shared: boolean) => {
     setReadOpen(true);
     setBoardId(boardId);
 
@@ -103,7 +103,7 @@ const DayBlock = ({
     }
 
     setDate(`${currYear.toString()}-${realMonth}-${realDay}`);
-    setShareValue(shared)
+    setShareValue(shared);
   };
 
   const renderPosts = () => {
@@ -126,13 +126,12 @@ const DayBlock = ({
             onClick={() => handleBoardClick(post.boardId, post.shared)}
           />,
         );
-
-        hasMyPost = true;
       }
     });
 
     return day;
   };
+
   return (
     <>
       <div className="group w-[13%] h-16 md:h-18 lg:h-[6.3rem] pt-2 md:pt-3 lg:pt-0 text-textBlack font-SCDream5 text-xs md:text-sm lg:text-base">
@@ -144,7 +143,7 @@ const DayBlock = ({
           >
             {children}
           </div>
-          {hasMyPost ? null : <AddBtn onClick={handleBtnClick} />}
+          {hasMine ? null : <AddBtn onClick={handleBtnClick} />}
         </div>
         {boards?.length !== 0 ? <div>{renderPosts()}</div> : null}
       </div>

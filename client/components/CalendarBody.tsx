@@ -10,7 +10,8 @@ import {
 import DayBlock from "./DayBlock";
 import useGetBoards from "../hooks/calendar/useGetBoards";
 import { useEffect } from "react";
-import MyBoard from "./MyBoard";
+import { useRecoilValue } from "recoil";
+import { categorySelectTitle } from "../recoil/calendarAtom";
 
 interface PropsValue {
   currMonth: number;
@@ -48,6 +49,7 @@ const GetDayOfWeek = () => {
 };
 
 const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
+  const ctgTitle = useRecoilValue(categorySelectTitle);
   const date = new Date(currYear, currMonth - 1); //오늘 날짜
   const monthDays = getDaysInMonth(new Date(currYear, currMonth - 1)); // 현재 달의 총 일수 /month는 0부터 시작,
   let monthStart = startOfMonth(date); //달의 시작일, Tue Nov 01 2022 00:00:00 GMT+0900 (한국 표준시)
@@ -55,12 +57,15 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
   let startDate = getDate(monthStart);
   let day = getDay(monthStart); //달의 첫 요일 , 일요일 (0)부터 시작
 
+  // 타입 긴급 조치
+  let curMonth = currMonth.toString();
+  let curYear = currYear.toString();
   const rows = [];
   let days = [];
 
   const { data: boardsData, refetch: boardRefetch } = useGetBoards({
-    currYear,
-    currMonth,
+    curYear,
+    curMonth,
   });
 
   useEffect(() => {
@@ -88,20 +93,27 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
           </div>,
         );
       } else {
-        let hasPost = false;
         let posts: any[] = [];
+        let hasMine = false;
 
         boardList?.map((el: Boards) => {
           let createdYear = parseInt(el.createdPost[0]);
           let createdMonth = parseInt(el.createdPost[1]);
           let createdDay = parseInt(el.createdPost[2]);
+          let category = el.category;
 
           if (
             createdYear === currYear &&
             createdMonth === currMonth &&
             startDate === createdDay
           ) {
-            posts.push(el);
+            if (category === ctgTitle || ctgTitle === "전체") {
+              posts.push(el);
+            }
+
+            if (!el.shared) {
+              hasMine = true;
+            }
           }
         });
 
@@ -112,6 +124,7 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
             currDay={startDate}
             key={startDate}
             boards={posts}
+            hasMine={hasMine}
           >
             {startDate}
           </DayBlock>,

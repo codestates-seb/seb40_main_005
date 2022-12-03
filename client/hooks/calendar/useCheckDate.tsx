@@ -1,5 +1,5 @@
 import {
-    useQuery,
+    useQuery, useQueryClient,
     // useQueryClient,
     // useQueryErrorResetBoundary,
   } from "react-query";
@@ -12,8 +12,20 @@ import getCheckDate from "../../apis/board/getCheckDate";
   }
   
   const useCheckDate = ({ day, month, year }: Props) => {
-    return useQuery(["get/checkDate"], () => getCheckDate({ day, month, year }), {
+    let realDay = Number(day);
+    let realMonth = Number(month);
+    let realYear = Number(year);
+
+    const queryClient = useQueryClient();
+
+    queryClient.invalidateQueries({ queryKey : ["get/checkDate"]})
+
+    // console.log(day, month, year);
+    return useQuery(["get/checkDate"], () => getCheckDate({ realDay, realMonth, realYear }), {
       enabled: false,
+      // onSuccess : res => {
+      //   console.log(res);
+      // }
     });
   };
   

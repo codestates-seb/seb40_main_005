@@ -54,6 +54,7 @@ const PatchBoardData = async ({
   //   const formValue = new FormData();
   //   formValue.append("file", JsonData);
 
+  console.log(category);
   console.log(boardId);
   return await formClient.patch(`/boards/${boardId}`, formData);
 };

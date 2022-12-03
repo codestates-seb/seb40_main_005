@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface TagsRepositoryCustom {
     List<Tags> findByTagsMember(String tagsMember);
-    List<Board> getSharedStatusById(String id, Pageable pageable);
+    List<Board> getSharedStatusById(String id,Integer year,Integer month,Integer day, Pageable pageable);
 }

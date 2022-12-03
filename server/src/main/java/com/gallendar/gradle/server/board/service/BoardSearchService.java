@@ -7,6 +7,7 @@ import com.gallendar.gradle.server.board.repository.BoardRepositoryCustomImpl;
 import com.gallendar.gradle.server.global.auth.jwt.JwtUtils;
 import com.gallendar.gradle.server.tags.type.TagStatus;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -16,13 +17,16 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BoardSearchService {
     private final BoardRepositoryCustomImpl boardRepositoryCustom;
     private final JwtUtils jwtUtils;
 
     @Transactional
     public List<BoardSearchResponse> SearchBoardByYearAndMonthAndCategory(int year, int month, String category, String token) {
+        log.info("유저 검증");
         String memberId = jwtUtils.getMemberIdFromToken(token);
+        log.info("검색 조건 실행");
         List<BoardSearchResponse> list = new ArrayList<>();
         List<Board> boards = boardRepositoryCustom.findByBoard(year, month, category, memberId);
         boards.forEach(board -> {

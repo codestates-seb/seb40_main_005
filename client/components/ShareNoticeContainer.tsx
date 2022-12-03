@@ -1,6 +1,7 @@
 import { ReactNode, useEffect } from "react";
 import useGetShareNotice from "../hooks/notice/useGetShareNotice";
 import ShareNotice from "./ShareNotice";
+import { useQueryClient } from "react-query";
 
 interface Shared {
   boardId: string;
@@ -9,9 +10,13 @@ interface Shared {
 }
 
 const ShareNoticeContainer = () => {
-  const { data: shareNotice, refetch: shareNoticeRefetch } =
-    useGetShareNotice();
+  const {
+    data: shareNotice,
+    refetch: shareNoticeRefetch,
+    isSuccess: Successed,
+  } = useGetShareNotice();
   let SharedList = shareNotice?.data;
+  const queryClient = useQueryClient();
 
   const renderNotices = (): ReactNode => {
     let shareNoticeLi: any[] = [];
@@ -32,8 +37,12 @@ const ShareNoticeContainer = () => {
 
   useEffect(() => {
     shareNoticeRefetch();
-    renderNotices();
-  }, []);
+
+    if (Successed) {
+      renderNotices();
+      queryClient.invalidateQueries("get/boards");
+    }
+  }, [shareNotice]);
 
   return (
     <>

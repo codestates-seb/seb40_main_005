@@ -1,17 +1,17 @@
 import Link from "next/link";
 import { useState } from "react";
 import ShareNoticeContainer from "./ShareNoticeContainer";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { isLoginState } from "../recoil/authAtom";
 import { useRouter } from "next/router";
-import ShippingNoticeContainer from "./shippingNoticeContainer";
+import ShippingNoticeContainer from "./ShippingNoticeContainer";
 
 const CalendarNav = () => {
   const [isShareOpen, setIsShareOpen] = useState(false);
   const [isShippingOpen, setIsShippingOpen] = useState(false);
 
   const router = useRouter();
-
+  const setIsLoginState = useSetRecoilState(isLoginState);
   const handleShareNotice = () => {
     setIsShareOpen(!isShareOpen);
     setIsShippingOpen(false);
@@ -25,6 +25,7 @@ const CalendarNav = () => {
   const onLogout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("userName");
+    setIsLoginState(false);
     router.push("/");
   };
 

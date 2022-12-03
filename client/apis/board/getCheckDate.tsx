@@ -1,16 +1,14 @@
 import client from "../../client/client";
 
 interface Props {
-    day: string;
-    month : string;
-    year : string;
-  }
+  realDay: number;
+  realMonth: number;
+  realYear: number;
+}
 
-const getCheckDate = async ({ day, month, year }: Props) => {
+const getCheckDate = async ({ realDay, realMonth, realYear }: Props) => {
 
-    let realDay = Number(day);
-    let realMonth = Number(month);
-    let realYear = Number(year);
+  console.log(realDay, realMonth, realYear);
   return await client
     .get(`/boards/count?day=${realDay}&month=${realMonth}&year=${realYear}`)
     .catch(err => console.log(err));

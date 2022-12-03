@@ -1,12 +1,10 @@
 import axios from "axios";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 const localStorage = typeof window !== "undefined" ? window.localStorage : null;
 
 const accessToken = localStorage?.getItem("token") || "";
-// import { useRecoilState, useRecoilValue } from "recoil";
-// import { accessTokenState } from "../recoil/authAtom";
-
-// const token = useRecoilValue(accessTokenState);
+console.log(accessToken);
 
 const client = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,

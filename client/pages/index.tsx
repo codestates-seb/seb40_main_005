@@ -5,6 +5,8 @@ import Dots from "../components/Dots";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { isLoginState } from "../recoil/authAtom";
 
 function Home() {
   const logoAnimate = {
@@ -64,6 +66,7 @@ function Home() {
   // 은비 작업부분
   // const outerDivRef = useRef<any>(null);
   const [scrollIdx, setScrollIndex] = useState<number>(1);
+  const loginState = useRecoilValue(isLoginState);
   // const [currPage, setCurrPage] = useState<number>(1);
 
   useEffect(() => {
@@ -72,8 +75,6 @@ function Home() {
       const pageHeight = window.innerHeight;
       const totalHeight = document.body.scrollHeight; // 전체 화면크기
       const currY = pageHeight;
-
-      // console.log(scrollTop, totalHeight - pageHeight);
 
       if (scrollTop < pageHeight) {
         setScrollIndex(1);
@@ -85,16 +86,15 @@ function Home() {
         scrollTop < totalHeight - pageHeight
       ) {
         setScrollIndex(2);
-
-        if (scrollTop >= Math.floor(currY / 2)) {
-          // console.log("here!");
-        }
       } else if (scrollTop >= totalHeight - pageHeight) {
         setScrollIndex(6);
       }
     });
   });
 
+  const setScroll = () => {
+    setScrollIndex(1);
+  };
   // const wheelHandler = (e: { preventDefault: any; deltaY: number }) => {
   // e.preventDefault();
   // scrollY === pageYOffset(구버전 호환성위해 사용)
@@ -256,7 +256,7 @@ function Home() {
 
         <div
           id="2"
-          className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/lending_두번째이미지.png')]"
+          className="flex items-center justify-center w-full h-screen bg-cover bg-[url('/images/두번째.jpg')]"
         >
           {/* 반응형 이슈 */}
           <div className="flex flex-col items-center justify-center w-full pl-5 pr-5 sm:items-start h-1/2 sm:pl-28 sm:pr-20">
@@ -418,7 +418,8 @@ function Home() {
             >
               당신의 모든 순간들을
             </motion.div>
-            <motion.div className="flex flex-col items-center justify-center md:flex-row lg:flex-row w-fit"
+            <motion.div
+              className="flex flex-col items-center justify-center md:flex-row lg:flex-row w-fit"
               variants={landingH1TextAnimate}
               initial={"offscreen"}
               whileInView={"onscreen"}

@@ -1,36 +1,28 @@
 #!/bin/bash
+BUILD_JAR=$(ls /home/e2-user/action/build/libs/server-0.0.1-SNAPSHOT.jar)
+JAR_NAME=$(basename $BUILD_JAR)
 
-REPOSITORY=~/home/ec2-user
-PROJECT_NAME=server-0.0.1-SNAPSHOT
+echo "> 현재 시간: $(date)" >> /home/ec2-user/action/deploy.log
 
-echo "> Build 파일 복사"
+echo "> build 파일명: $JAR_NAME" >> /home/ec2-user/action/deploy.log
 
-cp $REPOSITORY/deploy/*.jar $REPOSITORY/
+echo "> build 파일 복사" >> /home/ec2-user/action/deploy.log
+DEPLOY_PATH=/home/ec2-user/action/
+cp $BUILD_JAR $DEPLOY_PATH
 
-echo "> 현재 구동중인 애플리케이션 pid 확인"
+echo "> 현재 실행중인 애플리케이션 pid 확인" >> /home/ec2-user/action/deploy.log
+CURRENT_PID=$(pgrep -f $JAR_NAME)
 
-CURRENT_PID=$(pgrep -fl server-0.0.1-SNAPSHOT | grep java | awk '{print $1}')
-
-echo "현재 구동중인 어플리케이션 pid: $CURRENT_PID"
-
-if [ -z "$CURRENT_PID" ]; then
-  echo ">현재 구동중인 어플리케이션이 없으므로 종료하지 않는다."
+if [ -z $CURRENT_PID ]
+then
+  echo "> 현재 구동중인 애플리케이션이 없으므로 종료하지 않습니다." >> /home/ec2-user/action/deploy.log
 else
-  echo "> kill -15 $CURRENT_PID"
-  kill -15 $CURRENT_PID
-  sleep 10
+  echo "> kill -9 $CURRENT_PID" >> /home/ec2-user/action/deploy.log
+  sudo kill -9 $CURRENT_PID
+  sleep 5
 fi
 
-echo "> 새 어플리케이션 배포"
 
-JAR_NAME=$(ls -tr $REPOSITORY/*.jar | tail -n 1)
-
-echo "> JAR_NAME: $JAR_NAME"
-
-echo "> $JAR_NAME 에 실행 권한 추가"
-
-chmod +x $JAR_NAME
-echo "> $JAR_NAME 실행"
-
-nohup java -jar \
-    $JAR_NAME > $REPOSITORY/nohup.out 2>&1 &
+DEPLOY_JAR=$DEPLOY_PATH$JAR_NAME
+echo "> DEPLOY_JAR 배포"    >> /home/ec2-user/action/deploy.log
+sudo nohup java -jar $DEPLOY_JAR >> /home/ec2-user/deploy.log 2>/home/ec2-user/action/deploy_err.log &
