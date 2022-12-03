@@ -43,7 +43,7 @@ const MyPage = () => {
                 />
               </a>
             </Link>
-            <div className="cursor-pointer md:hidden">
+            <div className="cursor-pointer lg:hidden">
               <svg
                 onClick={handleChangeSideBar}
                 width="24"
