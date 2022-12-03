@@ -10,6 +10,8 @@ import com.gallendar.gradle.server.members.dto.MemberTagStatusResponse;
 import com.gallendar.gradle.server.tags.domain.TagsRepositoryCustomImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +32,7 @@ public class MemberInfoService {
         return new MemberInfoResponse(members.getId(), members.getEmail());
     }
 
-    public List<MemberTagStatusResponse> mySharedStatusGetById(String token, MemberTagStatusRequest memberTagStatusRequest, Pageable pageable) {
+    public Page<MemberTagStatusResponse> mySharedStatusGetById(String token, MemberTagStatusRequest memberTagStatusRequest, Pageable pageable) {
         String memberId = jwtUtils.getMemberIdFromToken(token);
         List<Board> tagStatus = tagsRepositoryCustom.getSharedStatusById(memberId, memberTagStatusRequest, pageable);
         List<MemberTagStatusResponse> list = new ArrayList<>();
@@ -41,6 +43,6 @@ public class MemberInfoService {
                 list.add(MemberTagStatusResponse.from(to, title, boardTags.getTags().getTagsMember(), boardTags.getTags().getStatus(), boardTags.getTags().getUpdatedAt()));
             });
         });
-        return list;
+        return new PageImpl<>(list);
     }
 }
