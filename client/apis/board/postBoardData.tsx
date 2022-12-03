@@ -3,15 +3,15 @@ import client from "../../client/client";
 import formClient from "../../client/formClient";
 
 interface boardData {
-    category : string,
-    content : string,
-    created : string,
-    music : string,
-    photo : any,
-    tags : any,
-    title : string,
-    url : string
-  }
+  category: string;
+  content: string;
+  created: string;
+  music: string;
+  photo: any;
+  tags: any;
+  title: string;
+  url: string;
+}
 
 const postBoardData = async ({
   category,
@@ -23,16 +23,16 @@ const postBoardData = async ({
   title,
   url,
 }: boardData) => {
-    // const data = {
-    //   category: category,
-    //   content: content,
-    //   created: created,
-    //   music: music,
-    //   photo: photo,
-    //   tags: tags,
-    //   title: title,
-    //   url: url
-    // };
+  // const data = {
+  //   category: category,
+  //   content: content,
+  //   created: created,
+  //   music: music,
+  //   photo: photo,
+  //   tags: tags,
+  //   title: title,
+  //   url: url
+  // };
   const formData = new FormData();
   formData.append("title", title);
   formData.append("content", content);
@@ -43,12 +43,19 @@ const postBoardData = async ({
   formData.append("created", created);
   formData.append("url", url);
 
-//   const JsonData = JSON.stringify(data);
-//   const formValue = new FormData();
-//   formValue.append("file", JsonData);
+  //   const JsonData = JSON.stringify(data);
+  //   const formValue = new FormData();
+  //   formValue.append("file", JsonData);
 
   console.log(created);
-  return await formClient.post("/boards", formData);
+  return await axios.post("/boards", formData, {
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    headers: {
+      withCredentials: true,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 
 export default postBoardData;

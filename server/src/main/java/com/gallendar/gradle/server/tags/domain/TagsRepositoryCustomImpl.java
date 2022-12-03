@@ -3,6 +3,7 @@ package com.gallendar.gradle.server.tags.domain;
 import com.gallendar.gradle.server.board.entity.Board;
 import com.gallendar.gradle.server.board.entity.QBoard;
 import com.gallendar.gradle.server.members.domain.QMembers;
+import com.gallendar.gradle.server.members.dto.MemberTagStatusRequest;
 import com.gallendar.gradle.server.tags.type.TagStatus;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -33,11 +34,11 @@ public class TagsRepositoryCustomImpl implements TagsRepositoryCustom {
     }
 
     @Override
-    public List<Board> getSharedStatusById(String id, Integer year, Integer month, Integer day, Pageable pageable) {
+    public List<Board> getSharedStatusById(String id, MemberTagStatusRequest memberTagStatusRequest, Pageable pageable) {
         List<Board> list = jpaQueryFactory
                 .selectFrom(qBoard)
                 .leftJoin(qBoard.members, qMembers)
-                .where(qMembers.id.eq(id),eqYear(year),eqMonth(month),eqDay(day)).fetchJoin()
+                .where(qMembers.id.eq(id),eqYear(memberTagStatusRequest.getYear()),eqMonth(memberTagStatusRequest.getMonth()),eqDay(memberTagStatusRequest.getDay())).fetchJoin()
                 .leftJoin(qBoard.boardTags, qBoardTags).fetchJoin()
                 .leftJoin(qBoardTags.tags, qTags).fetchJoin()
                 .distinct()

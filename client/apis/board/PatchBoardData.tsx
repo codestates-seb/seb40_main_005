@@ -13,7 +13,7 @@ interface boardData {
   tags: any;
   title: string;
   url: string;
-  boardId : number | null;
+  boardId: number | null;
 }
 
 const PatchBoardData = async ({
@@ -25,7 +25,7 @@ const PatchBoardData = async ({
   tags,
   title,
   url,
-  boardId
+  boardId,
 }: boardData) => {
   // const data = {
   //   category: category,
@@ -38,7 +38,6 @@ const PatchBoardData = async ({
   //   url: url
   // };
   // const [boardData, setBoardData] = useRecoilState(boardItemState);
-
 
   const formData = new FormData();
   formData.append("title", title);
@@ -56,7 +55,14 @@ const PatchBoardData = async ({
 
   console.log(category);
   console.log(boardId);
-  return await formClient.patch(`/boards/${boardId}`, formData);
+  return await axios.patch(`/boards/${boardId}`, formData, {
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    headers: {
+      withCredentials: true,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 
 export default PatchBoardData;

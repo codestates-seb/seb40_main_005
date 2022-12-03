@@ -1,4 +1,5 @@
 import client from "../../client/client";
+import axios from "axios";
 
 /**
  * @author yeowool
@@ -6,7 +7,16 @@ import client from "../../client/client";
  **/
 
 const getBoards = async () => {
-  return await client.get(`/category`).catch(err => console.log(err));
+  return await client
+    .get(`/category`, {
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
+      headers: {
+        withCredentials: true,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": `application/json`,
+      },
+    })
+    .catch(err => console.log(err));
 };
 
 export default getBoards;

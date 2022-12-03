@@ -1,5 +1,6 @@
 import useGetAcceptNotice from "../hooks/notice/useGetAcceptNotice";
 import useGetDenyNotice from "../hooks/notice/useGetDenyNotice";
+import useGetShareNotice from "../hooks/notice/useGetShareNotice";
 
 interface Props {
   shareId: string;
@@ -8,8 +9,25 @@ interface Props {
 }
 
 const ShareNotice = ({ shareId, title, boardId }: Props) => {
-  const { refetch: acceptNoticeRefetch } = useGetAcceptNotice(boardId);
+  const { refetch: acceptNoticeRefetch, isSuccess: approveSuccess } =
+    useGetAcceptNotice(boardId);
   const { refetch: denyNoticeRefetch } = useGetDenyNotice(boardId);
+  const { refetch: shareNoticeRefetch, isSuccess: denySuccess } =
+    useGetShareNotice();
+
+  // const approveShareNotice = () => {
+  //   acceptNoticeRefetch();
+  //   if (approveSuccess) {
+  //     shareNoticeRefetch();
+  //   }
+  // };
+
+  // const denyShareNotice = () => {
+  //   denyNoticeRefetch();
+  //   if (denySuccess) {
+  //     shareNoticeRefetch();
+  //   }
+  // };
 
   return (
     <>

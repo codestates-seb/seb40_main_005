@@ -42,7 +42,7 @@ const ShareNoticeContainer = () => {
       renderNotices();
       queryClient.invalidateQueries("get/boards");
     }
-  }, [shareNotice]);
+  }, []);
 
   return (
     <>
