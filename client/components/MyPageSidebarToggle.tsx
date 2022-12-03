@@ -64,7 +64,7 @@ const MyPageSidebar = ({ onClick }: Props) => {
 
   return (
     <>
-      <div className="z-50 p-3 pb-8 md:flex lg:flex absolute h-full flex-col bg-white w-2/3 drop-shadow-lg right-0 flex justify-between">
+      <div className="z-50 p-3 pb-8  lg:hidden absolute h-full flex-col bg-white w-2/3 md:w-2/6 drop-shadow-lg right-0 flex justify-between">
         <div className="flex flex-col justify-between ">
           <div className="SCDream8 text-2xl  cursor-pointer" onClick={onClick}>
             x

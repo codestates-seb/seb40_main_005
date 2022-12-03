@@ -32,7 +32,7 @@ const MyPage = () => {
 
       <div className="items-center justify-center w-full h-screen p-3 overflow-auto md:pt-4 bg-bgGray">
         <div className="flex flex-col md:pb-14 ">
-          <div className="flex flex-row items-center justify-between md:justify-center">
+          <div className="flex flex-row items-center justify-between lg:justify-center md:mx-8">
             <Link href="/calendar">
               <a>
                 <Image
@@ -43,7 +43,7 @@ const MyPage = () => {
                 />
               </a>
             </Link>
-            <div className="cursor-pointer md:hidden">
+            <div className="cursor-pointer lg:hidden">
               <svg
                 onClick={handleChangeSideBar}
                 width={50}
