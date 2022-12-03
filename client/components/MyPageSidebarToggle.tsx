@@ -64,15 +64,18 @@ const MyPageSidebar = ({ onClick }: Props) => {
 
   return (
     <>
-      <div className="z-50  p-3 hidden md:flex lg:flex flex-col bg-white w-[20rem] md:ml-8 md:w-2/12 md:min-w-[10rem] drop-shadow-2xl justify-between">
+      <div className="z-50 p-3 pb-8 md:flex lg:flex absolute h-full flex-col bg-white w-2/3 drop-shadow-lg right-0 flex justify-between">
         <div className="flex flex-col justify-between ">
+          <div className="SCDream8 text-2xl  cursor-pointer" onClick={onClick}>
+            x
+          </div>
           <div className="relative my-3 h-5 w-full flex justify-center">
-            <div className="z-10  text-lg  text-zinc-500 font-SCDream6 ">
+            <div className="z-10 text-lg md:text-xl lg:text-2xl text-zinc-500 font-SCDream6">
               마이페이지
             </div>
-            <div className="absolute w-24 h-2 top-[1.1rem]  md:w-[5rem] md:top-4 bg-mainOrange/40"></div>
+            <div className="absolute w-24 h-2 top-[1.1rem] md:w-[3.7rem] md:top-4 lg:w-[4.4rem] lg:top-5 bg-mainOrange/40"></div>
           </div>
-          <div className="grid w-full grid-cols-1  text-sm  lg:flex lg:flex-col h-fit lg:h-5/6 font-SCDream4 mt-5">
+          <div className="grid w-full grid-cols-1 overflow-auto text-md  lg:flex lg:flex-col h-fit lg:h-5/6 font-SCDream4 mt-5">
             {renderNotices()}
           </div>
         </div>
