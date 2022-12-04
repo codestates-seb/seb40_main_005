@@ -61,6 +61,11 @@ const categorySelectTitle = atom<string>({
   default: "전체",
 });
 
+const getBoardState = atom<boolean>({
+  key : "getBoardState",
+  default : false
+})
+
 export {
   modalOpenState,
   selectYearState,
@@ -73,4 +78,5 @@ export {
   boardSharedState,
   editModeState,
   categorySelectTitle,
+  getBoardState
 };

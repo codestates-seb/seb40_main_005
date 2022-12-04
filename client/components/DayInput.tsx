@@ -33,7 +33,7 @@ const DayInput = ({ year, month, setMonth, setYear }: Props) => {
     <>
       {!inputMode ? (
         <div
-          className="font-SCDream5 text-textGray text-base w-1/2 lg:w-1/4 h-fit flex flex-row justify-center items-center cursor-pointer"
+          className="font-SCDream5 text-textGray text-base w-fit h-fit flex flex-row justify-center items-center cursor-pointer"
           onClick={handleClick}
         >
           {year}.{month}

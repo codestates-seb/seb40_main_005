@@ -53,7 +53,7 @@ const CalendarContainer = () => {
 
         <div className="flex flex-col items-center justify-center w-full h-fit">
           <TodayBtn setMonth={changeMonth} setYear={changeYear} />
-          <div className="flex flex-row items-center justify-center w-full mt-3 h-fit">
+          <div className="flex flex-row items-center justify-between w-1/2 md:w-1/3 lg:w-1/5 mt-3 h-fit">
             <LeftBtn onClick={handleLeftClick} />
             <DayInput
               year={currYear}
