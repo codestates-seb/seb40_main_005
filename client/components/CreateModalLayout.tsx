@@ -17,6 +17,7 @@ import {
   boardItemState,
   readModalOpenState,
   modalOpenState,
+  getBoardState
 } from "../recoil/calendarAtom";
 import usePostBoard from "../hooks/calendar/usePostBoard";
 import usePatchBoard from "../hooks/calendar/usePatchBoard";
@@ -38,22 +39,13 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   const [showImg, setShowImg] = useState<string>("");
   const [context, setContext] = useState<string>("");
   const [share, setShare] = useState<any>([]);
-  const [pickDate, SetPickDate] = useState<string>("");
   const [readOpen, setReadOpen] = useRecoilState(readModalOpenState);
   const [open, setOpen] = useRecoilState(modalOpenState);
+  const [getBoard, setGetBoard] = useRecoilState(getBoardState);
+
 
   const changeDate = (e: any) => {
-    // console.log("바뀜?")
     setDate(e.target.value);
-    // if (!checkDateLoading){
-    //   if (checkDateData?.data.status === true) {
-    //     setDate(e.target.value);
-    //   } else {
-    //     window.alert(
-    //       "해당날짜는 게시글이 등록되어있습니다! \n다른 날짜를 선택해주세요",
-    //     );
-    //   }
-    // }
   };
 
   const changeCategory = (category: string) => {
@@ -98,8 +90,9 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     title: title,
     url: youtubeLink,
   });
-  let boardId: number | null = null;
-  if (boardData.data) {
+  let boardId: number | null = 0;
+  // console.log(boardData)
+  if (boardData.data !== undefined) {
     boardId = boardData.data[0].boardId;
   }
   const {
@@ -178,6 +171,8 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     setShare([]);
     deleteImg();
   };
+
+
   useEffect(() => {
     if (postSuccess && !editMode) {
       alert("등록되었습니다");
@@ -196,7 +191,8 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
       setContext("");
       setShare([]);
       deleteImg();
-      window.location.reload();
+      // window.location.reload();
+      setGetBoard(!getBoard);
       // window.location.reload();
     }
 
@@ -217,10 +213,17 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
       setContext("");
       setShare([]);
       deleteImg();
-      window.location.reload();
+
+      setGetBoard(!getBoard);
+
+      // window.location.reload();
       // window.location.reload();
     }
 
+    
+  }, [postSuccess, EditSuccess]);
+
+  useEffect(()=>{
     if (editMode) {
       console.log(boardData.data[0].category);
       setCategory(boardData.data[0].category);
@@ -241,7 +244,8 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
       setContext("");
       setShare([]);
     }
-  }, [postSuccess, editMode, EditSuccess]);
+  },[editMode])
+
   useEffect(() => {
     if (!readOpen) {
       checkDateRefetch();

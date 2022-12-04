@@ -11,6 +11,7 @@ import {
   readModalOpenState,
   boardItemState,
   boardSharedState,
+  getBoardState
 } from "../recoil/calendarAtom";
 import useGetBoardItem from "../hooks/calendar/useGetBoardItem";
 import MyBoard from "./MyBoard";
@@ -48,6 +49,7 @@ const DayBlock = ({
   const [readOpen, setReadOpen] = useRecoilState(readModalOpenState);
   const [boardItemValue, setBoardItemValue] = useRecoilState(boardItemState);
   const [shareValue, setShareValue] = useRecoilState(boardSharedState);
+  const [getBoard, setGetBoard] = useRecoilState(getBoardState);
 
   const [boardId, setBoardId] = useState<number | null>(null);
 
@@ -61,7 +63,9 @@ const DayBlock = ({
     } else setIsToday(false);
 
     if (boardItem) {
+      console.log(boardItem)
       setBoardItemValue(boardItem);
+      
     }
   }, [boardItem, currMonth]);
 

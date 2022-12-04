@@ -10,8 +10,8 @@ import {
 import DayBlock from "./DayBlock";
 import useGetBoards from "../hooks/calendar/useGetBoards";
 import { useEffect } from "react";
-import { useRecoilValue } from "recoil";
-import { categorySelectTitle } from "../recoil/calendarAtom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { categorySelectTitle, getBoardState } from "../recoil/calendarAtom";
 
 interface PropsValue {
   currMonth: number;
@@ -50,6 +50,7 @@ const GetDayOfWeek = () => {
 
 const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
   const ctgTitle = useRecoilValue(categorySelectTitle);
+  const [getBoard, setGetBoard] = useRecoilState(getBoardState);
   const date = new Date(currYear, currMonth - 1); //오늘 날짜
   const monthDays = getDaysInMonth(new Date(currYear, currMonth - 1)); // 현재 달의 총 일수 /month는 0부터 시작,
   let monthStart = startOfMonth(date); //달의 시작일, Tue Nov 01 2022 00:00:00 GMT+0900 (한국 표준시)
@@ -70,7 +71,7 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
 
   useEffect(() => {
     boardRefetch();
-  }, [currMonth]);
+  }, [currMonth, getBoard]);
 
   const boardList = boardsData?.data;
 

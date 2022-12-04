@@ -9,7 +9,8 @@ import {
   boardItemState,
   pickDayState,
   boardSharedState,
-  editModeState
+  editModeState,
+  getBoardState
 } from "../recoil/calendarAtom";
 import { useRecoilState } from "recoil";
 import { useEffect, useState } from "react";
@@ -30,6 +31,7 @@ const ReadModalLayout = ({ handleReadCloseClick, handleOpenBtnClick }: Props) =>
   const [optionView, setOptionView] = useState<boolean>(false);
   const [shared, setShared] = useRecoilState(boardSharedState);
   const [editMode, setEditMode] = useRecoilState(editModeState);
+  const [getBoard, setGetBoard] = useRecoilState(getBoardState);
 
   // useEffect(()=> {
   //     console.log(boardData);
@@ -46,7 +48,7 @@ const ReadModalLayout = ({ handleReadCloseClick, handleOpenBtnClick }: Props) =>
 
   // console.log(boardId);
 
-  const { mutate: deleteMute } = useDeleteBoard({ boardId });
+  const { isSuccess:deleteSuccss, mutate: deleteMute } = useDeleteBoard({ boardId });
 
   const handleOptionClick = () => {
     setOptionView(true);
@@ -62,7 +64,7 @@ const ReadModalLayout = ({ handleReadCloseClick, handleOpenBtnClick }: Props) =>
       deleteMute({ boardId });
       handleReadCloseClick();
       // Router.push("/calendar");
-      window.location.reload();
+      // window.location.reload();
     }
   };
 
@@ -80,6 +82,14 @@ const ReadModalLayout = ({ handleReadCloseClick, handleOpenBtnClick }: Props) =>
     handleReadCloseClick();
     setOptionView(false);
   }
+
+  useEffect(()=> {
+    console.log(deleteSuccss);
+    if(deleteSuccss){
+      alert("삭제되었습니다")
+      setGetBoard(!getBoard);
+    }
+  },[deleteSuccss])
 
   return (
     <>
