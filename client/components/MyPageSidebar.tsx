@@ -64,7 +64,7 @@ const MyPageSidebar = ({ onClick }: Props) => {
 
   return (
     <>
-      <div className="z-50  p-3 hidden md:flex lg:flex lg:w-2/12 flex-col bg-white w-[20rem] md:ml-8 md:min-w-[10rem] drop-shadow-2xl justify-between">
+      <div className="z-50  p-3 hidden lg:flex lg:w-2/12 flex-col bg-white w-[20rem] md:ml-8 md:min-w-[10rem] drop-shadow-2xl justify-between">
         <div className="flex flex-col justify-between ">
           <div className="relative flex justify-center w-full h-5 my-3">
             <div className="z-10 text-lg text-zinc-500 font-SCDream6 ">
