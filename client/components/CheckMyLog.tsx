@@ -26,10 +26,11 @@ const MyLogBox = () => {
   const handlePageChange = (page: number) => {
     setPage(page);
   };
+
   console.log(sharedLog);
 
   const renderLogs = () => {
-    const Logs = sharedLog?.data;
+    const Logs = sharedLog?.data.content;
     let logList: ReactNode[] = [];
 
     if (logSuccess) {
