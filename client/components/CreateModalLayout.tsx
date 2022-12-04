@@ -6,7 +6,7 @@ import AddTextContainer from "./AddTextContainer";
 import AddShareContainer from "./AddShareContainer";
 import BoardModalContainer from "./BoardModalContainer";
 import BoardModalBtn from "./BoardModalBtn";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   selectDayState,
@@ -42,6 +42,8 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   const [readOpen, setReadOpen] = useRecoilState(readModalOpenState);
   const [open, setOpen] = useRecoilState(modalOpenState);
 
+  const categoryRef = useRef<HTMLInputElement>(null);
+
   const changeDate = (e: any) => {
     // console.log("바뀜?")
     setDate(e.target.value);
@@ -58,6 +60,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
 
   const changeCategory = (category: string) => {
     setCategory(category);
+    categoryRef.current?.focus();
     console.log(category);
   };
 
@@ -336,6 +339,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
                 <div className="absolute top-3.5 left-0.5 right-0 bottom-2  bg-mainOrange/40"></div>
               </div>
               <input
+                ref={categoryRef}
                 type="text"
                 placeholder="입력하세요!"
                 value={title}
