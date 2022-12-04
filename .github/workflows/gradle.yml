@@ -10,8 +10,6 @@ name: Java CI with Gradle
 on:
   push:
     branches: [ "develop" ]
-  pull_request:
-    branches: [ "develop" ]
 
 permissions:
   contents: read
@@ -31,6 +29,8 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
+    - name: Run chmod to make gradlew executable
+        run: chmod +x ./gradlew
     - name: Build with Gradle
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
@@ -59,3 +59,4 @@ jobs:
         --deployment-config-name CodeDeployDefault.AllAtOnce
         --deployment-group-name jungsoyigroup
         --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=server-0.0.1-SNAPSHOT.zip
+
