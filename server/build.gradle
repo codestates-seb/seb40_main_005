@@ -1,7 +1,16 @@
+// 1. queryDsl version 정보 추가
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}
+
 plugins {
-	id 'org.springframework.boot' version '2.7.5'
-	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version '2.7.5'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    // 2. querydsl plugins 추가
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+    id 'java'
 }
 
 group = 'com.gallendar.gradle'
@@ -9,25 +18,113 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'junit:junit:4.13.2'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    implementation 'org.mapstruct:mapstruct:1.5.3.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+
+	//jwt
+	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.2'
+
+	//connector
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
+	implementation 'org.mariadb.jdbc:mariadb-java-client'
+
+	implementation 'org.apache.httpcomponents:httpclient'
+	runtimeOnly 'com.h2database:h2'
+
+	// gson
+	implementation group: 'com.google.code.gson', name: 'gson'
+
+	// test 및 REST DOCS 관련
+	testImplementation 'com.h2database:h2:1.4.199'
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	testImplementation group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+
+
+	//email
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	//Redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    //querydsl
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+    implementation "com.querydsl:querydsl-core:${queryDslVersion}"
+
+
+    //s3 starter aws
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+    //s3 mockup test
+    implementation 'io.findify:s3mock_2.13:0.2.6'
+    testImplementation 'io.findify:s3mock_2.12:0.2.6'
+
+    //swagger
+    implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
+
+    //logback
+    implementation (
+            'ch.qos.logback:logback-classic:1.2.3',
+            'ch.qos.logback:logback-core:1.2.3',
+    )
+
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
+}
+
+/*
+ * queryDSL 설정 추가
+ */
+// querydsl에서 사용할 경로 설정
+def querydslDir = '$buildDir/generated/querydsl'
+// JPA 사용 여부와 사용할 경로를 설정
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+// build 시 사용할 sourceSet 추가
+sourceSets {
+    main.java.srcDir querydslDir
+}
+// querydsl 컴파일시 사용할 옵션 설정
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+// querydsl 이 compileClassPath 를 상속하도록 설정
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    querydsl.extendsFrom compileClasspath
+}
+
+/**
+ * comileQuerydsl.doFirst 추가
+ */
+compileQuerydsl.doFirst {
+    if(file(querydslDir).exists() )
+        delete(file(querydslDir))
 }
