@@ -29,8 +29,8 @@ const CalendarNav = () => {
   };
 
   const onLogout = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("userName");
+    localStorage.removeItem("token");
+    localStorage.removeItem("memberId");
     setIsLoginState(false);
     router.push("/");
   };

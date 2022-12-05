@@ -39,19 +39,19 @@ const DayInput = ({ year, month, setMonth, setYear }: Props) => {
           {year}.{month}
         </div>
       ) : (
-        <div className="font-SCDream5 text-textGray text-base w-1/2 lg:w-1/4 h-fit flex flex-row justify-center items-center"
+        <div className="font-SCDream5 text-textGray text-base w-3/4 lg:w-2/4 h-fit flex flex-row justify-center items-center"
             onKeyDown={handlePressEnter}
         >
           <input
             type="text"
-            className="outline-none text-center font-SCDream5 text-textGray/70 text-base w-1/4 h-fit justify-center items-center"
+            className="outline-none text-center font-SCDream5 text-textGray/70 text-base w-5/6 h-fit justify-center items-center"
             defaultValue={year}
             onChange={handleYearChange}
           />
           .
           <input
             type="text"
-            className="outline-none text-center font-SCDream5 text-textGray/70 text-base w-1/6 h-fit justify-center items-center"
+            className="outline-none text-center font-SCDream5 text-textGray/70 text-base w-1/3 h-fit justify-center items-center"
             defaultValue={month}
             onChange={handleMonthChange}
           />

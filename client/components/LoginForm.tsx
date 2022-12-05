@@ -59,8 +59,6 @@ const LoginForm = () => {
       })
       .then(res => {
         if (res) {
-          console.log(localStorage.getItem("token"));
-
           boardRefetch();
           router.push("/calendar");
         }

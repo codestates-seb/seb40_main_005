@@ -27,8 +27,6 @@ const MyLogBox = () => {
     setPage(page);
   };
 
-  console.log(sharedLog);
-
   const renderLogs = () => {
     const Logs = sharedLog?.data.content;
     let logList: ReactNode[] = [];
@@ -146,7 +144,7 @@ const MyLogBox = () => {
           {/* </div> */}
 
           {/* Pagination 하드코딩  */}
-          <div className="flex justify-center mt-12">
+          {/* <div className="flex justify-center mt-12">
             <div className="flex flex-row items-center justify-between text-lg w-80 font-SCDream5">
               <div>
                 <svg
@@ -197,7 +195,7 @@ const MyLogBox = () => {
                 </svg>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

@@ -116,6 +116,9 @@ const SelectBar = ({ category, setCategory, keyCode }: CategoryType) => {
             className="w-5/6 "
           >
             <option className="SCDream3" selected>
+              카테고리 선택
+            </option>
+            <option className="SCDream3" selected>
               전체
             </option>
             {categoryList.map(option => (
