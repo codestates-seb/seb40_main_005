@@ -17,7 +17,8 @@ import {
   boardItemState,
   readModalOpenState,
   modalOpenState,
-  getBoardState
+  getBoardState,
+  getBoardItemState
 } from "../recoil/calendarAtom";
 import usePostBoard from "../hooks/calendar/usePostBoard";
 import usePatchBoard from "../hooks/calendar/usePatchBoard";
@@ -42,6 +43,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   const [readOpen, setReadOpen] = useRecoilState(readModalOpenState);
   const [open, setOpen] = useRecoilState(modalOpenState);
   const [getBoard, setGetBoard] = useRecoilState(getBoardState);
+  const [getBoardItem, setGetBoardItem] = useRecoilState(getBoardItemState);
 
 
   const categoryRef = useRef<HTMLInputElement>(null);
@@ -217,7 +219,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
       deleteImg();
 
       setGetBoard(!getBoard);
-
+      setGetBoardItem(!getBoardItem);
       // window.location.reload();
       // window.location.reload();
     }

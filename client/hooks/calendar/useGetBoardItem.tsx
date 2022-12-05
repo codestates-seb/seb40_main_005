@@ -1,16 +1,20 @@
 import {
-  useQuery,
+  useQuery, useQueryClient,
   // useQueryClient,
   // useQueryErrorResetBoundary,
 } from "react-query";
 import getBoardItem from "../../apis/board/getBoardItem";
 
 interface Props {
-  boardId: number | null;
+  boardItemId: number | null;
 }
 
-const useGetBoardItem = ({ boardId }: Props) => {
-  return useQuery(["get/boardItem"], () => getBoardItem({ boardId }), {
+const useGetBoardItem = ({ boardItemId }: Props) => {
+  const queryClient = useQueryClient();
+
+  queryClient.invalidateQueries({ queryKey: ["get/boardItem"] });
+
+  return useQuery(["get/boardItem"], () => getBoardItem({ boardItemId }), {
     enabled: false,
   });
 };

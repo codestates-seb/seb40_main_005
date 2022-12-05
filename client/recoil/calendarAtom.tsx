@@ -66,6 +66,11 @@ const getBoardState = atom<boolean>({
   default : false
 })
 
+const getBoardItemState = atom<boolean>({
+  key : "getBoardItemState",
+  default : false
+})
+
 export {
   modalOpenState,
   selectYearState,
@@ -78,5 +83,6 @@ export {
   boardSharedState,
   editModeState,
   categorySelectTitle,
-  getBoardState
+  getBoardState,
+  getBoardItemState
 };

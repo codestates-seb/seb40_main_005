@@ -11,7 +11,8 @@ import {
   readModalOpenState,
   boardItemState,
   boardSharedState,
-  getBoardState
+  getBoardState,
+  getBoardItemState
 } from "../recoil/calendarAtom";
 import useGetBoardItem from "../hooks/calendar/useGetBoardItem";
 import MyBoard from "./MyBoard";
@@ -50,30 +51,35 @@ const DayBlock = ({
   const [boardItemValue, setBoardItemValue] = useRecoilState(boardItemState);
   const [shareValue, setShareValue] = useRecoilState(boardSharedState);
   const [getBoard, setGetBoard] = useRecoilState(getBoardState);
+  const [getBoardItem, setGetBoardItem] = useRecoilState(getBoardItemState);
 
-  const [boardId, setBoardId] = useState<number | null>(null);
+  const [boardItemId, setBoardId] = useState<number | null>(null);
 
-  const { data: boardItem, refetch: boardItemRefetch } = useGetBoardItem({
-    boardId,
+  const { isSuccess:boardItemDone, data: boardItem, refetch: boardItemRefetch } = useGetBoardItem({
+    boardItemId,
   });
 
   useEffect(() => {
+    console.log('active')
     if (month === currMonth && year === currYear && children === day) {
       setIsToday(true);
     } else setIsToday(false);
 
-    if (boardItem) {
-      console.log(boardItem)
+    if (boardItem && boardItemDone) {
+      // console.log(boardItem)
       setBoardItemValue(boardItem);
       
     }
   }, [boardItem, currMonth]);
 
+  // console.log('active')
   useEffect(() => {
-    if (boardId) {
+    if (boardItemId) {
+      // console.log(boardItemId);
       boardItemRefetch();
+      // console.log(boardId)
     }
-  }, [boardId]);
+  }, [boardItemId, getBoardItem]);
 
   const handleBtnClick = () => {
     setOpen(true);
@@ -96,6 +102,7 @@ const DayBlock = ({
   const handleBoardClick = (boardId: number, shared: boolean) => {
     setReadOpen(true);
     setBoardId(boardId);
+    // console.log(boardId);
 
     let realMonth = currMonth.toString();
     if (realMonth.length < 2) {
