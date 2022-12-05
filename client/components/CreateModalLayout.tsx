@@ -18,7 +18,7 @@ import {
   readModalOpenState,
   modalOpenState,
   getBoardState,
-  getBoardItemState
+  getBoardItemState,
 } from "../recoil/calendarAtom";
 import usePostBoard from "../hooks/calendar/usePostBoard";
 import usePatchBoard from "../hooks/calendar/usePatchBoard";
@@ -231,7 +231,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
 
   useEffect(() => {
     if (editMode) {
-      console.log(boardData.data[0].category);
+      // console.log(boardData.data[0].category);
       setCategory(boardData.data[0].category);
       setTitle(boardData.data[0].title);
       setMusic(boardData.data[0].music);

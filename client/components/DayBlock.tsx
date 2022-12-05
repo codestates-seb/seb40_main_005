@@ -64,7 +64,7 @@ const DayBlock = ({
   });
 
   useEffect(() => {
-    console.log("active");
+    // console.log("active");
     if (month === currMonth && year === currYear && children === day) {
       setIsToday(true);
     } else setIsToday(false);

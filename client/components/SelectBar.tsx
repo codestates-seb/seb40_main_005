@@ -82,7 +82,7 @@ const SelectBar = ({ category, setCategory, keyCode }: CategoryType) => {
           <input
             type="text"
             id="change"
-            className=" w-4/6 md:w-5/6 text-right "
+            className="w-4/6 text-right md:w-5/6"
             placeholder="입력 후 Enter"
             // onKeyDown={pressEnter}
             value={category}
@@ -127,6 +127,9 @@ const SelectBar = ({ category, setCategory, keyCode }: CategoryType) => {
             onChange={selectChange}
             className="w-full "
           >
+            <option className="SCDream3" selected>
+              카테고리 선택
+            </option>
             <option className="SCDream3" selected>
               전체
             </option>

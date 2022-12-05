@@ -7,6 +7,10 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isLoginState } from "../recoil/authAtom";
+import IndexLogin from "../components/indexLogin";
+import IndexSignup from "../components/IndexSignup";
+import IndexCalendar from "../components/indexCalendar";
+import IndexLogout from "../components/IndexLogout";
 
 function Home() {
   const logoAnimate = {
@@ -66,8 +70,11 @@ function Home() {
   // 은비 작업부분
   // const outerDivRef = useRef<any>(null);
   const [scrollIdx, setScrollIndex] = useState<number>(1);
+  const localStorage =
+    typeof window !== "undefined" ? window.localStorage : null;
   const loginState = useRecoilValue(isLoginState);
   // const [currPage, setCurrPage] = useState<number>(1);
+  const isLogin = useRecoilValue(isLoginState);
 
   useEffect(() => {
     window.addEventListener("wheel", () => {
@@ -234,22 +241,8 @@ function Home() {
               여러분의 인상적인 순간들을 캘린더로 확인하세요!
             </motion.div>
             <div className="flex flex-row items-center justify-center w-full mt-20 sm:justify-start sm:mt-8">
-              <Link href="/login">
-                <div className="relative items-center justify-center mr-8 cursor-pointer w-fit h-7">
-                  <div className="z-10 ml-1 text-lg text-gray-700 font-SCDream3">
-                    로그인
-                  </div>
-                  <div className="absolute top-5 left-0.5 right-0 bottom-0.5  bg-mainOrange/40"></div>
-                </div>
-              </Link>
-              <Link href="/signup">
-                <div className="relative items-center justify-center cursor-pointer w-fit h-7">
-                  <div className="z-10 ml-1 text-lg text-gray-700 font-SCDream3">
-                    회원가입
-                  </div>
-                  <div className="absolute top-5 left-1 right-0 bottom-0.5  bg-mainOrange/40"></div>
-                </div>
-              </Link>
+              <IndexLogin />
+              <IndexSignup />
             </div>
           </div>
         </div>
