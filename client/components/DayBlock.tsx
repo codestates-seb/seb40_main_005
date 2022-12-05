@@ -12,7 +12,7 @@ import {
   boardItemState,
   boardSharedState,
   getBoardState,
-  getBoardItemState
+  getBoardItemState,
 } from "../recoil/calendarAtom";
 import useGetBoardItem from "../hooks/calendar/useGetBoardItem";
 import MyBoard from "./MyBoard";
@@ -55,12 +55,16 @@ const DayBlock = ({
 
   const [boardItemId, setBoardId] = useState<number | null>(null);
 
-  const { isSuccess:boardItemDone, data: boardItem, refetch: boardItemRefetch } = useGetBoardItem({
+  const {
+    isSuccess: boardItemDone,
+    data: boardItem,
+    refetch: boardItemRefetch,
+  } = useGetBoardItem({
     boardItemId,
   });
 
   useEffect(() => {
-    console.log('active')
+    console.log("active");
     if (month === currMonth && year === currYear && children === day) {
       setIsToday(true);
     } else setIsToday(false);
