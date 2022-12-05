@@ -6,10 +6,12 @@ interface CategoryTitle {
 }
 
 interface CategoryType {
+  category: string;
   setCategory: (category: string) => void;
+  keyCode: (keyCode: Number) => void;
 }
 
-const SelectBar = ({ setCategory }: CategoryType) => {
+const SelectBar = ({ category, setCategory, keyCode }: CategoryType) => {
   const [custom, setCustom] = useState<boolean>(false);
   const [select, isSelect] = useState<string>("");
   const [categoryList, setCategoryList] = useState<Array<CategoryTitle>>([]);
@@ -36,42 +38,98 @@ const SelectBar = ({ setCategory }: CategoryType) => {
       setCustom(false);
     }
   };
-  const pressEnter = (e: any) => {
-    if (e.keyCode == 13) {
-      const value = e.target.value;
-      setCategory(value);
-      setText("");
-    }
+  // 키다운 시 넘겨주는 형태
+  // const pressEnter = (e: any) => {
+  //   const value = e.target.value;
+  //   if (e.keyCode == 13) {
+  //     setCategory(value);
+  //     keyCode(e.keyCode);
+  //     setText("");
+  //   } else if (e.keyCode == 9) {
+  //     setCategory(value);
+  //     keyCode(e.keyCode);
+  //     setText("");
+  //   }
+  // };
+  const focusInput = (e: any) => {
+    keyCode(e.keyCode);
+  };
+  const saveNewCategory = (e: any) => {
+    const value = e.target.value;
+    setCategory(value);
   };
 
   return (
     <>
       {custom ? (
         <div className="flex flex-row justify-end text-sm SCDream3">
+          <button onClick={selectedControl}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="w-4 h-4 mx-2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M3 4.5h14.25M3 9h9.75M3 13.5h9.75m4.5-4.5v12m0 0l-3.75-3.75M17.25 21L21 17.25"
+              />
+            </svg>
+          </button>
           <input
             type="text"
             id="change"
-            className=" w-4/6 lg:w-[9rem] "
+            className=" w-4/6 md:w-5/6 text-right "
             placeholder="입력 후 Enter"
-            // value={text}
-            onKeyDown={pressEnter}
+            // onKeyDown={pressEnter}
+            value={category}
+            onKeyDown={focusInput}
+            onChange={saveNewCategory}
           ></input>
-          <button
-            onClick={selectedControl}
-            className="h-6 px-1.5 bg-btnOrange SCDream7 text-[0.8rem]  lg:text-sm hover:bg-lightOrange text-white font-bold lg:py-0.5 lg:px-5 rounded-md"
+          {/* <button
+            onClick={saveNewCategory}
+            className="h-6 px-0.5 w-10 md:w-20 lg:w-full bg-btnOrange SCDream7 text-[0.5rem] md:text-sm  lg:text-xs hover:bg-lightOrange text-white font-bold lg:py-0.5 lg:px-4 rounded-md"
           >
-            선택
-          </button>
+            등록
+          </button> */}
         </div>
       ) : (
-        <div className="flex flex-row justify-end text-sm ">
+        <div className="flex flex-row justify-end text-sm SCDream3">
+          {/* <button
+            className="h-6 px-1.5 bg-btnOrange SCDream7 text-[0.08rem]  lg:text-sm hover:bg-lightOrange text-white font-bold lg:py-0.5 lg:px-4 rounded-md"
+            onClick={selectedControl}
+          >
+            직접입력
+          </button> */}
+          <button onClick={selectedControl}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="w-4 h-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+              />
+            </svg>
+          </button>
+
           <select
             id="select-box"
             onClick={getCtategoryClick}
             onChange={selectChange}
-            className=""
+            className="w-full "
           >
-            <option className="SCDream3">나의 카테고리</option>
+            <option className="SCDream3" selected>
+              전체
+            </option>
             {categoryList.map(option => (
               <option
                 className="SCDream3"
@@ -82,12 +140,6 @@ const SelectBar = ({ setCategory }: CategoryType) => {
               </option>
             ))}
           </select>
-          <button
-            className="h-6 px-1.5 bg-btnOrange SCDream7 text-[0.8rem]  lg:text-sm hover:bg-lightOrange text-white font-bold lg:py-0.5 lg:px-4 rounded-md"
-            onClick={selectedControl}
-          >
-            입력
-          </button>
         </div>
       )}
     </>

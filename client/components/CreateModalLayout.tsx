@@ -7,7 +7,7 @@ import AddShareContainer from "./AddShareContainer";
 import BoardModalContainer from "./BoardModalContainer";
 import BoardModalBtn from "./BoardModalBtn";
 import { useEffect, useState, useRef } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { constSelector, useRecoilState, useRecoilValue } from "recoil";
 import {
   selectDayState,
   selectMonthState,
@@ -17,7 +17,7 @@ import {
   boardItemState,
   readModalOpenState,
   modalOpenState,
-  getBoardState
+  getBoardState,
 } from "../recoil/calendarAtom";
 import usePostBoard from "../hooks/calendar/usePostBoard";
 import usePatchBoard from "../hooks/calendar/usePatchBoard";
@@ -43,7 +43,6 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   const [open, setOpen] = useRecoilState(modalOpenState);
   const [getBoard, setGetBoard] = useRecoilState(getBoardState);
 
-
   const categoryRef = useRef<HTMLInputElement>(null);
 
   const changeDate = (e: any) => {
@@ -52,7 +51,12 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
 
   const changeCategory = (category: string) => {
     setCategory(category);
-    categoryRef.current?.focus();
+  };
+
+  const focus = (keyCode: Number) => {
+    if (keyCode === 13) {
+      categoryRef.current?.focus();
+    }
   };
 
   const changeTitle = (e: any) => {
@@ -172,8 +176,8 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     setContext("");
     setShare([]);
     deleteImg();
+    setCategory("");
   };
-
 
   useEffect(() => {
     if (postSuccess && !editMode) {
@@ -221,11 +225,9 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
       // window.location.reload();
       // window.location.reload();
     }
-
-    
   }, [postSuccess, EditSuccess]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (editMode) {
       console.log(boardData.data[0].category);
       setCategory(boardData.data[0].category);
@@ -246,7 +248,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
       setContext("");
       setShare([]);
     }
-  },[editMode])
+  }, [editMode]);
 
   useEffect(() => {
     if (!readOpen) {
@@ -325,14 +327,11 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
                 </div>
                 <div className="absolute top-3.5 left-0.5 right-0 bottom-2  bg-mainOrange/40"></div>
               </div>
-              <SelectBar setCategory={changeCategory} />
-              {/* <input
-                type="text"
-                value={category}
-                onChange={changeCategory}
-                placeholder="예) 크리스마스"
-                className="w-2/3 text-sm text-right text-gray-700 outline-none h-fit font-SCDream3 lg:text-sm"
-              /> */}
+              <SelectBar
+                category={category}
+                setCategory={changeCategory}
+                keyCode={focus}
+              />
             </CategoryInputContainer>
             <CategoryInputContainer>
               <div className="relative items-center justify-center mt-2 w-fit h-7">
@@ -399,7 +398,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
             </div>
             <div className="absolute top-3.5 left-0.5 right-0 bottom-2  bg-mainOrange/40"></div>
           </div>
-          <AddShareContainer changeShare={changeShare} />
+          <AddShareContainer share={share} changeShare={changeShare} />
         </div>
 
         <div className="flex flex-row items-center justify-center w-full h-8 mt-5">

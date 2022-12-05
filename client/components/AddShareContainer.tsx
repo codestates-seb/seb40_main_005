@@ -13,6 +13,7 @@ interface idType {
 
 interface ShareProps {
   changeShare: (share: string) => void;
+  share: string;
 }
 // interface TagState {
 //   id: string;
@@ -21,7 +22,7 @@ interface ShareProps {
 //   day: string;
 // }
 
-const AddShareContainer = ({ changeShare }: ShareProps) => {
+const AddShareContainer = ({ share, changeShare }: ShareProps) => {
   const [date, setDate] = useRecoilState(pickDayState);
 
   const [input, setInput] = useState<string>("");
@@ -139,6 +140,7 @@ const AddShareContainer = ({ changeShare }: ShareProps) => {
             <div className="pl-2 w-full h-full max-h-28 flex flex-col overflow-auto">
               <input
                 type="text"
+                // value={share}
                 placeholder="공유하고 싶은 사람을 검색하세요!"
                 className="ml-1 w-full font-SCDream3 text-left text-sm md:text-sm lg:text-sm p-1 rounded-md text-gray-700 outline-none"
                 onChange={inputChange}
