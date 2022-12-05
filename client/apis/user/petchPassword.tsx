@@ -13,7 +13,13 @@ const petchPassword = async ({ id, email, password }: ResetPwData) => {
     id: id,
     password: password,
   };
-  return await axios.patch("/members/password", data);
+  return await axios.patch("/members/password", data, {
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    headers: {
+      withCredentials: true,
+      "Content-Type": `application/json`,
+    },
+  });
 };
 
 export default petchPassword;

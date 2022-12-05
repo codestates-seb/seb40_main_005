@@ -12,7 +12,6 @@ const getAllUserId = (searchInput: string) => {
     baseURL: process.env.NEXT_PUBLIC_API_URL,
     headers: {
       withCredentials: true,
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": `application/json`,
     },
   });
