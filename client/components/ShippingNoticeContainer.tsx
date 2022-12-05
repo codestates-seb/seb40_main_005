@@ -9,8 +9,6 @@ const ShippingNoticeContainer = () => {
         </h2>
         <div className="py-2">
           <ShippingNotice />
-          <ShippingNotice />
-          <ShippingNotice />
         </div>
         <button className="relative" type="button">
           <span className="text-xs md:text-sm font-SCDream5">
