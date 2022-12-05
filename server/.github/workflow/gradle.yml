@@ -7,6 +7,9 @@ on:
 permissions:
   contents: read
 
+env:
+  S3_BUCKET_NAME: gallendar-ver001
+
 jobs:
   build:
 
@@ -19,9 +22,33 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'
-      - name: Run chmod to make gradlew executable
-        run: chmod +x ./gradlew
+
       - name: Build with Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
+      - name: Run chmod to make gradlew executable
+        run: chmod +x ./gradlew
+        # build 프로젝트 압축
+      - name: Make zip file
+        run: zip -r ./server-0.0.1-SNAPSHOT.zip .
+        shell: bash
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+        # 압축한 프로젝트를 S3로 전송
+      - name: Upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./server-0.0.1-SNAPSHOT.zip s3://$S3_BUCKET_NAME/server-0.0.1-SNAPSHOT.zip
+
+        # CodeDeploy에게 배포 명령
+      - name: Code Deploy
+        run: >
+          aws deploy create-deployment --application-name jungsoyi
+          --deployment-config-name CodeDeployDefault.AllAtOnce
+          --deployment-group-name jungsoyigroup
+          --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=server-0.0.1-SNAPSHOT.zip
