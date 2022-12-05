@@ -4,11 +4,13 @@ import Sidebar from "./Sidebar";
 import BoardContainer from "./BoardContainer";
 import { useEffect, useRef, useState } from "react";
 import CreateModalLayout from "./CreateModalLayout";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   modalOpenState,
   pickDayState,
   readModalOpenState,
+  getShareModalState,
+  getShippingModalState,
 } from "../recoil/calendarAtom";
 import ReadModalLayout from "./ReadModalLayout";
 
@@ -17,10 +19,15 @@ const CalendarPageLayout = () => {
   const CreateBoardModal = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useRecoilState(modalOpenState);
   const [readOpen, setReadOpen] = useRecoilState(readModalOpenState);
+  const setIsShareOpen = useSetRecoilState(getShareModalState);
+  const setIsShippingOpen = useSetRecoilState(getShippingModalState);
   // const [date, setDate] = useRecoilState(pickDayState);
 
   const handleOpenBtnClick = () => {
     const { current } = boardModal;
+
+    setIsShareOpen(false);
+    setIsShippingOpen(false);
 
     if (current?.style.transform !== undefined) {
       window.innerWidth < 376
@@ -43,6 +50,9 @@ const CalendarPageLayout = () => {
 
   const handleReadOpenBtnClick = () => {
     const { current } = CreateBoardModal;
+
+    setIsShareOpen(false);
+    setIsShippingOpen(false);
 
     if (current?.style.transform !== undefined) {
       window.innerWidth < 376
@@ -83,7 +93,7 @@ const CalendarPageLayout = () => {
           handleOpenBtnClick={handleOpenBtnClick}
         />
       </BoardContainer>
-      <div className="flex flex-col-reverse w-full h-full lg:flex-row mb-5 pb-3 bg-bgGray">
+      <div className="flex flex-col-reverse w-full h-full pb-3 mb-5 lg:flex-row bg-bgGray">
         <Sidebar />
         <div className="w-full h-full lg:pr-10 lg:pl-5">
           <CalendarNav />

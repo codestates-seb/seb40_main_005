@@ -68,7 +68,6 @@ const DayBlock = ({
     if (boardItem && boardItemDone) {
       // console.log(boardItem)
       setBoardItemValue(boardItem);
-      
     }
   }, [boardItem, currMonth]);
 
