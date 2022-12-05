@@ -84,6 +84,11 @@ const getShippingModalState = atom<boolean>({
   default: false,
 });
 
+const getBoardItemState = atom<boolean>({
+  key: "getBoardItemState",
+  default: false,
+});
+
 export {
   modalOpenState,
   selectYearState,
@@ -97,6 +102,7 @@ export {
   editModeState,
   categorySelectTitle,
   getBoardState,
+  getBoardItemState,
   getShareNoticeState,
   getShareModalState,
   getShippingModalState,
