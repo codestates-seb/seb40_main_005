@@ -10,7 +10,7 @@ import {
   pickDayState,
   boardSharedState,
   editModeState,
-  getBoardState
+  getBoardState,
 } from "../recoil/calendarAtom";
 import { useRecoilState } from "recoil";
 import { useEffect, useState } from "react";
@@ -25,7 +25,10 @@ interface Props {
   handleOpenBtnClick: () => void;
 }
 
-const ReadModalLayout = ({ handleReadCloseClick, handleOpenBtnClick }: Props) => {
+const ReadModalLayout = ({
+  handleReadCloseClick,
+  handleOpenBtnClick,
+}: Props) => {
   const [boardData, setBoardData] = useRecoilState(boardItemState);
   const [date, setDate] = useRecoilState(pickDayState);
   const [optionView, setOptionView] = useState<boolean>(false);
@@ -46,9 +49,11 @@ const ReadModalLayout = ({ handleReadCloseClick, handleOpenBtnClick }: Props) =>
     boardId = boardData.data[0].boardId;
   }
 
-  console.log(boardId);
+  // console.log(boardId);
 
-  const { isSuccess:deleteSuccss, mutate: deleteMute } = useDeleteBoard({ boardId });
+  const { isSuccess: deleteSuccss, mutate: deleteMute } = useDeleteBoard({
+    boardId,
+  });
 
   const handleOptionClick = () => {
     setOptionView(true);
@@ -76,28 +81,28 @@ const ReadModalLayout = ({ handleReadCloseClick, handleOpenBtnClick }: Props) =>
       setOptionView(false);
       setEditMode(true);
     }
-  }
+  };
 
   const handleCancelBtn = () => {
     handleReadCloseClick();
     setOptionView(false);
-  }
+  };
 
-  useEffect(()=> {
-    console.log(deleteSuccss);
-    if(deleteSuccss){
-      alert("삭제되었습니다")
+  useEffect(() => {
+    // console.log(deleteSuccss);
+    if (deleteSuccss) {
+      alert("삭제되었습니다");
       setGetBoard(!getBoard);
     }
-  },[deleteSuccss])
+  }, [deleteSuccss]);
 
   return (
     <>
       <div className="flex flex-col items-center justify-between w-full h-full p-5 overflow-auto">
         <div className="flex flex-row items-center justify-around w-full h-fit">
-          <div className="w-1/4 h-full flex flex-col justify-between items-start">
+          <div className="flex flex-col items-start justify-between w-1/4 h-full">
             <LeftArrow onClick={handleCancelBtn} />
-            <div className="flex flex-row w-fit h-fit justify-center items-center pb-3">
+            <div className="flex flex-row items-center justify-center pb-3 w-fit h-fit">
               <MapIcon />
               <div className="ml-0.5  text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5">
                 서비스 준비중
@@ -110,7 +115,7 @@ const ReadModalLayout = ({ handleReadCloseClick, handleOpenBtnClick }: Props) =>
               <div className="relative w-full h-fit">
                 {shared ? (
                   <OptionModal>
-                    <div className="flex flex-col justify-center items-end mb-3">
+                    <div className="flex flex-col items-end justify-center mb-3">
                       <CrossIcon onClick={handleCloseOptionClick} />
                     </div>
                     <div
@@ -122,10 +127,11 @@ const ReadModalLayout = ({ handleReadCloseClick, handleOpenBtnClick }: Props) =>
                   </OptionModal>
                 ) : (
                   <OptionModal>
-                    <div className="flex flex-col justify-center items-end mb-3">
+                    <div className="flex flex-col items-end justify-center mb-3">
                       <CrossIcon onClick={handleCloseOptionClick} />
                     </div>
-                    <div className="ml-0.5  text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5 cursor-pointer"
+                    <div
+                      className="ml-0.5  text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5 cursor-pointer"
                       onClick={handleUpdate}
                     >
                       수정하기
@@ -159,11 +165,11 @@ const ReadModalLayout = ({ handleReadCloseClick, handleOpenBtnClick }: Props) =>
           </div>
         </BoardModalContainer>
         <BoardModalContainer>
-          <div className="flex flex-col justify-center items-center w-full h-fit">
+          <div className="flex flex-col items-center justify-center w-full h-fit">
             <div className="z-10 ml-0.5 text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5">
               {boardData.data ? boardData.data[0].music : null}
             </div>
-            <div className="flex flex-row justify-center items-start w-full h-fit mt-2">
+            <div className="flex flex-row items-start justify-center w-full mt-2 h-fit">
               <HeadPhone />
               <div className="z-10 ml-1 text-xs md:text-xs lg:text-xs text-mainOrange font-SCDream5">
                 <Link href={boardData.data ? boardData.data[0].url : "#"}>
@@ -190,7 +196,7 @@ const ReadModalLayout = ({ handleReadCloseClick, handleOpenBtnClick }: Props) =>
               아직 공유한 사람이 없어요
             </div>
           ) : (
-            <div className="flex flex-row w-full h-fit justify-center items-center">
+            <div className="flex flex-row items-center justify-center w-full h-fit">
               {boardData.data[0].tagsMembers.map((el: string) => {
                 return (
                   <div
