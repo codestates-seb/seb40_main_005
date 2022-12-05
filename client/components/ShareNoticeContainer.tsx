@@ -2,6 +2,8 @@ import { ReactNode, useEffect } from "react";
 import useGetShareNotice from "../hooks/notice/useGetShareNotice";
 import ShareNotice from "./ShareNotice";
 import { useQueryClient } from "react-query";
+import { useRecoilState } from "recoil";
+import { getShareNoticeState } from "../recoil/calendarAtom";
 
 interface Shared {
   boardId: string;
@@ -17,6 +19,9 @@ const ShareNoticeContainer = () => {
   } = useGetShareNotice();
   let SharedList = shareNotice?.data;
   const queryClient = useQueryClient();
+
+  const [getShareNotice, setGetShareNotice] =
+    useRecoilState(getShareNoticeState);
 
   const renderNotices = (): ReactNode => {
     let shareNoticeLi: any[] = [];
@@ -42,7 +47,7 @@ const ShareNoticeContainer = () => {
       renderNotices();
       queryClient.invalidateQueries("get/boards");
     }
-  }, []);
+  }, [getShareNotice]);
 
   return (
     <>

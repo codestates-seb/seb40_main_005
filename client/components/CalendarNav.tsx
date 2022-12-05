@@ -1,17 +1,23 @@
 import Link from "next/link";
 import { useState } from "react";
 import ShareNoticeContainer from "./ShareNoticeContainer";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { isLoginState } from "../recoil/authAtom";
 import { useRouter } from "next/router";
 import ShippingNoticeContainer from "./ShippingNoticeContainer";
+import {
+  getShareModalState,
+  getShippingModalState,
+} from "../recoil/calendarAtom";
 
 const CalendarNav = () => {
-  const [isShareOpen, setIsShareOpen] = useState(false);
-  const [isShippingOpen, setIsShippingOpen] = useState(false);
-
   const router = useRouter();
   const setIsLoginState = useSetRecoilState(isLoginState);
+  const [isShareOpen, setIsShareOpen] = useRecoilState(getShareModalState);
+  const [isShippingOpen, setIsShippingOpen] = useRecoilState(
+    getShippingModalState,
+  );
+
   const handleShareNotice = () => {
     setIsShareOpen(!isShareOpen);
     setIsShippingOpen(false);
@@ -37,7 +43,7 @@ const CalendarNav = () => {
 
   return (
     <>
-      <nav className="flex justify-between w-full py-3 space-x-2 lg:py-5 px-3 md:px-0 md:justify-evenly lg:justify-end lg:space-x-12 font-SCDream4 text-textGray">
+      <nav className="flex justify-between w-full px-3 py-3 space-x-2 lg:py-5 md:px-0 md:justify-evenly lg:justify-end lg:space-x-12 font-SCDream4 text-textGray">
         <div className="relative">
           <Link href={"/mypage"}>마이페이지</Link>
           <div className="absolute w-[4.8rem] h-2 top-[0.8rem] md:top-3 lg:w-18 lg:top-[0.8rem] bg-mainOrange/40"></div>
