@@ -82,28 +82,16 @@ const SelectBar = ({ category, setCategory, keyCode }: CategoryType) => {
           <input
             type="text"
             id="change"
-            className=" w-4/6 md:w-5/6 text-right "
+            className=" w-3/6 text-right "
             placeholder="입력 후 Enter"
             // onKeyDown={pressEnter}
             value={category}
             onKeyDown={focusInput}
             onChange={saveNewCategory}
           ></input>
-          {/* <button
-            onClick={saveNewCategory}
-            className="h-6 px-0.5 w-10 md:w-20 lg:w-full bg-btnOrange SCDream7 text-[0.5rem] md:text-sm  lg:text-xs hover:bg-lightOrange text-white font-bold lg:py-0.5 lg:px-4 rounded-md"
-          >
-            등록
-          </button> */}
         </div>
       ) : (
         <div className="flex flex-row justify-end text-sm SCDream3">
-          {/* <button
-            className="h-6 px-1.5 bg-btnOrange SCDream7 text-[0.08rem]  lg:text-sm hover:bg-lightOrange text-white font-bold lg:py-0.5 lg:px-4 rounded-md"
-            onClick={selectedControl}
-          >
-            직접입력
-          </button> */}
           <button onClick={selectedControl}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +113,7 @@ const SelectBar = ({ category, setCategory, keyCode }: CategoryType) => {
             id="select-box"
             onClick={getCtategoryClick}
             onChange={selectChange}
-            className="w-full "
+            className="w-5/6 "
           >
             <option className="SCDream3" selected>
               전체
