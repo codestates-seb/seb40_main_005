@@ -62,7 +62,30 @@ const categorySelectTitle = atom<string>({
 });
 
 const getBoardState = atom<boolean>({
-  key : "getBoardState",
+  key: "getBoardState",
+  default: false,
+});
+
+const getShareNoticeState = atom<boolean>({
+  // 공유알림 모달 내 알림 변경사항을 위해 만든 상태 -> 수락 또는 거절이 상태 변경 일어남
+  key: "getShareNoticeState",
+  default: false,
+});
+
+const getShareModalState = atom<boolean>({
+  //공유알림 모달의 상태
+  key: "isShareOpen",
+  default: false,
+});
+
+const getShippingModalState = atom<boolean>({
+  // 배송알림 모달의 상태
+  key: "isShippingOpen",
+  default: false,
+});
+
+const getBoardItemState = atom<boolean>({
+  key : "getBoardItemState",
   default : false
 })
 
@@ -78,5 +101,9 @@ export {
   boardSharedState,
   editModeState,
   categorySelectTitle,
-  getBoardState
+  getBoardState,
+  getBoardItemState
+  getShareNoticeState,
+  getShareModalState,
+  getShippingModalState,
 };

@@ -2,12 +2,12 @@ import client from "../../client/client";
 import axios from "axios";
 
 interface Props {
-  boardId: number | null;
+  boardItemId: number | null;
 }
 
-const getBoardItem = async ({ boardId }: Props) => {
+const getBoardItem = async ({ boardItemId }: Props) => {
   return await axios
-    .get(`/boards/${boardId}`, {
+    .get(`/boards/${boardItemId}`, {
       baseURL: process.env.NEXT_PUBLIC_API_URL,
       headers: {
         withCredentials: true,

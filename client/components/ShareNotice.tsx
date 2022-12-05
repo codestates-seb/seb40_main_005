@@ -1,6 +1,7 @@
 import useGetAcceptNotice from "../hooks/notice/useGetAcceptNotice";
 import useGetDenyNotice from "../hooks/notice/useGetDenyNotice";
-import useGetShareNotice from "../hooks/notice/useGetShareNotice";
+import { useRecoilState } from "recoil";
+import { getBoardState, getShareNoticeState } from "../recoil/calendarAtom";
 
 interface Props {
   shareId: string;
@@ -9,25 +10,24 @@ interface Props {
 }
 
 const ShareNotice = ({ shareId, title, boardId }: Props) => {
-  const { refetch: acceptNoticeRefetch, isSuccess: approveSuccess } =
-    useGetAcceptNotice(boardId);
+  const { refetch: acceptNoticeRefetch } = useGetAcceptNotice(boardId);
   const { refetch: denyNoticeRefetch } = useGetDenyNotice(boardId);
-  const { refetch: shareNoticeRefetch, isSuccess: denySuccess } =
-    useGetShareNotice();
 
-  // const approveShareNotice = () => {
-  //   acceptNoticeRefetch();
-  //   if (approveSuccess) {
-  //     shareNoticeRefetch();
-  //   }
-  // };
+  const [getBoard, setGetBoard] = useRecoilState(getBoardState);
+  const [getShareNotice, setGetShareNotice] =
+    useRecoilState(getShareNoticeState);
 
-  // const denyShareNotice = () => {
-  //   denyNoticeRefetch();
-  //   if (denySuccess) {
-  //     shareNoticeRefetch();
-  //   }
-  // };
+  const approveShareNotice = () => {
+    acceptNoticeRefetch();
+    setGetShareNotice(!getShareNotice);
+    setGetBoard(!getBoard);
+  };
+
+  const denyShareNotice = () => {
+    denyNoticeRefetch();
+    setGetShareNotice(!getShareNotice);
+    setGetBoard(!getBoard);
+  };
 
   return (
     <>
@@ -36,16 +36,13 @@ const ShareNotice = ({ shareId, title, boardId }: Props) => {
           {shareId}님이 공유하셨습니다
         </div>
         <div className="flex flex-row items-center justify-between md:px-4">
-          <strong className="text-[0.9rem] md:text-[1rem] lg:text-[1.1rem] font-SCDream5">
+          <strong className="text-[0.9rem] md:text-[1rem] font-SCDream5 w-[7.5rem] md:w-32 truncate overflow-ellipsis">
             {title}
           </strong>
-          {/* 체크버튼 */}
+
           <div>
-            <button
-              onClick={() => acceptNoticeRefetch()}
-              type="button"
-              className="px-2 md:px-3"
-            >
+            {/* 체크버튼 */}
+            <button onClick={approveShareNotice} type="button" className="px-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -62,7 +59,7 @@ const ShareNotice = ({ shareId, title, boardId }: Props) => {
               </svg>
             </button>
             {/* 엑스버튼 */}
-            <button onClick={() => denyNoticeRefetch()} type="button">
+            <button onClick={denyShareNotice} type="button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

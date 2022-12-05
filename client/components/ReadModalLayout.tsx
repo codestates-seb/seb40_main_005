@@ -46,7 +46,7 @@ const ReadModalLayout = ({ handleReadCloseClick, handleOpenBtnClick }: Props) =>
     boardId = boardData.data[0].boardId;
   }
 
-  // console.log(boardId);
+  console.log(boardId);
 
   const { isSuccess:deleteSuccss, mutate: deleteMute } = useDeleteBoard({ boardId });
 
