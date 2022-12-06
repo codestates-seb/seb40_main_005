@@ -7,9 +7,9 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isLoginState } from "../recoil/authAtom";
-import IndexLogin from "../components/indexLogin";
+import IndexLogin from "../components/IndexLogin";
 import IndexSignup from "../components/IndexSignup";
-import IndexCalendar from "../components/indexCalendar";
+import IndexCalendar from "../components/IndexCalendar";
 import IndexLogout from "../components/IndexLogout";
 
 function Home() {

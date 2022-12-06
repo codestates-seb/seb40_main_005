@@ -7,12 +7,10 @@ import getShareNotice from "../../apis/notice/getShareNotice";
 
 const useGetShareNotice = () => {
   const queryClient = useQueryClient();
+  // queryClient.invalidateQueries("get/shareNotifications");
 
   return useQuery(["get/shareNotifications"], () => getShareNotice(), {
     enabled: false,
-    onSuccess() {
-      queryClient.invalidateQueries("get/boards");
-    },
   });
 };
 
