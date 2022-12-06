@@ -38,7 +38,7 @@ const LoginForm = () => {
   const {
     data: boardData,
     refetch: boardRefetch,
-    isSuccess: success,
+    isSuccess: boardSuccess,
   } = useGetBoards({
     curYear,
     curMonth,
@@ -60,6 +60,13 @@ const LoginForm = () => {
       .then(res => {
         if (res) {
           boardRefetch();
+          // console.log(isLogin);
+
+          // if (boardSuccess) {
+          //   console.log("hi");
+          //   console.log(isLogin);
+          // }
+
           router.push("/calendar");
         }
       })

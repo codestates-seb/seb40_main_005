@@ -1,34 +1,36 @@
 import BoardModalContainer from "./BoardModalContainer";
 import AddPhoto from "./AddPhoto";
-import React, { useState } from "react";
+import React, { LegacyRef, useState, forwardRef } from "react";
 import { extractExifTags } from "exif-parser-ts";
 
 interface Props {
   photo: any;
-  setPhoto: (file:any) => void;
+  setPhoto: (file: any) => void;
   showImg: string;
-  setShowImg: (url:any) => void;
+  setShowImg: (url: any) => void;
+  photoRef: React.ForwardedRef<HTMLInputElement>;
 }
 
-const AddPhotoContainer = ({ photo, setPhoto, showImg, setShowImg }: Props) => {
+const AddPhotoContainer = ({
+  photo,
+  setPhoto,
+  showImg,
+  setShowImg,
+  photoRef,
+}: Props) => {
   const uploadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
     // const formData = new FormData();
+    console.log("여기~");
 
-    
-    
-    // console.log(fileList);
     if (fileList !== null) {
-      // formData.append("file", fileList[0])
-      // console.log(fileList[0]);
       setPhoto(fileList[0]);
       setShowImg(URL.createObjectURL(fileList[0]));
     }
-  };
-  
-  // console.log(photo?.getAll("file"));
 
-  
+    // e.target.value = "";
+  };
+
   return (
     <>
       <BoardModalContainer>
@@ -41,8 +43,10 @@ const AddPhotoContainer = ({ photo, setPhoto, showImg, setShowImg }: Props) => {
                 id="file"
                 type="file"
                 accept="image/*"
+                ref={photoRef}
                 className="hidden"
                 onChange={uploadFile}
+                // onClick={() => handleClickInput}
               />
               <label htmlFor="file" className="flex flex-col items-center">
                 <AddPhoto />
@@ -61,4 +65,4 @@ const AddPhotoContainer = ({ photo, setPhoto, showImg, setShowImg }: Props) => {
   );
 };
 
-export default AddPhotoContainer;
+export default forwardRef(AddPhotoContainer);
