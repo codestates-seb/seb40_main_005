@@ -10,7 +10,7 @@ interface CategoryValue {
   mtCategory: string;
 }
 
-const StoreSidebar = ({ onClick }: Props) => {
+const CommerceSidebarToggle = ({ onClick }: Props) => {
   const myCategory = [
     {
       mtCategory: "테마",
@@ -48,8 +48,11 @@ const StoreSidebar = ({ onClick }: Props) => {
 
   return (
     <>
-      <div className="z-50  p-3 hidden lg:flex lg:w-2/12 flex-col bg-white w-[20rem] md:ml-8 md:min-w-[10rem] drop-shadow-2xl justify-between">
+      <div className="z-50 p-3 pb-8 md:flex lg:hidden absolute h-full flex-col bg-white w-2/3 md:w-2/6 drop-shadow-lg right-0 flex justify-between">
         <div className="flex flex-col justify-between ">
+          <div className="SCDream8 text-2xl  cursor-pointer" onClick={onClick}>
+            x
+          </div>
           <div className="relative flex justify-center w-full h-5 my-3">
             <div className="z-10 text-xl text-zinc-500 font-SCDream6 ">
               스토어
@@ -65,4 +68,4 @@ const StoreSidebar = ({ onClick }: Props) => {
   );
 };
 
-export default StoreSidebar;
+export default CommerceSidebarToggle;

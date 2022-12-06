@@ -25,6 +25,7 @@ import usePatchBoard from "../hooks/calendar/usePatchBoard";
 import useCheckDate from "../hooks/calendar/useCheckDate";
 //yeowool
 import SelectBar from "./SelectBar";
+
 interface Props {
   handleCloseClick: () => void;
 }
@@ -46,6 +47,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   const [getBoardItem, setGetBoardItem] = useRecoilState(getBoardItemState);
 
   const categoryRef = useRef<HTMLInputElement>(null);
+  const photoRef = useRef<HTMLInputElement | null>(null);
 
   const changeDate = (e: any) => {
     setDate(e.target.value);
@@ -79,6 +81,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   const changeShare = (share: string) => {
     setShare(share);
   };
+
   const deleteImg = () => {
     URL.revokeObjectURL(showImg);
     setShowImg("");
@@ -184,6 +187,28 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
       setCategory("");
     }
   };
+
+  const handleUploadPhotoClick = () => {
+    console.log("먹니?");
+
+    // if (photo) {
+    //   photoRef.current = null;
+    // }
+
+    photoRef.current?.click();
+
+    console.log(photoRef.current);
+  };
+
+  useEffect(() => {
+    console.log("useEffect");
+
+    // if (photoRef.current) {
+    //   console.log("먹힘");
+
+    //   photoRef.current?.click();
+    // }
+  }, [photoRef]);
 
   useEffect(() => {
     if (postSuccess && !editMode) {
@@ -362,17 +387,27 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
           />
         </div>
         <div className="flex flex-col items-start justify-center w-full mt-2 h-fit">
-          <div className="relative items-center justify-center mt-2 ml-2 w-fit h-7">
-            <div className="z-10 ml-0.5 text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5">
-              사진
+          <div className="flex flex-row justify-between w-full">
+            <div className="relative items-center justify-center mt-2 ml-2 w-fit h-7">
+              <div className="z-10 ml-0.5 text-sm md:text-sm lg:text-sm text-gray-700 font-SCDream5">
+                사진
+              </div>
+              <div className="absolute top-3.5 left-0.5 right-0 bottom-2  bg-mainOrange/40"></div>
             </div>
-            <div className="absolute top-3.5 left-0.5 right-0 bottom-2  bg-mainOrange/40"></div>
+            <button
+              type="button"
+              className="mr-2 text-xs text-mainOrange font-SCDream5"
+              onClick={handleUploadPhotoClick}
+            >
+              다시 업로드
+            </button>
           </div>
           <AddPhothoContainer
             photo={photo}
             setPhoto={setPhoto}
             showImg={showImg}
             setShowImg={setShowImg}
+            photoRef={photoRef}
           />
           <div className="flex flex-col items-end justify-start w-full mt-3 text-xs text-left h-fit font-SCDream5 text-mainOrange">
             사진은 한 게시물당 1개만 올릴 수 있습니다
@@ -394,7 +429,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
             </div>
             <div className="absolute top-3.5 left-0.5 right-0 bottom-2  bg-mainOrange/40"></div>
           </div>
-          <AddShareContainer share={share} changeShare={changeShare} />
+          <AddShareContainer changeShare={changeShare} />
         </div>
 
         <div className="flex flex-row items-center justify-center w-full h-8 mt-5">

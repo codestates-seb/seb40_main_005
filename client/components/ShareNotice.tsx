@@ -2,6 +2,8 @@ import useGetAcceptNotice from "../hooks/notice/useGetAcceptNotice";
 import useGetDenyNotice from "../hooks/notice/useGetDenyNotice";
 import { useRecoilState } from "recoil";
 import { getBoardState, getShareNoticeState } from "../recoil/calendarAtom";
+import { ReactElement } from "react";
+import { useEffect } from "react";
 
 interface Props {
   shareId: string;
@@ -10,24 +12,28 @@ interface Props {
 }
 
 const ShareNotice = ({ shareId, title, boardId }: Props) => {
-  const { refetch: acceptNoticeRefetch } = useGetAcceptNotice(boardId);
-  const { refetch: denyNoticeRefetch } = useGetDenyNotice(boardId);
+  const { refetch: acceptNoticeRefetch, isSuccess: accepted } =
+    useGetAcceptNotice(boardId);
+  const { refetch: denyNoticeRefetch, isSuccess: denied } =
+    useGetDenyNotice(boardId);
 
   const [getBoard, setGetBoard] = useRecoilState(getBoardState);
   const [getShareNotice, setGetShareNotice] =
     useRecoilState(getShareNoticeState);
 
   const approveShareNotice = () => {
+    //함수로 안감싸줘도 실행되는지 나중에 확인해보자^^~ -> 응 안돼~
     acceptNoticeRefetch();
-    setGetShareNotice(!getShareNotice);
-    setGetBoard(!getBoard);
   };
 
   const denyShareNotice = () => {
     denyNoticeRefetch();
+  };
+
+  useEffect(() => {
     setGetShareNotice(!getShareNotice);
     setGetBoard(!getBoard);
-  };
+  }, [accepted, denied]);
 
   return (
     <>

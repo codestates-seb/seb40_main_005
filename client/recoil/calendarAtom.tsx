@@ -84,6 +84,12 @@ const getShippingModalState = atom<boolean>({
   default: false,
 });
 
+const hasSharedData = atom<boolean>({
+  //공유알림 데이터가 존재 여부 상태
+  key: "hasSharedData",
+  default: false,
+});
+
 const getBoardItemState = atom<boolean>({
   key: "getBoardItemState",
   default: false,
@@ -112,4 +118,5 @@ export {
   getShareModalState,
   getShippingModalState,
   getBoardId
+  hasSharedData,
 };

@@ -78,13 +78,9 @@ const DayBlock = ({
     }
   }, [boardItem, currMonth]);
 
-  // console.log('active')
   useEffect(() => {
     if (boardItemId) {
-      // console.log(boardItemId);
       boardItemRefetch();
-      // console.log(boardId)
-      console.log(boardItemId)
     }
   }, [boardItemId, getBoardItem]);
 
@@ -171,3 +167,35 @@ const DayBlock = ({
 };
 
 export default DayBlock;
+
+// return (
+//   <>
+//     <div className="group w-[13%] h-16 md:h-18 lg:h-[6.3rem] pt-2 md:pt-3 lg:pt-0 text-textBlack font-SCDream5 text-xs md:text-sm lg:text-base">
+//       <div className="flex flex-row items-center py-1">
+//         <div
+//           className={w-fit h-fit px-[0.3rem] py-[0.2rem] md:px-[0.65rem] lg:px-[0.75rem] md:py-[0.3rem] ${isToday ? "bg-btnOrange rounded-full text-white" : null
+//             }}
+//         >
+//           {children}
+//         </div>
+//         {hasMine ? null : <AddBtn onClick={handleBtnClick} />}
+//       </div>
+//       {boards && boards.map(post => post.shared ? (
+//         <SharedBoard
+//         key={post.boardId}
+//         post={post.title}
+//         // onClick={() => setBoardId(post.boardId)}
+//         onClick={handleBoardClick(post.boardId, post.shared)}
+//         />
+//       ) : (
+//         <MyBoard
+//         key={post.boardId}
+//         post={post.title}
+//         // onClick={() => setBoardId(post.boardId)}
+//         onClick={handleBoardClick(post.boardId, post.shared)}
+//         />
+//       )
+//       )}
+//       {/* {boards?.length !== 0 ? <div>{renderPosts()}</div> : null} */}
+//     </div>
+//   </>

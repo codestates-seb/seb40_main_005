@@ -1,9 +1,9 @@
 import { ReactNode, useEffect } from "react";
 import useGetShareNotice from "../hooks/notice/useGetShareNotice";
 import ShareNotice from "./ShareNotice";
-import { useQueryClient } from "react-query";
-import { useRecoilState } from "recoil";
-import { getShareNoticeState } from "../recoil/calendarAtom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { getShareNoticeState, hasSharedData } from "../recoil/calendarAtom";
+import Link from "next/link";
 
 interface Shared {
   boardId: string;
@@ -17,16 +17,32 @@ const ShareNoticeContainer = () => {
     refetch: shareNoticeRefetch,
     isSuccess: Successed,
   } = useGetShareNotice();
-  let SharedList = shareNotice?.data;
-  const queryClient = useQueryClient();
 
-  const [getShareNotice, setGetShareNotice] =
-    useRecoilState(getShareNoticeState);
+  // let sharedList = shareNotice?.data;
+
+  const getShareNotice = useRecoilValue(getShareNoticeState);
+
+  // const [hasSharedNotice, setHasSharedNotice] = useRecoilState(hasSharedData);
+  let sharedList = shareNotice?.data;
+
+  // useEffect(() => {
+  //   shareNoticeRefetch();
+
+  //   if (Successed) {
+  //     console.log("hi");
+
+  //     console.log(shareNotice?.data);
+
+  //     shareNotice?.data.length > 0
+  //       ? setHasSharedNotice(true)
+  //       : setHasSharedNotice(false);
+  //   }
+  // }, []);
 
   const renderNotices = (): ReactNode => {
     let shareNoticeLi: any[] = [];
 
-    SharedList?.forEach((share: Shared) => {
+    sharedList?.forEach((share: Shared) => {
       shareNoticeLi.push(
         <ShareNotice
           key={share.boardId}
@@ -45,7 +61,6 @@ const ShareNoticeContainer = () => {
 
     if (Successed) {
       renderNotices();
-      queryClient.invalidateQueries("get/boards");
     }
   }, [getShareNotice]);
 
@@ -57,10 +72,10 @@ const ShareNoticeContainer = () => {
         </h2>
         <div>{renderNotices()}</div>
         <button className="relative" type="button">
-          <span className="text-xs md:text-sm font-SCDream5">
+          <Link href="/mypage" className="text-xs md:text-sm font-SCDream5">
             나의 활동 전체보기
-          </span>
-          <div className="absolute w-[6.3rem] md:w-[7.2rem] h-[0.4rem] top-[0.85rem] left-[2.6rem] md:left-[4rem] lg:left-16 bg-mainOrange/40"></div>
+          </Link>
+          <div className="absolute w-[6.3rem] md:w-[8.2rem] h-[0.4rem] top-[0.85rem] left-[2.6rem] md:left-[4rem] lg:left-14 bg-mainOrange/40"></div>
         </button>
       </div>
     </>
