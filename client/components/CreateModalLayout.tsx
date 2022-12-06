@@ -103,8 +103,8 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   });
   let boardId: number | null = 0;
 
-  if (boardData.data !== undefined) {
-    boardId = boardData.data[0].boardId;
+  if (editMode && boardData.data !== undefined) {
+    boardId = boardData?.data[0].boardId;
   }
   const {
     data: EditRes,
@@ -381,13 +381,13 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
               </div>
               <div className="absolute top-3.5 left-0.5 right-0 bottom-2  bg-mainOrange/40"></div>
             </div>
-            <button
+            {/* <button
               type="button"
               className="mr-2 text-xs text-mainOrange font-SCDream5"
               onClick={handleUploadPhotoClick}
             >
               다시 업로드
-            </button>
+            </button> */}
           </div>
           <AddPhothoContainer
             photo={photo}

@@ -21,7 +21,6 @@ const AddPhotoContainer = ({
   const uploadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
     // const formData = new FormData();
-    console.log("여기~");
 
     if (fileList !== null) {
       setPhoto(fileList[0]);

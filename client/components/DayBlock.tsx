@@ -76,7 +76,7 @@ const DayBlock = ({
       // console.log(boardItem)
       setBoardItemValue(boardItem);
     }
-  }, [boardItem, currMonth]);
+  }, [currMonth, boardItem]);
 
   useEffect(() => {
     if (boardItemId) {
