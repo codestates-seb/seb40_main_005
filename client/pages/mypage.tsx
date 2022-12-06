@@ -1,5 +1,6 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isLoginState } from "../recoil/authAtom";
+import { isCategoryState } from "../recoil/calendarAtom";
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 import CheckMyLog from "../components/CheckMyLog";
@@ -7,10 +8,12 @@ import Image from "next/image";
 import Link from "next/link";
 import MyPageSidebarToggle from "../components/MyPageSidebarToggle";
 import MyPageSidebar from "../components/MyPageSidebar";
+import MyThemeContainer from "../components/MyThemeContainer";
 
 const MyPage = () => {
   const loginState = useRecoilValue(isLoginState);
   const router = useRouter();
+  const [isSelected, setIsSelected] = useRecoilState<boolean>(isCategoryState);
 
   useEffect(() => {
     if (!loginState) {
@@ -64,7 +67,7 @@ const MyPage = () => {
           </div>
           <div className="flex flex-row justify-center md:mt-10">
             <MyPageSidebar onClick={handleChangeSideBar}></MyPageSidebar>
-            <CheckMyLog />
+            {isSelected ? <CheckMyLog /> : <MyThemeContainer />}
           </div>
         </div>
       </div>

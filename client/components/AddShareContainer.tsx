@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { modalOpenState } from "../recoil/calendarAtom";
 import useGetAllUsers from "../hooks/user/useGetAllUsers";
+import ShareNoticeContainer from "./ShareNoticeContainer";
 
 // import useGetTagState from "../hooks/calendar/useGetTagState";
 
@@ -77,10 +78,15 @@ const AddShareContainer = ({ changeShare }: ShareProps) => {
     }
 
     let sendtags: string = "";
+
     for (let i = 0; i < tagList.length; i++) {
-      sendtags += tagList[i].id + ",";
+      if (i === tagList.length - 1) {
+        sendtags += tagList[i].id;
+      } else {
+        sendtags += tagList[i].id + ",";
+      }
     }
-    sendtags.replace(/,\s*$/, "");
+
     changeShare(sendtags);
   }, [allUsers]);
 

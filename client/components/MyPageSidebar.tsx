@@ -1,8 +1,9 @@
 import MySidebarCategory from "./MySidebarCategory";
-import { useRecoilState } from "recoil";
-import { categorySelectTitle } from "../recoil/calendarAtom";
 import useDeleteUser from "../hooks/user/useDeleteUser";
 import Router from "next/router";
+import { useState } from "react";
+import { isCategoryState } from "../recoil/calendarAtom";
+import { useRecoilState } from "recoil";
 
 interface Props {
   onClick: () => void;
@@ -13,6 +14,8 @@ interface CategoryValue {
 }
 
 const MyPageSidebar = ({ onClick }: Props) => {
+  const [isSelected, setIsSelected] = useRecoilState<boolean>(isCategoryState);
+
   const myCategory = [
     {
       mtCategory: "나의 활동",
@@ -22,8 +25,9 @@ const MyPageSidebar = ({ onClick }: Props) => {
     },
   ];
 
-  const [categoryTitle, setcategoryTitle] =
-    useRecoilState<string>(categorySelectTitle);
+  const [categoryTitle, setcategoryTitle] = useState<string>(
+    myCategory[0].mtCategory,
+  );
 
   const renderNotices = () => {
     const categoryListArr: any[] = [];
@@ -46,6 +50,11 @@ const MyPageSidebar = ({ onClick }: Props) => {
 
   const handleClick = (title: string) => {
     setcategoryTitle(title);
+    if ("나의 활동" === title) {
+      setIsSelected(true);
+    } else if ("테마" === title) {
+      setIsSelected(false);
+    }
   };
 
   const { mutate: deleteUser } = useDeleteUser();

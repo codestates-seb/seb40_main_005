@@ -1,6 +1,7 @@
 import MySidebarCategory from "./MySidebarCategory";
+import { useState } from "react";
+import { isCategoryState } from "../recoil/calendarAtom";
 import { useRecoilState } from "recoil";
-import { categorySelectTitle } from "../recoil/calendarAtom";
 
 interface Props {
   onClick: () => void;
@@ -11,6 +12,8 @@ interface CategoryValue {
 }
 
 const StoreSidebar = ({ onClick }: Props) => {
+  const [isSelected, setIsSelected] = useRecoilState<boolean>(isCategoryState);
+
   const myCategory = [
     {
       mtCategory: "테마",
@@ -20,8 +23,9 @@ const StoreSidebar = ({ onClick }: Props) => {
     },
   ];
 
-  const [categoryTitle, setcategoryTitle] =
-    useRecoilState<string>(categorySelectTitle);
+  const [categoryTitle, setcategoryTitle] = useState<string>(
+    myCategory[0].mtCategory,
+  );
 
   const renderNotices = () => {
     const categoryListArr: any[] = [];
@@ -44,6 +48,11 @@ const StoreSidebar = ({ onClick }: Props) => {
 
   const handleClick = (title: string) => {
     setcategoryTitle(title);
+    if ("테마" === title) {
+      setIsSelected(true);
+    } else if ("앨범" === title) {
+      setIsSelected(false);
+    }
   };
 
   return (
