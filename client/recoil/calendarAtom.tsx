@@ -102,7 +102,7 @@ const getBoardId = atom<number>({
 
 const isCategoryState = atom<boolean>({
   key: "categoryState",
-  default: false,
+  default: true,
 });
 
 export {
