@@ -47,7 +47,6 @@ const postBoardData = async ({
   //   const formValue = new FormData();
   //   formValue.append("file", JsonData);
 
-  console.log(created);
   return await axios.post("/boards", formData, {
     baseURL: process.env.NEXT_PUBLIC_API_URL,
     headers: {

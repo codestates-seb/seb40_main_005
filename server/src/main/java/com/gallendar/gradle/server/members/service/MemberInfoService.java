@@ -43,6 +43,8 @@ public class MemberInfoService {
                 list.add(MemberTagStatusResponse.from(to, title, boardTags.getTags().getTagsMember(), boardTags.getTags().getStatus(), boardTags.getTags().getUpdatedAt()));
             });
         });
-        return new PageImpl<>(list);
+        final int start = (int) pageable.getOffset();
+        final int end = Math.min(start + pageable.getPageSize(), list.size());
+        return new PageImpl<>(list.subList(start, end), pageable, list.size());
     }
 }

@@ -1,8 +1,8 @@
 import { ReactNode, useEffect } from "react";
 import useGetShareNotice from "../hooks/notice/useGetShareNotice";
 import ShareNotice from "./ShareNotice";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { getShareNoticeState, hasSharedData } from "../recoil/calendarAtom";
+import { useRecoilValue } from "recoil";
+import { getShareNoticeState } from "../recoil/calendarAtom";
 import Link from "next/link";
 
 interface Shared {
@@ -18,26 +18,9 @@ const ShareNoticeContainer = () => {
     isSuccess: Successed,
   } = useGetShareNotice();
 
-  // let sharedList = shareNotice?.data;
-
   const getShareNotice = useRecoilValue(getShareNoticeState);
 
-  // const [hasSharedNotice, setHasSharedNotice] = useRecoilState(hasSharedData);
   let sharedList = shareNotice?.data;
-
-  // useEffect(() => {
-  //   shareNoticeRefetch();
-
-  //   if (Successed) {
-  //     console.log("hi");
-
-  //     console.log(shareNotice?.data);
-
-  //     shareNotice?.data.length > 0
-  //       ? setHasSharedNotice(true)
-  //       : setHasSharedNotice(false);
-  //   }
-  // }, []);
 
   const renderNotices = (): ReactNode => {
     let shareNoticeLi: any[] = [];
@@ -75,7 +58,7 @@ const ShareNoticeContainer = () => {
           <Link href="/mypage" className="text-xs md:text-sm font-SCDream5">
             나의 활동 전체보기
           </Link>
-          <div className="absolute w-[6.3rem] md:w-[8.2rem] h-[0.4rem] top-[0.85rem] left-[2.6rem] md:left-[4rem] lg:left-14 bg-mainOrange/40"></div>
+          <div className="absolute w-[8.2rem] h-[0.4rem] top-[0.85rem] left-[1.4rem] md:left-[4rem] lg:left-14 bg-mainOrange/40"></div>
         </button>
       </div>
     </>
