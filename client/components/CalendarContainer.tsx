@@ -1,10 +1,5 @@
 import {
-  formatDistance,
-  getDate,
   getMonth,
-  startOfDay,
-  startOfMonth,
-  subDays,
   getYear,
 } from "date-fns";
 import { format } from "date-fns";
@@ -47,13 +42,15 @@ const CalendarContainer = () => {
 
   return (
     <>
-      <div className="flex flex-col justify-center  w-full h-fit px-4 mb-3 rounded-lg lg:py-5 md:px-6 lg:max-h-[90%] lg:px-12 lg:drop-shadow-2xl bg-bgGray lg:bg-bgWhite">
+      {/* <div className="flex flex-col justify-center  w-full h-fit px-4 mb-3 rounded-lg lg:py-5 md:px-6 lg:max-h-[90%] lg:px-12 lg:drop-shadow-2xl bg-bgGray lg:bg-bgWhite"> */}
+      {/* <div className="flex flex-col justify-center  w-full min-h-fit h-[92%] px-4 mb-3 rounded-lg lg:py-5 md:px-6 lg:max-h-[95%] lg:px-12 lg:drop-shadow-2xl bg-bgGray lg:bg-bgWhite"> */}
+      <div className="flex flex-col justify-start w-full min-h-fit h-fit lg:h-fit mb-1 px-4 rounded-lg md:px-6 pb-0 lg:pb-10 lg:px-12 lg:drop-shadow-2xl bg-bgGray lg:bg-bgWhite">
         {/* <div className="w-full px-5 pt-5 pb-5 my-3 rounded-lg h-fit lg:drop-shadow-2xl bg-bgGray lg:bg-bgWhite"> */}
         {/* calendar header */}
 
-        <div className="flex flex-col items-center justify-center w-full h-fit">
+        <div className="flex flex-col items-center justify-center w-full h-fit mt-10">
           <TodayBtn setMonth={changeMonth} setYear={changeYear} />
-          <div className="flex flex-row items-center justify-between w-1/2 md:w-1/3 lg:w-1/5 mt-3 h-fit">
+          <div className="flex flex-row items-center justify-between w-2/3 md:w-2/3 lg:w-1/5 mt-3 h-fit">
             <LeftBtn onClick={handleLeftClick} />
             <DayInput
               year={currYear}

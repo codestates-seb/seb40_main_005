@@ -1,14 +1,16 @@
 import Link from "next/link";
-import { useState } from "react";
 import ShareNoticeContainer from "./ShareNoticeContainer";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { isLoginState } from "../recoil/authAtom";
 import { useRouter } from "next/router";
 import ShippingNoticeContainer from "./ShippingNoticeContainer";
 import {
   getShareModalState,
   getShippingModalState,
+  hasSharedData,
 } from "../recoil/calendarAtom";
+import useGetShareNotice from "../hooks/notice/useGetShareNotice";
+import { useEffect } from "react";
 
 const CalendarNav = () => {
   const router = useRouter();
@@ -17,6 +19,25 @@ const CalendarNav = () => {
   const [isShippingOpen, setIsShippingOpen] = useRecoilState(
     getShippingModalState,
   );
+
+  const {
+    data: shareNotice,
+    refetch: shareNoticeRefetch,
+    isSuccess: Successed,
+  } = useGetShareNotice();
+
+  const [hasSharedNotice, setHasSharedNotice] = useRecoilState(hasSharedData);
+  let sharedList = shareNotice?.data;
+
+  useEffect(() => {
+    shareNoticeRefetch();
+  }, []);
+
+  useEffect(() => {
+    shareNotice?.data.length > 0
+      ? setHasSharedNotice(true)
+      : setHasSharedNotice(false);
+  }, [Successed]);
 
   const handleShareNotice = () => {
     setIsShareOpen(!isShareOpen);
@@ -43,7 +64,7 @@ const CalendarNav = () => {
 
   return (
     <>
-      <nav className="flex justify-between w-full px-3 py-3 space-x-2 lg:py-5 md:px-0 md:justify-evenly lg:justify-end lg:space-x-12 font-SCDream4 text-textGray">
+      <nav className="flex justify-between w-full px-3 pt-7 space-x-2 lg:py-7 md:px-0 md:justify-evenly lg:justify-end lg:space-x-12 font-SCDream4 text-textGray">
         <div className="relative">
           <Link href={"/mypage"}>마이페이지</Link>
           <div className="absolute w-[4.8rem] h-2 top-[0.8rem] md:top-3 lg:w-18 lg:top-[0.8rem] bg-mainOrange/40"></div>
@@ -54,7 +75,9 @@ const CalendarNav = () => {
             {isShareOpen ? <ShareNoticeContainer /> : null}
           </div>
 
-          <div className="absolute w-2 h-2 rounded-full top-[-4px] left-[3.8rem] bg-noticeRed"></div>
+          {hasSharedNotice ? (
+            <div className="absolute w-2 h-2 rounded-full top-[-4px] left-[3.8rem] bg-noticeRed"></div>
+          ) : null}
 
           <button onClick={handleShareNotice} type="button">
             공유알림
@@ -66,7 +89,7 @@ const CalendarNav = () => {
           <div className="absolute left-[-8.8rem] md:left-[-12rem] z-10 top-10">
             {isShippingOpen ? <ShippingNoticeContainer /> : null}
           </div>
-          <div className="absolute w-2 h-2 rounded-full top-[-3px] left-[1.9rem] bg-noticeRed"></div>
+          {/* {hasSharedNotice ? <div className="absolute w-2 h-2 rounded-full top-[-3px] left-[1.9rem] bg-noticeRed"></div> : null} */}
 
           <button onClick={handleShippingNotice} type="button">
             알림

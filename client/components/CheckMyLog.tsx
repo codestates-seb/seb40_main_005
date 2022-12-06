@@ -31,6 +31,8 @@ const MyLogBox = () => {
     const Logs = sharedLog?.data.content;
     let logList: ReactNode[] = [];
 
+    console.log(Logs);
+
     if (logSuccess) {
       Logs?.forEach((log: log) => {
         let logTime = log.time;

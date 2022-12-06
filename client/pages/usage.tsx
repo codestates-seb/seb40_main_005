@@ -162,9 +162,10 @@ const Usage = () => {
             <div className="relative items-center justify-center w-fit h-fit">
               <div className="flex items-center justify-left w-fit ml-3 mr-3">
                 <Image
-                  src="/images/사용설명서 이미지.png"
+                  src="/images/게시글작성.gif"
                   width={850}
                   height={450}
+                  className="rounded-lg drop-shadow-lg"
                 />
               </div>
               {/* <div className="absolute top-5 right-36 bottom-20 w-10 h-10 rounded-full border-4 border-orange"></div> */}
@@ -204,9 +205,11 @@ const Usage = () => {
           <div className="flex flex-col items-center sm:items-center justify-center h-fit z-10 w-full pl-3 pr-3 md:pl-5 md:pr-5">
             <div className="flex items-center justify-left w-fit ml-3 mr-3">
               <Image
-                src="/images/사용설명서 이미지.png"
+                src="/images/공유알림 (수락, 거절).gif"
                 width={850}
                 height={450}
+                className="rounded-lg drop-shadow-lg"
+
               />
             </div>
             <motion.div
@@ -244,9 +247,11 @@ const Usage = () => {
           <div className="flex flex-col items-center sm:items-center justify-center h-fit z-10 w-full pl-3 pr-3 md:pl-5 md:pr-5">
             <div className="flex items-center justify-left w-fit ml-3 mr-3">
               <Image
-                src="/images/사용설명서 이미지.png"
+                src="/images/카테고리 별 조회.gif"
                 width={850}
                 height={450}
+                className="rounded-lg drop-shadow-lg"
+
               />
             </div>
             <motion.div
@@ -284,9 +289,11 @@ const Usage = () => {
           <div className="flex flex-col items-center sm:items-center justify-center h-fit z-10 w-full pl-3 pr-3 md:pl-5 md:pr-5">
             <div className="flex items-center justify-left w-fit ml-3 mr-3">
               <Image
-                src="/images/사용설명서 이미지2.png"
+                src="/images/게시글조회.gif"
                 width={850}
                 height={450}
+                className="rounded-lg drop-shadow-lg"
+
               />
             </div>
             <motion.div

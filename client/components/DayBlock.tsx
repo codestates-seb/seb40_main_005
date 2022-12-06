@@ -13,6 +13,7 @@ import {
   boardSharedState,
   getBoardState,
   getBoardItemState,
+  getBoardId
 } from "../recoil/calendarAtom";
 import useGetBoardItem from "../hooks/calendar/useGetBoardItem";
 import MyBoard from "./MyBoard";
@@ -52,8 +53,10 @@ const DayBlock = ({
   const [shareValue, setShareValue] = useRecoilState(boardSharedState);
   const [getBoard, setGetBoard] = useRecoilState(getBoardState);
   const [getBoardItem, setGetBoardItem] = useRecoilState(getBoardItemState);
+  const [changeState, setChangeState] = useState<boolean>(false);
+  // const [boardItemId, setBoardItemId] = useState<number | null>(null);
+  const [boardItemId, setBoardItemId] = useRecoilState(getBoardId);
 
-  const [boardItemId, setBoardId] = useState<number | null>(null);
 
   const {
     isSuccess: boardItemDone,
@@ -75,12 +78,9 @@ const DayBlock = ({
     }
   }, [boardItem, currMonth]);
 
-  // console.log('active')
   useEffect(() => {
     if (boardItemId) {
-      // console.log(boardItemId);
       boardItemRefetch();
-      // console.log(boardId)
     }
   }, [boardItemId, getBoardItem]);
 
@@ -101,11 +101,12 @@ const DayBlock = ({
 
     setDate(`${currYear.toString()}-${realMonth}-${realDay}`);
   };
-
+  // console.log(boardItemId);
   const handleBoardClick = (boardId: number, shared: boolean) => {
+    setBoardItemId(boardId);
     setReadOpen(true);
-    setBoardId(boardId);
     // console.log(boardId);
+    setChangeState(!changeState)
 
     let realMonth = currMonth.toString();
     if (realMonth.length < 2) {
@@ -166,3 +167,35 @@ const DayBlock = ({
 };
 
 export default DayBlock;
+
+// return (
+//   <>
+//     <div className="group w-[13%] h-16 md:h-18 lg:h-[6.3rem] pt-2 md:pt-3 lg:pt-0 text-textBlack font-SCDream5 text-xs md:text-sm lg:text-base">
+//       <div className="flex flex-row items-center py-1">
+//         <div
+//           className={w-fit h-fit px-[0.3rem] py-[0.2rem] md:px-[0.65rem] lg:px-[0.75rem] md:py-[0.3rem] ${isToday ? "bg-btnOrange rounded-full text-white" : null
+//             }}
+//         >
+//           {children}
+//         </div>
+//         {hasMine ? null : <AddBtn onClick={handleBtnClick} />}
+//       </div>
+//       {boards && boards.map(post => post.shared ? (
+//         <SharedBoard
+//         key={post.boardId}
+//         post={post.title}
+//         // onClick={() => setBoardId(post.boardId)}
+//         onClick={handleBoardClick(post.boardId, post.shared)}
+//         />
+//       ) : (
+//         <MyBoard
+//         key={post.boardId}
+//         post={post.title}
+//         // onClick={() => setBoardId(post.boardId)}
+//         onClick={handleBoardClick(post.boardId, post.shared)}
+//         />
+//       )
+//       )}
+//       {/* {boards?.length !== 0 ? <div>{renderPosts()}</div> : null} */}
+//     </div>
+//   </>

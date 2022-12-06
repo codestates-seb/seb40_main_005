@@ -147,10 +147,10 @@ const CalendarBody = ({ currYear, currMonth }: PropsValue) => {
   }
 
   return (
-    <>
+    <div className="flex flex-col w-full h-full">
       <GetDayOfWeek />
       <div>{rows}</div>
-    </>
+    </div>
   );
 };
 export default CalendarBody;
