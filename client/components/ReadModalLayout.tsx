@@ -98,7 +98,7 @@ const ReadModalLayout = ({
 
   return (
     <>
-      <div className="flex flex-col items-center justify-between w-full h-full p-5 overflow-auto">
+      <div className="flex flex-col items-center justify-between min-w-[350px] w-full h-full p-5 overflow-auto">
         <div className="flex flex-row items-center justify-around w-full h-fit">
           <div className="flex flex-col items-start justify-between w-1/4 h-full">
             <LeftArrow onClick={handleCancelBtn} />

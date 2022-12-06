@@ -10,9 +10,6 @@ interface Props {
 }
 
 const useGetBoardItem = ({ boardItemId }: Props) => {
-  const queryClient = useQueryClient();
-
-  queryClient.invalidateQueries({ queryKey: ["get/boardItem"] });
 
   return useQuery(["get/boardItem"], () => getBoardItem({ boardItemId }), {
     enabled: false,

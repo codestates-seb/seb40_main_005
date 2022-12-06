@@ -57,7 +57,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <section className="flex flex-col items-center justify-center w-full h-full pl-4 pr-4 lg:justify-around lg:w-1/6 lg:pr-0 pt-14">
+      <section className="flex flex-col items-center justify-center w-full h-full pl-4 pr-4 lg:justify-around lg:w-1/6 lg:pr-0 pt-3 md:pt-5 lg:pt-20">
         <div className="relative items-center justify-center cursor-pointer w-fit h-7 mb-[1rem] ">
           <div className="z-10 ml-0.5 text-base lg:text-xl text-gray-700 font-SCDream4">
             카테고리

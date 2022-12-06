@@ -86,7 +86,7 @@ const SignUp = () => {
     setIsCheckId(false);
     if (
       e.target.value.length !== 0 &&
-      (e.target.value.length < 5 || !idRex.test(e.target.value))
+      (e.target.value.length < 5 && !idRex.test(e.target.value))
     ) {
       setCheckId(false);
     } else {
@@ -108,24 +108,22 @@ const SignUp = () => {
   };
 
   const handlePressEnter = (e: any) => {
-    if (e.keyCode === 13) {
       e.preventDefault();
       if (idValue.length !== 0 && checkId) {
         idRefetch();
-        console.log(idData);
+        // console.log(idData);
         setIsCheckId(true);
       }
-    }
   };
 
   const handleEmailEnter = (e: any) => {
     e.preventDefault();
-    if (e.keyCode === 13 && checkEmail) {
+    // if (e.keyCode === 13 && checkEmail) {
       // console.log(emailData);
       emailRefetch();
-      console.log(emailData);
+      // console.log(emailData);
       setIsCheckEmail(true);
-    }
+    // }
   };
 
   const handlePwChange = (e: any) => {
@@ -187,7 +185,7 @@ const SignUp = () => {
             </div>
             <div className="absolute left-0 right-0 top-5 md:top-6 lg:top-7 bottom-1 md:bottom-0 lg:-bottom-1 bg-mainOrange/40"></div>
           </div>
-          <form className="w-full">
+          <form className="w-full" onSubmit={handlePressEnter}>
             <div className="flex flex-col w-full h-fit">
               <div className="relative items-center justify-center w-fit h-7 mt-7">
                 <label
@@ -198,24 +196,33 @@ const SignUp = () => {
                 </label>
                 <div className="absolute top-4 md:top-4.5 lg:top-4 left-0 right-0 bottom-2 md:bottom-1.5 lg:bottom-1.5 bg-mainOrange/40"></div>
               </div>
-              <input
-                className="font-SCDream3 text-gray-500 w-full text-xs md:text-sm mt-2 border-b-[1px] border-mainOrange/40 outline-none"
-                id="identity"
-                autoComplete="off"
-                type="text"
-                value={idValue}
-                onKeyDown={handlePressEnter}
-                placeholder="ID를 입력 후 Enter를 눌러주세요"
-                {...register("idErrorInput", {
-                  required: "ID는 필수 입력입니다.",
-                  onChange: handleIdChange,
-                  minLength: 5,
-                  pattern: {
-                    value: /^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{5,}$/,
-                    message: "ID는 영문,숫자 5자 이상 입력되어야합니다.",
-                  },
-                })}
-              />
+              <div className="flex flex-row w-full h-fit items-center justify-center">
+                <input
+                  className="font-SCDream3 text-gray-500 w-full text-xs md:text-sm mt-2 border-b-[1px] border-mainOrange/40 outline-none"
+                  id="identity"
+                  autoComplete="off"
+                  type="text"
+                  value={idValue}
+                  // onKeyDown={handlePressEnter}
+                  placeholder="ID를 입력 후 중복확인 버튼을 클릭하세요"
+                  {...register("idErrorInput", {
+                    required: "ID는 필수 입력입니다.",
+                    onChange: handleIdChange,
+                    minLength: 5,
+                    pattern: {
+                      value: /^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{5,}$/,
+                      message: "ID는 영문,숫자 5자 이상 입력되어야합니다.",
+                    },
+                  })}
+                />
+                {idRex.test(idValue) && checkId && idValue.length !== 0 && !isCheckId ? (
+                  <AuthBtn
+                    onClick={()=>{handlePressEnter}}
+                  >
+                    중복확인
+                  </AuthBtn>
+                ) : null}
+              </div>
               <ErrorMessage
                 errors={errors}
                 name="idErrorInput"
@@ -225,7 +232,7 @@ const SignUp = () => {
                   </div>
                 )}
               />
-              {!checkId ? (
+              {idValue.length !== 0 && !idRex.test(idValue) ? (
                 <div className="flex flex-row items-end justify-end w-full mt-1 text-[10px] md:text-[11px] text-nagativeMessage h-fit font-SCDream2">
                   ID는 영문,숫자포함 5자 이상 입력되어야합니다.
                 </div>
@@ -265,14 +272,21 @@ const SignUp = () => {
                   autoComplete="off"
                   type="text"
                   value={emailValue}
-                  onKeyUp={handleEmailEnter}
+                  // onKeyUp={handleEmailEnter}
                   disabled={!idData ? true : idData.response ? true : false}
-                  placeholder="Email 입력 후 Enter를 눌러주세요"
+                  placeholder="Email 입력 후 중복확인 버튼을 클릭하세요"
                   {...register("emailErrorInput", {
                     required: "Email은 필수 입력입니다.",
                     onChange: handleEmailChange,
                   })}
                 />
+                {checkEmail && !isCheckEmail? (
+                  <AuthBtn
+                    onClick={()=>{handleEmailEnter}}
+                  >
+                    중복확인
+                  </AuthBtn>
+                ) : null}
                 {emailValue.length !== 0 &&
                 isCheckEmail &&
                 !checkAuthNum &&

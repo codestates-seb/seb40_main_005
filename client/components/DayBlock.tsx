@@ -13,6 +13,7 @@ import {
   boardSharedState,
   getBoardState,
   getBoardItemState,
+  getBoardId
 } from "../recoil/calendarAtom";
 import useGetBoardItem from "../hooks/calendar/useGetBoardItem";
 import MyBoard from "./MyBoard";
@@ -52,8 +53,10 @@ const DayBlock = ({
   const [shareValue, setShareValue] = useRecoilState(boardSharedState);
   const [getBoard, setGetBoard] = useRecoilState(getBoardState);
   const [getBoardItem, setGetBoardItem] = useRecoilState(getBoardItemState);
+  const [changeState, setChangeState] = useState<boolean>(false);
+  // const [boardItemId, setBoardItemId] = useState<number | null>(null);
+  const [boardItemId, setBoardItemId] = useRecoilState(getBoardId);
 
-  const [boardItemId, setBoardId] = useState<number | null>(null);
 
   const {
     isSuccess: boardItemDone,
@@ -81,6 +84,7 @@ const DayBlock = ({
       // console.log(boardItemId);
       boardItemRefetch();
       // console.log(boardId)
+      console.log(boardItemId)
     }
   }, [boardItemId, getBoardItem]);
 
@@ -101,11 +105,12 @@ const DayBlock = ({
 
     setDate(`${currYear.toString()}-${realMonth}-${realDay}`);
   };
-
+  // console.log(boardItemId);
   const handleBoardClick = (boardId: number, shared: boolean) => {
+    setBoardItemId(boardId);
     setReadOpen(true);
-    setBoardId(boardId);
     // console.log(boardId);
+    setChangeState(!changeState)
 
     let realMonth = currMonth.toString();
     if (realMonth.length < 2) {
