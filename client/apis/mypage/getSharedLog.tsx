@@ -1,9 +1,14 @@
 import client from "../../client/client";
 import axios from "axios";
 
-const getSharedLog = async () => {
+interface Props {
+  page : number
+}
+
+const getSharedLog = async ({page}:Props) => {
+  console.log(page)
   return await axios
-    .get(`/member/tag?page=0&size=7`, {
+    .get(`/member/tag?page=${page}&size=7`, {
       baseURL: process.env.NEXT_PUBLIC_API_URL,
       headers: {
         withCredentials: true,
