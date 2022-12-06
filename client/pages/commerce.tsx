@@ -4,9 +4,9 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import MyPageSidebarToggle from "../components/MyPageSidebarToggle";
 import CommerceContainer from "../components/commerceContainer";
 import StoreSidebar from "../components/commerceSidebar";
+import CommerceSidebarToggle from "../components/commerceSidebarToggle";
 
 const Commerce = () => {
   const loginState = useRecoilValue(isLoginState);
@@ -27,10 +27,10 @@ const Commerce = () => {
 
   return (
     <>
-      {sideBar ? <MyPageSidebarToggle onClick={handleChangeSideBar} /> : null}
+      {sideBar ? <CommerceSidebarToggle onClick={handleChangeSideBar} /> : null}
 
       <div className="items-center justify-center w-full h-screen p-3 overflow-auto md:pt-4 bg-bgGray">
-        <div className="flex flex-row items-center justify-between md:justify-center">
+        <div className="flex flex-row items-center justify-between md:mx-8 lg:justify-center">
           <Link href="/calendar">
             <a>
               <Image
@@ -41,7 +41,7 @@ const Commerce = () => {
               />
             </a>
           </Link>
-          <div className="cursor-pointer md:hidden">
+          <div className="cursor-pointer lg:hidden">
             <svg
               onClick={handleChangeSideBar}
               width="24"
