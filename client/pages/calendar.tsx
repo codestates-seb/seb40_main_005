@@ -18,7 +18,7 @@ const Calendar = () => {
 
   return (
     <>
-      <div className="justify-center items-center w-full h-full bg-bgGray overflow-auto">
+      <div className="flex flex-col justify-start items-center w-full h-fit bg-bgGray overflow-auto">
         <CalendarPageLayout />
       </div>
     </>

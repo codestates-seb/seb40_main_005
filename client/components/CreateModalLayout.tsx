@@ -167,21 +167,25 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     // console.log(submitRes)
   };
   const handleCancel = () => {
-    handleCloseClick();
-    setEditMode(false);
 
-    setDate("");
-    setDate("2022-02-21");
-    setCategory("");
-    setTitle("");
-    setMusic("");
-    setYoutubeLink("");
-    setPhoto("");
-    setShowImg("");
-    setContext("");
-    setShare([]);
-    deleteImg();
-    setCategory("");
+    let res = confirm("창을 닫으면 작성된 내용이 사라집니다!\n계속하시겠습니까?");
+    if(res){
+      handleCloseClick();
+      setEditMode(false);
+  
+      setDate("");
+      setDate("0000-00-00");
+      setCategory("");
+      setTitle("");
+      setMusic("");
+      setYoutubeLink("");
+      setPhoto("");
+      setShowImg("");
+      setContext("");
+      setShare([]);
+      deleteImg();
+      setCategory("");
+    }
   };
 
   const handleUploadPhotoClick = () => {
@@ -278,35 +282,24 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   }, [editMode]);
 
   useEffect(() => {
-    if (!readOpen) {
-      checkDateRefetch();
-    }
+    checkDateRefetch();
   }, [date]);
-  // console.log("acitve");
 
   useEffect(() => {
-    if (readOpen || open) {
+    if (open || editMode) {
+
       if (checkDateData?.data.status === false) {
         window.alert(
           "해당날짜는 게시글이 등록되어있습니다! \n다른 날짜를 선택해주세요",
         );
         setDate("");
-        if (readOpen || open) {
-          if (checkDateData?.data.status === false) {
-            window.alert(
-              "해당날짜는 게시글이 등록되어있습니다! \n다른 날짜를 선택해주세요",
-            );
-            setDate("");
-          }
-        }
       }
     }
   }, [checkDateData]);
-  // console.log(checkDateData);
 
   return (
     <>
-      <div className="flex flex-col items-center justify-between w-full h-full p-5 overflow-auto">
+      <div className="flex flex-col items-center justify-between min-w-[350px] w-full h-full p-5 overflow-auto">
         {EditLoading ? (
           <div className="absolute z-50 flex flex-col items-center justify-center w-1/2 text-lg rounded-lg top-60 h-1/3 bg-mainOrange/70 font-SCDream5 text-bgWhite">
             <div className="z-10 ml-0.5 text-lg md:text-lg lg:text-lg text-bgWhite font-SCDream5">
