@@ -102,7 +102,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     url: youtubeLink,
   });
   let boardId: number | null = 0;
-  // console.log(boardData)
+
   if (boardData.data !== undefined) {
     boardId = boardData.data[0].boardId;
   }
@@ -126,7 +126,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   let year = splitDate[0];
   let month = splitDate[1];
   let day = splitDate[2];
-  // console.log(year, month, day);
+
   const {
     data: checkDateData,
     refetch: checkDateRefetch,
@@ -164,15 +164,15 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
     } else {
       submitMutate(submitData);
     }
-    // console.log(submitRes)
   };
   const handleCancel = () => {
-
-    let res = confirm("창을 닫으면 작성된 내용이 사라집니다!\n계속하시겠습니까?");
-    if(res){
+    let res = confirm(
+      "창을 닫으면 작성된 내용이 사라집니다!\n계속하시겠습니까?",
+    );
+    if (res) {
       handleCloseClick();
       setEditMode(false);
-  
+
       setDate("");
       setDate("0000-00-00");
       setCategory("");
@@ -189,26 +189,17 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   };
 
   const handleUploadPhotoClick = () => {
-    console.log("먹니?");
-
-    // if (photo) {
-    //   photoRef.current = null;
-    // }
-
     photoRef.current?.click();
-
-    console.log(photoRef.current);
   };
 
-  useEffect(() => {
-    console.log("useEffect");
+  // useEffect(() => {
 
-    // if (photoRef.current) {
-    //   console.log("먹힘");
+  //   // if (photoRef.current) {
+  //   //   console.log("먹힘");
 
-    //   photoRef.current?.click();
-    // }
-  }, [photoRef]);
+  //   //   photoRef.current?.click();
+  //   // }
+  // }, [photoRef]);
 
   useEffect(() => {
     if (postSuccess && !editMode) {
@@ -253,14 +244,11 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
 
       setGetBoard(!getBoard);
       setGetBoardItem(!getBoardItem);
-      // window.location.reload();
-      // window.location.reload();
     }
   }, [postSuccess, EditSuccess]);
 
   useEffect(() => {
     if (editMode) {
-      // console.log(boardData.data[0].category);
       setCategory(boardData.data[0].category);
       setTitle(boardData.data[0].title);
       setMusic(boardData.data[0].music);
@@ -287,7 +275,6 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
 
   useEffect(() => {
     if (open || editMode) {
-
       if (checkDateData?.data.status === false) {
         window.alert(
           "해당날짜는 게시글이 등록되어있습니다! \n다른 날짜를 선택해주세요",

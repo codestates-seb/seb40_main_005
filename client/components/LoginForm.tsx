@@ -28,7 +28,6 @@ const LoginForm = () => {
 
   const router = useRouter();
   const loginMutation = useMutation(postLogin);
-  // const [isLogin, setIsLogin] = useRecoilState(isLoginState);
   const isLogin = useRecoilValue(isLoginState);
   const setIsLogin = useSetRecoilState(isLoginState);
 
@@ -60,13 +59,6 @@ const LoginForm = () => {
       .then(res => {
         if (res) {
           boardRefetch();
-          // console.log(isLogin);
-
-          // if (boardSuccess) {
-          //   console.log("hi");
-          //   console.log(isLogin);
-          // }
-
           router.push("/calendar");
         }
       })
@@ -81,7 +73,18 @@ const LoginForm = () => {
 
   return (
     <>
-      <div className="flex flex-col justify-between h-1/2">
+      <div className="relative flex flex-col justify-between h-1/2">
+        {loginMutation.isLoading ? (
+          <div className="absolute z-50 flex flex-col items-center justify-center text-lg rounded-lg w-[15rem] md:w-[18rem] lg:w-80 top-24 md:top-32 left-2 md:left-16 lg:left-8 h-1/2 bg-mainOrange/70 font-SCDream5 text-bgWhite">
+            <div className="z-10 ml-0.5 mb-1 text-sm md:text-base lg:text-lg text-bgWhite font-SCDream5">
+              여러분의 추억을 불러오는 중입니다
+            </div>
+            <div className="z-10 ml-0.5 text-xs md:text-sm text-bgWhite font-SCDream5">
+              잠시만 기다려주세요
+            </div>
+          </div>
+        ) : null}
+
         <div className="relative">
           <div className="z-10 text-base md:text-xl lg:text-2xl text-zinc-500 font-SCDream6">
             로그인
