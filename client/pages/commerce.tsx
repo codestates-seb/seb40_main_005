@@ -1,16 +1,20 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useRecoilState } from "recoil";
 import { isLoginState } from "../recoil/authAtom";
+import { isCategoryState } from "../recoil/calendarAtom";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import CommerceContainer from "../components/commerceContainer";
+import PhotoBookContainer from "../components/PhotoBookContainer";
 import StoreSidebar from "../components/commerceSidebar";
 import CommerceSidebarToggle from "../components/CommerceSidebarToggle";
 
 const Commerce = () => {
   const loginState = useRecoilValue(isLoginState);
   const router = useRouter();
+
+  const [isSelected, setIsSelected] = useRecoilState<boolean>(isCategoryState);
 
   useEffect(() => {
     if (!loginState) {
@@ -30,7 +34,7 @@ const Commerce = () => {
       {sideBar ? <CommerceSidebarToggle onClick={handleChangeSideBar} /> : null}
 
       <div className="items-center justify-center w-full h-screen p-3 overflow-auto md:pt-4 bg-bgGray">
-        <div className="flex flex-row items-center justify-between md:mx-8 lg:justify-center">
+        <div className="flex flex-row  items-center justify-between md:mx-8 lg:justify-center">
           <Link href="/calendar">
             <a>
               <Image
@@ -62,7 +66,7 @@ const Commerce = () => {
         </div>
         <div className="flex flex-row justify-center md:mt-10">
           <StoreSidebar onClick={handleChangeSideBar}></StoreSidebar>
-          <CommerceContainer />
+          {isSelected ? <CommerceContainer /> : <PhotoBookContainer />}
         </div>
       </div>
     </>

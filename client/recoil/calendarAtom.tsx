@@ -100,6 +100,11 @@ const getBoardId = atom<number>({
   default: 0,
 });
 
+const isCategoryState = atom<boolean>({
+  key: "categoryState",
+  default: false,
+});
+
 export {
   modalOpenState,
   selectYearState,
@@ -119,4 +124,5 @@ export {
   getShippingModalState,
   getBoardId,
   hasSharedData,
+  isCategoryState,
 };

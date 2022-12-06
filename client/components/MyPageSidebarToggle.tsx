@@ -1,8 +1,10 @@
 import MySidebarCategory from "./MySidebarCategory";
-import { useRecoilState } from "recoil";
-import { categorySelectTitle } from "../recoil/calendarAtom";
+import { useState } from "react";
 import useDeleteUser from "../hooks/user/useDeleteUser";
 import Router from "next/router";
+import Link from "next/link";
+import { isCategoryState } from "../recoil/calendarAtom";
+import { useRecoilState } from "recoil";
 
 interface Props {
   onClick: () => void;
@@ -13,6 +15,8 @@ interface CategoryValue {
 }
 
 const MyPageSidebar = ({ onClick }: Props) => {
+  const [isSelected, setIsSelected] = useRecoilState<boolean>(isCategoryState);
+
   const myCategory = [
     {
       mtCategory: "나의 활동",
@@ -22,8 +26,9 @@ const MyPageSidebar = ({ onClick }: Props) => {
     },
   ];
 
-  const [categoryTitle, setcategoryTitle] =
-    useRecoilState<string>(categorySelectTitle);
+  const [categoryTitle, setcategoryTitle] = useState<string>(
+    myCategory[0].mtCategory,
+  );
 
   const renderNotices = () => {
     const categoryListArr: any[] = [];
@@ -46,6 +51,11 @@ const MyPageSidebar = ({ onClick }: Props) => {
 
   const handleClick = (title: string) => {
     setcategoryTitle(title);
+    if ("나의 활동" === title) {
+      setIsSelected(true);
+    } else if ("테마" === title) {
+      setIsSelected(false);
+    }
   };
 
   const { mutate: deleteUser } = useDeleteUser();
@@ -64,11 +74,24 @@ const MyPageSidebar = ({ onClick }: Props) => {
 
   return (
     <>
-      <div className="z-50 p-3 pb-8 md:flex lg:hidden absolute h-full flex-col bg-white w-2/3 md:w-2/6 drop-shadow-lg right-0 flex justify-between">
+      <div className="z-50 p-3 pb-8 flex lg:hidden absolute h-full flex-col bg-white w-2/3 md:w-2/6 drop-shadow-lg right-0 justify-between">
         <div className="flex flex-col justify-between ">
-          <div className="SCDream8 text-2xl  cursor-pointer" onClick={onClick}>
-            x
-          </div>
+          <svg
+            onClick={onClick}
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="3"
+            stroke="currentColor"
+            className="mt-3 ml-2 w-5 h-5"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+
           <div className="relative my-3 h-5 w-full flex justify-center">
             <div className="z-10 text-lg md:text-xl lg:text-2xl text-zinc-500 font-SCDream6">
               마이페이지
