@@ -97,8 +97,8 @@ const getBoardItemState = atom<boolean>({
 
 const getBoardId = atom<number>({
   key: "getBoardId",
-  default : 0
-})
+  default: 0,
+});
 
 export {
   modalOpenState,
@@ -117,6 +117,6 @@ export {
   getShareNoticeState,
   getShareModalState,
   getShippingModalState,
-  getBoardId
+  getBoardId,
   hasSharedData,
 };

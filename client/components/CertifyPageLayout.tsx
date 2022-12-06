@@ -20,7 +20,7 @@ const CertifyPageLayout = (props: { children: React.ReactNode }) => {
             />
           </a>
         </Link>
-        <div className="flex h-4/5 w-80 lg:mt-11 lg:mb-10 lg:h-[32rem] md:w-4/6 lg:w-3/5 drop-shadow-2xl">
+        <div className="flex h-min-width-4/5 w-80 lg:mt-11 lg:mb-10 lg:h-[32rem] md:w-4/6 lg:w-3/5 drop-shadow-2xl">
           <div className="lg:w-1/2 hidden md:hidden lg:block h-full bg-gradient-to-t from-[#FE4C00] to-[#FF9264]">
             <div className="flex items-center justify-center lg:h-full">
               <div className="absolute top-0 bottom-0 left-0 right-0 w-1/2 h-full bg-white/60"></div>

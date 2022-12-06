@@ -27,11 +27,10 @@ const MyLogBox = () => {
     setPage(page);
   };
 
-  const renderLogs = () => {
-    const Logs = sharedLog?.data.content;
-    let logList: ReactNode[] = [];
+  const Logs = sharedLog?.data.content;
 
-    console.log(Logs);
+  const renderLogs = () => {
+    let logList: ReactNode[] = [];
 
     if (logSuccess) {
       Logs?.forEach((log: log) => {
@@ -40,7 +39,11 @@ const MyLogBox = () => {
         let month = logTime[1];
         let date = logTime[2];
         let hour =
-          logTime[3] >= 12 ? `오후 ${logTime[3] - 12}` : `오전 ${logTime[3]}`;
+          logTime[3] < 12
+            ? `오전 ${logTime[3]}`
+            : logTime[3] === 12
+            ? `오후 12`
+            : `오후 ${logTime[3] - 12}`;
         let minute = logTime[4] < 10 ? `0${logTime[4]}` : logTime[4];
 
         if (log.status === "alert") {
@@ -105,17 +108,10 @@ const MyLogBox = () => {
 
   useEffect(() => {
     getSharedLog();
-  }, []);
+  }, [logSuccess]);
 
   return (
     <>
-      {/* <div className="flex flex-col h-full md:mx-10 md:w-9/12 md:drop-shadow-2xl">
-        <MyPageUserBox />
-        <div className="relative mt-3 mb-3 md:mt-6 ">
-          <div className="z-10 text-base md:text-xl lg:text-2xl text-zinc-500 font-SCDream6">
-            나의활동
-          </div>
-          <div className="absolute w-16 h-2 top-[1rem] md:w-[3.7rem] md:top-4 lg:w-24 lg:top-6 bg-mainOrange/40"></div> */}
       <div className="flex flex-col w-full h-full md:mx-8">
         <MyPageUserBox />
         <div className="relative my-3">

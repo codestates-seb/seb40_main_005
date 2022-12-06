@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import CommerceContainer from "../components/commerceContainer";
 import StoreSidebar from "../components/commerceSidebar";
-import CommerceSidebarToggle from "../components/commerceSidebarToggle";
+import CommerceSidebarToggle from "../components/CommerceSidebarToggle";
 
 const Commerce = () => {
   const loginState = useRecoilValue(isLoginState);
