@@ -117,6 +117,6 @@ export {
   getShareNoticeState,
   getShareModalState,
   getShippingModalState,
-  getBoardId
+  getBoardId,
   hasSharedData,
 };

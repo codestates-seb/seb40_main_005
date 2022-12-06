@@ -5,6 +5,8 @@ import { ReactNode, useEffect, useState } from "react";
 import LogContainer from "./LogContainer";
 import LogDetail from "./LogDetail";
 import Pagination from "react-js-pagination";
+import PageBtn from "./PageBtn";
+import SelectPageBtn from "./SelectPageBtn";
 
 interface log {
   shareFrom: string;
@@ -15,23 +17,30 @@ interface log {
 }
 
 const MyLogBox = () => {
+  const [page, setPage] = useState<number>(0);
+  const [compCount, setCompCount] = useState<any>([]);
+
   const {
     data: sharedLog,
     refetch: getSharedLog,
     isSuccess: logSuccess,
-  } = useGetSharedLog();
+  } = useGetSharedLog({ page });
 
-  const [page, setPage] = useState(1);
+  const handlePageChange = (currPage: number) => {
+    // console.log(currPage);
+    setPage(currPage);
+  };
 
-  const handlePageChange = (page: number) => {
-    setPage(page);
+  const addPage = (el: number) => {
+    return el + 1;
   };
 
   const renderLogs = () => {
     const Logs = sharedLog?.data.content;
     let logList: ReactNode[] = [];
 
-    console.log(Logs);
+    // console.log(Logs);
+    // console.log(sharedLog?.data);
 
     if (logSuccess) {
       Logs?.forEach((log: log) => {
@@ -50,7 +59,7 @@ const MyLogBox = () => {
                 <span>{log.shareFrom}</span>님이 <span>{log.title}</span>
                 게시물을 공유하였습니다.
               </LogDetail>
-              <div className="font-SCDream5 flex flex-col items-end w-[6rem] text-[0.1rem] md:text-[0.2rem] lg:text-sm">
+              <div className="font-SCDream5 flex flex-col items-end w-[30%] text-[0.1rem] md:text-[0.2rem] lg:text-sm">
                 <div className="h-fit w-fit">{`${year}-${month}-${date}`}</div>
                 <div className="h-fit w-fit">{`${hour}시 ${minute}분`}</div>
               </div>
@@ -64,7 +73,7 @@ const MyLogBox = () => {
                 수락하였습니다.
               </LogDetail>
 
-              <div className="font-SCDream5 flex flex-col items-end w-[6rem] text-[0.1rem] md:text-[0.2rem] lg:text-sm">
+              <div className="font-SCDream5 flex flex-col items-end w-[30%] text-[0.1rem] md:text-[0.2rem] lg:text-sm">
                 <div className="h-fit w-fit">{`${year}-${month}-${date}`}</div>
                 <div className="h-fit w-fit">{`${hour}시${minute}분`}</div>
               </div>
@@ -77,7 +86,7 @@ const MyLogBox = () => {
                 <span>{log.shareTo}</span>님이 <span>{log.title}</span> 게시물을
                 거절하였습니다.
               </LogDetail>
-              <div className="font-SCDream5 flex flex-col items-end w-[6rem] text-[0.1rem] md:text-[0.2rem] lg:text-sm">
+              <div className="font-SCDream5 flex flex-col items-end w-[30%] text-[0.1rem] md:text-[0.2rem] lg:text-sm">
                 <div className="h-fit w-fit">{`${year}-${month}-${date}`}</div>
                 <div className="h-fit w-fit">{`${hour}시${minute}분`}</div>
               </div>
@@ -90,7 +99,7 @@ const MyLogBox = () => {
                 <span>{log.shareTo}</span>님이 <span>{log.shareFrom}</span>
                 게시물을 공유하였습니다.
               </LogDetail>
-              <div className="font-SCDream5 flex flex-col items-end w-[6rem] text-[0.1rem] md:text-[0.2rem] lg:text-sm">
+              <div className="font-SCDream5 flex flex-col items-end w-[30%] text-[0.1rem] md:text-[0.2rem] lg:text-sm">
                 <div className="h-fit w-fit">{`${year}-${month}-${date}`}</div>
                 <div className="h-fit w-fit">{`${hour}시${minute}분`}</div>
               </div>
@@ -106,7 +115,15 @@ const MyLogBox = () => {
   useEffect(() => {
     getSharedLog();
   }, []);
-
+  
+  useEffect(() => {
+    if(logSuccess){
+      // let count = Math.ceil(sharedLog?.data.totalElements / sharedLog?.data.size);
+      setCompCount(Array(1).fill(""));
+      // console.log(count);
+      // setCompCount(Array(Math.ceil(sharedLog?.data.totalElements)).fill(""));
+    }
+  },[logSuccess])
   return (
     <>
       {/* <div className="flex flex-col h-full md:mx-10 md:w-9/12 md:drop-shadow-2xl">
@@ -125,7 +142,7 @@ const MyLogBox = () => {
           <div className="absolute w-16 h-2 top-[0.8rem] md:w-20 md:top-4 lg:w-[4.9rem] lg:top-[1.1rem] bg-mainOrange/40"></div>
         </div>
 
-        <div className="pt-4 px-3 md:px-4 lg:px-3 flex flex-col bg-white w-full h-[31rem] drop-shadow-lg	text-zinc-500 font-SCDream6">
+        <div className="pt-4 px-3 md:px-4 lg:px-3 flex flex-col bg-white w-full min-h-[31rem] h-fit drop-shadow-lg	text-zinc-500 font-SCDream6">
           <div className="flex flex-row justify-between text-sm font-semibold font-SCDream5 lg:px-10 lg:text-lg">
             <div className="md:pl-28 h-fit w-fit">활동내용</div>
             <div className="h-fit w-fit">알림일자</div>
@@ -198,6 +215,24 @@ const MyLogBox = () => {
               </div>
             </div>
           </div> */}
+          <div className="flex flex-row w-full h-fit justify-center items-center my-4">
+            {compCount.map((el: number, idx: number) => {
+              if (page === idx) {
+                return <SelectPageBtn key={el}>{idx + 1}</SelectPageBtn>;
+              } else {
+                return (
+                  <PageBtn
+                    key={el}
+                    onClick={() => {
+                      handlePageChange(idx + 1);
+                    }}
+                  >
+                    {idx + 1}
+                  </PageBtn>
+                );
+              }
+            })}
+          </div>
         </div>
       </div>
     </>
