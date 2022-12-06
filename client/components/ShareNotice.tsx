@@ -2,7 +2,6 @@ import useGetAcceptNotice from "../hooks/notice/useGetAcceptNotice";
 import useGetDenyNotice from "../hooks/notice/useGetDenyNotice";
 import { useRecoilState } from "recoil";
 import { getBoardState, getShareNoticeState } from "../recoil/calendarAtom";
-import { ReactElement } from "react";
 import { useEffect } from "react";
 
 interface Props {
@@ -48,7 +47,7 @@ const ShareNotice = ({ shareId, title, boardId }: Props) => {
 
           <div>
             {/* 체크버튼 */}
-            <button onClick={approveShareNotice} type="button" className="px-2">
+            <button onClick={approveShareNotice} type="button" className="px-1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

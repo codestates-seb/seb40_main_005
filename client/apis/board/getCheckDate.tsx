@@ -8,7 +8,6 @@ interface Props {
 }
 
 const getCheckDate = async ({ realDay, realMonth, realYear }: Props) => {
-  console.log(realDay, realMonth, realYear);
   return await axios
     .get(`/boards/count?day=${realDay}&month=${realMonth}&year=${realYear}`, {
       baseURL: process.env.NEXT_PUBLIC_API_URL,
