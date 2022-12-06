@@ -4,7 +4,7 @@ import SidebarCategory from "./SidebarCategory";
 import React, { useEffect } from "react";
 import useGetCategoryTitie from "../hooks/calendar/useGetCategory";
 import { useRecoilState } from "recoil";
-import { categorySelectTitle } from "../recoil/calendarAtom";
+import { categorySelectTitle, getBoardState } from "../recoil/calendarAtom";
 
 interface CategoryValue {
   categoryTitle: string;
@@ -12,6 +12,8 @@ interface CategoryValue {
 const Sidebar = () => {
   const [categoryTitle, setcategoryTitle] =
     useRecoilState<string>(categorySelectTitle);
+  const [isgetBoardState, setisgetBoardState] =
+    useRecoilState<boolean>(getBoardState);
 
   const { data: categoryDatas, refetch: categoryRefetch } =
     useGetCategoryTitie();
@@ -49,7 +51,7 @@ const Sidebar = () => {
   useEffect(() => {
     categoryRefetch();
     renderNotices();
-  }, []);
+  }, [isgetBoardState]);
 
   const handleClick = (title: string) => {
     setcategoryTitle(title);
@@ -64,7 +66,7 @@ const Sidebar = () => {
           </div>
           <div className="absolute top-4 lg:top-5 left-0.5 right-0 bottom-1.5 lg:bottom-0.5  bg-mainOrange/40"></div>
         </div>
-        <div className="grid w-full grid-cols-1 overflow-auto text-sm drop-shadow-xl lg:flex lg:flex-col h-1/3 lg:h-5/6 font-SCDream4">
+        <div className="h-[10rem] md:h-[16rem] lg:h-[37rem] px-5 w-full scrollbar-thin scrollbar-thumb-coral scrollbar-track-bgWhite overflow-y-scroll scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
           {renderNotices()}
         </div>
 

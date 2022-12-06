@@ -25,6 +25,7 @@ import usePatchBoard from "../hooks/calendar/usePatchBoard";
 import useCheckDate from "../hooks/calendar/useCheckDate";
 //yeowool
 import SelectBar from "./SelectBar";
+
 interface Props {
   handleCloseClick: () => void;
 }
@@ -80,6 +81,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
   const changeShare = (share: string) => {
     setShare(share);
   };
+
   const deleteImg = () => {
     URL.revokeObjectURL(showImg);
     setShowImg("");
@@ -434,7 +436,7 @@ const CreateModalLayout = ({ handleCloseClick }: Props) => {
             </div>
             <div className="absolute top-3.5 left-0.5 right-0 bottom-2  bg-mainOrange/40"></div>
           </div>
-          <AddShareContainer share={share} changeShare={changeShare} />
+          <AddShareContainer changeShare={changeShare} />
         </div>
 
         <div className="flex flex-row items-center justify-center w-full h-8 mt-5">
