@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "SCDream1";
+  src: url("../public/fonts/SCDream1.otf");
+}
+
+@font-face {
+  font-family: "SCDream2";
+  src: url("../public/fonts/SCDream2.otf");
+}
+
+@font-face {
+  font-family: "SCDream3";
+  src: url("../public/fonts/SCDream3.otf");
+}
+
+@font-face {
+  font-family: "SCDream4";
+  src: url("../public/fonts/SCDream4.otf");
+}
+
+@font-face {
+  font-family: "SCDream5";
+  src: url("../public/fonts/SCDream5.otf");
+}
+
+@font-face {
+  font-family: "SCDream6";
+  src: url("../public/fonts/SCDream6.otf");
+}
+
+@font-face {
+  font-family: "SCDream7";
+  src: url("../public/fonts/SCDream7.otf");
+}
+
+@font-face {
+  font-family: "SCDream8";
+  src: url("../public/fonts/SCDream8.otf");
+}
+
+@font-face {
+  font-family: "SCDream9";
+  src: url("../public/fonts/SCDream9.otf");
+}
+
+.speech-bubble {
+  position: relative;
+  background: #fff;
+  border: 2px solid #ffc0ac;
+  border-radius: 10px;
+  width: 12.8rem;
+  padding: 0.8rem;
+}
+
+@media screen and (min-width: 377px) {
+  .speech-bubble {
+    width: 17rem;
+  }
+}
+
+.speech-bubble:after,
+.speech-bubble:before {
+  bottom: 100%;
+  left: 80%;
+  border: solid transparent;
+  content: "";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.speech-bubble:after {
+  border-color: rgba(255, 255, 255, 0);
+  border-bottom-color: #fff;
+  border-width: 10px;
+  margin-left: -10px;
+}
+.speech-bubble:before {
+  border-color: rgba(0, 0, 0, 0);
+  border-bottom-color: #ffc0ac;
+  border-width: 13px;
+  margin-left: -13px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+ul.pagination li {
+  display: inline-block;
+  width: 30px;
+  border: 1px solid #e2e2e2;
+  display: flex;
+  justify-content: center;
+  font-size: 25px;
+}
+
+ul.pagination li a {
+  text-decoration: none;
+  color: #337ab7;
+  font-size: 20px;
+}
+
+ul.pagination li.active a {
+  color: white;
+}
+ul.pagination li.active {
+  background-color: #337ab7;
+}
+
+ul.pagination li a:hover,
+ul.pagination li a.active {
+  color: blue;
+}
+
+.page-selection {
+  width: 48px;
+  height: 30px;
+  color: #337ab7;
+}
+
+.pagination-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
