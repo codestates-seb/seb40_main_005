@@ -2,17 +2,21 @@ import axios from "axios";
 import client from "../../client/client";
 
 interface authNumData {
-  authNum: string;
+  authNumValue: string;
   email: string;
 }
 
-const checkAuthNum = async ({ authNum, email }: authNumData) => {
+const checkAuthNum = async ({ authNumValue, email }: authNumData) => {
   const data = {
-    authNum: authNum,
+    authNum: authNumValue,
     email: email,
   };
-  return await client.post("/authentication/email/verify", data).catch(err => {
-    return err;
+  return await axios.post("/authentication/email/verify", data, {
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    headers: {
+      withCredentials: true,
+      "Content-Type": `application/json`,
+    },
   });
 };
 

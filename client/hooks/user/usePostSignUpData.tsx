@@ -1,16 +1,15 @@
-import { Dispatch, SetStateAction } from "react";
 import { useMutation } from "react-query";
 import postSignUp from "../../apis/user/postSignUp";
 
-
-interface SignUpData {
-    id : string,
-    email : string,
-    password : string
-  }
-
-const usePostSignUpData = ({id, email, password}:SignUpData) => {
-    return useMutation(postSignUp);
-}
+const usePostSignUpData = () => {
+  return useMutation(postSignUp, {
+    onSuccess: res => {
+      console.log(res);
+    },
+    onError: err => {
+      console.log(err);
+    },
+  });
+};
 
 export default usePostSignUpData;
