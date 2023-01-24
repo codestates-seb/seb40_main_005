@@ -1,5 +1,4 @@
 import axios from "axios";
-import client from "../../client/client";
 
 interface SignUpData {
   id: string;
@@ -13,7 +12,13 @@ const postSignUp = async ({ id, email, password }: SignUpData) => {
     email: email,
     password: password,
   };
-  return await client.post("/members", data);
+  return await axios.post("/members", data, {
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
+    headers: {
+      withCredentials: true,
+      "Content-Type": `application/json`,
+    },
+  });
 };
 
 export default postSignUp;
