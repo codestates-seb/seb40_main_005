@@ -15,7 +15,7 @@
 </br>
 
 ## 💡배포링크
-https://d13omv2hzth85q.cloudfront.net/
+https://dno0w5lnin6d8.cloudfront.net/
 
 </br>
 
