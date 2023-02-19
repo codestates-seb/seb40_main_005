@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Image from "next/image";
 import TopBtn from "../components/TopBtn";
 import ScrollImg from "../components/ScrollImg";
@@ -11,6 +12,7 @@ import IndexLogin from "../components/IndexLogin";
 import IndexSignup from "../components/IndexSignup";
 import IndexCalendar from "../components/IndexCalendar";
 import IndexLogout from "../components/IndexLogout";
+import ogImage from "public/images/Gallendar.png";
 
 function Home() {
   const logoAnimate = {
@@ -192,6 +194,16 @@ function Home() {
 
   return (
     <>
+      <Head>
+        <title>Gallendar</title>
+        <meta
+          property="og:url"
+          content="https://dno0w5lnin6d8.cloudfront.net/"
+        />
+        <meta property="og:title" content="Gallendar, 나만의 추억 캘린더" />
+        <meta property="og:site_name" content="Gallendar(갤린더)" />
+        <meta property="og:image" content={`${ogImage}`} />
+      </Head>
       <TopBtn />
       <ScrollImg />
       <Dots scrollIdx={scrollIdx} />
