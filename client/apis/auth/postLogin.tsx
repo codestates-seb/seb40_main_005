@@ -1,5 +1,4 @@
 import axios from "axios";
-import client from "../../client/client";
 
 interface LoginValue {
   id: string;
@@ -7,12 +6,15 @@ interface LoginValue {
 }
 
 const postLogin = async (payload: LoginValue) => {
-  // 요청메소드 + 요청정보
-  const { data } = await client.post("/authentication", payload, {
-    baseURL: process.env.NEXT_PUBLIC_API_URL,
-  });
-
-  return data;
+  return axios
+    .post("/authentication", payload, {
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
+      headers: {
+        withCredentials: true,
+        "Content-Type": `application/json`,
+      },
+    })
+    .catch(err => console.log(err));
 };
 
 export default postLogin;

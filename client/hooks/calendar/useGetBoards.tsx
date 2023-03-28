@@ -1,8 +1,4 @@
-import {
-  useQuery,
-  // useQueryClient,
-  // useQueryErrorResetBoundary,
-} from "react-query";
+import { useQuery } from "react-query";
 import getBoards from "../../apis/board/getBoards";
 
 interface Props {

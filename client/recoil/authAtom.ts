@@ -1,6 +1,7 @@
 import { atom } from "recoil";
 
 const localStorage = typeof window !== "undefined" ? window.localStorage : null;
+
 const isLoginState = atom({
   key: "isLogin",
   default: localStorage?.getItem("token") ? true : false,
@@ -16,4 +17,9 @@ const userNameState = atom({
   default: localStorage?.getItem("memberId") || "",
 });
 
-export { isLoginState, accessTokenState, userNameState };
+const failedMsg = atom({
+  key: "failedMsg",
+  default: "",
+})
+
+export { isLoginState, accessTokenState, userNameState, failedMsg };
