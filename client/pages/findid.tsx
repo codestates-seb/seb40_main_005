@@ -52,7 +52,7 @@ function FindId() {
             <h2 className="z-10 text-base md:text-xl lg:text-2xl text-zinc-500 font-SCDream6">
               아이디 찾기
             </h2>
-            <div className="absolute top-5 md:top-6 lg:top-7 left-0 right-0 bottom-1 md:bottom-0 lg:-bottom-1 bg-mainOrange/40"></div>
+            <div className="absolute left-0 right-0 top-5 md:top-6 lg:top-7 bottom-1 md:bottom-0 lg:-bottom-1 bg-mainOrange/40"></div>
           </div>
           <form className="w-full">
             <div className="flex flex-col w-full h-fit">
@@ -60,7 +60,7 @@ function FindId() {
                 <div className="relative items-center justify-center w-fit h-7 mt-7">
                   <label
                     htmlFor="email"
-                    className="font-SCDream5 text-gray-500 text-base"
+                    className="text-base text-gray-500 font-SCDream5"
                   >
                     E-mail
                   </label>
@@ -82,12 +82,12 @@ function FindId() {
                   errors={errors}
                   name="emailErrorInput"
                   render={({ message }) => (
-                    <div className="flex flex-row justify-end items-end w-full text-mainOrange h-fit font-SCDream2 text-xs mt-1">
+                    <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
                       {message}
                     </div>
                   )}
                 />
-                <div className="flex flex-row justify-end items-end w-full text-mainOrange h-fit font-SCDream2 text-xs mt-1">
+                <div className="flex flex-row items-end justify-end w-full mt-1 text-xs text-mainOrange h-fit font-SCDream2">
                   {emailValue === ""
                     ? null
                     : emailValue.match(emailRegex)
@@ -98,12 +98,12 @@ function FindId() {
             </div>
           </form>
 
-          <div className=" w-full h-1/6 flex items-center justify-center text-mainOrange font-SCDream4 text-sm mt-1">
+          <div className="flex items-center justify-center w-full mt-1 text-sm  h-1/6 text-mainOrange font-SCDream4">
             {isLoading ? (
-              <div className=" absolute w-full flex justify-center items-center">
+              <div className="absolute flex items-center justify-center w-full ">
                 <div role="status">
                   <svg
-                    className="inline mr-2 w-8 h-8 text-gray-200 animate-spin fill-mainOrange "
+                    className="inline w-8 h-8 mr-2 text-gray-200 animate-spin fill-mainOrange "
                     viewBox="0 0 100 101"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -122,7 +122,7 @@ function FindId() {
               </div>
             ) : isSuccess ? (
               <>
-                <div className="w-full h-2/3 mt-16 flex flex-col items-center justify-center">
+                <div className="flex flex-col items-center justify-center w-full mt-16 h-2/3">
                   <p className="py-5">{`ID는 ${
                     data.data.id.slice(0, 4) +
                     "*".repeat(data.data.id.length - 4)
@@ -136,7 +136,7 @@ function FindId() {
               </>
             ) : isData ? (
               <>
-                <div className="w-full h-2/3 mt-16 flex flex-col items-center justify-center">
+                <div className="flex flex-col items-center justify-center w-full mt-16 h-2/3">
                   <p className="py-5">존재 하지 않는 아이디 입니다</p>
                   <Link href="/signup">
                     <button className="flex  items-center  py-2 justify-center w-4/6 md:w-3/6 lg:w-4/6 h-8 rounded-2xl bg-btnOrange text-white font-SCDream5 text-sm hover:bg-[#fcb79a]">
@@ -146,16 +146,16 @@ function FindId() {
                 </div>
               </>
             ) : (
-              <div className="flex flex-col justify-center items-center mt-20">
+              <div className="flex flex-col items-center justify-center mt-20">
                 <svg
-                  className="h-10 w-10 mt-10"
+                  className="w-10 h-10 mt-10"
                   width="19"
                   height="19"
                   viewBox="0 0 19 19"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <g clip-path="url(#clip0_364_3047)">
+                  <g clipPath="url(#clip0_364_3047)">
                     <path
                       d="M18.411 16.1685L13.9104 12.3412C13.4449 11.922 12.9473 11.7309 12.5459 11.7487C13.6087 10.5042 14.25 8.89036 14.25 7.12573C14.25 3.19036 11.0604 0.000732422 7.125 0.000732422C3.18963 0.000732422 0 3.19036 0 7.12573C0 11.0611 3.18963 14.2507 7.125 14.2507C8.88962 14.2507 10.5034 13.6095 11.7479 12.5467C11.7289 12.948 11.9213 13.4456 12.3405 13.9111L16.1678 18.4117C16.8233 19.1397 17.8932 19.2014 18.5464 18.5483C19.1995 17.8952 19.1378 16.824 18.4098 16.1697L18.411 16.1685ZM7.125 11.8745C4.50181 11.8745 2.375 9.74773 2.375 7.12455C2.375 4.50136 4.50181 2.37454 7.125 2.37454C9.74819 2.37454 11.875 4.50136 11.875 7.12455C11.875 9.74773 9.74819 11.8745 7.125 11.8745Z"
                       fill="#FF9264"
@@ -167,8 +167,8 @@ function FindId() {
                     </clipPath>
                   </defs>
                 </svg>
-                <div className="w-full h-18 mt-4  flex flex-col items-center justify-center text-mainOrange font-SCDream4 text-xs ">
-                  <div className="py-5 flex flex-col items-center justify-center">
+                <div className="flex flex-col items-center justify-center w-full mt-4 text-xs h-18 text-mainOrange font-SCDream4 ">
+                  <div className="flex flex-col items-center justify-center py-5">
                     <p>가입 시 사용한 이메일 주소를 입력하여</p>
                     <p>아이디의 앞 4자리를 확인 하실 수 있습니다</p>
                   </div>

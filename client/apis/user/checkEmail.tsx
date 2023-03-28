@@ -1,5 +1,4 @@
 import axios from "axios";
-import client from "../../client/client";
 
 const checkEmail = async (email: string) => {
   // 요청메소드 + 요청정보

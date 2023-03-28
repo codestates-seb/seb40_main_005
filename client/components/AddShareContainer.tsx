@@ -113,26 +113,26 @@ const AddShareContainer = ({ changeShare }: ShareProps) => {
     <>
       <BoardModalContainer>
         <div className="flex flex-row w-full h-fit justify-between items-center p-0.5">
-          <div className=" w-full h-fit  inline-flex relative items-start flex-rap">
-            <div className="w-fit h-fit flex ">
+          <div className="relative inline-flex items-start w-full h-fit flex-rap">
+            <div className="flex w-fit h-fit ">
               <Search />
             </div>
-            <div className="pl-2 w-full h-fit  flex flex-col flex-rapo ">
+            <div className="flex flex-col w-full pl-2 h-fit flex-rapo ">
               <input
                 type="text"
                 value={input}
                 placeholder="공유하고 싶은 사람을 검색하세요!"
-                className="ml-1 w-full font-SCDream3 text-left text-sm md:text-sm lg:text-sm p-1 rounded-md text-gray-700 outline-none"
+                className="w-full p-1 ml-1 text-sm text-left text-gray-700 rounded-md outline-none font-SCDream3 md:text-sm lg:text-sm"
                 onChange={inputChange}
               />
 
-              <div className="w-full h-full flex items-baseline flex-row flex-wrap">
+              <div className="flex flex-row flex-wrap items-baseline w-full h-full">
                 {tagList.map((tagItem, index) => {
                   return (
                     <div
                       key={index}
                       onClick={() => deleteTagItem(tagItem.id)}
-                      className="mr-2 mb-2 text-white pr-3 pl-2 pm-2 cursor-pointer inline-flex justify-center w-fit h-full hover:bg-red-400 bg-btnOrange rounded-full"
+                      className="inline-flex justify-center h-full pl-2 pr-3 mb-2 mr-2 text-white rounded-full cursor-pointer pm-2 w-fit hover:bg-red-400 bg-btnOrange"
                     >
                       <p className="pb-1">{tagItem.id}</p>
                       <button className="text-lg">
@@ -140,13 +140,15 @@ const AddShareContainer = ({ changeShare }: ShareProps) => {
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
                           viewBox="0 0 24 24"
-                          stroke-width="3"
+                          strokeWidth="3"
                           stroke="currentColor"
                           className="w-4 h-4"
                         >
                           <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
+                            // stroke-linecap="round"
+                            // stroke-linejoin="round"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                             d="M6 18L18 6M6 6l12 12"
                           />
                         </svg>
@@ -155,7 +157,7 @@ const AddShareContainer = ({ changeShare }: ShareProps) => {
                   );
                 })}
                 {tagList.length !== 0 ? (
-                  <p className="text-xs font-SCDream3 text-gray-700 min-w-fit">
+                  <p className="text-xs text-gray-700 font-SCDream3 min-w-fit">
                     님과 함께합니다
                   </p>
                 ) : null}
@@ -168,12 +170,12 @@ const AddShareContainer = ({ changeShare }: ShareProps) => {
                 // }`}
                 role="menu"
               >
-                <div className="w-full h-full flex items-baseline flex-row flex-wrap flex-rap ">
+                <div className="flex flex-row flex-wrap items-baseline w-full h-full flex-rap ">
                   {categoryList.map((el: { id: string }) => {
                     return (
                       <button
                         key={el.id}
-                        className="my-1 mr-5 pb-1 text-white pr-3 pl-2 pm-3 cursor-pointer inline-flex justify-center w-fit h-full  hover:bg-btnOrange bg-underbar rounded-full "
+                        className="inline-flex justify-center h-full pb-1 pl-2 pr-3 my-1 mr-5 text-white rounded-full cursor-pointer pm-3 w-fit hover:bg-btnOrange bg-underbar "
                         onClick={Tagging}
                         value={el.id}
                       >

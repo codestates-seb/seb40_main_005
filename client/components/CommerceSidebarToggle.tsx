@@ -56,20 +56,20 @@ const CommerceSidebarToggle = ({ onClick }: Props) => {
 
   return (
     <>
-      <div className="z-50 p-3 pb-8 md:flex lg:hidden absolute h-full flex-col bg-white w-2/3 md:w-2/6 drop-shadow-lg right-0 flex justify-between">
+      <div className="absolute right-0 z-50 flex flex-col justify-between w-2/3 h-full p-3 pb-8 bg-white md:flex lg:hidden md:w-2/6 drop-shadow-lg">
         <div className="flex flex-col justify-between ">
           <svg
             onClick={onClick}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            stroke-width="3"
+            strokeWidth="3"
             stroke="currentColor"
-            className="mt-3 ml-2 w-5 h-5"
+            className="w-5 h-5 mt-3 ml-2"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeLinecap="round"
+              strokeLinejoin="round"
               d="M6 18L18 6M6 6l12 12"
             />
           </svg>

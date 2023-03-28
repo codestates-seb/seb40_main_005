@@ -11,7 +11,7 @@ import {
   boardSharedState,
   editModeState,
   getBoardState,
-  getBoardId
+  getBoardId,
 } from "../recoil/calendarAtom";
 import { useRecoilState } from "recoil";
 import { useEffect, useState } from "react";
@@ -38,20 +38,7 @@ const ReadModalLayout = ({
   const [getBoard, setGetBoard] = useRecoilState(getBoardState);
   const [boardId, setBoardId] = useRecoilState(getBoardId);
 
-  // useEffect(()=> {
-  //     console.log(boardData);
-  //   },[boardData])
-  // console.log(date);
   let splitDate = date.split("-");
-  // console.log(boardData);
-
-  // let boardId: number | null = null;
-
-  // if (boardData.data !== undefined) {
-  //   boardId = boardData.data[0].boardId;
-  // }
-
-  // console.log(boardId);
 
   const { isSuccess: deleteSuccss, mutate: deleteMute } = useDeleteBoard({
     boardId,
@@ -70,8 +57,6 @@ const ReadModalLayout = ({
     if (res) {
       deleteMute({ boardId });
       handleReadCloseClick();
-      // Router.push("/calendar");
-      // window.location.reload();
     }
   };
 
@@ -91,7 +76,6 @@ const ReadModalLayout = ({
   };
 
   useEffect(() => {
-    // console.log(deleteSuccss);
     if (deleteSuccss) {
       alert("삭제되었습니다");
       setGetBoard(!getBoard);

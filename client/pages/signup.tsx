@@ -86,7 +86,8 @@ const SignUp = () => {
     setIsCheckId(false);
     if (
       e.target.value.length !== 0 &&
-      (e.target.value.length < 5 && !idRex.test(e.target.value))
+      e.target.value.length < 5 &&
+      !idRex.test(e.target.value)
     ) {
       setCheckId(false);
     } else {
@@ -108,21 +109,20 @@ const SignUp = () => {
   };
 
   const handlePressEnter = (e: any) => {
-      e.preventDefault();
-      if (idValue.length !== 0 && checkId) {
-        idRefetch();
-        // console.log(idData);
-        setIsCheckId(true);
-      }
+    e.preventDefault();
+    if (idValue.length !== 0 && checkId) {
+      idRefetch();
+      setIsCheckId(true);
+    }
   };
 
   const handleEmailEnter = (e: any) => {
     e.preventDefault();
     // if (e.keyCode === 13 && checkEmail) {
-      // console.log(emailData);
-      emailRefetch();
-      // console.log(emailData);
-      setIsCheckEmail(true);
+    // console.log(emailData);
+    emailRefetch();
+    // console.log(emailData);
+    setIsCheckEmail(true);
     // }
   };
 
@@ -165,12 +165,8 @@ const SignUp = () => {
   const handleClickSubmit = (e: any) => {
     e.preventDefault();
 
-    // console.log(idValue, emailValue, pwValue);
     singUpMute(signUpData);
     setModalView(true);
-
-    console.log(signUpData);
-    console.log(signupData);
   };
 
   return (
@@ -196,7 +192,7 @@ const SignUp = () => {
                 </label>
                 <div className="absolute top-4 md:top-4.5 lg:top-4 left-0 right-0 bottom-2 md:bottom-1.5 lg:bottom-1.5 bg-mainOrange/40"></div>
               </div>
-              <div className="flex flex-row w-full h-fit items-center justify-center">
+              <div className="flex flex-row items-center justify-center w-full h-fit">
                 <input
                   className="font-SCDream3 text-gray-500 w-full text-xs md:text-sm mt-2 border-b-[1px] border-mainOrange/40 outline-none"
                   id="identity"
@@ -215,9 +211,14 @@ const SignUp = () => {
                     },
                   })}
                 />
-                {idRex.test(idValue) && checkId && idValue.length !== 0 && !isCheckId ? (
+                {idRex.test(idValue) &&
+                checkId &&
+                idValue.length !== 0 &&
+                !isCheckId ? (
                   <AuthBtn
-                    onClick={()=>{handlePressEnter}}
+                    onClick={() => {
+                      handlePressEnter;
+                    }}
                   >
                     중복확인
                   </AuthBtn>
@@ -280,9 +281,11 @@ const SignUp = () => {
                     onChange: handleEmailChange,
                   })}
                 />
-                {checkEmail && !isCheckEmail? (
+                {checkEmail && !isCheckEmail ? (
                   <AuthBtn
-                    onClick={()=>{handleEmailEnter}}
+                    onClick={() => {
+                      handleEmailEnter;
+                    }}
                   >
                     중복확인
                   </AuthBtn>
@@ -476,12 +479,13 @@ const SignUp = () => {
               </div>
             </EmailCheckNumberLayout>
           )}
-          {!authInputView && !pwInputView ? (
+          {/* Oauth */}
+          {/* {!authInputView && !pwInputView ? (
             <div className="flex flex-col items-center justify-center w-full mt-3 h-fit">
               <GoogleBtn />
               <KakaoBtn />
             </div>
-          ) : null}
+          ) : null} */}
         </div>
       </CertifyPageLayout>
     </>

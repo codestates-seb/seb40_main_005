@@ -4,15 +4,14 @@ import TopBtn from "../components/TopBtn";
 import ScrollImg from "../components/ScrollImg";
 import Dots from "../components/Dots";
 import Link from "next/link";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { isLoginState } from "../recoil/authAtom";
 import IndexLogin from "../components/IndexLogin";
 import IndexSignup from "../components/IndexSignup";
-import IndexCalendar from "../components/IndexCalendar";
-import IndexLogout from "../components/IndexLogout";
-import ogImage from "public/images/Gallendar.png";
+import ogImg from "../public/images/Gallendar.png";
+import GuestLogin from "../components/guest/GuestLogin";
 
 function Home() {
   const logoAnimate = {
@@ -104,93 +103,6 @@ function Home() {
   const setScroll = () => {
     setScrollIndex(1);
   };
-  // const wheelHandler = (e: { preventDefault: any; deltaY: number }) => {
-  // e.preventDefault();
-  // scrollY === pageYOffset(구버전 호환성위해 사용)
-  // const { scrollTop } = outerDivRef.current;
-  // const scrollTop: number = window.scrollY;
-  // console.log(scrollTop);
-  // // 스크롤 위쪽 끝부분 위치
-  // const pageHeight = window.innerHeight; // 화면 세로길이(== 100vh)
-  // const totalHeight = document.body.scrollHeight; // 전체 화면크기
-  // const currY = pageHeight * currPage;
-  // console.log(outerDivRef);
-  // if (scrollTop >= Math.floor(currY / 2)) {
-  //   window.scrollTo({
-  //     top: pageHeight * currPage,
-  //     behavior: "smooth",
-  //   });
-  //   setCurrPage(currPage + 1);
-  // }
-  //     if (scrollTop < pageHeight) {
-  //       // 스크롤 내릴 때
-  //       if (scrollTop >= 0 && scrollTop < pageHeight) {
-  //         outerDivRef.current.scrollTo({
-  //           top: pageHeight,
-  //           left: 0,
-  //           behavior: "smooth",
-  //         });
-  //         setScrollIndex(1);
-  //         console.log(outerDivRef.current);
-  //       } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-  //         //현재 2페이지
-  //         console.log("현재 2페이지, down");
-  //         console.log(scrollTop);
-  //         outerDivRef.current.scrollTo({
-  //           top: pageHeight * 2,
-  //           left: 0,
-  //           behavior: "smooth",
-  //         });
-  //         setScrollIndex(3);
-  //       } else {
-  //         // 현재 3페이지
-  //         console.log("현재 3페이지, down");
-  //         outerDivRef.current.scrollTo({
-  //           top: pageHeight * 2,
-  //           left: 0,
-  //           behavior: "smooth",
-  //         });
-  //         setScrollIndex(3);
-  //       }
-  //     } else {
-  //       // 스크롤 올릴 때
-  //       if (scrollTop >= 0 && scrollTop < pageHeight) {
-  //         //현재 1페이지
-  //         console.log("현재 1페이지, up");
-  //         outerDivRef.current.scrollTo({
-  //           top: 0,
-  //           left: 0,
-  //           behavior: "smooth",
-  //         });
-  //         setScrollIndex(1);
-  //       } else if (scrollTop >= pageHeight && scrollTop < pageHeight * 2) {
-  //         //현재 2페이지
-  //         console.log("현재 2페이지, up");
-  //         outerDivRef.current.scrollTo({
-  //           top: 0,
-  //           left: 0,
-  //           behavior: "smooth",
-  //         });
-  //         // setScrollIndex(1);
-  //       } else {
-  //         // 현재 3페이지
-  //         console.log("현재 3페이지, up");
-  //         outerDivRef.current.scrollTo({
-  //           top: pageHeight,
-  //           left: 0,
-  //           behavior: "smooth",
-  //         // setScrollIndex(3);
-  //       }
-  //     }
-  // };
-  // const outerDivRefCurrent = outerDivRef.current;
-  // outerDivRefCurrent?.addEventListener("wheel", wheelHandler);
-  // return () => {
-  //   outerDivRefCurrent?.removeEventListener("wheel", wheelHandler);
-  // };
-  // window.addEventListener("wheel", wheelHandler);
-  // }, []);
-  // 여기까지 은비 작업부분 ^__^
 
   return (
     <>
@@ -202,7 +114,7 @@ function Home() {
         />
         <meta property="og:title" content="Gallendar, 나만의 추억 캘린더" />
         <meta property="og:site_name" content="Gallendar(갤린더)" />
-        <meta property="og:image" content={`${ogImage}`} />
+        <meta property="og:image" content={`${ogImg}`} />
       </Head>
       <TopBtn />
       <ScrollImg />
@@ -252,8 +164,11 @@ function Home() {
             >
               여러분의 인상적인 순간들을 캘린더로 확인하세요!
             </motion.div>
+            {/* 로그인 / 회원가입 버튼 */}
             <div className="flex flex-row items-center justify-center w-full mt-20 sm:justify-start sm:mt-8">
               <IndexLogin />
+              {/* guest Login 버튼  */}
+              <GuestLogin />
               <IndexSignup />
             </div>
           </div>
