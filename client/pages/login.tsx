@@ -9,10 +9,10 @@ const Login = () => {
       <CertifyPageLayout>
         <div className="flex flex-col justify-between h-fit">
           <LoginForm />
-          <div className="flex flex-col mt-5 md:mt-12 lg:mt-6 md:items-center">
+          {/* <div className="flex flex-col mt-5 md:mt-12 lg:mt-6 md:items-center">
             <GoogleBtn />
             <KakaoBtn />
-          </div>
+          </div> */}
         </div>
       </CertifyPageLayout>
     </>

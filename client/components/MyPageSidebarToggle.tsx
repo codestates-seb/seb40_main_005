@@ -74,16 +74,16 @@ const MyPageSidebar = ({ onClick }: Props) => {
 
   return (
     <>
-      <div className="z-50 p-3 pb-8 flex lg:hidden absolute h-full flex-col bg-white w-2/3 md:w-2/6 drop-shadow-lg right-0 justify-between">
+      <div className="absolute right-0 z-50 flex flex-col justify-between w-2/3 h-full p-3 pb-8 bg-white lg:hidden md:w-2/6 drop-shadow-lg">
         <div className="flex flex-col justify-between ">
           <svg
             onClick={onClick}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            stroke-width="3"
+            strokeWidth="3"
             stroke="currentColor"
-            className="mt-3 ml-2 w-5 h-5"
+            className="w-5 h-5 mt-3 ml-2"
           >
             <path
               stroke-linecap="round"
@@ -92,19 +92,19 @@ const MyPageSidebar = ({ onClick }: Props) => {
             />
           </svg>
 
-          <div className="relative my-3 h-5 w-full flex justify-center">
+          <div className="relative flex justify-center w-full h-5 my-3">
             <div className="z-10 text-lg md:text-xl lg:text-2xl text-zinc-500 font-SCDream6">
               마이페이지
             </div>
             <div className="absolute w-24 h-2 top-[1.1rem] md:w-[3.7rem] md:top-4 lg:w-[4.4rem] lg:top-5 bg-mainOrange/40"></div>
           </div>
-          <div className="grid w-full grid-cols-1 overflow-auto text-md  lg:flex lg:flex-col h-fit lg:h-5/6 font-SCDream4 mt-5">
+          <div className="grid w-full grid-cols-1 mt-5 overflow-auto text-md lg:flex lg:flex-col h-fit lg:h-5/6 font-SCDream4">
             {renderNotices()}
           </div>
         </div>
         <button
           onClick={DeleteUser}
-          className="flex justify-end pr-4 pb-3 text-xs text-red-600 cursor-pointer"
+          className="flex justify-end pb-3 pr-4 text-xs text-red-600 cursor-pointer"
         >
           회원탈퇴
         </button>

@@ -34,7 +34,7 @@ const Commerce = () => {
       {sideBar ? <CommerceSidebarToggle onClick={handleChangeSideBar} /> : null}
 
       <div className="items-center justify-center w-full h-screen p-3 overflow-auto md:pt-4 bg-bgGray">
-        <div className="flex flex-row  items-center justify-between md:mx-8 lg:justify-center">
+        <div className="flex flex-row items-center justify-between md:mx-8 lg:justify-center">
           <Link href="/calendar">
             <a>
               <Image
@@ -57,9 +57,9 @@ const Commerce = () => {
               <path
                 d="M3.75 6.75H20.25M3.75 12H20.25M3.75 17.25H20.25"
                 stroke="black"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
           </div>

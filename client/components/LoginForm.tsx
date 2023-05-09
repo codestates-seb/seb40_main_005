@@ -1,14 +1,15 @@
-import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { isLoginState } from "../recoil/authAtom";
 import { useForm } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import Link from "next/link";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import postLogin from "../apis/auth/postLogin";
 import { useMutation } from "react-query";
 import { useRouter } from "next/router";
 import useGetBoards from "../hooks/calendar/useGetBoards";
 import { selectYearState, selectMonthState } from "../recoil/calendarAtom";
+import usePostLogin from "../hooks/user/usePostLogin";
 
 interface FormValues {
   id: string;
@@ -17,7 +18,8 @@ interface FormValues {
 }
 
 const LoginForm = () => {
-  const [idValue, setIdValue] = useState<string>("");
+  const [id, setId] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [failedMsg, setFailedMsg] = useState<string>("");
 
   const {
@@ -29,46 +31,38 @@ const LoginForm = () => {
   const router = useRouter();
   const loginMutation = useMutation(postLogin);
   const isLogin = useRecoilValue(isLoginState);
-  const setIsLogin = useSetRecoilState(isLoginState);
 
-  const [curMonth, setCurMonth] = useRecoilState(selectMonthState);
-  const [curYear, setCurYear] = useRecoilState(selectYearState);
+  const [curMonth] = useRecoilState(selectMonthState);
+  const [curYear] = useRecoilState(selectYearState);
 
-  const {
-    data: boardData,
-    refetch: boardRefetch,
-    isSuccess: boardSuccess,
-  } = useGetBoards({
+  const { refetch: boardRefetch } = useGetBoards({
     curYear,
     curMonth,
   });
 
-  const useLogin = ({ id, password }: FormValues) => {
-    return loginMutation
-      .mutateAsync({ id, password })
-      .then(res => {
-        if (res.token) {
-          localStorage.setItem("token", res.token);
-          localStorage.setItem("memberId", res.memberId);
-          setIsLogin(true);
-          setFailedMsg("");
+  const { mutate, isSuccess } = usePostLogin();
 
-          return res.token;
-        }
-      })
-      .then(res => {
-        if (res) {
-          boardRefetch();
-          router.push("/calendar");
-        }
-      })
-      .catch(() => {
-        setFailedMsg("ID 혹은 비밀번호가 일치하지 않습니다.");
-      });
+  useEffect(() => {
+    if (isSuccess) {
+      boardRefetch();
+      router.push("/calendar");
+    }
+
+    if (isLogin) {
+      router.push("/calendar");
+    }
+  }, [isSuccess]);
+
+  const onSubmit = () => {
+    mutate({ id, password });
   };
 
-  const handleIdChange = (e: any) => {
-    setIdValue(e.target.value);
+  const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setId(e.target.value);
+  };
+
+  const handlePwChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
   };
 
   return (
@@ -94,7 +88,7 @@ const LoginForm = () => {
 
         <form
           className="relative flex flex-col mt-5 text-base text-gray-500 font-SCDream5"
-          onSubmit={handleSubmit(useLogin)}
+          onSubmit={handleSubmit(onSubmit)}
         >
           {/* 아이디 입력 */}
           <label htmlFor="id">ID</label>
@@ -125,7 +119,7 @@ const LoginForm = () => {
               </div>
             )}
           />
-          {idValue.length !== 0 && idValue.length < 5 ? (
+          {id.length !== 0 && id.length < 5 ? (
             <div className="flex flex-row items-end justify-end w-full mt-1 text-[0.6rem] md:text-xs text-mainOrange h-fit font-SCDream2">
               5글자 이상으로 입력해주세요
             </div>
@@ -147,6 +141,7 @@ const LoginForm = () => {
             type="password"
             {...register("password", {
               required: "비밀번호를 입력해주세요!",
+              onChange: handlePwChange,
               pattern: {
                 value:
                   /^[A-Za-z0-9`~!@#\$%\^&\*\(\)\{\}\[\]\-_=\+\\|;:'"<>,\./\?]{8,25}$/,
@@ -177,6 +172,17 @@ const LoginForm = () => {
               <Link href={"/resetpw"}>비밀번호재설정</Link>
             </div>
           </div>
+
+          {/* 환영문구 */}
+          <div className="my-10">
+            <div className="flex flex-row items-center justify-center w-full text-sm h-fit font-SCDream5 md:text-lg text-mainOrange">
+              Gallendar에 오신 걸 환영합니다!
+            </div>
+            <div className="flex flex-row items-center justify-center w-full text-xs h-fit font-SCDream5 md:text-sm text-socialBgOrg">
+              Welcome to Galledar!
+            </div>
+          </div>
+
           <input
             type="submit"
             className="self-end w-20 mt-3 md:w-28 h-8 rounded-2xl bg-btnOrange text-white font-SCDream5 text-sm hover:bg-[#fcb79a]"
