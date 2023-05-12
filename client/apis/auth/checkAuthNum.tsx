@@ -3,15 +3,15 @@ import client from "../../client/client";
 
 interface authNumData {
   authNumValue: string;
-  email: string;
+  emailValue: string;
 }
 
-const checkAuthNum = async ({ authNumValue, email }: authNumData) => {
+const checkAuthNum = async ({ authNumValue, emailValue }: authNumData) => {
   const data = {
     authNum: authNumValue,
-    email: email,
+    email: emailValue,
   };
-  return await axios.post("/authentication/email/verify", data, {
+  return await axios.post("/authentication/emailValue/verify", data, {
     baseURL: process.env.NEXT_PUBLIC_API_URL,
     headers: {
       withCredentials: true,

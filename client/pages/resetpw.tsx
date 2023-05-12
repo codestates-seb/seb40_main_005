@@ -62,12 +62,10 @@ const SignUp = () => {
 
   const { data: emailData, refetch: emailRefetch } = useCheckEmail(emailValue);
 
-  const { data: checkAuth, mutate: checkAuthNumMute } = useCheckAuthNum({
-    authNum: authNumValue,
-    email: emailValue,
-  });
+  const { data: checkAuth, mutate: checkAuthNumMute } = useCheckAuthNum();
+  console.log(checkAuth);
 
-  const { mutate: postAuthNumMute } = useRequestAuthNum({ email: emailValue });
+  const { mutate: postAuthNumMute } = useRequestAuthNum();
 
   const { data: signupData, mutate: singUpMute } = usePatchPw(signUpData);
 
@@ -107,7 +105,9 @@ const SignUp = () => {
         // refetch 한 값을 바로 가져온 뒤 데이터 값 체크. 현재는 정상 요청인지 아닌지만 판별하나, 이후 중복값인지 아닌지 statusCode 로 확인해야 함
         const { data: idRefetchData } = await idRefetch();
 
-        const idCheckStatus = idRefetchData?.data || null;
+        console.log(idRefetchData);
+
+        const idCheckStatus = idRefetchData?.data;
 
         setIsCheckSameId(false);
         if (idCheckStatus) {
@@ -191,7 +191,7 @@ const SignUp = () => {
 
   const handleClickAuthNumBtn = () => {
     // 조건문 추가
-    checkAuthNumMute({ authNum: authNumValue, email: emailValue });
+    checkAuthNumMute({ authNumValue, emailValue });
     console.log(checkAuth);
     setCheckAuthNum(true);
     setAuthInputView(false);
@@ -271,7 +271,7 @@ const SignUp = () => {
               </div>
               <div className="flex flex-row items-end justify-center w-full h-fit">
                 <input
-                  className="font-SCDream3 text-gray-500 w-full text-xs md:text-sm mt-2 border-b-[1px] border-mainOrange/40 outline-none"
+                  className="font-SCDream3 text-gray-500a w-full text-xs md:text-sm mt-2 border-b-[1px] border-mainOrange/40 outline-none"
                   id="email"
                   autoComplete="off"
                   type="text"
@@ -329,10 +329,7 @@ const SignUp = () => {
               />
               <AuthBtn onClick={handleClickAuthNumBtn}>인증</AuthBtn>
             </EmailCheckNumberLayout>
-          ) : isCheckSameEmail &&
-            !authInputView &&
-            pwInputView &&
-            checkAuth?.data ? (
+          ) : isCheckSameEmail && !authInputView && pwInputView && checkAuth ? (
             <form className="w-full" onSubmit={handleClickSubmit}>
               <div className="flex flex-col w-full h-fit">
                 <div className="flex flex-col w-full md:flex-row h-fit">

@@ -169,7 +169,7 @@ const LoginForm = () => {
                   아이디찾기
                 </Link>
               </div>
-              <Link href={"/resetpw"}>비밀번호재설정</Link>
+              {/* <Link href={"/resetpw"}>비밀번호재설정</Link> */}
             </div>
           </div>
 
