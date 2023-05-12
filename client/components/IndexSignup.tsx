@@ -3,7 +3,7 @@ import Link from "next/link";
 const IndexSignup = () => {
   return (
     <>
-      <Link href="/signup">
+      <Link href="/resignup">
         <div className="relative items-center justify-center cursor-pointer w-fit h-7">
           <div className="z-10 ml-1 text-lg text-gray-700 font-SCDream3">
             회원가입
