@@ -161,7 +161,7 @@ const LoginForm = () => {
           />
 
           <div className="mt-2 text-gray-500 flex justify-between text-[6px] font-SCDream2">
-            <Link href={"/signup"}>아직 회원이 아니신가요?</Link>
+            <Link href={"/resignup"}>아직 회원이 아니신가요?</Link>
 
             <div className="flex text-[6px]">
               <div className="mr-[0.3rem] md:mr-6">

@@ -98,7 +98,7 @@ function FindId() {
             </div>
           </form>
 
-          <div className="flex items-center justify-center w-full mt-1 text-sm  h-1/6 text-mainOrange font-SCDream4">
+          <div className="flex items-center justify-center w-full mt-1 text-sm h-1/6 text-mainOrange font-SCDream4">
             {isLoading ? (
               <div className="absolute flex items-center justify-center w-full ">
                 <div role="status">
@@ -138,7 +138,7 @@ function FindId() {
               <>
                 <div className="flex flex-col items-center justify-center w-full mt-16 h-2/3">
                   <p className="py-5">존재 하지 않는 아이디 입니다</p>
-                  <Link href="/signup">
+                  <Link href="/resignup">
                     <button className="flex  items-center  py-2 justify-center w-4/6 md:w-3/6 lg:w-4/6 h-8 rounded-2xl bg-btnOrange text-white font-SCDream5 text-sm hover:bg-[#fcb79a]">
                       <span>회원가입 페이지로 이동하기</span>
                     </button>
